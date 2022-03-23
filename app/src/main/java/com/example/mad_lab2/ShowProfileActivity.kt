@@ -1,5 +1,6 @@
 package com.example.mad_lab2
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -11,9 +12,21 @@ class ShowProfileActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_main)
         val profile = Profile("Monkey", "D. Luffy", "m.d.luffy@gmail.com", "Red Line - Ocean - World", "Captain", "@the_big_d")
-        val fullnameOBJ = findViewById<TextView>(R.id.fullnameID)
-        val nicknameOBJ = findViewById<TextView>(R.id.nicknameID)
-        val qualificationOBJ = findViewById<TextView>(R.id.qualificationID)
+        val fullnameOBJ: TextView
+        val nicknameOBJ: TextView
+        val qualificationOBJ: TextView
+        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            fullnameOBJ = findViewById(R.id.fullnameID2)
+            nicknameOBJ = findViewById(R.id.nicknameID2)
+            qualificationOBJ = findViewById(R.id.qualificationID2)
+        }
+        else // (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+        {
+            fullnameOBJ = findViewById(R.id.fullnameID)
+            nicknameOBJ = findViewById(R.id.nicknameID)
+            qualificationOBJ = findViewById(R.id.qualificationID)
+        }
         fullnameOBJ.text = profile.name + " " + profile.surname
         nicknameOBJ.text = profile.nickname
         qualificationOBJ.text = profile.qualification
