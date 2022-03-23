@@ -8,12 +8,12 @@
     tools:context=".ShowProfileActivity">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/fullnameID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-black"
-        android:text="Sibilla Sagristano"
+        android:text="@string/fullnamePH"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
@@ -22,32 +22,32 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/qualificationID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="sans-serif-light"
-        android:text="Professional Educator"
+        android:text="@string/qualificationPH"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="@+id/nicknameID"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toStartOf="@+id/nicknameID"
+        app:layout_constraintTop_toBottomOf="@+id/nicknameID" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/nicknameID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
-        android:text="\@sibilla.sagristano"
+        android:text="@string/nickanemPH"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#009688"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="@+id/fullnameID"
         app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintStart_toStartOf="@+id/fullnameID"
+        app:layout_constraintTop_toBottomOf="@+id/fullnameID" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -90,22 +90,23 @@
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="36dp"
         android:tint="#009688"
-        app:layout_constraintBottom_toBottomOf="@+id/textView3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintHorizontal_bias="0.852"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.112"
         app:srcCompat="@drawable/ic_verified_black_24dp" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
-        android:layout_width="404dp"
-        android:layout_height="49dp"
+        android:layout_width="386dp"
+        android:layout_height="41dp"
         android:layout_marginTop="28dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="@+id/qualificationID"
+        app:layout_constraintStart_toStartOf="@+id/qualificationID"
+        app:layout_constraintTop_toBottomOf="@+id/qualificationID"
         app:tabIndicatorColor="#009688"
         app:tabSelectedTextColor="#009688">
 
@@ -126,14 +127,14 @@
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
-        android:layout_width="409dp"
-        android:layout_height="364dp"
+        android:layout_width="385dp"
+        android:layout_height="331dp"
         android:layout_marginTop="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.272"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-        app:layout_constraintVertical_bias="0.462" />
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

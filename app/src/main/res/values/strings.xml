@@ -3,4 +3,7 @@
     <string name="skills_str">Skills</string>
     <string name="information_str">Information</string>
     <string name="description_str">Description</string>
+    <string name="fullnamePH">Name Surname</string>
+    <string name="nickanemPH">\@nickname</string>
+    <string name="qualificationPH">Qualification</string>
 </resources>
