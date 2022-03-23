@@ -11,7 +11,7 @@
         android:id="@+id/fullnameID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-black"
         android:text="@string/fullnamePH"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -30,7 +30,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/nicknameID"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="@+id/nicknameID"
         app:layout_constraintTop_toBottomOf="@+id/nicknameID" />
 
@@ -44,7 +44,7 @@
         android:textColor="#009688"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/fullnameID"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="@+id/fullnameID"
         app:layout_constraintTop_toBottomOf="@+id/fullnameID" />
 
@@ -55,10 +55,10 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:clickable="true"
-        android:tint="#009688"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_edit_black_24dp" />
+        app:srcCompat="@drawable/ic_edit_black_24dp"
+        app:tint="#009688" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -67,16 +67,16 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:clickable="true"
-        android:tint="#009688"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_west_black_24dp" />
+        app:srcCompat="@drawable/ic_west_black_24dp"
+        app:tint="#009688" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="386dp"
         android:layout_height="41dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="@+id/qualificationID"
         app:layout_constraintStart_toStartOf="@+id/qualificationID"
         app:layout_constraintTop_toBottomOf="@+id/qualificationID"
@@ -112,24 +112,25 @@
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="73dp"
-        android:layout_height="87dp"
-        android:layout_marginTop="104dp"
+        android:layout_width="78dp"
+        android:layout_height="84dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.105"
         app:srcCompat="@drawable/propic" />
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:tint="#009688"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="76dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
         app:layout_constraintStart_toStartOf="@+id/imageView7"
         app:layout_constraintTop_toTopOf="@+id/imageView7"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_verified_black_24dp" />
+        app:srcCompat="@drawable/ic_verified_black_24dp"
+        app:tint="#009688" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
