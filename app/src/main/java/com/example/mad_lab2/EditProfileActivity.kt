@@ -1,5 +1,6 @@
 package com.example.mad_lab2
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -28,10 +29,23 @@ class EditProfileActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onBackPressed() {
+        val intent = Intent(this, ShowProfileActivity::class.java)
+        intent.putExtra("fullname", findViewById<EditText>(R.id.EDITfullnameID).toString())
+        intent.putExtra("nickname", findViewById<EditText>(R.id.EDITnicknameID).toString())
+        intent.putExtra("qualification", findViewById<EditText>(R.id.EDITqualificationID).toString())
+        setResult(1)
+        super.onBackPressed()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.complete_user_editing -> {
-                // retrieve the info back
+                val intent = Intent(this, ShowProfileActivity::class.java)
+                intent.putExtra("fullname", findViewById<EditText>(R.id.EDITfullnameID).toString())
+                intent.putExtra("nickname", findViewById<EditText>(R.id.EDITnicknameID).toString())
+                intent.putExtra("qualification", findViewById<EditText>(R.id.EDITqualificationID).toString())
+                setResult(1)
                 finish()
                 true
             }
