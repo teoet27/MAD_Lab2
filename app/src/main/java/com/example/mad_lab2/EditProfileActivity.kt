@@ -2,25 +2,38 @@ package com.example.mad_lab2
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatDelegate
 
 class EditProfileActivity : AppCompatActivity() {
+    private lateinit var editFullNameOBJ: EditText
+    private lateinit var editNickNameOBJ: EditText
+    private lateinit var editQualificationOBJ: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_edit_profile)
 
-        val editFullNameOBJ = findViewById<EditText>(R.id.EDITfullnameID)
-        val editNickNameOBJ = findViewById<EditText>(R.id.EDITnicknameID)
-        val editQualificationOBJ = findViewById<EditText>(R.id.EDITqualificationID)
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            this.editFullNameOBJ = findViewById<EditText>(R.id.EDITfullnameID2)
+            this.editNickNameOBJ = findViewById<EditText>(R.id.EDITnicknameID2)
+            this.editQualificationOBJ = findViewById<EditText>(R.id.EDITqualificationID2)
+        } else {
+            this.editFullNameOBJ = findViewById<EditText>(R.id.EDITfullnameID)
+            this.editNickNameOBJ = findViewById<EditText>(R.id.EDITnicknameID)
+            this.editQualificationOBJ = findViewById<EditText>(R.id.EDITqualificationID)
+        }
 
-        editFullNameOBJ.setText(intent.getCharSequenceExtra("fullname"))
-        editNickNameOBJ.setText(intent.getCharSequenceExtra("nickname"))
-        editQualificationOBJ.setText(intent.getCharSequenceExtra("qualification"))
+        this.editFullNameOBJ.setText(intent.getCharSequenceExtra("fullname"))
+        this.editNickNameOBJ.setText(intent.getCharSequenceExtra("nickname"))
+        this.editQualificationOBJ.setText(intent.getCharSequenceExtra("qualification"))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

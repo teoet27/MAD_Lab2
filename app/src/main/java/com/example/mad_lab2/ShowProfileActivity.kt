@@ -20,18 +20,23 @@ class ShowProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_main)
-        val profile = Profile("Monkey", "D. Luffy", "m.d.luffy@gmail.com", "Red Line - Ocean - World", "Captain", "@the_big_d")
-        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
+        val profile = Profile(
+            "Monkey",
+            "D. Luffy",
+            "m.d.luffy@gmail.com",
+            "Red Line - Ocean - World",
+            "Captain",
+            "@the_big_d"
+        )
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            this.fullnameOBJ = findViewById<TextView>(R.id.fullnameID2)
+            this.nicknameOBJ = findViewById<TextView>(R.id.nicknameID2)
+            this.qualificationOBJ = findViewById<TextView>(R.id.qualificationID2)
+        } else // (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
         {
-            this.fullnameOBJ = findViewById(R.id.fullnameID2)
-            this.nicknameOBJ = findViewById(R.id.nicknameID2)
-            this.qualificationOBJ = findViewById(R.id.qualificationID2)
-        }
-        else // (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-        {
-            this.fullnameOBJ = findViewById(R.id.fullnameID)
-            this.nicknameOBJ = findViewById(R.id.nicknameID)
-            this.qualificationOBJ = findViewById(R.id.qualificationID)
+            this.fullnameOBJ = findViewById<TextView>(R.id.fullnameID)
+            this.nicknameOBJ = findViewById<TextView>(R.id.nicknameID)
+            this.qualificationOBJ = findViewById<TextView>(R.id.qualificationID)
         }
         this.fullnameOBJ.text = profile.name + " " + profile.surname
         this.nicknameOBJ.text = profile.nickname
@@ -50,9 +55,22 @@ class ShowProfileActivity : AppCompatActivity() {
                 // switch to edit mode
                 val intent = Intent(this, EditProfileActivity::class.java)
                 val b = Bundle()
-                b.putCharSequence("fullname", findViewById<TextView>(R.id.fullnameID).text)
-                b.putCharSequence("nickname", findViewById<TextView>(R.id.nicknameID).text)
-                b.putCharSequence("qualification", findViewById<TextView>(R.id.qualificationID).text)
+                if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    b.putCharSequence("fullname", findViewById<TextView>(R.id.fullnameID2).text)
+                    b.putCharSequence("nickname", findViewById<TextView>(R.id.nicknameID2).text)
+                    b.putCharSequence(
+                        "qualification",
+                        findViewById<TextView>(R.id.qualificationID2).text
+                    )
+
+                } else {
+                    b.putCharSequence("fullname", findViewById<TextView>(R.id.fullnameID).text)
+                    b.putCharSequence("nickname", findViewById<TextView>(R.id.nicknameID).text)
+                    b.putCharSequence(
+                        "qualification",
+                        findViewById<TextView>(R.id.qualificationID).text
+                    )
+                }
                 intent.putExtras(b)
                 startActivityForResult(intent, 1)
                 true
@@ -62,10 +80,13 @@ class ShowProfileActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            this.fullnameOBJ.text = data?.getCharSequenceExtra("fullname").toString() ?: "MISSING FN"
-            this.nicknameOBJ.text = data?.getCharSequenceExtra("nickname").toString() ?: "@MISSINGNICK"
-            this.qualificationOBJ.text = data?.getCharSequenceExtra("qualification").toString() ?: "QUALIFICATION N/A"
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            this.fullnameOBJ.text =
+                data?.getCharSequenceExtra("fullname").toString() ?: "MISSING FN"
+            this.nicknameOBJ.text =
+                data?.getCharSequenceExtra("nickname").toString() ?: "@MISSINGNICK"
+            this.qualificationOBJ.text =
+                data?.getCharSequenceExtra("qualification").toString() ?: "QUALIFICATION N/A"
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
