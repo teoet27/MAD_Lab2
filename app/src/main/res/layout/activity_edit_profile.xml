@@ -104,4 +104,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:srcCompat="@drawable/ic_photo_camera_black_24dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

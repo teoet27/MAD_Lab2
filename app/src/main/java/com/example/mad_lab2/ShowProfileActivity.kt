@@ -31,14 +31,14 @@ class ShowProfileActivity : AppCompatActivity() {
         )
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            this.fullnameOBJ = findViewById<TextView>(R.id.fullnameID2)
-            this.nicknameOBJ = findViewById<TextView>(R.id.nicknameID2)
-            this.qualificationOBJ = findViewById<TextView>(R.id.qualificationID2)
+            this.fullnameOBJ = findViewById(R.id.fullnameID2)
+            this.nicknameOBJ = findViewById(R.id.nicknameID2)
+            this.qualificationOBJ = findViewById(R.id.qualificationID2)
         } else
         {
-            this.fullnameOBJ = findViewById<TextView>(R.id.fullnameID)
-            this.nicknameOBJ = findViewById<TextView>(R.id.nicknameID)
-            this.qualificationOBJ = findViewById<TextView>(R.id.qualificationID)
+            this.fullnameOBJ = findViewById(R.id.fullnameID)
+            this.nicknameOBJ = findViewById(R.id.nicknameID)
+            this.qualificationOBJ = findViewById(R.id.qualificationID)
         }
         this.fullnameOBJ.text = profile.name + " " + profile.surname
         this.nicknameOBJ.text = profile.nickname
@@ -84,11 +84,11 @@ class ShowProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             this.fullnameOBJ.text =
-                data?.getCharSequenceExtra("fullname").toString() ?: "MISSING FN"
+                data?.getCharSequenceExtra("fullname").toString()
             this.nicknameOBJ.text =
-                data?.getCharSequenceExtra("nickname").toString() ?: "@MISSINGNICK"
+                data?.getCharSequenceExtra("nickname").toString()
             this.qualificationOBJ.text =
-                data?.getCharSequenceExtra("qualification").toString() ?: "QUALIFICATION N/A"
+                data?.getCharSequenceExtra("qualification").toString()
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
