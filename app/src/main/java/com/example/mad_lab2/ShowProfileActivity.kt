@@ -1,8 +1,8 @@
 package com.example.mad_lab2
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.os.Debug
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -38,7 +38,7 @@ class ShowProfileActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu, menu)
+        inflater.inflate(R.menu.show_profile_main_menu, menu)
         return true
     }
 
@@ -46,7 +46,11 @@ class ShowProfileActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.edit_user_profile -> {
                 // switch to edit mode
-
+                val intent = Intent(this, EditProfileActivity::class.java)
+                intent.putExtra("fullname", findViewById<TextView>(R.id.fullnameID).text)
+                intent.putExtra("nickname", findViewById<TextView>(R.id.nicknameID).text)
+                intent.putExtra("qualification", findViewById<TextView>(R.id.qualificationID).text)
+                startActivity(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)
