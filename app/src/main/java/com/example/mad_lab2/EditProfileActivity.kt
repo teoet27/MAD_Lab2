@@ -13,12 +13,12 @@ class EditProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
         val editFullNameOBJ = findViewById<EditText>(R.id.EDITfullnameID)
-        val ediNickNameOBJ = findViewById<EditText>(R.id.EDITnicknameID)
+        val editNickNameOBJ = findViewById<EditText>(R.id.EDITnicknameID)
         val editQualificationOBJ = findViewById<EditText>(R.id.EDITqualificationID)
 
-        editFullNameOBJ.editableText = intent.getCharSequenceExtra("fullname")
-        ediNickNameOBJ.editableText = intent.getCharSequenceExtra("nickname")
-        editQualificationOBJ.editableText = intent.getCharSequenceExtra("qualification")
+        editFullNameOBJ.setText(intent.getCharSequenceExtra("fullname"))
+        editNickNameOBJ.setText(intent.getCharSequenceExtra("nickname"))
+        editQualificationOBJ.setText(intent.getCharSequenceExtra("qualification"))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
