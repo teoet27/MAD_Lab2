@@ -2,6 +2,7 @@ package com.example.mad_lab2
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.os.Debug
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -45,6 +46,7 @@ class ShowProfileActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.edit_user_profile -> {
                 // switch to edit mode
+
                 true
             }
             else -> super.onOptionsItemSelected(item)
