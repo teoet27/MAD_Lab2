@@ -76,8 +76,8 @@
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
-        android:layout_width="385dp"
-        android:layout_height="541dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
