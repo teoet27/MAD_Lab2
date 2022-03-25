@@ -50,7 +50,7 @@ class ShowProfileActivity : AppCompatActivity() {
                 intent.putExtra("fullname", findViewById<TextView>(R.id.fullnameID).text)
                 intent.putExtra("nickname", findViewById<TextView>(R.id.nicknameID).text)
                 intent.putExtra("qualification", findViewById<TextView>(R.id.qualificationID).text)
-                startActivity(intent)
+                startActivityForResult(intent, 1)
                 true
             }
             else -> super.onOptionsItemSelected(item)
