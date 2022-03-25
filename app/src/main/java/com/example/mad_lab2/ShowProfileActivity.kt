@@ -2,6 +2,9 @@ package com.example.mad_lab2
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -30,5 +33,21 @@ class ShowProfileActivity : AppCompatActivity() {
         fullnameOBJ.text = profile.name + " " + profile.surname
         nicknameOBJ.text = profile.nickname
         qualificationOBJ.text = profile.qualification
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.edit_user_profile -> {
+                // switch to edit mode
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
