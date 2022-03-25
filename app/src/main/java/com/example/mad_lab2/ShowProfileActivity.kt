@@ -20,6 +20,7 @@ class ShowProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_main)
+
         val profile = Profile(
             "Monkey",
             "D. Luffy",
@@ -28,11 +29,12 @@ class ShowProfileActivity : AppCompatActivity() {
             "Captain",
             "@the_big_d"
         )
+
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             this.fullnameOBJ = findViewById<TextView>(R.id.fullnameID2)
             this.nicknameOBJ = findViewById<TextView>(R.id.nicknameID2)
             this.qualificationOBJ = findViewById<TextView>(R.id.qualificationID2)
-        } else // (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+        } else
         {
             this.fullnameOBJ = findViewById<TextView>(R.id.fullnameID)
             this.nicknameOBJ = findViewById<TextView>(R.id.nicknameID)
@@ -89,5 +91,19 @@ class ShowProfileActivity : AppCompatActivity() {
                 data?.getCharSequenceExtra("qualification").toString() ?: "QUALIFICATION N/A"
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putCharSequence("fullname", this.fullnameOBJ.text)
+        outState.putCharSequence("nickname", this.nicknameOBJ.text)
+        outState.putCharSequence("qualification", this.qualificationOBJ.text)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        this.fullnameOBJ.text = savedInstanceState.getCharSequence("fullname")
+        this.nicknameOBJ.text = savedInstanceState.getCharSequence("nickname")
+        this.qualificationOBJ.text = savedInstanceState.getCharSequence("qualification")
     }
 }

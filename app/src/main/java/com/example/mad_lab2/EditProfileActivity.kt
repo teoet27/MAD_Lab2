@@ -45,9 +45,21 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val intent = Intent()
         val b = Bundle()
-        b.putCharSequence("fullname", findViewById<EditText>(R.id.EDITfullnameID).text)
-        b.putCharSequence("nickname", findViewById<EditText>(R.id.EDITnicknameID).text)
-        b.putCharSequence("qualification", findViewById<EditText>(R.id.EDITqualificationID).text)
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            b.putCharSequence("fullname", findViewById<EditText>(R.id.EDITfullnameID2).text)
+            b.putCharSequence("nickname", findViewById<EditText>(R.id.EDITnicknameID2).text)
+            b.putCharSequence(
+                "qualification",
+                findViewById<EditText>(R.id.EDITqualificationID2).text
+            )
+        } else {
+            b.putCharSequence("fullname", findViewById<EditText>(R.id.EDITfullnameID).text)
+            b.putCharSequence("nickname", findViewById<EditText>(R.id.EDITnicknameID).text)
+            b.putCharSequence(
+                "qualification",
+                findViewById<EditText>(R.id.EDITqualificationID).text
+            )
+        }
         intent.putExtras(b)
         setResult(Activity.RESULT_OK, intent)
         super.onBackPressed()
@@ -58,12 +70,21 @@ class EditProfileActivity : AppCompatActivity() {
             R.id.complete_user_editing -> {
                 val intent = Intent()
                 val b = Bundle()
-                b.putCharSequence("fullname", findViewById<EditText>(R.id.EDITfullnameID).text)
-                b.putCharSequence("nickname", findViewById<EditText>(R.id.EDITnicknameID).text)
-                b.putCharSequence(
-                    "qualification",
-                    findViewById<EditText>(R.id.EDITqualificationID).text
-                )
+                if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    b.putCharSequence("fullname", findViewById<EditText>(R.id.EDITfullnameID2).text)
+                    b.putCharSequence("nickname", findViewById<EditText>(R.id.EDITnicknameID2).text)
+                    b.putCharSequence(
+                        "qualification",
+                        findViewById<EditText>(R.id.EDITqualificationID2).text
+                    )
+                } else {
+                    b.putCharSequence("fullname", findViewById<EditText>(R.id.EDITfullnameID).text)
+                    b.putCharSequence("nickname", findViewById<EditText>(R.id.EDITnicknameID).text)
+                    b.putCharSequence(
+                        "qualification",
+                        findViewById<EditText>(R.id.EDITqualificationID).text
+                    )
+                }
                 intent.putExtras(b)
                 setResult(Activity.RESULT_OK, intent)
                 finish()
@@ -71,5 +92,19 @@ class EditProfileActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putCharSequence("fullname", this.editFullNameOBJ.text)
+        outState.putCharSequence("nickname", this.editNickNameOBJ.text)
+        outState.putCharSequence("qualification", this.editQualificationOBJ.text)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        this.editFullNameOBJ.setText(savedInstanceState.getCharSequence("fullname"))
+        this.editNickNameOBJ.setText(savedInstanceState.getCharSequence("nickname"))
+        this.editQualificationOBJ.setText(savedInstanceState.getCharSequence("qualification"))
     }
 }
