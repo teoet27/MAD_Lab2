@@ -33,7 +33,7 @@ class ShowProfileActivity : AppCompatActivity() {
                 "@the_big_d",
                 "notAvailable"
             )
-        }
+        }//
 
         // TODO: ask malnati about landscape and portrait differentiation
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
