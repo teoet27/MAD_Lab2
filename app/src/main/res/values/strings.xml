@@ -8,6 +8,7 @@
     <string name="qualificationPH">Qualification</string>
     <string name="edit_user_profile">Edit your profile</string>
     <string name="done">Done</string>
+    <string name="preference_file_key">profileData</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

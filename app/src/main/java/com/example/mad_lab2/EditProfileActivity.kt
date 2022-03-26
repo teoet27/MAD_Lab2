@@ -15,11 +15,14 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var editFullNameOBJ: EditText
     private lateinit var editNickNameOBJ: EditText
     private lateinit var editQualificationOBJ: EditText
+    private lateinit var sdh: SaveProfileDataHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_edit_profile)
+
+        sdh = SaveProfileDataHandler(applicationContext)
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             this.editFullNameOBJ = findViewById<EditText>(R.id.EDITfullnameID2)
@@ -61,6 +64,15 @@ class EditProfileActivity : AppCompatActivity() {
             )
         }
         intent.putExtras(b)
+        val profile: Profile = Profile(
+            this.editFullNameOBJ.text.toString(),
+            "",
+            "",
+            this.editQualificationOBJ.text.toString(),
+            this.editNickNameOBJ.text.toString(),
+            ""
+        )
+        this.sdh.storeData(profile)
         setResult(Activity.RESULT_OK, intent)
         super.onBackPressed()
     }
@@ -70,22 +82,21 @@ class EditProfileActivity : AppCompatActivity() {
             R.id.complete_user_editing -> {
                 val intent = Intent()
                 val b = Bundle()
-                if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    b.putCharSequence("fullname", findViewById<EditText>(R.id.EDITfullnameID2).text)
-                    b.putCharSequence("nickname", findViewById<EditText>(R.id.EDITnicknameID2).text)
-                    b.putCharSequence(
-                        "qualification",
-                        findViewById<EditText>(R.id.EDITqualificationID2).text
-                    )
-                } else {
-                    b.putCharSequence("fullname", findViewById<EditText>(R.id.EDITfullnameID).text)
-                    b.putCharSequence("nickname", findViewById<EditText>(R.id.EDITnicknameID).text)
-                    b.putCharSequence(
-                        "qualification",
-                        findViewById<EditText>(R.id.EDITqualificationID).text
-                    )
-                }
+
+                b.putCharSequence("fullname", this.editFullNameOBJ.text)
+                b.putCharSequence("nickname", this.editNickNameOBJ.text)
+                b.putCharSequence("qualification", this.editQualificationOBJ.text)
+
                 intent.putExtras(b)
+                val profile: Profile = Profile(
+                    this.editFullNameOBJ.text.toString(),
+                    "",
+                    "",
+                    this.editQualificationOBJ.text.toString(),
+                    this.editNickNameOBJ.text.toString(),
+                    ""
+                )
+                this.sdh.storeData(profile)
                 setResult(Activity.RESULT_OK, intent)
                 finish()
                 true
