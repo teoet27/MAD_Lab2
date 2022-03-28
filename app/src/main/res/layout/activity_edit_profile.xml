@@ -42,7 +42,7 @@
     </com.google.android.material.tabs.TabLayout>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/edit_user_image"
         android:layout_width="78dp"
         android:layout_height="84dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -64,9 +64,9 @@
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintEnd_toEndOf="@+id/edit_user_image"
+        app:layout_constraintStart_toStartOf="@+id/edit_user_image"
+        app:layout_constraintTop_toBottomOf="@+id/edit_user_image" />
 
     <EditText
         android:id="@+id/EDITnicknameID"
@@ -102,13 +102,13 @@
         app:layout_constraintTop_toBottomOf="@+id/EDITnicknameID" />
 
     <ImageView
-        android:id="@+id/imageView9"
+        android:id="@+id/camera_button"
         android:layout_width="31dp"
         android:layout_height="25dp"
         android:layout_marginStart="52dp"
         android:layout_marginBottom="64dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_user_image"
+        app:layout_constraintStart_toStartOf="@+id/edit_user_image"
         app:srcCompat="@drawable/ic_photo_camera_black_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
