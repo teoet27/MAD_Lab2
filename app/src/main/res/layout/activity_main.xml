@@ -49,7 +49,7 @@
                 android:fontFamily="sans-serif-light"
                 android:text="@string/nickanemPH"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/orange_poli"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/fullnameID"
                 app:layout_constraintStart_toStartOf="@+id/fullnameID"
@@ -64,7 +64,7 @@
                 app:layout_constraintStart_toStartOf="@+id/imageView7"
                 app:layout_constraintTop_toTopOf="@+id/imageView7"
                 app:srcCompat="@drawable/ic_verified_black_24dp"
-                app:tint="#009688" />
+                app:tint="@color/orange_poli" />
 
             <TextView
                 android:id="@+id/qualificationID"
@@ -102,7 +102,7 @@
                     android:text="@string/description_str"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/prussian_blue"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -111,7 +111,8 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
-                    android:text="@string/default_description_text" />
+                    android:text="@string/default_description_text"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/skillsID"
@@ -124,7 +125,7 @@
                     android:text="@string/skills_str"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/prussian_blue"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -133,7 +134,8 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
-                    android:text="@string/default_skills_text" />
+                    android:text="@string/default_skills_text"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/textView16"
@@ -143,6 +145,7 @@
                     android:paddingLeft="40dp"
                     android:paddingRight="40dp"
                     android:text="@string/empty_skills"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -156,7 +159,7 @@
                     android:text="@string/information_str"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/prussian_blue"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -164,7 +167,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="8dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -175,7 +178,8 @@
                         android:drawableLeft="@drawable/ic_account_circle_black_24dp"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
-                        android:text="@string/full_name" />
+                        android:text="@string/phone_number"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/textView7"
@@ -183,6 +187,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="TextView"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -192,7 +197,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="8dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -203,7 +208,8 @@
                         android:drawableLeft="@drawable/ic_email_black_24dp"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
-                        android:text="@string/email_text" />
+                        android:text="@string/email_text"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/textView7"
@@ -211,6 +217,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="TextView"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -220,7 +227,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="8dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -239,6 +246,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="TextView"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>

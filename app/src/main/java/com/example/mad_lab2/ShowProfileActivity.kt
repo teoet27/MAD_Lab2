@@ -3,8 +3,6 @@ package com.example.mad_lab2
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -37,7 +35,6 @@ class ShowProfileActivity : AppCompatActivity() {
             )
         }
 
-        // TODO: ask malnati about landscape and portrait differentiation
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             this.fullnameOBJ = findViewById(R.id.fullnameID2)
             this.nicknameOBJ = findViewById(R.id.nicknameID2)
