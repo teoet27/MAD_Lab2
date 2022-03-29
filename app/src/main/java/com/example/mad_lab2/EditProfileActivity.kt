@@ -50,22 +50,31 @@ class EditProfileActivity : AppCompatActivity() {
         this.editNickNameOBJ.setText(intent.getCharSequenceExtra("nickname"))
         this.editQualificationOBJ.setText(intent.getCharSequenceExtra("qualification"))
 
-        val cam: ImageView=findViewById(R.id.camera_button)
+        val cam: ImageView
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            cam = findViewById(R.id.camera_button2)
+        } else {
+            cam = findViewById(R.id.camera_button)
+        }
         registerForContextMenu(cam)
-        cam.setOnClickListener{openContextMenu(cam)}
+        cam.setOnClickListener { openContextMenu(cam) }
     }
 
-    override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
         super.onCreateContextMenu(menu, v, menuInfo)
         val inflater: MenuInflater = menuInflater
-        if(packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY))
+        if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY))
             inflater.inflate(R.menu.select_take_picture_floating_context_menu, menu)
         else
             inflater.inflate(R.menu.select_picture_floating_context_menu, menu)
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        when(item.title){
+        when (item.title) {
             resources.getString(R.string.floating_menu_shot_picture) -> dispatchTakePictureIntent()
             resources.getString(R.string.floating_menu_load_picture) -> dispatchLoadPictureIntent()
         }
@@ -100,7 +109,8 @@ class EditProfileActivity : AppCompatActivity() {
 
     val PICK_IMAGE = 100
     private fun dispatchLoadPictureIntent() {
-        val loadPictureIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        val loadPictureIntent =
+            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         try {
             startActivityForResult(loadPictureIntent, PICK_IMAGE)
         } catch (e: ActivityNotFoundException) {

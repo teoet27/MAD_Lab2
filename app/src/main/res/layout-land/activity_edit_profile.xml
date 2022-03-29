@@ -102,7 +102,7 @@
         app:srcCompat="@drawable/propic" />
 
     <ImageView
-        android:id="@+id/imageView10"
+        android:id="@+id/camera_button2"
         android:layout_width="31dp"
         android:layout_height="25dp"
         android:layout_marginStart="60dp"
