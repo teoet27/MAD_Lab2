@@ -104,7 +104,7 @@
 
         <ScrollView
             style="@style/CardView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_corners_land"
             android:backgroundTint="@color/prussian_blue"
