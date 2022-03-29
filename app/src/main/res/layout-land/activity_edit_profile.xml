@@ -14,16 +14,17 @@
         android:orientation="horizontal">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="326dp"
+            android:layout_width="323dp"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/edit_profilePictureID"
                 android:layout_width="78dp"
                 android:layout_height="84dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.088"
+                app:layout_constraintHorizontal_bias="0.033"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/propic" />
