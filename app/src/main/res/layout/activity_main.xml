@@ -136,6 +136,16 @@
                     android:text="@string/default_skills_text" />
 
                 <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="40dp"
+                    android:text="@string/empty_skills"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:id="@+id/personalInfoID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

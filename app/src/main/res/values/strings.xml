@@ -18,4 +18,5 @@
     <string name="default_skills_text">This is a list of their skills:</string>
     <string name="email_text">Email:</string>
     <string name="location_text">Location:</string>
+    <string name="empty_skills">No skills.</string>
 </resources>
