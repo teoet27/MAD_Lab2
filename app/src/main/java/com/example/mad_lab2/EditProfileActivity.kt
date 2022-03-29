@@ -3,6 +3,7 @@ package com.example.mad_lab2
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -29,9 +30,9 @@ class EditProfileActivity : AppCompatActivity() {
             this.editNickNameOBJ = findViewById<EditText>(R.id.EDITnicknameID2)
             this.editQualificationOBJ = findViewById<EditText>(R.id.EDITqualificationID2)
         } else {
-            this.editFullNameOBJ = findViewById<EditText>(R.id.EDITfullnameID)
-            this.editNickNameOBJ = findViewById<EditText>(R.id.EDITnicknameID)
-            this.editQualificationOBJ = findViewById<EditText>(R.id.EDITqualificationID)
+            this.editFullNameOBJ = findViewById<EditText>(R.id.edit_fullnameID)
+            this.editNickNameOBJ = findViewById<EditText>(R.id.edit_nicknameID)
+            this.editQualificationOBJ = findViewById<EditText>(R.id.edit_qualificationID)
         }
 
         this.editFullNameOBJ.setText(intent.getCharSequenceExtra("fullname"))
@@ -56,11 +57,11 @@ class EditProfileActivity : AppCompatActivity() {
                 findViewById<EditText>(R.id.EDITqualificationID2).text
             )
         } else {
-            b.putCharSequence("fullname", findViewById<EditText>(R.id.EDITfullnameID).text)
-            b.putCharSequence("nickname", findViewById<EditText>(R.id.EDITnicknameID).text)
+            b.putCharSequence("fullname", findViewById<EditText>(R.id.edit_fullnameID).text)
+            b.putCharSequence("nickname", findViewById<EditText>(R.id.edit_nicknameID).text)
             b.putCharSequence(
                 "qualification",
-                findViewById<EditText>(R.id.EDITqualificationID).text
+                findViewById<EditText>(R.id.edit_qualificationID).text
             )
         }
         intent.putExtras(b)

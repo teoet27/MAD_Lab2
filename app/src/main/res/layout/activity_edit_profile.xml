@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/prussian_blue"
-    android:theme="@style/Theme.MAD_Lab2"
+    android:background="@color/white"
+    android:theme="@style/Theme.MAD_Lab2_EditMode"
     tools:context=".ShowProfileActivity">
 
     <LinearLayout
@@ -19,7 +19,7 @@
             android:layout_marginBottom="15dp">
 
             <ImageView
-                android:id="@+id/profilePictureID"
+                android:id="@+id/edit_profilePictureID"
                 android:layout_width="78dp"
                 android:layout_height="84dp"
                 android:layout_marginTop="16dp"
@@ -37,11 +37,11 @@
                 android:inputType="textPersonName"
                 android:text="@string/fullnamePH"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/prussian_blue"
                 android:textSize="34sp"
-                app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
-                app:layout_constraintStart_toStartOf="@+id/profilePictureID"
-                app:layout_constraintTop_toBottomOf="@+id/profilePictureID" />
+                app:layout_constraintEnd_toEndOf="@+id/edit_profilePictureID"
+                app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profilePictureID" />
 
             <EditText
                 android:id="@+id/edit_nicknameID"
@@ -60,13 +60,13 @@
                 app:layout_constraintTop_toTopOf="@+id/edit_fullnameID" />
 
             <ImageView
-                android:id="@+id/verification_badge_ID"
+                android:id="@+id/edit_verification_badge_ID"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_marginTop="76dp"
-                app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
-                app:layout_constraintStart_toStartOf="@+id/profilePictureID"
-                app:layout_constraintTop_toTopOf="@+id/profilePictureID"
+                app:layout_constraintEnd_toEndOf="@+id/edit_profilePictureID"
+                app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
+                app:layout_constraintTop_toTopOf="@+id/edit_profilePictureID"
                 app:srcCompat="@drawable/ic_verified_black_24dp"
                 app:tint="@color/orange_poli" />
 
@@ -79,19 +79,33 @@
                 android:inputType="text"
                 android:text="@string/qualificationPH"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/prussian_blue"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="@+id/edit_nicknameID"
                 app:layout_constraintHorizontal_bias="0.52"
                 app:layout_constraintStart_toStartOf="@+id/edit_nicknameID"
                 app:layout_constraintTop_toTopOf="@+id/edit_nicknameID" />
+
+            <ImageView
+                android:id="@+id/edit_camera_button"
+                android:layout_width="31dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="52dp"
+                android:layout_marginBottom="68dp"
+                android:tint="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_profilePictureID"
+                app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
+                app:layout_constraintTop_toTopOf="@+id/edit_profilePictureID"
+                app:layout_constraintVertical_bias="0.68"
+                app:srcCompat="@drawable/ic_photo_camera_black_24dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
             style="@style/CardView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/rounded_corners">
+            android:background="@drawable/rounded_corners"
+            android:backgroundTint="@color/prussian_blue">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -107,7 +121,7 @@
                     android:paddingBottom="10dp"
                     android:text="@string/description_str"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/prussian_blue"
+                    android:textColor="@color/orange_poli"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -118,6 +132,7 @@
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
                     android:text="@string/default_description_text"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <TextView
@@ -130,7 +145,7 @@
                     android:paddingBottom="10dp"
                     android:text="@string/skills_str"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/prussian_blue"
+                    android:textColor="@color/orange_poli"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -141,6 +156,7 @@
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
                     android:text="@string/default_skills_text"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <EditText
@@ -151,6 +167,7 @@
                     android:paddingLeft="40dp"
                     android:paddingRight="40dp"
                     android:text="@string/empty_skills"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -164,7 +181,7 @@
                     android:paddingBottom="10dp"
                     android:text="@string/information_str"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/prussian_blue"
+                    android:textColor="@color/orange_poli"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -181,19 +198,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableLeft="@drawable/ic_account_circle_black_24dp"
+                        android:drawableLeft="@drawable/ic_call_black_24dp"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
                         android:text="@string/phone_number"
-                        android:textSize="16sp" />
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:drawableTint="#FFFFFF" />
 
                     <TextView
                         android:id="@+id/edit_phone_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView"
                         android:inputType="phone"
+                        android:text="TextView"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -216,15 +236,18 @@
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
                         android:text="@string/email_text"
-                        android:textSize="16sp" />
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:drawableTint="#FFFFFF" />
 
                     <TextView
                         android:id="@+id/edit_email_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView"
                         android:inputType="textEmailAddress"
+                        android:text="TextView"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -247,7 +270,9 @@
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
                         android:text="@string/location_text"
-                        android:textSize="16sp" />
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:drawableTint="#FFFFFF" />
 
                     <TextView
                         android:id="@+id/edit_loc_show_ID"
@@ -255,6 +280,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="TextView"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
