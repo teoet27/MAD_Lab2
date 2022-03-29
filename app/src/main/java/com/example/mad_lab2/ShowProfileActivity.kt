@@ -15,6 +15,11 @@ class ShowProfileActivity : AppCompatActivity() {
     private lateinit var fullnameOBJ: TextView
     private lateinit var nicknameOBJ: TextView
     private lateinit var qualificationOBJ: TextView
+    private lateinit var descriptionOBJ: TextView
+    private lateinit var emailOBJ: TextView
+    private lateinit var locationOBJ: TextView
+    private lateinit var skillsOBJ: TextView
+    private lateinit var phoneOBJ: TextView
     private lateinit var sdh: SaveProfileDataHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,14 +29,18 @@ class ShowProfileActivity : AppCompatActivity() {
 
         sdh = SaveProfileDataHandler(applicationContext)
         var profile = sdh.retrieveData()
-        if(profile == null) {
+
+        if (profile == null) {
             profile = Profile(
                 "Monkey D. Luffy",
-                "m.d.luffy@gmail.com",
-                "Red Line - Ocean - World",
-                "Captain",
-                "@the_big_d",
-                "notAvailable"
+                "Powerful Warrior, Obscure Powers",
+                "luffy@mail.com",
+                "The Great Sea",
+                "Captain @ Going Merry",
+                "@cappello_di_paglia",
+                "Sono un pirata davvero potente che però in teoria non sa cosa scrivere quindi... Mangiamo?",
+                "null",
+                "3775268111"
             )
         }
 
@@ -39,15 +48,30 @@ class ShowProfileActivity : AppCompatActivity() {
             this.fullnameOBJ = findViewById(R.id.fullnameID_land)
             this.nicknameOBJ = findViewById(R.id.nicknameID_land)
             this.qualificationOBJ = findViewById(R.id.qualificationID_land)
-        } else
-        {
-            this.fullnameOBJ = findViewById(R.id.fullnameID_land)
-            this.nicknameOBJ = findViewById(R.id.nicknameID_land)
-            this.qualificationOBJ = findViewById(R.id.qualificationID_land)
+            this.descriptionOBJ = findViewById(R.id.description_show_ID_land)
+            this.emailOBJ = findViewById(R.id.email_show_ID_land)
+            this.locationOBJ = findViewById(R.id.loc_show_ID_land)
+            this.skillsOBJ = findViewById(R.id.skillsListID_land)
+            this.phoneOBJ = findViewById(R.id.phone_show_ID_land)
+        } else {
+            this.fullnameOBJ = findViewById(R.id.fullnameID)
+            this.nicknameOBJ = findViewById(R.id.nicknameID)
+            this.qualificationOBJ = findViewById(R.id.qualificationID)
+            this.descriptionOBJ = findViewById(R.id.description_show_ID)
+            this.emailOBJ = findViewById(R.id.email_show_ID)
+            this.locationOBJ = findViewById(R.id.loc_show_ID)
+            this.skillsOBJ = findViewById(R.id.skillsListID)
+            this.phoneOBJ = findViewById(R.id.phone_show_ID)
         }
         this.fullnameOBJ.text = profile?.fullname
         this.nicknameOBJ.text = profile?.nickname
         this.qualificationOBJ.text = profile?.qualification
+        this.phoneOBJ.text = profile?.phoneNumber
+        this.locationOBJ.text = profile?.location
+        this.skillsOBJ.text = profile?.skills
+        this.emailOBJ.text = profile?.email
+        this.descriptionOBJ.text = profile?.description
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -69,13 +93,29 @@ class ShowProfileActivity : AppCompatActivity() {
                         "qualification",
                         findViewById<TextView>(R.id.qualificationID_land).text
                     )
+                    b.putCharSequence("phone", findViewById<TextView>(R.id.phone_show_ID_land).text)
+                    b.putCharSequence("location", findViewById<TextView>(R.id.loc_show_ID_land).text)
+                    b.putCharSequence("skills", findViewById<TextView>(R.id.skillsListID_land).text)
+                    b.putCharSequence("email", findViewById<TextView>(R.id.email_show_ID_land).text)
+                    b.putCharSequence(
+                        "description",
+                        findViewById<TextView>(R.id.description_show_ID_land).text
+                    )
 
                 } else {
-                    b.putCharSequence("fullname", findViewById<TextView>(R.id.fullnameID_land).text)
-                    b.putCharSequence("nickname", findViewById<TextView>(R.id.nicknameID_land).text)
+                    b.putCharSequence("fullname", findViewById<TextView>(R.id.fullnameID).text)
+                    b.putCharSequence("nickname", findViewById<TextView>(R.id.nicknameID).text)
                     b.putCharSequence(
                         "qualification",
-                        findViewById<TextView>(R.id.qualificationID_land).text
+                        findViewById<TextView>(R.id.qualificationID).text
+                    )
+                    b.putCharSequence("phone", findViewById<TextView>(R.id.phone_show_ID).text)
+                    b.putCharSequence("location", findViewById<TextView>(R.id.loc_show_ID).text)
+                    b.putCharSequence("skills", findViewById<TextView>(R.id.skillsListID).text)
+                    b.putCharSequence("email", findViewById<TextView>(R.id.email_show_ID).text)
+                    b.putCharSequence(
+                        "description",
+                        findViewById<TextView>(R.id.description_show_ID).text
                     )
                 }
                 intent.putExtras(b)
@@ -94,6 +134,16 @@ class ShowProfileActivity : AppCompatActivity() {
                 data?.getCharSequenceExtra("nickname").toString()
             this.qualificationOBJ.text =
                 data?.getCharSequenceExtra("qualification").toString()
+            this.descriptionOBJ.text =
+                data?.getCharSequenceExtra("description").toString()
+            this.emailOBJ.text =
+                data?.getCharSequenceExtra("email").toString()
+            this.skillsOBJ.text =
+                data?.getCharSequenceExtra("skills").toString()
+            this.locationOBJ.text =
+                data?.getCharSequenceExtra("location").toString()
+            this.phoneOBJ.text =
+                data?.getCharSequenceExtra("phone").toString()
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -103,6 +153,11 @@ class ShowProfileActivity : AppCompatActivity() {
         outState.putCharSequence("fullname", this.fullnameOBJ.text)
         outState.putCharSequence("nickname", this.nicknameOBJ.text)
         outState.putCharSequence("qualification", this.qualificationOBJ.text)
+        outState.putCharSequence("location", this.locationOBJ.text)
+        outState.putCharSequence("email", this.emailOBJ.text)
+        outState.putCharSequence("phone", this.phoneOBJ.text)
+        outState.putCharSequence("description", this.descriptionOBJ.text)
+        outState.putCharSequence("skills", this.skillsOBJ.text)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -110,5 +165,10 @@ class ShowProfileActivity : AppCompatActivity() {
         this.fullnameOBJ.text = savedInstanceState.getCharSequence("fullname")
         this.nicknameOBJ.text = savedInstanceState.getCharSequence("nickname")
         this.qualificationOBJ.text = savedInstanceState.getCharSequence("qualification")
+        this.locationOBJ.text = savedInstanceState.getCharSequence("location")
+        this.emailOBJ.text = savedInstanceState.getCharSequence("email")
+        this.phoneOBJ.text = savedInstanceState.getCharSequence("phone")
+        this.descriptionOBJ.text = savedInstanceState.getCharSequence("description")
+        this.skillsOBJ.text = savedInstanceState.getCharSequence("skills")
     }
 }
