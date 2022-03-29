@@ -36,14 +36,14 @@ class ShowProfileActivity : AppCompatActivity() {
         }
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            this.fullnameOBJ = findViewById(R.id.fullnameID2)
-            this.nicknameOBJ = findViewById(R.id.nicknameID2)
-            this.qualificationOBJ = findViewById(R.id.qualificationID2)
+            this.fullnameOBJ = findViewById(R.id.fullnameID_land)
+            this.nicknameOBJ = findViewById(R.id.nicknameID_land)
+            this.qualificationOBJ = findViewById(R.id.qualificationID_land)
         } else
         {
-            this.fullnameOBJ = findViewById(R.id.fullnameID)
-            this.nicknameOBJ = findViewById(R.id.nicknameID)
-            this.qualificationOBJ = findViewById(R.id.qualificationID)
+            this.fullnameOBJ = findViewById(R.id.fullnameID_land)
+            this.nicknameOBJ = findViewById(R.id.nicknameID_land)
+            this.qualificationOBJ = findViewById(R.id.qualificationID_land)
         }
         this.fullnameOBJ.text = profile?.fullname
         this.nicknameOBJ.text = profile?.nickname
@@ -63,19 +63,19 @@ class ShowProfileActivity : AppCompatActivity() {
                 val intent = Intent(this, EditProfileActivity::class.java)
                 val b = Bundle()
                 if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    b.putCharSequence("fullname", findViewById<TextView>(R.id.fullnameID2).text)
-                    b.putCharSequence("nickname", findViewById<TextView>(R.id.nicknameID2).text)
+                    b.putCharSequence("fullname", findViewById<TextView>(R.id.fullnameID_land).text)
+                    b.putCharSequence("nickname", findViewById<TextView>(R.id.nicknameID_land).text)
                     b.putCharSequence(
                         "qualification",
-                        findViewById<TextView>(R.id.qualificationID2).text
+                        findViewById<TextView>(R.id.qualificationID_land).text
                     )
 
                 } else {
-                    b.putCharSequence("fullname", findViewById<TextView>(R.id.fullnameID).text)
-                    b.putCharSequence("nickname", findViewById<TextView>(R.id.nicknameID).text)
+                    b.putCharSequence("fullname", findViewById<TextView>(R.id.fullnameID_land).text)
+                    b.putCharSequence("nickname", findViewById<TextView>(R.id.nicknameID_land).text)
                     b.putCharSequence(
                         "qualification",
-                        findViewById<TextView>(R.id.qualificationID).text
+                        findViewById<TextView>(R.id.qualificationID_land).text
                     )
                 }
                 intent.putExtras(b)

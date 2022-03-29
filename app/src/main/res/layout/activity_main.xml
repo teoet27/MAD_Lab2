@@ -29,7 +29,7 @@
                 app:srcCompat="@drawable/propic" />
 
             <TextView
-                android:id="@+id/fullnameID"
+                android:id="@+id/fullnameID_land"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -43,7 +43,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/profilePictureID" />
 
             <TextView
-                android:id="@+id/nicknameID"
+                android:id="@+id/nicknameID_land"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
@@ -51,9 +51,9 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/orange_poli"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/fullnameID"
-                app:layout_constraintStart_toStartOf="@+id/fullnameID"
-                app:layout_constraintTop_toBottomOf="@+id/fullnameID" />
+                app:layout_constraintEnd_toEndOf="@+id/fullnameID_land"
+                app:layout_constraintStart_toStartOf="@+id/fullnameID_land"
+                app:layout_constraintTop_toBottomOf="@+id/fullnameID_land" />
 
             <ImageView
                 android:id="@+id/verification_badge_ID"
@@ -67,7 +67,7 @@
                 app:tint="@color/orange_poli" />
 
             <TextView
-                android:id="@+id/qualificationID"
+                android:id="@+id/qualificationID_land"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -76,9 +76,9 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/nicknameID"
-                app:layout_constraintStart_toStartOf="@+id/nicknameID"
-                app:layout_constraintTop_toBottomOf="@+id/nicknameID" />
+                app:layout_constraintEnd_toEndOf="@+id/nicknameID_land"
+                app:layout_constraintStart_toStartOf="@+id/nicknameID_land"
+                app:layout_constraintTop_toBottomOf="@+id/nicknameID_land" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
