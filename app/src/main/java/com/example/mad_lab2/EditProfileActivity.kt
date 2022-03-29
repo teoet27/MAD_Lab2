@@ -3,7 +3,6 @@ package com.example.mad_lab2
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -26,13 +25,13 @@ class EditProfileActivity : AppCompatActivity() {
         sdh = SaveProfileDataHandler(applicationContext)
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            this.editFullNameOBJ = findViewById<EditText>(R.id.EDITfullnameID2)
-            this.editNickNameOBJ = findViewById<EditText>(R.id.EDITnicknameID2)
-            this.editQualificationOBJ = findViewById<EditText>(R.id.EDITqualificationID2)
+            this.editFullNameOBJ = findViewById<EditText>(R.id.edit_fullnameID_land)
+            this.editNickNameOBJ = findViewById<EditText>(R.id.edit_nicknameID_land)
+            this.editQualificationOBJ = findViewById<EditText>(R.id.edit_qualificationID_land)
         } else {
-            this.editFullNameOBJ = findViewById<EditText>(R.id.edit_fullnameID)
-            this.editNickNameOBJ = findViewById<EditText>(R.id.edit_nicknameID)
-            this.editQualificationOBJ = findViewById<EditText>(R.id.edit_qualificationID)
+            this.editFullNameOBJ = findViewById<EditText>(R.id.edit_fullnameID_land)
+            this.editNickNameOBJ = findViewById<EditText>(R.id.edit_nicknameID_land)
+            this.editQualificationOBJ = findViewById<EditText>(R.id.edit_qualificationID_land)
         }
 
         this.editFullNameOBJ.setText(intent.getCharSequenceExtra("fullname"))
@@ -50,18 +49,18 @@ class EditProfileActivity : AppCompatActivity() {
         val intent = Intent()
         val b = Bundle()
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            b.putCharSequence("fullname", findViewById<EditText>(R.id.EDITfullnameID2).text)
-            b.putCharSequence("nickname", findViewById<EditText>(R.id.EDITnicknameID2).text)
+            b.putCharSequence("fullname", findViewById<EditText>(R.id.edit_fullnameID_land).text)
+            b.putCharSequence("nickname", findViewById<EditText>(R.id.edit_nicknameID_land).text)
             b.putCharSequence(
                 "qualification",
-                findViewById<EditText>(R.id.EDITqualificationID2).text
+                findViewById<EditText>(R.id.edit_qualificationID_land).text
             )
         } else {
-            b.putCharSequence("fullname", findViewById<EditText>(R.id.edit_fullnameID).text)
-            b.putCharSequence("nickname", findViewById<EditText>(R.id.edit_nicknameID).text)
+            b.putCharSequence("fullname", findViewById<EditText>(R.id.edit_fullnameID_land).text)
+            b.putCharSequence("nickname", findViewById<EditText>(R.id.edit_nicknameID_land).text)
             b.putCharSequence(
                 "qualification",
-                findViewById<EditText>(R.id.edit_qualificationID).text
+                findViewById<EditText>(R.id.edit_qualificationID_land).text
             )
         }
         intent.putExtras(b)
