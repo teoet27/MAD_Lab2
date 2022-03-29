@@ -92,7 +92,7 @@
                 android:layout_height="25dp"
                 android:layout_marginStart="52dp"
                 android:layout_marginBottom="68dp"
-                android:tint="@color/black"
+                app:tint="@color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/edit_profilePictureID"
                 app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
                 app:layout_constraintTop_toTopOf="@+id/edit_profilePictureID"
@@ -206,7 +206,7 @@
                         android:textSize="16sp"
                         app:drawableTint="#FFFFFF" />
 
-                    <TextView
+                    <EditText
                         android:id="@+id/edit_phone_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -240,7 +240,7 @@
                         android:textSize="16sp"
                         app:drawableTint="#FFFFFF" />
 
-                    <TextView
+                    <EditText
                         android:id="@+id/edit_email_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -274,7 +274,7 @@
                         android:textSize="16sp"
                         app:drawableTint="#FFFFFF" />
 
-                    <TextView
+                    <EditText
                         android:id="@+id/edit_loc_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
