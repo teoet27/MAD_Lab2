@@ -1,15 +1,19 @@
 package com.example.mad_lab2
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.VibrationEffect
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatDelegate
+import android.os.Vibrator
 
 class EditProfileActivity : AppCompatActivity() {
     private lateinit var editFullNameOBJ: EditText
@@ -21,6 +25,7 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var editSkillsOBJ: EditText
     private lateinit var editPhoneOBJ: EditText
     private lateinit var sdh: SaveProfileDataHandler
+    private lateinit var vibrator: Vibrator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +62,7 @@ class EditProfileActivity : AppCompatActivity() {
         this.editLocationOBJ.setText(intent.getCharSequenceExtra("location"))
         this.editSkillsOBJ.setText(intent.getCharSequenceExtra("skills"))
         this.editPhoneOBJ.setText(intent.getCharSequenceExtra("phone"))
+        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -75,7 +81,10 @@ class EditProfileActivity : AppCompatActivity() {
                 "qualification",
                 findViewById<EditText>(R.id.edit_qualificationID_land).text
             )
-            b.putCharSequence("description", findViewById<EditText>(R.id.edit_description_show_ID_land).text)
+            b.putCharSequence(
+                "description",
+                findViewById<EditText>(R.id.edit_description_show_ID_land).text
+            )
             b.putCharSequence("email", findViewById<EditText>(R.id.edit_email_show_ID_land).text)
             b.putCharSequence("location", findViewById<EditText>(R.id.edit_loc_show_ID_land).text)
             b.putCharSequence("skills", findViewById<EditText>(R.id.edit_skillsListID_land).text)
@@ -87,7 +96,10 @@ class EditProfileActivity : AppCompatActivity() {
                 "qualification",
                 findViewById<EditText>(R.id.edit_qualificationID).text
             )
-            b.putCharSequence("description", findViewById<EditText>(R.id.edit_description_show_ID).text)
+            b.putCharSequence(
+                "description",
+                findViewById<EditText>(R.id.edit_description_show_ID).text
+            )
             b.putCharSequence("email", findViewById<EditText>(R.id.edit_email_show_ID).text)
             b.putCharSequence("location", findViewById<EditText>(R.id.edit_loc_show_ID).text)
             b.putCharSequence("skills", findViewById<EditText>(R.id.edit_skillsListID).text)
@@ -106,6 +118,11 @@ class EditProfileActivity : AppCompatActivity() {
             this.editPhoneOBJ.text.toString()
         )
         this.sdh.storeData(profile)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(120, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(120)
+        }
         setResult(Activity.RESULT_OK, intent)
         super.onBackPressed()
     }
@@ -139,6 +156,11 @@ class EditProfileActivity : AppCompatActivity() {
                 )
                 this.sdh.storeData(profile)
                 setResult(Activity.RESULT_OK, intent)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vibrator.vibrate(VibrationEffect.createOneShot(120, VibrationEffect.DEFAULT_AMPLITUDE))
+                } else {
+                    vibrator.vibrate(120)
+                }
                 finish()
                 true
             }

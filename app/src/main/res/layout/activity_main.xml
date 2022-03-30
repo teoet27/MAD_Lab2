@@ -240,7 +240,8 @@
                         android:drawableLeft="@drawable/ic_location_on_black_24dp"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
-                        android:text="@string/location_text" />
+                        android:text="@string/location_text"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/loc_show_ID"
