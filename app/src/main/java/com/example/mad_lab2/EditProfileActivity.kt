@@ -88,7 +88,7 @@ class EditProfileActivity : AppCompatActivity() {
                 findViewById<EditText>(R.id.edit_qualificationID).text
             )
             b.putCharSequence("description", findViewById<EditText>(R.id.edit_description_show_ID).text)
-            b.putCharSequence("email", findViewById<EditText>(R.id.edit_description_show_ID).text)
+            b.putCharSequence("email", findViewById<EditText>(R.id.edit_email_show_ID).text)
             b.putCharSequence("location", findViewById<EditText>(R.id.edit_loc_show_ID).text)
             b.putCharSequence("skills", findViewById<EditText>(R.id.edit_skillsListID).text)
             b.putCharSequence("phone", findViewById<EditText>(R.id.edit_phone_show_ID).text)
