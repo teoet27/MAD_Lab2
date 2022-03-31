@@ -17,7 +17,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
+import java.io.OutputStream
 
 
 class EditProfileActivity : AppCompatActivity() {
@@ -31,7 +33,6 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var editPhoneOBJ: EditText
     private lateinit var sdh: SaveProfileDataHandler
     private lateinit var vibrator: Vibrator
-    lateinit var currentPhotoPath: String
     lateinit var photoURI: Uri
 
 
@@ -98,7 +99,7 @@ class EditProfileActivity : AppCompatActivity() {
     private fun createImageFile(): File {
         // Create an image file name
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File( storageDir,"profile_picture.jpg")
+        return File( storageDir,R.string.profile_picture_filename.toString())
     }
 
     val PICK_IMAGE = 100
@@ -120,8 +121,10 @@ class EditProfileActivity : AppCompatActivity() {
         }
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             photoURI=data?.data!!
-            val bitmap=getBitmapFromUri(photoURI)
-            findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(bitmap)
+            getBitmapFromUri(photoURI)?.also {
+                saveProfilePicture(it, getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString())
+                findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(it)
+            }
         }
     }
     fun getBitmapFromUri(imageURI:Uri): Bitmap? {
@@ -137,6 +140,18 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
+    fun saveProfilePicture(bitmap:Bitmap,dir:String){
+        val imageFile=File(dir,R.string.profile_picture_filename.toString())
+        try{
+            // Compress the bitmap and save in jpg format
+            val stream: OutputStream = FileOutputStream(imageFile)
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream)
+            stream.flush()
+            stream.close()
+        }catch (e:IOException){
+            e.printStackTrace()
+        }
+    }
     override fun onCreateContextMenu(
         menu: ContextMenu?,
         v: View?,
