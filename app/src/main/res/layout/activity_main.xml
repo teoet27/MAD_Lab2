@@ -175,18 +175,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableLeft="@drawable/ic_call_black_24dp"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
                         android:text="@string/phone_number"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        app:drawableLeftCompat="@drawable/ic_call_black_24dp" />
 
                     <TextView
                         android:id="@+id/phone_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView"
+                        android:text="@string/default_empty_string"
                         android:textAlignment="textEnd"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -206,18 +206,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableLeft="@drawable/ic_email_black_24dp"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
                         android:text="@string/email_text"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        app:drawableLeftCompat="@drawable/ic_email_black_24dp" />
 
                     <TextView
                         android:id="@+id/email_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView"
+                        android:text="@string/default_empty_string"
                         android:textAlignment="textEnd"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -237,18 +237,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableLeft="@drawable/ic_location_on_black_24dp"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
                         android:text="@string/location_text"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        app:drawableLeftCompat="@drawable/ic_location_on_black_24dp" />
 
                     <TextView
                         android:id="@+id/loc_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView"
+                        android:text="@string/default_empty_string"
                         android:textAlignment="textEnd"
                         android:textSize="16sp"
                         android:textStyle="bold" />

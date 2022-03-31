@@ -20,4 +20,5 @@
     <string name="email_text">Email:</string>
     <string name="location_text">Location:</string>
     <string name="empty_skills">No skills.</string>
+    <string name="default_empty_string">DefaultEmptyString</string>
 </resources>
