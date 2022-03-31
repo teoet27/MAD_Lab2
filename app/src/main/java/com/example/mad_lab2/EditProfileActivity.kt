@@ -1,18 +1,24 @@
 package com.example.mad_lab2
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.os.VibrationEffect
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.*
+import android.provider.MediaStore
+import android.view.*
 import android.widget.EditText
+import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import android.os.Vibrator
+import androidx.core.content.FileProvider
+import androidx.core.net.toUri
+import java.io.File
+import java.io.IOException
+
 
 class EditProfileActivity : AppCompatActivity() {
     private lateinit var editFullNameOBJ: EditText
@@ -25,6 +31,9 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var editPhoneOBJ: EditText
     private lateinit var sdh: SaveProfileDataHandler
     private lateinit var vibrator: Vibrator
+    lateinit var currentPhotoPath: String
+    lateinit var photoURI: Uri
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +60,102 @@ class EditProfileActivity : AppCompatActivity() {
         this.editSkillsOBJ.setText(intent.getCharSequenceExtra("skills"))
         this.editPhoneOBJ.setText(intent.getCharSequenceExtra("phone"))
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+        val cam: ImageView = findViewById(R.id.edit_camera_button)
+
+        registerForContextMenu(cam)
+        cam.setOnClickListener { openContextMenu(cam) }
+    }
+
+    val REQUEST_IMAGE_CAPTURE = 1
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            // Ensure that there's a camera activity to handle the intent
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                // Create the File where the photo should go
+                val photoFile: File? = try {
+                    createImageFile()
+                } catch (ex: IOException) {
+                    // Error occurred while creating the File
+                    ex.printStackTrace()
+                    null
+                }
+                // Continue only if the File was successfully created
+                photoFile?.also {
+                    photoURI = FileProvider.getUriForFile(
+                        this,
+                        "com.example.android.fileprovider",
+                        it
+                    )
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                }
+            }
+        }
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File( storageDir,"profile_picture.jpg")
+    }
+
+    val PICK_IMAGE = 100
+    private fun dispatchLoadPictureIntent() {
+        val loadPictureIntent =
+            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        try {
+            startActivityForResult(loadPictureIntent, PICK_IMAGE)
+        } catch (e: ActivityNotFoundException) {
+            // display error state to the user
+            e.printStackTrace()
+        }
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            val bitmap=getBitmapFromUri(photoURI)
+            findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(bitmap)
+        }
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+            photoURI=data?.data!!
+            val bitmap=getBitmapFromUri(photoURI)
+            findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(bitmap)
+        }
+    }
+    fun getBitmapFromUri(imageURI:Uri): Bitmap? {
+        contentResolver.notifyChange(imageURI, null)
+        val cr = contentResolver
+        val bitmap: Bitmap
+        return try {
+            bitmap = MediaStore.Images.Media.getBitmap(cr, imageURI)
+            bitmap
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        val inflater: MenuInflater = menuInflater
+        if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY))
+            inflater.inflate(R.menu.select_take_picture_floating_context_menu, menu)
+        else
+            inflater.inflate(R.menu.select_picture_floating_context_menu, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        when (item.title) {
+            resources.getString(R.string.floating_menu_shot_picture) -> dispatchTakePictureIntent()
+            resources.getString(R.string.floating_menu_load_picture) -> dispatchLoadPictureIntent()
+        }
+        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

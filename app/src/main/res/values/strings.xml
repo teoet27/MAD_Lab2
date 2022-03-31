@@ -21,4 +21,7 @@
     <string name="location_text">Location:</string>
     <string name="empty_skills">No skills.</string>
     <string name="default_empty_string">DefaultEmptyString</string>
+    <string name="floating_menu_load_picture">Select an image</string>
+    <string name="floating_menu_shot_picture">Take a photo</string>
+
 </resources>
