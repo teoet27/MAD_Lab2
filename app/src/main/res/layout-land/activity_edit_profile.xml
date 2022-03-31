@@ -30,7 +30,7 @@
                 app:srcCompat="@drawable/propic" />
 
             <EditText
-                android:id="@+id/edit_fullnameID_land"
+                android:id="@+id/edit_fullnameID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -46,7 +46,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/edit_profilePictureID" />
 
             <EditText
-                android:id="@+id/edit_nicknameID_land"
+                android:id="@+id/edit_nicknameID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="72dp"
@@ -56,10 +56,10 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/orange_poli"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/edit_fullnameID_land"
+                app:layout_constraintEnd_toEndOf="@+id/edit_fullnameID"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/edit_fullnameID_land"
-                app:layout_constraintTop_toTopOf="@+id/edit_fullnameID_land" />
+                app:layout_constraintStart_toStartOf="@+id/edit_fullnameID"
+                app:layout_constraintTop_toTopOf="@+id/edit_fullnameID" />
 
             <ImageView
                 android:id="@+id/edit_verification_badge_ID"
@@ -73,7 +73,7 @@
                 app:tint="@color/orange_poli" />
 
             <EditText
-                android:id="@+id/edit_qualificationID_land"
+                android:id="@+id/edit_qualificationID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
@@ -83,10 +83,10 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/prussian_blue"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/edit_nicknameID_land"
+                app:layout_constraintEnd_toEndOf="@+id/edit_nicknameID"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/edit_nicknameID_land"
-                app:layout_constraintTop_toTopOf="@+id/edit_nicknameID_land" />
+                app:layout_constraintStart_toStartOf="@+id/edit_nicknameID"
+                app:layout_constraintTop_toTopOf="@+id/edit_nicknameID" />
 
             <ImageView
                 android:id="@+id/edit_camera_button"
@@ -130,7 +130,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/edit_description_show_ID_land"
+                    android:id="@+id/edit_description_show_ID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="25dp"
@@ -164,7 +164,7 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:id="@+id/edit_skillsListID_land"
+                    android:id="@+id/edit_skillsListID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -211,7 +211,7 @@
                         app:drawableTint="#FFFFFF" />
 
                     <EditText
-                        android:id="@+id/edit_phone_show_ID_land"
+                        android:id="@+id/edit_phone_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -246,7 +246,7 @@
                         app:drawableTint="#FFFFFF" />
 
                     <EditText
-                        android:id="@+id/edit_email_show_ID_land"
+                        android:id="@+id/edit_email_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -281,7 +281,7 @@
                         app:drawableTint="#FFFFFF" />
 
                     <EditText
-                        android:id="@+id/edit_loc_show_ID_land"
+                        android:id="@+id/edit_loc_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
