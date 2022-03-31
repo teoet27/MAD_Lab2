@@ -20,13 +20,28 @@
 
             <ImageView
                 android:id="@+id/profilePictureID"
-                android:layout_width="78dp"
+                android:layout_width="84dp"
                 android:layout_height="84dp"
                 android:layout_marginTop="16dp"
+                android:cropToPadding="true"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/propic" />
+
+            <ImageView
+                android:id="@+id/profilePicture_mask_ID"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:cropToPadding="true"
+                android:scaleType="centerCrop"
+                android:tint="@color/prussian_blue"
+                app:layout_constraintBottom_toBottomOf="@+id/profilePictureID"
+                app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
+                app:layout_constraintStart_toStartOf="@+id/profilePictureID"
+                app:layout_constraintTop_toTopOf="@+id/profilePictureID"
+                app:srcCompat="@drawable/circular_mask" />
 
             <TextView
                 android:id="@+id/fullnameID"
