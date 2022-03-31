@@ -12,6 +12,7 @@
         android:theme="@style/Theme.MAD_Lab2">
         <activity
             android:name=".EditProfileActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".ShowProfileActivity"
