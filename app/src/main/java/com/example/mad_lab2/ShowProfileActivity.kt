@@ -44,25 +44,15 @@ class ShowProfileActivity : AppCompatActivity() {
             )
         }
 
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            this.fullnameOBJ = findViewById(R.id.fullnameID_land)
-            this.nicknameOBJ = findViewById(R.id.nicknameID_land)
-            this.qualificationOBJ = findViewById(R.id.qualificationID_land)
-            this.descriptionOBJ = findViewById(R.id.description_show_ID_land)
-            this.emailOBJ = findViewById(R.id.email_show_ID_land)
-            this.locationOBJ = findViewById(R.id.loc_show_ID_land)
-            this.skillsOBJ = findViewById(R.id.skillsListID_land)
-            this.phoneOBJ = findViewById(R.id.phone_show_ID_land)
-        } else {
-            this.fullnameOBJ = findViewById(R.id.fullnameID)
-            this.nicknameOBJ = findViewById(R.id.nicknameID)
-            this.qualificationOBJ = findViewById(R.id.qualificationID)
-            this.descriptionOBJ = findViewById(R.id.description_show_ID)
-            this.emailOBJ = findViewById(R.id.email_show_ID)
-            this.locationOBJ = findViewById(R.id.loc_show_ID)
-            this.skillsOBJ = findViewById(R.id.skillsListID)
-            this.phoneOBJ = findViewById(R.id.phone_show_ID)
-        }
+        this.fullnameOBJ = findViewById(R.id.fullnameID)
+        this.nicknameOBJ = findViewById(R.id.nicknameID)
+        this.qualificationOBJ = findViewById(R.id.qualificationID)
+        this.descriptionOBJ = findViewById(R.id.description_show_ID)
+        this.emailOBJ = findViewById(R.id.email_show_ID)
+        this.locationOBJ = findViewById(R.id.loc_show_ID)
+        this.skillsOBJ = findViewById(R.id.skillsListID)
+        this.phoneOBJ = findViewById(R.id.phone_show_ID)
+
         this.fullnameOBJ.text = profile?.fullname
         this.nicknameOBJ.text = profile?.nickname
         this.qualificationOBJ.text = profile?.qualification
@@ -86,38 +76,22 @@ class ShowProfileActivity : AppCompatActivity() {
                 // switch to edit mode
                 val intent = Intent(this, EditProfileActivity::class.java)
                 val b = Bundle()
-                if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    b.putCharSequence("fullname", findViewById<TextView>(R.id.fullnameID_land).text)
-                    b.putCharSequence("nickname", findViewById<TextView>(R.id.nicknameID_land).text)
-                    b.putCharSequence(
-                        "qualification",
-                        findViewById<TextView>(R.id.qualificationID_land).text
-                    )
-                    b.putCharSequence("phone", findViewById<TextView>(R.id.phone_show_ID_land).text)
-                    b.putCharSequence("location", findViewById<TextView>(R.id.loc_show_ID_land).text)
-                    b.putCharSequence("skills", findViewById<TextView>(R.id.skillsListID_land).text)
-                    b.putCharSequence("email", findViewById<TextView>(R.id.email_show_ID_land).text)
-                    b.putCharSequence(
-                        "description",
-                        findViewById<TextView>(R.id.description_show_ID_land).text
-                    )
 
-                } else {
-                    b.putCharSequence("fullname", findViewById<TextView>(R.id.fullnameID).text)
-                    b.putCharSequence("nickname", findViewById<TextView>(R.id.nicknameID).text)
-                    b.putCharSequence(
-                        "qualification",
-                        findViewById<TextView>(R.id.qualificationID).text
-                    )
-                    b.putCharSequence("phone", findViewById<TextView>(R.id.phone_show_ID).text)
-                    b.putCharSequence("location", findViewById<TextView>(R.id.loc_show_ID).text)
-                    b.putCharSequence("skills", findViewById<TextView>(R.id.skillsListID).text)
-                    b.putCharSequence("email", findViewById<TextView>(R.id.email_show_ID).text)
-                    b.putCharSequence(
-                        "description",
-                        findViewById<TextView>(R.id.description_show_ID).text
-                    )
-                }
+                b.putCharSequence("fullname", findViewById<TextView>(R.id.fullnameID).text)
+                b.putCharSequence("nickname", findViewById<TextView>(R.id.nicknameID).text)
+                b.putCharSequence(
+                    "qualification",
+                    findViewById<TextView>(R.id.qualificationID).text
+                )
+                b.putCharSequence("phone", findViewById<TextView>(R.id.phone_show_ID).text)
+                b.putCharSequence("location", findViewById<TextView>(R.id.loc_show_ID).text)
+                b.putCharSequence("skills", findViewById<TextView>(R.id.skillsListID).text)
+                b.putCharSequence("email", findViewById<TextView>(R.id.email_show_ID).text)
+                b.putCharSequence(
+                    "description",
+                    findViewById<TextView>(R.id.description_show_ID).text
+                )
+
                 intent.putExtras(b)
                 startActivityForResult(intent, 1)
                 true

@@ -30,7 +30,7 @@
                 app:srcCompat="@drawable/propic" />
 
             <TextView
-                android:id="@+id/fullnameID_land"
+                android:id="@+id/fullnameID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -45,7 +45,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/profilePictureID" />
 
             <TextView
-                android:id="@+id/nicknameID_land"
+                android:id="@+id/nicknameID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
@@ -53,10 +53,10 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/orange_poli"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/fullnameID_land"
+                app:layout_constraintEnd_toEndOf="@+id/fullnameID"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/fullnameID_land"
-                app:layout_constraintTop_toBottomOf="@+id/fullnameID_land" />
+                app:layout_constraintStart_toStartOf="@+id/fullnameID"
+                app:layout_constraintTop_toBottomOf="@+id/fullnameID" />
 
             <ImageView
                 android:id="@+id/verification_badge_ID"
@@ -70,7 +70,7 @@
                 app:tint="@color/orange_poli" />
 
             <TextView
-                android:id="@+id/qualificationID_land"
+                android:id="@+id/qualificationID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -79,10 +79,10 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/nicknameID_land"
+                app:layout_constraintEnd_toEndOf="@+id/nicknameID"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/nicknameID_land"
-                app:layout_constraintTop_toBottomOf="@+id/nicknameID_land" />
+                app:layout_constraintStart_toStartOf="@+id/nicknameID"
+                app:layout_constraintTop_toBottomOf="@+id/nicknameID" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
@@ -111,7 +111,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/description_show_ID_land"
+                    android:id="@+id/description_show_ID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="25dp"
@@ -143,7 +143,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/skillsListID_land"
+                    android:id="@+id/skillsListID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -187,11 +187,11 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/phone_show_ID_land"
+                        android:id="@+id/phone_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView"
+                        android:text="@string/default_empty_string"
                         android:textAlignment="textEnd"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -218,11 +218,11 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/email_show_ID_land"
+                        android:id="@+id/email_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView"
+                        android:text="@string/default_empty_string"
                         android:textAlignment="textEnd"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -249,11 +249,11 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/loc_show_ID_land"
+                        android:id="@+id/loc_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView"
+                        android:text="@string/default_empty_string"
                         android:textAlignment="textEnd"
                         android:textSize="16sp"
                         android:textStyle="bold" />

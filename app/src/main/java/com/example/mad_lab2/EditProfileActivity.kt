@@ -34,25 +34,14 @@ class EditProfileActivity : AppCompatActivity() {
 
         sdh = SaveProfileDataHandler(applicationContext)
 
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            this.editFullNameOBJ = findViewById(R.id.edit_fullnameID_land)
-            this.editNickNameOBJ = findViewById(R.id.edit_nicknameID_land)
-            this.editQualificationOBJ = findViewById(R.id.edit_qualificationID_land)
-            this.editDescriptionOBJ = findViewById(R.id.edit_description_show_ID_land)
-            this.editEmailOBJ = findViewById(R.id.edit_email_show_ID_land)
-            this.editLocationOBJ = findViewById(R.id.edit_loc_show_ID_land)
-            this.editSkillsOBJ = findViewById(R.id.edit_skillsListID_land)
-            this.editPhoneOBJ = findViewById(R.id.edit_phone_show_ID_land)
-        } else {
-            this.editFullNameOBJ = findViewById(R.id.edit_fullnameID)
-            this.editNickNameOBJ = findViewById(R.id.edit_nicknameID)
-            this.editQualificationOBJ = findViewById(R.id.edit_qualificationID)
-            this.editDescriptionOBJ = findViewById(R.id.edit_description_show_ID)
-            this.editEmailOBJ = findViewById(R.id.edit_email_show_ID)
-            this.editLocationOBJ = findViewById(R.id.edit_loc_show_ID)
-            this.editSkillsOBJ = findViewById(R.id.edit_skillsListID)
-            this.editPhoneOBJ = findViewById(R.id.edit_phone_show_ID)
-        }
+        this.editFullNameOBJ = findViewById(R.id.edit_fullnameID)
+        this.editNickNameOBJ = findViewById(R.id.edit_nicknameID)
+        this.editQualificationOBJ = findViewById(R.id.edit_qualificationID)
+        this.editDescriptionOBJ = findViewById(R.id.edit_description_show_ID)
+        this.editEmailOBJ = findViewById(R.id.edit_email_show_ID)
+        this.editLocationOBJ = findViewById(R.id.edit_loc_show_ID)
+        this.editSkillsOBJ = findViewById(R.id.edit_skillsListID)
+        this.editPhoneOBJ = findViewById(R.id.edit_phone_show_ID)
 
         this.editFullNameOBJ.setText(intent.getCharSequenceExtra("fullname"))
         this.editNickNameOBJ.setText(intent.getCharSequenceExtra("nickname"))
@@ -74,37 +63,22 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val intent = Intent()
         val b = Bundle()
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            b.putCharSequence("fullname", findViewById<EditText>(R.id.edit_fullnameID_land).text)
-            b.putCharSequence("nickname", findViewById<EditText>(R.id.edit_nicknameID_land).text)
-            b.putCharSequence(
-                "qualification",
-                findViewById<EditText>(R.id.edit_qualificationID_land).text
-            )
-            b.putCharSequence(
-                "description",
-                findViewById<EditText>(R.id.edit_description_show_ID_land).text
-            )
-            b.putCharSequence("email", findViewById<EditText>(R.id.edit_email_show_ID_land).text)
-            b.putCharSequence("location", findViewById<EditText>(R.id.edit_loc_show_ID_land).text)
-            b.putCharSequence("skills", findViewById<EditText>(R.id.edit_skillsListID_land).text)
-            b.putCharSequence("phone", findViewById<EditText>(R.id.edit_phone_show_ID_land).text)
-        } else {
-            b.putCharSequence("fullname", findViewById<EditText>(R.id.edit_fullnameID).text)
-            b.putCharSequence("nickname", findViewById<EditText>(R.id.edit_nicknameID).text)
-            b.putCharSequence(
-                "qualification",
-                findViewById<EditText>(R.id.edit_qualificationID).text
-            )
-            b.putCharSequence(
-                "description",
-                findViewById<EditText>(R.id.edit_description_show_ID).text
-            )
-            b.putCharSequence("email", findViewById<EditText>(R.id.edit_email_show_ID).text)
-            b.putCharSequence("location", findViewById<EditText>(R.id.edit_loc_show_ID).text)
-            b.putCharSequence("skills", findViewById<EditText>(R.id.edit_skillsListID).text)
-            b.putCharSequence("phone", findViewById<EditText>(R.id.edit_phone_show_ID).text)
-        }
+
+        b.putCharSequence("fullname", findViewById<EditText>(R.id.edit_fullnameID).text)
+        b.putCharSequence("nickname", findViewById<EditText>(R.id.edit_nicknameID).text)
+        b.putCharSequence(
+            "qualification",
+            findViewById<EditText>(R.id.edit_qualificationID).text
+        )
+        b.putCharSequence(
+            "description",
+            findViewById<EditText>(R.id.edit_description_show_ID).text
+        )
+        b.putCharSequence("email", findViewById<EditText>(R.id.edit_email_show_ID).text)
+        b.putCharSequence("location", findViewById<EditText>(R.id.edit_loc_show_ID).text)
+        b.putCharSequence("skills", findViewById<EditText>(R.id.edit_skillsListID).text)
+        b.putCharSequence("phone", findViewById<EditText>(R.id.edit_phone_show_ID).text)
+
         intent.putExtras(b)
         val profile: Profile = Profile(
             this.editFullNameOBJ.text.toString(),
@@ -157,7 +131,12 @@ class EditProfileActivity : AppCompatActivity() {
                 this.sdh.storeData(profile)
                 setResult(Activity.RESULT_OK, intent)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vibrator.vibrate(VibrationEffect.createOneShot(120, VibrationEffect.DEFAULT_AMPLITUDE))
+                    vibrator.vibrate(
+                        VibrationEffect.createOneShot(
+                            120,
+                            VibrationEffect.DEFAULT_AMPLITUDE
+                        )
+                    )
                 } else {
                     vibrator.vibrate(120)
                 }
