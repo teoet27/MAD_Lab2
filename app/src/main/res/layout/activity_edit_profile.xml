@@ -25,13 +25,28 @@
 
                 <ImageView
                     android:id="@+id/edit_profilePictureID"
-                    android:layout_width="78dp"
+                    android:layout_width="84dp"
                     android:layout_height="84dp"
                     android:layout_marginTop="16dp"
+                    android:cropToPadding="true"
+                    android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/propic" />
+
+                <ImageView
+                    android:id="@+id/edit_profilePicture_mask_ID"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:cropToPadding="true"
+                    android:scaleType="centerCrop"
+                    app:tint="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/edit_profilePictureID"
+                    app:layout_constraintEnd_toEndOf="@+id/edit_profilePictureID"
+                    app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
+                    app:layout_constraintTop_toTopOf="@+id/edit_profilePictureID"
+                    app:srcCompat="@drawable/circular_mask" />
 
                 <EditText
                     android:id="@+id/edit_fullnameID"
