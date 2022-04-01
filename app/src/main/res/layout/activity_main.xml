@@ -36,7 +36,7 @@
                 android:layout_height="0dp"
                 android:cropToPadding="true"
                 android:scaleType="centerCrop"
-                android:tint="@color/prussian_blue"
+                app:tint="@color/prussian_blue"
                 app:layout_constraintBottom_toBottomOf="@+id/profilePictureID"
                 app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
                 app:layout_constraintHorizontal_bias="0.0"
