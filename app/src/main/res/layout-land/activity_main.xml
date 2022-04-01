@@ -38,7 +38,7 @@
                 android:cropToPadding="true"
                 android:scaleType="centerCrop"
                 android:tint="@color/prussian_blue"
-                app:layout_constraintBottom_toBottomOf="@+id/edit_profilePictureID"
+                app:layout_constraintBottom_toBottomOf="@+id/profilePictureID"
                 app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
                 app:layout_constraintStart_toStartOf="@+id/profilePictureID"
                 app:layout_constraintTop_toTopOf="@+id/profilePictureID"

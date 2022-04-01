@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
@@ -15,7 +16,6 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.FileProvider
-import androidx.core.net.toUri
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -33,7 +33,12 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var editPhoneOBJ: EditText
     private lateinit var sdh: SaveProfileDataHandler
     private lateinit var vibrator: Vibrator
+    private lateinit var profilePictureOBJ: ImageView
+
     lateinit var photoURI: Uri
+    private val profilePictureFilename: String = "profile_picture.jpg"
+    private lateinit var profilePictureDirectoryPath: String
+    private lateinit var profilePicturePath: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +56,7 @@ class EditProfileActivity : AppCompatActivity() {
         this.editLocationOBJ = findViewById(R.id.edit_loc_show_ID)
         this.editSkillsOBJ = findViewById(R.id.edit_skillsListID)
         this.editPhoneOBJ = findViewById(R.id.edit_phone_show_ID)
+        this.profilePictureOBJ = findViewById(R.id.edit_profilePictureID)
 
         this.editFullNameOBJ.setText(intent.getCharSequenceExtra("fullname"))
         this.editNickNameOBJ.setText(intent.getCharSequenceExtra("nickname"))
@@ -61,6 +67,13 @@ class EditProfileActivity : AppCompatActivity() {
         this.editSkillsOBJ.setText(intent.getCharSequenceExtra("skills"))
         this.editPhoneOBJ.setText(intent.getCharSequenceExtra("phone"))
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+        profilePicturePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + profilePictureFilename
+        profilePictureDirectoryPath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
+
+        getBitmapFromFile(profilePicturePath)?.also {
+            this.profilePictureOBJ.setImageBitmap(it)
+        }
 
         val cam: ImageView = findViewById(R.id.edit_camera_button)
 
@@ -98,8 +111,7 @@ class EditProfileActivity : AppCompatActivity() {
     @Throws(IOException::class)
     private fun createImageFile(): File {
         // Create an image file name
-        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File( storageDir,R.string.profile_picture_filename.toString())
+        return File( profilePicturePath)
     }
 
     val PICK_IMAGE = 100
@@ -113,6 +125,7 @@ class EditProfileActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -122,11 +135,12 @@ class EditProfileActivity : AppCompatActivity() {
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             photoURI=data?.data!!
             getBitmapFromUri(photoURI)?.also {
-                saveProfilePicture(it, getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString())
+                saveProfilePicture(it, profilePictureDirectoryPath)
                 findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(it)
             }
         }
     }
+
     fun getBitmapFromUri(imageURI:Uri): Bitmap? {
         contentResolver.notifyChange(imageURI, null)
         val cr = contentResolver
@@ -140,8 +154,12 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
+    fun getBitmapFromFile(path:String): Bitmap? {
+        return BitmapFactory.decodeFile(path)
+    }
+
     fun saveProfilePicture(bitmap:Bitmap,dir:String){
-        val imageFile=File(dir,R.string.profile_picture_filename.toString())
+        val imageFile=File(dir,profilePictureFilename)
         try{
             // Compress the bitmap and save in jpg format
             val stream: OutputStream = FileOutputStream(imageFile)
