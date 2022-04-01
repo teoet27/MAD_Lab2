@@ -114,6 +114,7 @@ class EditProfileActivity : AppCompatActivity() {
         return File( profilePicturePath)
     }
 
+
     val PICK_IMAGE = 100
     private fun dispatchLoadPictureIntent() {
         val loadPictureIntent =
