@@ -137,8 +137,7 @@ class EditProfileActivity : AppCompatActivity() {
             photoURI=data?.data!!
             getBitmapFromUri(photoURI)?.also {
                 saveProfilePicture(it, profilePictureDirectoryPath)
-                //findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(it)
-                findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(handleSamplingAndRotationBitmap(applicationContext,photoURI))
+                findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(it)
             }
         }
     }
