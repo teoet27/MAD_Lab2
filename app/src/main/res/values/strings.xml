@@ -24,5 +24,6 @@
     <string name="default_empty_string">DefaultEmptyString</string>
     <string name="floating_menu_load_picture">Select an image</string>
     <string name="floating_menu_shot_picture">Take a photo</string>
+    <string name="noskills">No skills.</string>
 
 </resources>

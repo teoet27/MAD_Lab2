@@ -11,11 +11,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:weightSum="100"
         android:orientation="horizontal">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="323dp"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="66">
 
             <ImageView
                 android:id="@+id/edit_profilePictureID"
@@ -120,7 +122,8 @@
         <ScrollView
             style="@style/CardView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="34"
             android:background="@drawable/rounded_corners_land"
             android:backgroundTint="@color/prussian_blue"
             android:visibility="visible">

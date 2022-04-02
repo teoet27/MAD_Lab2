@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
@@ -33,6 +35,8 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var sdh: SaveProfileDataHandler
     private lateinit var vibrator: Vibrator
     private lateinit var photoURI: Uri
+    private val REQUEST_IMAGE_CAPTURE = 1
+    private val PICK_IMAGE = 100
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +71,7 @@ class EditProfileActivity : AppCompatActivity() {
         cam.setOnClickListener { openContextMenu(cam) }
     }
 
-    val REQUEST_IMAGE_CAPTURE = 1
+
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
@@ -98,10 +102,9 @@ class EditProfileActivity : AppCompatActivity() {
     private fun createImageFile(): File {
         // Create an image file name
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File( storageDir,R.string.profile_picture_filename.toString())
+        return File(storageDir, R.string.profile_picture_filename.toString())
     }
 
-    val PICK_IMAGE = 100
     private fun dispatchLoadPictureIntent() {
         val loadPictureIntent =
             Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
@@ -112,21 +115,38 @@ class EditProfileActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            val bitmap=getBitmapFromUri(photoURI)
-            findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(bitmap)
-        }
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
-            photoURI=data?.data!!
-            getBitmapFromUri(photoURI)?.also {
-                saveProfilePicture(it, getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString())
+            val bitmap = getBitmapFromUri(this.photoURI)
+            val ei = ExifInterface(getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + "/profile_picture.jpg")
+            val rotatedBitmap: Bitmap?
+            val orientation: Int = ei.getAttributeInt(
+                ExifInterface.TAG_ORIENTATION,
+                ExifInterface.ORIENTATION_UNDEFINED
+            )
+            rotatedBitmap = when (orientation) {
+                ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(bitmap!!, 90f)
+                ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(bitmap!!, 180f)
+                ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(bitmap!!, 270f)
+                ExifInterface.ORIENTATION_NORMAL -> bitmap!!
+                else -> bitmap!!
+            }
+            findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(rotatedBitmap)
+        } else if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+            this.photoURI = data?.data!!
+            getBitmapFromUri(this.photoURI)?.also {
+                saveProfilePicture(
+                    it,
+                    getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
+                )
                 findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(it)
             }
         }
     }
-    fun getBitmapFromUri(imageURI:Uri): Bitmap? {
+
+    private fun getBitmapFromUri(imageURI: Uri): Bitmap? {
         contentResolver.notifyChange(imageURI, null)
         val cr = contentResolver
         val bitmap: Bitmap
@@ -139,18 +159,28 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
-    fun saveProfilePicture(bitmap:Bitmap,dir:String){
-        val imageFile=File(dir,R.string.profile_picture_filename.toString())
-        try{
+    private fun rotateImage(source: Bitmap, angle: Float): Bitmap? {
+        val matrix = Matrix()
+        matrix.postRotate(angle)
+        return Bitmap.createBitmap(
+            source, 0, 0, source.width, source.height,
+            matrix, true
+        )
+    }
+
+    private fun saveProfilePicture(bitmap: Bitmap, dir: String) {
+        val imageFile = File(dir, "profile_picture.jpg")
+        try {
             // Compress the bitmap and save in jpg format
             val stream: OutputStream = FileOutputStream(imageFile)
-            bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream) ?: throw IOException()
             stream.flush()
             stream.close()
-        }catch (e:IOException){
+        } catch (e: IOException) {
             e.printStackTrace()
         }
     }
+
     override fun onCreateContextMenu(
         menu: ContextMenu?,
         v: View?,
@@ -198,7 +228,7 @@ class EditProfileActivity : AppCompatActivity() {
         b.putCharSequence("phone", findViewById<EditText>(R.id.edit_phone_show_ID).text)
 
         intent.putExtras(b)
-        val profile: Profile = Profile(
+        val profile = Profile(
             this.editFullNameOBJ.text.toString(),
             this.editSkillsOBJ.text.toString(),
             this.editEmailOBJ.text.toString(),
@@ -235,9 +265,8 @@ class EditProfileActivity : AppCompatActivity() {
                 b.putCharSequence("phone", this.editPhoneOBJ.text)
 
                 intent.putExtras(b)
-                val profile: Profile = Profile(
+                val profile = Profile(
                     this.editFullNameOBJ.text.toString(),
-                    this.editSkillsOBJ.text.toString(),
                     this.editEmailOBJ.text.toString(),
                     this.editLocationOBJ.text.toString(),
                     this.editQualificationOBJ.text.toString(),

@@ -1,12 +1,12 @@
 package com.example.mad_lab2
 
 class Profile(
-    name: String, skills: String, email: String, location: String,
+    name: String, email: String, location: String,
     qualification: String, nickname: String, description: String,
     imageLocation: String, phoneNumber: String
 ) {
     var fullname: String
-    var skills: String
+    var skills: ArrayList<String>
     var email: String
     var location: String
     var qualification: String
@@ -17,7 +17,7 @@ class Profile(
 
     init {
         this.fullname = name
-        this.skills = skills
+        this.skills = ArrayList<String>()
         this.email = email
         this.location = location
         this.qualification = qualification
@@ -25,5 +25,24 @@ class Profile(
         this.imageLocation = imageLocation
         this.description = description
         this.phoneNumber = phoneNumber
+    }
+
+    constructor(
+        name: String, skills: String, email: String, location: String,
+        qualification: String, nickname: String, description: String,
+        imageLocation: String, phoneNumber: String
+    ) : this(
+        name, email, location,
+        qualification,
+        nickname,
+        description,
+        imageLocation,
+        phoneNumber
+    ) {
+        if (skills.compareTo("No skills.") != 0) {
+            val x: List<String> = skills.split(",")
+            for (i in x.indices)
+                this.skills.add(i, x[i])
+        }
     }
 }

@@ -11,11 +11,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:weightSum="100"
         android:orientation="horizontal">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="321dp"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="66">
 
             <ImageView
                 android:id="@+id/profilePictureID"
@@ -37,12 +39,12 @@
                 android:layout_height="0dp"
                 android:cropToPadding="true"
                 android:scaleType="centerCrop"
-                app:tint="@color/prussian_blue"
                 app:layout_constraintBottom_toBottomOf="@+id/profilePictureID"
                 app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
                 app:layout_constraintStart_toStartOf="@+id/profilePictureID"
                 app:layout_constraintTop_toTopOf="@+id/profilePictureID"
-                app:srcCompat="@drawable/circular_mask" />
+                app:srcCompat="@drawable/circular_mask"
+                app:tint="@color/prussian_blue" />
 
             <TextView
                 android:id="@+id/fullnameID"
@@ -104,6 +106,7 @@
             style="@style/CardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="33"
             android:background="@drawable/rounded_corners_land"
             android:visibility="visible">
 

@@ -11,21 +11,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="100">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp">
+            android:layout_height="match_parent"
+            android:layout_weight="66">
 
             <ImageView
                 android:id="@+id/profilePictureID"
                 android:layout_width="84dp"
                 android:layout_height="84dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:cropToPadding="true"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/propic" />
@@ -36,14 +38,14 @@
                 android:layout_height="0dp"
                 android:cropToPadding="true"
                 android:scaleType="centerCrop"
-                app:tint="@color/prussian_blue"
                 app:layout_constraintBottom_toBottomOf="@+id/profilePictureID"
                 app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/profilePictureID"
                 app:layout_constraintTop_toTopOf="@+id/profilePictureID"
                 app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/circular_mask" />
+                app:srcCompat="@drawable/circular_mask"
+                app:tint="@color/prussian_blue" />
 
             <TextView
                 android:id="@+id/fullnameID"
@@ -105,6 +107,7 @@
             style="@style/CardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="34"
             android:background="@drawable/rounded_corners">
 
             <LinearLayout
@@ -292,5 +295,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="377dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="425dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

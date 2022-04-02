@@ -16,12 +16,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="100">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp">
+                android:layout_height="match_parent"
+                android:layout_weight="66">
 
                 <ImageView
                     android:id="@+id/edit_profilePictureID"
@@ -41,12 +42,14 @@
                     android:layout_height="0dp"
                     android:cropToPadding="true"
                     android:scaleType="centerCrop"
-                    app:tint="@color/white"
                     app:layout_constraintBottom_toBottomOf="@+id/edit_profilePictureID"
                     app:layout_constraintEnd_toEndOf="@+id/edit_profilePictureID"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
                     app:layout_constraintTop_toTopOf="@+id/edit_profilePictureID"
-                    app:srcCompat="@drawable/circular_mask" />
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/circular_mask"
+                    app:tint="@color/white" />
 
                 <EditText
                     android:id="@+id/edit_fullnameID"
@@ -110,12 +113,10 @@
                     android:id="@+id/edit_camera_button"
                     android:layout_width="31dp"
                     android:layout_height="25dp"
-                    android:layout_marginStart="52dp"
+                    android:layout_marginStart="56dp"
                     android:layout_marginBottom="68dp"
                     app:layout_constraintBottom_toBottomOf="@+id/edit_profilePictureID"
                     app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
-                    app:layout_constraintTop_toTopOf="@+id/edit_profilePictureID"
-                    app:layout_constraintVertical_bias="0.68"
                     app:srcCompat="@drawable/ic_photo_camera_black_24dp"
                     app:tint="@color/black" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -123,6 +124,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="34"
                 android:background="@drawable/rounded_corners"
                 android:backgroundTint="@color/prussian_blue">
 
@@ -312,5 +314,12 @@
             </FrameLayout>
         </LinearLayout>
     </ScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="275dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

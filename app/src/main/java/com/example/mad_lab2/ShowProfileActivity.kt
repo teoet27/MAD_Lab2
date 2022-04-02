@@ -32,7 +32,6 @@ class ShowProfileActivity : AppCompatActivity() {
         if (profile == null) {
             profile = Profile(
                 "Monkey D. Luffy",
-                "Powerful Warrior, Obscure Powers",
                 "luffy@mail.com",
                 "The Great Sea",
                 "Captain @ Going Merry",
@@ -52,14 +51,18 @@ class ShowProfileActivity : AppCompatActivity() {
         this.skillsOBJ = findViewById(R.id.skillsListID)
         this.phoneOBJ = findViewById(R.id.phone_show_ID)
 
-        this.fullnameOBJ.text = profile?.fullname
-        this.nicknameOBJ.text = profile?.nickname
-        this.qualificationOBJ.text = profile?.qualification
-        this.phoneOBJ.text = profile?.phoneNumber
-        this.locationOBJ.text = profile?.location
-        this.skillsOBJ.text = profile?.skills
-        this.emailOBJ.text = profile?.email
-        this.descriptionOBJ.text = profile?.description
+        this.fullnameOBJ.text = profile.fullname
+        this.nicknameOBJ.text = profile.nickname
+        this.qualificationOBJ.text = profile.qualification
+        this.phoneOBJ.text = profile.phoneNumber
+        this.locationOBJ.text = profile.location
+        if (profile.skills.size == 0) {
+            this.skillsOBJ.setText(R.string.noskills)
+        } else {
+            this.skillsOBJ.text = fromArrayListToString(profile.skills)
+        }
+        this.emailOBJ.text = profile.email
+        this.descriptionOBJ.text = profile.description
 
     }
 
@@ -99,6 +102,16 @@ class ShowProfileActivity : AppCompatActivity() {
         }
     }
 
+    private fun fromArrayListToString(list: ArrayList<String>) : String {
+        var out: String = ""
+        for(i in list.indices){
+            out += list[i]
+            if(i != list.size-1)
+                out += ", "
+        }
+        return out
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             this.fullnameOBJ.text =
@@ -111,8 +124,15 @@ class ShowProfileActivity : AppCompatActivity() {
                 data?.getCharSequenceExtra("description").toString()
             this.emailOBJ.text =
                 data?.getCharSequenceExtra("email").toString()
-            this.skillsOBJ.text =
-                data?.getCharSequenceExtra("skills").toString()
+            if(data?.getCharSequenceExtra("skills").toString().compareTo("[]") == 0 ||
+                data?.getCharSequenceExtra("skills").toString().compareTo("No skills") == 0)
+            {
+                this.skillsOBJ.setText(R.string.noskills)
+            }
+            else {
+                this.skillsOBJ.text =
+                    data?.getCharSequenceExtra("skills").toString()
+            }
             this.locationOBJ.text =
                 data?.getCharSequenceExtra("location").toString()
             this.phoneOBJ.text =
