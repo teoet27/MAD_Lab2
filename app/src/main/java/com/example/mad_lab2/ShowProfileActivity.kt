@@ -138,6 +138,9 @@ class ShowProfileActivity : AppCompatActivity() {
                 data?.getCharSequenceExtra("location").toString()
             this.phoneOBJ.text =
                 data?.getCharSequenceExtra("phone").toString()
+            getBitmapFromFile(profilePicturePath)?.also {
+                this.profilePictureOBJ.setImageBitmap(it)
+            }
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -164,5 +167,8 @@ class ShowProfileActivity : AppCompatActivity() {
         this.phoneOBJ.text = savedInstanceState.getCharSequence("phone")
         this.descriptionOBJ.text = savedInstanceState.getCharSequence("description")
         this.skillsOBJ.text = savedInstanceState.getCharSequence("skills")
+        getBitmapFromFile(profilePicturePath)?.also {
+            this.profilePictureOBJ.setImageBitmap(it)
+        }
     }
 }

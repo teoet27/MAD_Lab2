@@ -307,5 +307,8 @@ class EditProfileActivity : AppCompatActivity() {
         this.editLocationOBJ.setText(savedInstanceState.getCharSequence("location"))
         this.editSkillsOBJ.setText(savedInstanceState.getCharSequence("skills"))
         this.editPhoneOBJ.setText(savedInstanceState.getCharSequence("phone"))
+        getBitmapFromFile(profilePicturePath)?.also {
+            this.profilePictureOBJ.setImageBitmap(it)
+        }
     }
 }
