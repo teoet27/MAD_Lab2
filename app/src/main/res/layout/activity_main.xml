@@ -16,17 +16,21 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="16dp"
             android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/profilePictureID"
                 android:layout_width="84dp"
                 android:layout_height="84dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
                 android:cropToPadding="true"
                 android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/fullnameID"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/propic" />
@@ -39,37 +43,44 @@
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="@+id/profilePictureID"
                 app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/profilePictureID"
                 app:layout_constraintTop_toTopOf="@+id/profilePictureID"
+                app:layout_constraintVertical_bias="1.0"
                 app:srcCompat="@drawable/circular_mask"
                 app:tint="@color/prussian_blue" />
 
             <TextView
                 android:id="@+id/fullnameID"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
                 android:fontFamily="sans-serif-black"
+                android:singleLine="false"
                 android:text="@string/fullnamePH"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="#FFFFFF"
                 android:textSize="34sp"
-                app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
-                app:layout_constraintStart_toStartOf="@+id/profilePictureID"
-                app:layout_constraintTop_toBottomOf="@+id/profilePictureID" />
+                android:textAlignment="viewStart"
+                app:layout_constraintWidth_default="wrap"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/profilePictureID"
+                app:layout_constraintTop_toTopOf="@+id/profilePictureID"
+                app:layout_constraintWidth_min="16dp" />
 
             <TextView
                 android:id="@+id/nicknameID"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:text="@string/nickanemPH"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/orange_poli"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/fullnameID"
                 app:layout_constraintStart_toStartOf="@+id/fullnameID"
-                app:layout_constraintTop_toBottomOf="@+id/fullnameID" />
+                app:layout_constraintTop_toBottomOf="@+id/fullnameID"
+                app:layout_constraintWidth_default="wrap" />
 
             <ImageView
                 android:id="@+id/verification_badge_ID"
@@ -84,15 +95,15 @@
 
             <TextView
                 android:id="@+id/qualificationID"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="sans-serif-light"
+                android:singleLine="false"
                 android:text="@string/qualificationPH"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/nicknameID"
                 app:layout_constraintStart_toStartOf="@+id/nicknameID"
                 app:layout_constraintTop_toBottomOf="@+id/nicknameID" />
         </androidx.constraintlayout.widget.ConstraintLayout>

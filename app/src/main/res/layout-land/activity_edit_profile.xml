@@ -14,8 +14,10 @@
         android:orientation="horizontal">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="323dp"
-            android:layout_height="wrap_content">
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/edit_profilePictureID"
@@ -37,7 +39,7 @@
                 android:layout_height="0dp"
                 android:cropToPadding="true"
                 android:scaleType="centerCrop"
-                android:tint="@color/white"
+                app:tint="@color/white"
                 app:layout_constraintBottom_toBottomOf="@+id/edit_profilePictureID"
                 app:layout_constraintEnd_toEndOf="@+id/edit_profilePictureID"
                 app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
@@ -55,6 +57,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/prussian_blue"
                 android:textSize="34sp"
+                android:singleLine="false"
                 app:layout_constraintEnd_toEndOf="@+id/edit_profilePictureID"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
@@ -98,6 +101,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/prussian_blue"
                 android:textSize="20sp"
+                android:singleLine="false"
                 app:layout_constraintEnd_toEndOf="@+id/edit_nicknameID"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/edit_nicknameID"
@@ -109,18 +113,20 @@
                 android:layout_height="25dp"
                 android:layout_marginStart="52dp"
                 android:layout_marginBottom="68dp"
-                app:tint="@color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/edit_profilePictureID"
                 app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
                 app:layout_constraintTop_toTopOf="@+id/edit_profilePictureID"
                 app:layout_constraintVertical_bias="0.68"
-                app:srcCompat="@drawable/ic_photo_camera_black_24dp" />
+                app:srcCompat="@drawable/ic_photo_camera_black_24dp"
+                app:tint="@color/black" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
             style="@style/CardView"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="2"
             android:background="@drawable/rounded_corners_land"
             android:backgroundTint="@color/prussian_blue"
             android:visibility="visible">
