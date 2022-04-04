@@ -78,7 +78,7 @@
                     android:paddingTop="30dp"
                     android:paddingBottom="5dp"
                     android:text="@string/fullnamePH"
-                    android:textAlignment="center"
+                    android:textAlignment="viewStart"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/prussian_blue"
                     android:textSize="34sp" />
@@ -91,7 +91,7 @@
                     android:paddingLeft="16dp"
                     android:paddingBottom="15dp"
                     android:text="@string/nickanemPH"
-                    android:textAlignment="center"
+                    android:textAlignment="viewStart"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/orange_poli"
                     android:textSize="16sp"
