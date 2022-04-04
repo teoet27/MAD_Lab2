@@ -32,7 +32,7 @@ class ShowProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.show_profile_activity_main)
 
         sdh = SaveProfileDataHandler(applicationContext)
         var profile = sdh.retrieveData()
@@ -51,15 +51,15 @@ class ShowProfileActivity : AppCompatActivity() {
             )
         }
 
-        this.fullnameOBJ = findViewById(R.id.fullnameID)
-        this.nicknameOBJ = findViewById(R.id.nicknameID)
-        this.qualificationOBJ = findViewById(R.id.qualificationID)
+        this.fullnameOBJ = findViewById(R.id.edit_fullnameID)
+        this.nicknameOBJ = findViewById(R.id.edit_nicknameID)
+        this.qualificationOBJ = findViewById(R.id.edit_qualificationID)
         this.descriptionOBJ = findViewById(R.id.description_show_ID)
         this.emailOBJ = findViewById(R.id.email_show_ID)
         this.locationOBJ = findViewById(R.id.loc_show_ID)
         this.skillsOBJ = findViewById(R.id.skillsListID)
         this.phoneOBJ = findViewById(R.id.phone_show_ID)
-        this.profilePictureOBJ = findViewById(R.id.profilePictureID)
+        this.profilePictureOBJ = findViewById(R.id.edit_profilePictureID)
 
         this.fullnameOBJ.text = profile.fullname
         this.nicknameOBJ.text = profile.nickname
@@ -99,11 +99,11 @@ class ShowProfileActivity : AppCompatActivity() {
                 val intent = Intent(this, EditProfileActivity::class.java)
                 val b = Bundle()
 
-                b.putCharSequence("fullname", findViewById<TextView>(R.id.fullnameID).text)
-                b.putCharSequence("nickname", findViewById<TextView>(R.id.nicknameID).text)
+                b.putCharSequence("fullname", findViewById<TextView>(R.id.edit_fullnameID).text)
+                b.putCharSequence("nickname", findViewById<TextView>(R.id.edit_nicknameID).text)
                 b.putCharSequence(
                     "qualification",
-                    findViewById<TextView>(R.id.qualificationID).text
+                    findViewById<TextView>(R.id.edit_qualificationID).text
                 )
                 b.putCharSequence("phone", findViewById<TextView>(R.id.phone_show_ID).text)
                 b.putCharSequence("location", findViewById<TextView>(R.id.loc_show_ID).text)

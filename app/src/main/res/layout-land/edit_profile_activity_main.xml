@@ -1,36 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/prussian_blue"
-    android:theme="@style/Theme.MAD_Lab2"
-    tools:context=".ShowProfileActivity">
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2">
+            android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/edit_profilePictureID"
-                android:layout_width="84dp"
-                android:layout_height="84dp"
-                android:layout_marginBottom="8dp"
+                android:layout_width="247dp"
+                android:layout_height="247dp"
                 android:cropToPadding="true"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintHorizontal_bias="0.513"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.13"
+                app:layout_constraintVertical_bias="0.431"
                 app:srcCompat="@drawable/propic" />
 
             <ImageView
@@ -46,96 +42,112 @@
                 app:layout_constraintTop_toTopOf="@+id/edit_profilePictureID"
                 app:layout_constraintVertical_bias="1.0"
                 app:srcCompat="@drawable/circular_mask"
-                app:tint="@color/prussian_blue" />
-
-            <TextView
-                android:id="@+id/edit_fullnameID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="sans-serif-black"
-                android:text="@string/fullnamePH"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="#FFFFFF"
-                android:textSize="34sp"
-                app:layout_constraintEnd_toEndOf="@+id/edit_profilePictureID"
-                app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
-                app:layout_constraintTop_toBottomOf="@+id/edit_profilePictureID" />
-
-            <TextView
-                android:id="@+id/edit_nicknameID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:text="@string/nickanemPH"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/orange_poli"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/edit_fullnameID"
-                app:layout_constraintStart_toStartOf="@+id/edit_fullnameID"
-                app:layout_constraintTop_toBottomOf="@+id/edit_fullnameID" />
+                app:tint="@color/white" />
 
             <ImageView
                 android:id="@+id/edit_camera_button"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginTop="76dp"
+                android:layout_width="59dp"
+                android:layout_height="47dp"
+                android:layout_marginBottom="200dp"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_profilePictureID"
                 app:layout_constraintEnd_toEndOf="@+id/edit_profilePictureID"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
-                app:layout_constraintTop_toTopOf="@+id/edit_profilePictureID"
-                app:srcCompat="@drawable/ic_verified_black_24dp"
-                app:tint="@color/orange_poli" />
+                app:srcCompat="@drawable/ic_photo_camera_black_24dp"
+                app:tint="@color/black" />
 
-            <TextView
-                android:id="@+id/edit_qualificationID"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="sans-serif-light"
-                android:text="@string/qualificationPH"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/edit_nicknameID"
-                app:layout_constraintStart_toStartOf="@+id/edit_nicknameID"
-                app:layout_constraintTop_toBottomOf="@+id/edit_nicknameID" />
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="16dp" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
             style="@style/CardView"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_corners">
+            android:layout_weight="2"
+            android:background="@color/prussian_blue">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <EditText
+                    android:id="@+id/edit_fullnameID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="30dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/fullnamePH"
+                    android:textAlignment="viewStart"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/white"
+                    android:textSize="34sp" />
+
+                <EditText
+                    android:id="@+id/edit_nicknameID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:paddingLeft="16dp"
+                    android:paddingBottom="15dp"
+                    android:text="@string/nickanemPH"
+                    android:textAlignment="viewStart"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/orange_poli"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edit_qualificationID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FC7A08"
+                    android:fontFamily="sans-serif-light"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/qualificationPH"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/prussian_blue"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/descriptionID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
+                    android:paddingLeft="16dp"
                     android:paddingTop="30dp"
                     android:paddingBottom="10dp"
                     android:text="@string/description_str"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/prussian_blue"
+                    android:textColor="@color/orange_poli"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/description_show_ID"
+                <EditText
+                    android:id="@+id/edit_description_show_ID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
                     android:text="@string/default_description_text"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <TextView
@@ -143,12 +155,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:paddingLeft="15dp"
+                    android:paddingLeft="16dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:text="@string/skills_str"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/prussian_blue"
+                    android:textColor="@color/orange_poli"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -159,16 +171,18 @@
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
                     android:text="@string/default_skills_text"
+                    android:textColor="#FFFFFF"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/skillsListID"
+                <EditText
+                    android:id="@+id/edit_skillsListID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:paddingLeft="40dp"
                     android:paddingRight="40dp"
                     android:text="@string/empty_skills"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -177,12 +191,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:paddingLeft="15dp"
+                    android:paddingLeft="16dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:text="@string/information_str"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/prussian_blue"
+                    android:textColor="@color/orange_poli"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -201,17 +215,22 @@
                         android:layout_weight="1"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
+                        android:ems="1"
                         android:text="@string/phone_number"
+                        android:textColor="#FFFFFF"
                         android:textSize="16sp"
-                        app:drawableLeftCompat="@drawable/ic_call_black_24dp" />
+                        app:drawableLeftCompat="@drawable/ic_call_black_24dp"
+                        app:drawableTint="@color/orange_poli" />
 
-                    <TextView
-                        android:id="@+id/phone_show_ID"
+                    <EditText
+                        android:id="@+id/edit_phone_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:inputType="phone"
                         android:text="@string/default_empty_string"
                         android:textAlignment="textEnd"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -232,17 +251,22 @@
                         android:layout_weight="1"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
+                        android:ems="1"
                         android:text="@string/email_text"
+                        android:textColor="#FFFFFF"
                         android:textSize="16sp"
-                        app:drawableLeftCompat="@drawable/ic_email_black_24dp" />
+                        app:drawableLeftCompat="@drawable/ic_email_black_24dp"
+                        app:drawableTint="@color/orange_poli" />
 
-                    <TextView
-                        android:id="@+id/email_show_ID"
+                    <EditText
+                        android:id="@+id/edit_email_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:inputType="textEmailAddress"
                         android:text="@string/default_empty_string"
                         android:textAlignment="textEnd"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -263,17 +287,21 @@
                         android:layout_weight="1"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
+                        android:ems="1"
                         android:text="@string/location_text"
+                        android:textColor="#FFFFFF"
                         android:textSize="16sp"
-                        app:drawableLeftCompat="@drawable/ic_location_on_black_24dp" />
+                        app:drawableLeftCompat="@drawable/ic_location_on_black_24dp"
+                        app:drawableTint="@color/orange_poli" />
 
-                    <TextView
-                        android:id="@+id/loc_show_ID"
+                    <EditText
+                        android:id="@+id/edit_loc_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/default_empty_string"
                         android:textAlignment="textEnd"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -282,5 +310,4 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,7 +19,7 @@
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/profilePictureID"
+                android:id="@+id/edit_profilePictureID"
                 android:layout_width="84dp"
                 android:layout_height="84dp"
                 android:layout_marginStart="8dp"
@@ -38,15 +38,15 @@
                 android:layout_height="0dp"
                 android:cropToPadding="true"
                 android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="@+id/profilePictureID"
-                app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
-                app:layout_constraintStart_toStartOf="@+id/profilePictureID"
-                app:layout_constraintTop_toTopOf="@+id/profilePictureID"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_profilePictureID"
+                app:layout_constraintEnd_toEndOf="@+id/edit_profilePictureID"
+                app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
+                app:layout_constraintTop_toTopOf="@+id/edit_profilePictureID"
                 app:srcCompat="@drawable/circular_mask"
                 app:tint="@color/prussian_blue" />
 
             <TextView
-                android:id="@+id/fullnameID"
+                android:id="@+id/edit_fullnameID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -55,13 +55,13 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="#FFFFFF"
                 android:textSize="34sp"
-                app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
+                app:layout_constraintEnd_toEndOf="@+id/edit_profilePictureID"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/profilePictureID"
-                app:layout_constraintTop_toBottomOf="@+id/profilePictureID" />
+                app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profilePictureID" />
 
             <TextView
-                android:id="@+id/nicknameID"
+                android:id="@+id/edit_nicknameID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
@@ -69,24 +69,24 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/orange_poli"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/fullnameID"
+                app:layout_constraintEnd_toEndOf="@+id/edit_fullnameID"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/fullnameID"
-                app:layout_constraintTop_toBottomOf="@+id/fullnameID" />
+                app:layout_constraintStart_toStartOf="@+id/edit_fullnameID"
+                app:layout_constraintTop_toBottomOf="@+id/edit_fullnameID" />
 
             <ImageView
-                android:id="@+id/verification_badge_ID"
+                android:id="@+id/edit_camera_button"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_marginTop="76dp"
-                app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
-                app:layout_constraintStart_toStartOf="@+id/profilePictureID"
-                app:layout_constraintTop_toTopOf="@+id/profilePictureID"
+                app:layout_constraintEnd_toEndOf="@+id/edit_profilePictureID"
+                app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
+                app:layout_constraintTop_toTopOf="@+id/edit_profilePictureID"
                 app:srcCompat="@drawable/ic_verified_black_24dp"
                 app:tint="@color/orange_poli" />
 
             <TextView
-                android:id="@+id/qualificationID"
+                android:id="@+id/edit_qualificationID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -95,10 +95,10 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/nicknameID"
+                app:layout_constraintEnd_toEndOf="@+id/edit_nicknameID"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/nicknameID"
-                app:layout_constraintTop_toBottomOf="@+id/nicknameID" />
+                app:layout_constraintStart_toStartOf="@+id/edit_nicknameID"
+                app:layout_constraintTop_toBottomOf="@+id/edit_nicknameID" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
