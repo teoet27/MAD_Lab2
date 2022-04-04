@@ -15,6 +15,7 @@ class Profile(
     var imageLocation: String
     var phoneNumber: String
 
+
     init {
         this.fullname = name
         this.skills = skills
