@@ -2,10 +2,14 @@ package com.example.mad_lab2
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Environment
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -20,6 +24,11 @@ class ShowProfileActivity : AppCompatActivity() {
     private lateinit var skillsOBJ: TextView
     private lateinit var phoneOBJ: TextView
     private lateinit var sdh: SaveProfileDataHandler
+    private lateinit var profilePictureOBJ: ImageView
+
+    private val profilePictureFilename: String = "profile_picture.jpg"
+    private lateinit var profilePictureDirectoryPath: String
+    private lateinit var profilePicturePath: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +60,7 @@ class ShowProfileActivity : AppCompatActivity() {
         this.locationOBJ = findViewById(R.id.loc_show_ID)
         this.skillsOBJ = findViewById(R.id.skillsListID)
         this.phoneOBJ = findViewById(R.id.phone_show_ID)
+        this.profilePictureOBJ = findViewById(R.id.profilePictureID)
 
         this.fullnameOBJ.text = profile.fullname
         this.nicknameOBJ.text = profile.nickname
@@ -65,6 +75,16 @@ class ShowProfileActivity : AppCompatActivity() {
         this.emailOBJ.text = profile.email
         this.descriptionOBJ.text = profile.description
 
+        profilePicturePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + profilePictureFilename
+        profilePictureDirectoryPath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
+
+        getBitmapFromFile(profilePicturePath)?.also {
+            this.profilePictureOBJ.setImageBitmap(it)
+        }
+    }
+
+    fun getBitmapFromFile(path:String): Bitmap? {
+        return BitmapFactory.decodeFile(path)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -138,6 +158,9 @@ class ShowProfileActivity : AppCompatActivity() {
                 data?.getCharSequenceExtra("location").toString()
             this.phoneOBJ.text =
                 data?.getCharSequenceExtra("phone").toString()
+            getBitmapFromFile(profilePicturePath)?.also {
+                this.profilePictureOBJ.setImageBitmap(it)
+            }
         }
         super.onActivityResult(requestCode, resultCode, data)
     }

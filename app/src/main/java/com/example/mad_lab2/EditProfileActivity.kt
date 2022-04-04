@@ -6,8 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Matrix
-import android.media.ExifInterface
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
@@ -34,7 +34,12 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var editPhoneOBJ: EditText
     private lateinit var sdh: SaveProfileDataHandler
     private lateinit var vibrator: Vibrator
+    private lateinit var profilePictureOBJ: ImageView
     private lateinit var photoURI: Uri
+    private lateinit var profilePictureDirectoryPath: String
+    private lateinit var profilePicturePath: String
+
+    private val profilePictureFilename: String = "profile_picture.jpg"
     private val REQUEST_IMAGE_CAPTURE = 1
     private val PICK_IMAGE = 100
 
@@ -54,6 +59,7 @@ class EditProfileActivity : AppCompatActivity() {
         this.editLocationOBJ = findViewById(R.id.edit_loc_show_ID)
         this.editSkillsOBJ = findViewById(R.id.edit_skillsListID)
         this.editPhoneOBJ = findViewById(R.id.edit_phone_show_ID)
+        this.profilePictureOBJ = findViewById(R.id.edit_profilePictureID)
 
         this.editFullNameOBJ.setText(intent.getCharSequenceExtra("fullname"))
         this.editNickNameOBJ.setText(intent.getCharSequenceExtra("nickname"))
@@ -68,10 +74,21 @@ class EditProfileActivity : AppCompatActivity() {
         this.editPhoneOBJ.setText(intent.getCharSequenceExtra("phone"))
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
+        profilePicturePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + profilePictureFilename
+        profilePictureDirectoryPath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
+
+        getBitmapFromFile(profilePicturePath)?.also {
+            this.profilePictureOBJ.setImageBitmap(it)
+        }
+
         val cam: ImageView = findViewById(R.id.edit_camera_button)
 
         registerForContextMenu(cam)
         cam.setOnClickListener { openContextMenu(cam) }
+    }
+
+    fun getBitmapFromFile(path:String): Bitmap? {
+        return BitmapFactory.decodeFile(path)
     }
 
 
@@ -104,8 +121,7 @@ class EditProfileActivity : AppCompatActivity() {
     @Throws(IOException::class)
     private fun createImageFile(): File {
         // Create an image file name
-        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File(storageDir, R.string.profile_picture_filename.toString())
+        return File(profilePicturePath)
     }
 
     private fun dispatchLoadPictureIntent() {
@@ -122,29 +138,13 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            val bitmap = getBitmapFromUri(this.photoURI)
-            val ei =
-                ExifInterface(getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + "/profile_picture.jpg")
-            val rotatedBitmap: Bitmap?
-            val orientation: Int = ei.getAttributeInt(
-                ExifInterface.TAG_ORIENTATION,
-                ExifInterface.ORIENTATION_UNDEFINED
-            )
-            rotatedBitmap = when (orientation) {
-                ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(bitmap!!, 90f)
-                ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(bitmap!!, 180f)
-                ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(bitmap!!, 270f)
-                ExifInterface.ORIENTATION_NORMAL -> bitmap!!
-                else -> bitmap!!
-            }
-            findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(rotatedBitmap)
-        } else if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
-            this.photoURI = data?.data!!
-            getBitmapFromUri(this.photoURI)?.also {
-                saveProfilePicture(
-                    it,
-                    getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
-                )
+            val bitmap=getBitmapFromUri(photoURI)
+            findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(bitmap)
+        }
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+            photoURI=data?.data!!
+            getBitmapFromUri(photoURI)?.also {
+                saveProfilePicture(it, profilePictureDirectoryPath)
                 findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(it)
             }
         }
@@ -242,7 +242,7 @@ class EditProfileActivity : AppCompatActivity() {
                 this.editQualificationOBJ.text.toString(),
                 this.editNickNameOBJ.text.toString(),
                 this.editDescriptionOBJ.text.toString(),
-                "null",
+                this.profilePicturePath,
                 this.editPhoneOBJ.text.toString()
             )
         } else {
@@ -254,7 +254,7 @@ class EditProfileActivity : AppCompatActivity() {
                 this.editQualificationOBJ.text.toString(),
                 this.editNickNameOBJ.text.toString(),
                 this.editDescriptionOBJ.text.toString(),
-                "null",
+                this.profilePicturePath,
                 this.editPhoneOBJ.text.toString()
             )
         }
@@ -285,16 +285,33 @@ class EditProfileActivity : AppCompatActivity() {
                 b.putCharSequence("phone", this.editPhoneOBJ.text)
 
                 intent.putExtras(b)
-                val profile = Profile(
-                    this.editFullNameOBJ.text.toString(),
-                    this.editEmailOBJ.text.toString(),
-                    this.editLocationOBJ.text.toString(),
-                    this.editQualificationOBJ.text.toString(),
-                    this.editNickNameOBJ.text.toString(),
-                    this.editDescriptionOBJ.text.toString(),
-                    "null",
-                    this.editPhoneOBJ.text.toString()
-                )
+
+                val profile: Profile
+                if (this.editSkillsOBJ.text.toString().compareTo("") == 0) {
+                    profile = Profile(
+                        this.editFullNameOBJ.text.toString(),
+                        this.editEmailOBJ.text.toString(),
+                        this.editLocationOBJ.text.toString(),
+                        this.editQualificationOBJ.text.toString(),
+                        this.editNickNameOBJ.text.toString(),
+                        this.editDescriptionOBJ.text.toString(),
+                        this.profilePicturePath,
+                        this.editPhoneOBJ.text.toString()
+                    )
+                } else {
+                    profile = Profile(
+                        this.editFullNameOBJ.text.toString(),
+                        this.editSkillsOBJ.text.toString(),
+                        this.editEmailOBJ.text.toString(),
+                        this.editLocationOBJ.text.toString(),
+                        this.editQualificationOBJ.text.toString(),
+                        this.editNickNameOBJ.text.toString(),
+                        this.editDescriptionOBJ.text.toString(),
+                        this.profilePicturePath,
+                        this.editPhoneOBJ.text.toString()
+                    )
+                }
+
                 this.sdh.storeData(profile)
                 setResult(Activity.RESULT_OK, intent)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
