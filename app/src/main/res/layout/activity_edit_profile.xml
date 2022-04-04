@@ -20,8 +20,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/edit_profilePictureID"
@@ -103,10 +103,12 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/prussian_blue"
                 android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/edit_nicknameID"
                 app:layout_constraintHorizontal_bias="0.52"
                 app:layout_constraintStart_toStartOf="@+id/edit_nicknameID"
-                app:layout_constraintTop_toTopOf="@+id/edit_nicknameID" />
+                app:layout_constraintTop_toTopOf="@+id/edit_nicknameID"
+                app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
                 android:id="@+id/edit_camera_button"
@@ -122,10 +124,10 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
             android:background="@drawable/rounded_corners"
             android:backgroundTint="@color/prussian_blue"
-            android:layout_weight="1"
             android:fillViewport="true">
 
             <LinearLayout
