@@ -26,7 +26,6 @@ class ShowProfileActivity : AppCompatActivity() {
     private lateinit var sdh: SaveProfileDataHandler
     private lateinit var profilePictureOBJ: ImageView
 
-    private val profilePictureFilename: String = "profile_picture.jpg"
     private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
 
@@ -75,7 +74,7 @@ class ShowProfileActivity : AppCompatActivity() {
         this.emailOBJ.text = profile.email
         this.descriptionOBJ.text = profile.description
 
-        profilePicturePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + profilePictureFilename
+        profilePicturePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(R.string.profile_picture_filename)
         profilePictureDirectoryPath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
 
         getBitmapFromFile(profilePicturePath)?.also {

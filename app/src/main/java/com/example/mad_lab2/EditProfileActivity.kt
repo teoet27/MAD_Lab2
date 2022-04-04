@@ -39,7 +39,6 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
 
-    private val profilePictureFilename: String = "profile_picture.jpg"
     private val REQUEST_IMAGE_CAPTURE = 1
     private val PICK_IMAGE = 100
 
@@ -74,7 +73,7 @@ class EditProfileActivity : AppCompatActivity() {
         this.editPhoneOBJ.setText(intent.getCharSequenceExtra("phone"))
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
-        profilePicturePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + profilePictureFilename
+        profilePicturePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(R.string.profile_picture_filename)
         profilePictureDirectoryPath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
 
         getBitmapFromFile(profilePicturePath)?.also {
