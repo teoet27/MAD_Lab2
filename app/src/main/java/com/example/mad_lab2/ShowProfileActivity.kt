@@ -32,6 +32,7 @@ class ShowProfileActivity : AppCompatActivity() {
         if (profile == null) {
             profile = Profile(
                 "Monkey D. Luffy",
+                "Super Punch, The Mysterious D. Power",
                 "luffy@mail.com",
                 "The Great Sea",
                 "Captain @ Going Merry",
@@ -124,7 +125,7 @@ class ShowProfileActivity : AppCompatActivity() {
                 data?.getCharSequenceExtra("description").toString()
             this.emailOBJ.text =
                 data?.getCharSequenceExtra("email").toString()
-            if(data?.getCharSequenceExtra("skills").toString().compareTo("[]") == 0 ||
+            if(data?.getCharSequenceExtra("skills")?.length == 0 ||
                 data?.getCharSequenceExtra("skills").toString().compareTo("No skills") == 0)
             {
                 this.skillsOBJ.setText(R.string.noskills)

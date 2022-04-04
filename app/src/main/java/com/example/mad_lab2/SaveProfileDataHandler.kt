@@ -5,7 +5,7 @@ import com.google.gson.Gson
 
 class SaveProfileDataHandler(context: Context) {
     private val sharedPrefereces =
-        context.getSharedPreferences("com.example.mad_lab2_profileData", Context.MODE_PRIVATE)
+        context.getSharedPreferences("com.example.mad_lab2_ProfileData", Context.MODE_PRIVATE)
 
     public fun storeData(profile: Profile?) {
         if (profile != null)

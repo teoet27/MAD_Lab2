@@ -61,7 +61,10 @@ class EditProfileActivity : AppCompatActivity() {
         this.editDescriptionOBJ.setText(intent.getCharSequenceExtra("description"))
         this.editEmailOBJ.setText(intent.getCharSequenceExtra("email"))
         this.editLocationOBJ.setText(intent.getCharSequenceExtra("location"))
-        this.editSkillsOBJ.setText(intent.getCharSequenceExtra("skills"))
+        if (intent.getCharSequenceExtra("skills")?.toString()?.compareTo("No skills.") == 0)
+            this.editSkillsOBJ.setText("")
+        else
+            this.editSkillsOBJ.setText(intent.getCharSequenceExtra("skills"))
         this.editPhoneOBJ.setText(intent.getCharSequenceExtra("phone"))
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
@@ -120,7 +123,8 @@ class EditProfileActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val bitmap = getBitmapFromUri(this.photoURI)
-            val ei = ExifInterface(getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + "/profile_picture.jpg")
+            val ei =
+                ExifInterface(getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + "/profile_picture.jpg")
             val rotatedBitmap: Bitmap?
             val orientation: Int = ei.getAttributeInt(
                 ExifInterface.TAG_ORIENTATION,
@@ -228,17 +232,33 @@ class EditProfileActivity : AppCompatActivity() {
         b.putCharSequence("phone", findViewById<EditText>(R.id.edit_phone_show_ID).text)
 
         intent.putExtras(b)
-        val profile = Profile(
-            this.editFullNameOBJ.text.toString(),
-            this.editSkillsOBJ.text.toString(),
-            this.editEmailOBJ.text.toString(),
-            this.editLocationOBJ.text.toString(),
-            this.editQualificationOBJ.text.toString(),
-            this.editNickNameOBJ.text.toString(),
-            this.editDescriptionOBJ.text.toString(),
-            "null",
-            this.editPhoneOBJ.text.toString()
-        )
+
+        val profile: Profile
+        if (this.editSkillsOBJ.text.toString().compareTo("") == 0) {
+            profile = Profile(
+                this.editFullNameOBJ.text.toString(),
+                this.editEmailOBJ.text.toString(),
+                this.editLocationOBJ.text.toString(),
+                this.editQualificationOBJ.text.toString(),
+                this.editNickNameOBJ.text.toString(),
+                this.editDescriptionOBJ.text.toString(),
+                "null",
+                this.editPhoneOBJ.text.toString()
+            )
+        } else {
+            profile = Profile(
+                this.editFullNameOBJ.text.toString(),
+                this.editSkillsOBJ.text.toString(),
+                this.editEmailOBJ.text.toString(),
+                this.editLocationOBJ.text.toString(),
+                this.editQualificationOBJ.text.toString(),
+                this.editNickNameOBJ.text.toString(),
+                this.editDescriptionOBJ.text.toString(),
+                "null",
+                this.editPhoneOBJ.text.toString()
+            )
+        }
+
         this.sdh.storeData(profile)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator.vibrate(VibrationEffect.createOneShot(120, VibrationEffect.DEFAULT_AMPLITUDE))

@@ -39,10 +39,11 @@ class Profile(
         imageLocation,
         phoneNumber
     ) {
-        if (skills.compareTo("No skills.") != 0) {
+        if (skills.compareTo("No skills.") != 0 || skills.compareTo("") != 0) {
             val x: List<String> = skills.split(",")
             for (i in x.indices)
-                this.skills.add(i, x[i])
+                if (x[i].compareTo("") != 0)
+                    this.skills.add(i, x[i])
         }
     }
 }
