@@ -5,27 +5,15 @@ class Profile(
     qualification: String, nickname: String, description: String,
     imageLocation: String, phoneNumber: String
 ) {
-    var fullname: String
-    var skills: ArrayList<String>
-    var email: String
-    var location: String
-    var qualification: String
-    var nickname: String
-    var description: String
-    var imageLocation: String
-    var phoneNumber: String
-
-    init {
-        this.fullname = name
-        this.skills = ArrayList<String>()
-        this.email = email
-        this.location = location
-        this.qualification = qualification
-        this.nickname = nickname
-        this.imageLocation = imageLocation
-        this.description = description
-        this.phoneNumber = phoneNumber
-    }
+    var fullname: String = name
+    var skills: ArrayList<String> = ArrayList<String>()
+    var email: String = email
+    var location: String = location
+    var qualification: String = qualification
+    var nickname: String = nickname
+    var description: String = description
+    var imageLocation: String = imageLocation
+    var phoneNumber: String = phoneNumber
 
     constructor(
         name: String, skills: String, email: String, location: String,
