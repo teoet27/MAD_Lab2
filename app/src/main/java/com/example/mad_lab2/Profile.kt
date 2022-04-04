@@ -29,9 +29,13 @@ class Profile(
     ) {
         if (skills.compareTo("No skills.") != 0 || skills.compareTo("") != 0) {
             val x: List<String> = skills.split(",")
-            for (i in x.indices)
+            for (i in x.indices) {
+                if (x[i][0].compareTo(' ') == 0) {
+
+                }
                 if (x[i].compareTo("") != 0)
                     this.skills.add(i, x[i])
+            }
         }
     }
 }

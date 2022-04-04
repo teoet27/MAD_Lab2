@@ -125,8 +125,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun dispatchLoadPictureIntent() {
-        val loadPictureIntent =
-            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        val loadPictureIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         try {
             startActivityForResult(loadPictureIntent, PICK_IMAGE)
         } catch (e: ActivityNotFoundException) {
@@ -137,14 +136,17 @@ class EditProfileActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if ((requestCode == REQUEST_IMAGE_CAPTURE || requestCode == PICK_IMAGE) && resultCode == RESULT_OK) {
-            saveProfilePicture(
-                handleSamplingAndRotationBitmap(applicationContext, photoURI)!!,
-                profilePictureDirectoryPath
-            )
-            findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(
-                handleSamplingAndRotationBitmap(applicationContext, photoURI)
-            )
+        val rotatedImage: Bitmap?
+
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            rotatedImage = handleSamplingAndRotationBitmap(applicationContext, this.photoURI)!!
+            saveProfilePicture(rotatedImage!!, profilePictureDirectoryPath)
+            findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(rotatedImage)
+        } else if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+            this.photoURI = data?.data!!
+            rotatedImage = handleSamplingAndRotationBitmap(applicationContext, this.photoURI)!!
+            saveProfilePicture(rotatedImage!!, profilePictureDirectoryPath)
+            findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(rotatedImage)
         }
     }
 
