@@ -91,7 +91,6 @@ class EditProfileActivity : AppCompatActivity() {
         return BitmapFactory.decodeFile(path)
     }
 
-
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
