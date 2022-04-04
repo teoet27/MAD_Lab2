@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/prussian_blue"
-    android:theme="@style/Theme.MAD_Lab2"
-    tools:context=".ShowProfileActivity">
+    android:backgroundTint="@color/prussian_blue">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,25 +18,21 @@
 
             <ImageView
                 android:id="@+id/profilePictureID"
-                android:layout_width="84dp"
-                android:layout_height="84dp"
-                android:layout_marginBottom="8dp"
-                android:cropToPadding="true"
-                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.13"
-                app:srcCompat="@drawable/propic" />
+                app:srcCompat="@drawable/propic"
+                android:layout_width="84dp"
+                android:layout_height="84dp"
+                android:layout_marginBottom="8dp"
+                android:cropToPadding="true"
+                android:scaleType="centerCrop" />
 
             <ImageView
                 android:id="@+id/profilePicture_mask_ID"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:cropToPadding="true"
-                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="@+id/profilePictureID"
                 app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -47,10 +40,17 @@
                 app:layout_constraintTop_toTopOf="@+id/profilePictureID"
                 app:layout_constraintVertical_bias="1.0"
                 app:srcCompat="@drawable/circular_mask"
-                app:tint="@color/prussian_blue" />
+                app:tint="@color/prussian_blue"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:cropToPadding="true"
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/fullnameID"
+                app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
+                app:layout_constraintStart_toStartOf="@+id/profilePictureID"
+                app:layout_constraintTop_toBottomOf="@+id/profilePictureID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -59,13 +59,13 @@
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="#FFFFFF"
-                android:textSize="34sp"
-                app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
-                app:layout_constraintStart_toStartOf="@+id/profilePictureID"
-                app:layout_constraintTop_toBottomOf="@+id/profilePictureID" />
+                android:textSize="34sp" />
 
             <TextView
                 android:id="@+id/nicknameID"
+                app:layout_constraintEnd_toEndOf="@+id/fullnameID"
+                app:layout_constraintStart_toStartOf="@+id/fullnameID"
+                app:layout_constraintTop_toBottomOf="@+id/fullnameID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
@@ -73,24 +73,24 @@
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/orange_poli"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/fullnameID"
-                app:layout_constraintStart_toStartOf="@+id/fullnameID"
-                app:layout_constraintTop_toBottomOf="@+id/fullnameID" />
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/verification_badge_ID"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginTop="76dp"
                 app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
                 app:layout_constraintStart_toStartOf="@+id/profilePictureID"
                 app:layout_constraintTop_toTopOf="@+id/profilePictureID"
                 app:srcCompat="@drawable/ic_verified_black_24dp"
-                app:tint="@color/orange_poli" />
+                app:tint="@color/orange_poli"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="76dp" />
 
             <TextView
                 android:id="@+id/qualificationID"
+                app:layout_constraintEnd_toEndOf="@+id/nicknameID"
+                app:layout_constraintStart_toStartOf="@+id/nicknameID"
+                app:layout_constraintTop_toBottomOf="@+id/nicknameID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -99,10 +99,7 @@
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/nicknameID"
-                app:layout_constraintStart_toStartOf="@+id/nicknameID"
-                app:layout_constraintTop_toBottomOf="@+id/nicknameID" />
+                android:textSize="20sp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
@@ -197,14 +194,14 @@
 
                     <TextView
                         android:id="@+id/phone_static_ID"
+                        app:drawableLeftCompat="@drawable/ic_call_black_24dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
                         android:text="@string/phone_number"
-                        android:textSize="16sp"
-                        app:drawableLeftCompat="@drawable/ic_call_black_24dp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/phone_show_ID"
@@ -228,14 +225,14 @@
 
                     <TextView
                         android:id="@+id/email_static_ID"
+                        app:drawableLeftCompat="@drawable/ic_email_black_24dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
                         android:text="@string/email_text"
-                        android:textSize="16sp"
-                        app:drawableLeftCompat="@drawable/ic_email_black_24dp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/email_show_ID"
@@ -259,14 +256,14 @@
 
                     <TextView
                         android:id="@+id/loc_static_ID"
+                        app:drawableLeftCompat="@drawable/ic_location_on_black_24dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
                         android:text="@string/location_text"
-                        android:textSize="16sp"
-                        app:drawableLeftCompat="@drawable/ic_location_on_black_24dp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/loc_show_ID"
@@ -283,5 +280,4 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
