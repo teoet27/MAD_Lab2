@@ -174,7 +174,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
-                    android:text="@string/default_skills_text"
+                    android:text="@string/edit_skills_text"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp" />
 

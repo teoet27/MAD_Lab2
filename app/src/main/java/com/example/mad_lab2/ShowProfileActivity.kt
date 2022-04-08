@@ -66,10 +66,10 @@ class ShowProfileActivity : AppCompatActivity() {
         this.qualificationOBJ.text = profile.qualification
         this.phoneOBJ.text = profile.phoneNumber
         this.locationOBJ.text = profile.location
-        if (profile.skills.size == 0) {
+        if (profile.skillList.size == 0) {
             this.skillsOBJ.setText(R.string.noskills)
         } else {
-            this.skillsOBJ.text = fromArrayListToString(profile.skills)
+            this.skillsOBJ.text = fromArrayListToString(profile.skillList)
         }
         this.emailOBJ.text = profile.email
         this.descriptionOBJ.text = profile.description
@@ -82,7 +82,7 @@ class ShowProfileActivity : AppCompatActivity() {
         }
     }
 
-    fun getBitmapFromFile(path:String): Bitmap? {
+    fun getBitmapFromFile(path: String): Bitmap? {
         return BitmapFactory.decodeFile(path)
     }
 
@@ -122,11 +122,11 @@ class ShowProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun fromArrayListToString(list: ArrayList<String>) : String {
-        var out: String = ""
-        for(i in list.indices){
+    private fun fromArrayListToString(list: ArrayList<String>): String {
+        var out = ""
+        for (i in list.indices) {
             out += list[i]
-            if(i != list.size-1)
+            if (i != list.size - 1)
                 out += ", "
         }
         return out
@@ -144,12 +144,11 @@ class ShowProfileActivity : AppCompatActivity() {
                 data?.getCharSequenceExtra("description").toString()
             this.emailOBJ.text =
                 data?.getCharSequenceExtra("email").toString()
-            if(data?.getCharSequenceExtra("skills")?.length == 0 ||
-                data?.getCharSequenceExtra("skills").toString().compareTo("No skills") == 0)
-            {
+            if (data?.getCharSequenceExtra("skills")?.length == 0 ||
+                data?.getCharSequenceExtra("skills").toString().split(" ").size == data?.getCharSequenceExtra("skills").toString().length + 1
+            ) {
                 this.skillsOBJ.setText(R.string.noskills)
-            }
-            else {
+            } else {
                 this.skillsOBJ.text =
                     data?.getCharSequenceExtra("skills").toString()
             }

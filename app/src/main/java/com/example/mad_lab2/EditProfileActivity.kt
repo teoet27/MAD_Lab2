@@ -139,12 +139,12 @@ class EditProfileActivity : AppCompatActivity() {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             rotatedImage = handleSamplingAndRotationBitmap(applicationContext, this.photoURI)!!
-            saveProfilePicture(rotatedImage!!, profilePictureDirectoryPath)
+            saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
             findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(rotatedImage)
         } else if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             this.photoURI = data?.data!!
             rotatedImage = handleSamplingAndRotationBitmap(applicationContext, this.photoURI)!!
-            saveProfilePicture(rotatedImage!!, profilePictureDirectoryPath)
+            saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
             findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(rotatedImage)
         }
     }
@@ -193,25 +193,21 @@ class EditProfileActivity : AppCompatActivity() {
         val intent = Intent()
         val b = Bundle()
 
-        b.putCharSequence("fullname", findViewById<EditText>(R.id.edit_fullnameID).text)
-        b.putCharSequence("nickname", findViewById<EditText>(R.id.edit_nicknameID).text)
-        b.putCharSequence(
-            "qualification",
-            findViewById<EditText>(R.id.edit_qualificationID).text
-        )
-        b.putCharSequence(
-            "description",
-            findViewById<EditText>(R.id.edit_description_show_ID).text
-        )
-        b.putCharSequence("email", findViewById<EditText>(R.id.edit_email_show_ID).text)
-        b.putCharSequence("location", findViewById<EditText>(R.id.edit_loc_show_ID).text)
-        b.putCharSequence("skills", findViewById<EditText>(R.id.edit_skillsListID).text)
-        b.putCharSequence("phone", findViewById<EditText>(R.id.edit_phone_show_ID).text)
+        b.putCharSequence("fullname", this.editFullNameOBJ.text)
+        b.putCharSequence("nickname", this.editNickNameOBJ.text)
+        b.putCharSequence("qualification", this.editQualificationOBJ.text)
+        b.putCharSequence("description", this.editDescriptionOBJ.text)
+        b.putCharSequence("email", this.editEmailOBJ.text)
+        b.putCharSequence("location", this.editLocationOBJ.text)
+        b.putCharSequence("skills", this.editSkillsOBJ.text)
+        b.putCharSequence("phone", this.editPhoneOBJ.text)
 
         intent.putExtras(b)
 
         val profile: Profile
-        if (this.editSkillsOBJ.text.toString().compareTo("") == 0) {
+        if (this.editSkillsOBJ.text.toString().compareTo("") == 0 ||
+            this.editSkillsOBJ.text.toString().split(" ").size == this.editSkillsOBJ.text.toString().length + 1
+        ) {
             profile = Profile(
                 this.editFullNameOBJ.text.toString(),
                 this.editEmailOBJ.text.toString(),
@@ -264,7 +260,9 @@ class EditProfileActivity : AppCompatActivity() {
                 intent.putExtras(b)
 
                 val profile: Profile
-                if (this.editSkillsOBJ.text.toString().compareTo("") == 0) {
+                if (this.editSkillsOBJ.text.toString().compareTo("") == 0 ||
+                    this.editSkillsOBJ.text.toString().split(" ").size == this.editSkillsOBJ.text.toString().length + 1
+                ) {
                     profile = Profile(
                         this.editFullNameOBJ.text.toString(),
                         this.editEmailOBJ.text.toString(),

@@ -6,7 +6,7 @@ class Profile(
     imageLocation: String, phoneNumber: String
 ) {
     var fullname: String = name
-    var skills: ArrayList<String> = ArrayList<String>()
+    var skillList: ArrayList<String> = ArrayList<String>()
     var email: String = email
     var location: String = location
     var qualification: String = qualification
@@ -27,11 +27,12 @@ class Profile(
         imageLocation,
         phoneNumber
     ) {
-        if (skills.compareTo("No skills.") != 0 || skills.compareTo("") != 0) {
+        if (skills.compareTo("") != 0 && skills.split(" ").size != skills.length + 1) {
             val x: List<String> = skills.split(",")
             for (i in x.indices) {
-                if (x[i].compareTo("") != 0)
-                    this.skills.add(i, x[i])
+                if (x[i].compareTo("") != 0) {
+                    this.skillList.add(i, x[i].trim())
+                }
             }
         }
     }
