@@ -189,6 +189,21 @@ class EditProfileActivity : AppCompatActivity() {
         return true
     }
 
+    fun parseSkillString(x: String): String {
+        var out = ""
+        for ((index, kw) in x.split(",").withIndex()) {
+            if (!kw.trim().isEmpty()) {
+                if (index == 0) {
+                    out += kw.trim()
+                } else {
+                    out += ", "
+                    out += kw.trim()
+                }
+            }
+        }
+        return out
+    }
+
     override fun onBackPressed() {
         val intent = Intent()
         val b = Bundle()
@@ -199,7 +214,7 @@ class EditProfileActivity : AppCompatActivity() {
         b.putCharSequence("description", this.editDescriptionOBJ.text)
         b.putCharSequence("email", this.editEmailOBJ.text)
         b.putCharSequence("location", this.editLocationOBJ.text)
-        b.putCharSequence("skills", this.editSkillsOBJ.text)
+        b.putCharSequence("skills", parseSkillString(this.editSkillsOBJ.text.toString()))
         b.putCharSequence("phone", this.editPhoneOBJ.text)
 
         intent.putExtras(b)
@@ -254,7 +269,7 @@ class EditProfileActivity : AppCompatActivity() {
                 b.putCharSequence("description", this.editDescriptionOBJ.text)
                 b.putCharSequence("email", this.editEmailOBJ.text)
                 b.putCharSequence("location", this.editLocationOBJ.text)
-                b.putCharSequence("skills", this.editSkillsOBJ.text)
+                b.putCharSequence("skills", parseSkillString(this.editSkillsOBJ.text.toString()))
                 b.putCharSequence("phone", this.editPhoneOBJ.text)
 
                 intent.putExtras(b)
