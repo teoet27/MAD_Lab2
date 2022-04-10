@@ -87,10 +87,21 @@ class EditProfileActivity : AppCompatActivity() {
         cam.setOnClickListener { openContextMenu(cam) }
     }
 
+    /**
+     * This method returns the Bitmap image from a file whose path is provided
+     *
+     * @param path  The path were to find the file
+     * @return Bitmap image results
+     */
     fun getBitmapFromFile(path: String): Bitmap? {
         return BitmapFactory.decodeFile(path)
     }
 
+    /**
+     * This method invokes an intent to take a picture. First, it checks if there is an
+     * available camera, then it creates a file where to store the image and finally the intent
+     * is dispatched.
+     */
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
@@ -117,12 +128,21 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * This method creates an image file and throws an exception if the file could not be created
+     *
+     * @return Created file
+     * @throws IOException
+     */
     @Throws(IOException::class)
     private fun createImageFile(): File {
         // Create an image file name
         return File(profilePicturePath)
     }
 
+    /**
+     * This method invokes an intent to load a picture from the filesystem
+     */
     private fun dispatchLoadPictureIntent() {
         val loadPictureIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         try {
@@ -133,6 +153,14 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * This method returns the Bitmap image from a file whose path is provided
+     *
+     * @param requestCode  It delivers the user's decision (either take or load a picture)
+     * @param resultCode  It represents the result of the invoked intent
+     * @param data  It contains the image bitmap in the extras
+     * @return Bitmap image results
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val rotatedImage: Bitmap?
@@ -149,6 +177,12 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * This method stores the profile picture into a file
+     *
+     * @param bitmap  Bitmap image of the profile picture
+     * @param dir  Directory where to store the profile picture
+     */
     private fun saveProfilePicture(bitmap: Bitmap, dir: String) {
         val imageFile = File(dir, "profile_picture.jpg")
         try {
@@ -162,6 +196,14 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * This method chooses a menu to be inflated on the basis of the availability of the camera
+     *
+     * @param menu  ContextMenu
+     * @param v  View
+     * @param menuInfo  ContextMenu info
+     * @return true
+     */
     override fun onCreateContextMenu(
         menu: ContextMenu?,
         v: View?,
@@ -175,6 +217,12 @@ class EditProfileActivity : AppCompatActivity() {
             inflater.inflate(R.menu.select_picture_floating_context_menu, menu)
     }
 
+    /**
+     * This method invokes an intent for either taking or loading a picture
+     *
+     * @param item  Chosen menu entry
+     * @return true
+     */
     override fun onContextItemSelected(item: MenuItem): Boolean {
         when (item.title) {
             resources.getString(R.string.floating_menu_shot_picture) -> dispatchTakePictureIntent()
@@ -183,12 +231,24 @@ class EditProfileActivity : AppCompatActivity() {
         return true
     }
 
+    /**
+     * This method inflates the option menu
+     *
+     * @param menu  Menu to be inflated
+     * @return true
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.edit_profile_main_menu, menu)
         return true
     }
 
+    /**
+     * This utility method modifies the skills-textbox edited by the user to a specific format
+     *
+     * @param x  String written by the user
+     * @return string of skills
+     */
     fun parseSkillString(x: String): String {
         var out = ""
         for ((index, kw) in x.split(",").withIndex()) {

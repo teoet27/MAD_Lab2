@@ -82,10 +82,22 @@ class ShowProfileActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * This method returns the Bitmap image from a file whose path is provided
+     *
+     * @param path  The path were to find the file
+     * @return Bitmap image results
+     */
     fun getBitmapFromFile(path: String): Bitmap? {
         return BitmapFactory.decodeFile(path)
     }
 
+    /**
+     * This method inflates the option menu
+     *
+     * @param menu  Menu to be inflated
+     * @return true
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.show_profile_main_menu, menu)
@@ -122,6 +134,12 @@ class ShowProfileActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * This utility method changes an array list into a string with a specific format
+     *
+     * @param list  List of skills
+     * @return string of skills
+     */
     private fun fromArrayListToString(list: ArrayList<String>): String {
         var out = ""
         for (i in list.indices) {
