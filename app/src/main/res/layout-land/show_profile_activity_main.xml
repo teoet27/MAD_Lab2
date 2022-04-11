@@ -132,8 +132,8 @@
 
                 <TextView
                     android:id="@+id/description_show_ID"
-                    android:layout_width="549dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="116dp"
                     android:hint="No description provided."
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
@@ -165,8 +165,8 @@
 
                 <TextView
                     android:id="@+id/skillsListID"
-                    android:layout_width="551dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="21dp"
                     android:layout_marginTop="5dp"
                     android:paddingLeft="40dp"
                     android:paddingRight="40dp"
