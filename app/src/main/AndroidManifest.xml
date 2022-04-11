@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mad_lab2">
+    package="it.polito.group06">
 
     <uses-permission android:name="android.permission.VIBRATE"/>
     <application
@@ -11,11 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MAD_Lab2">
         <activity
-            android:name=".EditProfileActivity"
+            android:name="it.polito.group06.EditProfileActivity"
             android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
-            android:name=".ShowProfileActivity"
+            android:name="it.polito.group06.ShowProfileActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

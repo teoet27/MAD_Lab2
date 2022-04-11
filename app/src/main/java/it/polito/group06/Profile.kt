@@ -1,4 +1,4 @@
-package com.example.mad_lab2
+package it.polito.group06
 
 class Profile(
     name: String, email: String, location: String,

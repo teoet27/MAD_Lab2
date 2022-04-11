@@ -4,16 +4,32 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/drawable/ic_account_circle_black_24dp.xml" value="0.387" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/drawable/ic_add_black_24dp.xml" value="0.387" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/drawable/ic_badge_black_24dp.xml" value="0.387" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/drawable/ic_call_black_24dp.xml" value="0.387" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/drawable/ic_done_black_24dp.xml" value="0.387" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/drawable/ic_edit_black_24dp.xml" value="0.387" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/drawable/ic_email_black_24dp.xml" value="0.387" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.387" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/drawable/ic_location_on_black_24dp.xml" value="0.387" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/drawable/ic_menu_black_24dp.xml" value="0.387" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/drawable/ic_menu_open_black_24dp.xml" value="0.387" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/drawable/ic_photo_camera_black_24dp.xml" value="0.387" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/drawable/ic_photo_library_black_24dp.xml" value="0.387" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/drawable/ic_schedule_black_24dp.xml" value="0.387" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/drawable/ic_verified_black_24dp.xml" value="0.387" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/drawable/ic_west_black_24dp.xml" value="0.387" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/layout-land/edit_profile_activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/layout-land/show_profile_activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/layout/edit_profile_activity_main.xml" value="0.3175213675213675" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/layout/show_profile_activity_main.xml" value="0.3175213675213675" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.387" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD_Lab2/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.387" />
         <entry key="..\:/Users/Utente/AndroidStudioProjects/MAD_Lab2/app/src/main/res/layout/activity_edit_profile.xml" value="0.20104166666666667" />
         <entry key="..\:/Users/Utente/AndroidStudioProjects/MAD_Lab2/app/src/main/res/layout/edit_profile_activity_main.xml" value="0.33" />
         <entry key="..\:/Users/Utente/AndroidStudioProjects/MAD_Lab2/app/src/main/res/layout/show_profile_activity_main.xml" value="0.25" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>

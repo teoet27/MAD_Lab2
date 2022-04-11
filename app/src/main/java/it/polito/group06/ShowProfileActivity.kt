@@ -1,4 +1,4 @@
-package com.example.mad_lab2
+package it.polito.group06
 
 import android.app.Activity
 import android.content.Intent
@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import it.polito.group06.R
 
 class ShowProfileActivity : AppCompatActivity() {
     private lateinit var fullnameOBJ: TextView
@@ -120,14 +121,14 @@ class ShowProfileActivity : AppCompatActivity() {
                 val intent = Intent(this, EditProfileActivity::class.java)
                 val b = Bundle()
 
-                b.putCharSequence("fullname", findViewById<TextView>(R.id.edit_fullnameID).text)
-                b.putCharSequence("nickname", findViewById<TextView>(R.id.edit_nicknameID).text.toString().split("@")[1])
-                b.putCharSequence("qualification", findViewById<TextView>(R.id.edit_qualificationID).text)
-                b.putCharSequence("phone", findViewById<TextView>(R.id.phone_show_ID).text)
-                b.putCharSequence("location", findViewById<TextView>(R.id.loc_show_ID).text)
-                b.putCharSequence("skills", findViewById<TextView>(R.id.skillsListID).text)
-                b.putCharSequence("email", findViewById<TextView>(R.id.email_show_ID).text)
-                b.putCharSequence("description", findViewById<TextView>(R.id.description_show_ID).text)
+                b.putCharSequence("group06.lab2.fullname", findViewById<TextView>(R.id.edit_fullnameID).text)
+                b.putCharSequence("group06.lab2.nickname", findViewById<TextView>(R.id.edit_nicknameID).text.toString().split("@")[1])
+                b.putCharSequence("group06.lab2.qualification", findViewById<TextView>(R.id.edit_qualificationID).text)
+                b.putCharSequence("group06.lab2.phone", findViewById<TextView>(R.id.phone_show_ID).text)
+                b.putCharSequence("group06.lab2.location", findViewById<TextView>(R.id.loc_show_ID).text)
+                b.putCharSequence("group06.lab2.skills", findViewById<TextView>(R.id.skillsListID).text)
+                b.putCharSequence("group06.lab2.email", findViewById<TextView>(R.id.email_show_ID).text)
+                b.putCharSequence("group06.lab2.description", findViewById<TextView>(R.id.description_show_ID).text)
 
                 intent.putExtras(b)
                 startActivityForResult(intent, 1)
@@ -155,21 +156,21 @@ class ShowProfileActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            this.fullnameOBJ.text = data?.getCharSequenceExtra("fullname").toString()
-            this.nicknameOBJ.text = "@" + data?.getCharSequenceExtra("nickname").toString()
-            this.qualificationOBJ.text = data?.getCharSequenceExtra("qualification").toString()
-            this.descriptionOBJ.text = data?.getCharSequenceExtra("description").toString()
-            this.emailOBJ.text = data?.getCharSequenceExtra("email").toString()
-            if (data?.getCharSequenceExtra("skills")?.length == 0 ||
-                data?.getCharSequenceExtra("skills").toString().split(" ").size == data?.getCharSequenceExtra("skills").toString().length + 1
+            this.fullnameOBJ.text = data?.getCharSequenceExtra("group06.lab2.fullname").toString()
+            this.nicknameOBJ.text = "@" + data?.getCharSequenceExtra("group06.lab2.nickname").toString()
+            this.qualificationOBJ.text = data?.getCharSequenceExtra("group06.lab2.qualification").toString()
+            this.descriptionOBJ.text = data?.getCharSequenceExtra("group06.lab2.description").toString()
+            this.emailOBJ.text = data?.getCharSequenceExtra("group06.lab2.email").toString()
+            if (data?.getCharSequenceExtra("group06.lab2.skills")?.length == 0 ||
+                data?.getCharSequenceExtra("group06.lab2.skills").toString().split(" ").size == data?.getCharSequenceExtra("group06.lab2.skills").toString().length + 1
             ) {
                 this.skillsOBJ.setText(R.string.noskills)
             } else {
                 this.skillsOBJ.text =
-                    data?.getCharSequenceExtra("skills").toString()
+                    data?.getCharSequenceExtra("group06.lab2.skills").toString()
             }
-            this.locationOBJ.text = data?.getCharSequenceExtra("location").toString()
-            this.phoneOBJ.text = data?.getCharSequenceExtra("phone").toString()
+            this.locationOBJ.text = data?.getCharSequenceExtra("group06.lab2.location").toString()
+            this.phoneOBJ.text = data?.getCharSequenceExtra("group06.lab2.phone").toString()
             getBitmapFromFile(profilePicturePath)?.also {
                 this.profilePictureOBJ.setImageBitmap(it)
             }
@@ -179,25 +180,25 @@ class ShowProfileActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putCharSequence("fullname", this.fullnameOBJ.text)
-        outState.putCharSequence("nickname", this.nicknameOBJ.text)
-        outState.putCharSequence("qualification", this.qualificationOBJ.text)
-        outState.putCharSequence("location", this.locationOBJ.text)
-        outState.putCharSequence("email", this.emailOBJ.text)
-        outState.putCharSequence("phone", this.phoneOBJ.text)
-        outState.putCharSequence("description", this.descriptionOBJ.text)
-        outState.putCharSequence("skills", this.skillsOBJ.text)
+        outState.putCharSequence("group06.lab2.fullname", this.fullnameOBJ.text)
+        outState.putCharSequence("group06.lab2.nickname", this.nicknameOBJ.text)
+        outState.putCharSequence("group06.lab2.qualification", this.qualificationOBJ.text)
+        outState.putCharSequence("group06.lab2.location", this.locationOBJ.text)
+        outState.putCharSequence("group06.lab2.email", this.emailOBJ.text)
+        outState.putCharSequence("group06.lab2.phone", this.phoneOBJ.text)
+        outState.putCharSequence("group06.lab2.description", this.descriptionOBJ.text)
+        outState.putCharSequence("group06.lab2.skills", this.skillsOBJ.text)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        this.fullnameOBJ.text = savedInstanceState.getCharSequence("fullname")
-        this.nicknameOBJ.text = savedInstanceState.getCharSequence("nickname")
-        this.qualificationOBJ.text = savedInstanceState.getCharSequence("qualification")
-        this.locationOBJ.text = savedInstanceState.getCharSequence("location")
-        this.emailOBJ.text = savedInstanceState.getCharSequence("email")
-        this.phoneOBJ.text = savedInstanceState.getCharSequence("phone")
-        this.descriptionOBJ.text = savedInstanceState.getCharSequence("description")
-        this.skillsOBJ.text = savedInstanceState.getCharSequence("skills")
+        this.fullnameOBJ.text = savedInstanceState.getCharSequence("group06.lab2.fullname")
+        this.nicknameOBJ.text = savedInstanceState.getCharSequence("group06.lab2.nickname")
+        this.qualificationOBJ.text = savedInstanceState.getCharSequence("group06.lab2.qualification")
+        this.locationOBJ.text = savedInstanceState.getCharSequence("group06.lab2.location")
+        this.emailOBJ.text = savedInstanceState.getCharSequence("group06.lab2.email")
+        this.phoneOBJ.text = savedInstanceState.getCharSequence("group06.lab2.phone")
+        this.descriptionOBJ.text = savedInstanceState.getCharSequence("group06.lab2.description")
+        this.skillsOBJ.text = savedInstanceState.getCharSequence("group06.lab2.skills")
     }
 }

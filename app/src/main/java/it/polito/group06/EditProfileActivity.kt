@@ -1,4 +1,4 @@
-package com.example.mad_lab2
+package it.polito.group06
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
@@ -18,6 +18,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.FileProvider
+import it.polito.group06.R
 import java.io.*
 
 
@@ -58,17 +59,17 @@ class EditProfileActivity : AppCompatActivity() {
         this.editPhoneOBJ = findViewById(R.id.edit_phone_show_ID)
         this.profilePictureOBJ = findViewById(R.id.edit_profilePictureID)
 
-        this.editFullNameOBJ.setText(intent.getCharSequenceExtra("fullname"))
-        this.editNickNameOBJ.setText(intent.getCharSequenceExtra("nickname"))
-        this.editQualificationOBJ.setText(intent.getCharSequenceExtra("qualification"))
-        this.editDescriptionOBJ.setText(intent.getCharSequenceExtra("description"))
-        this.editEmailOBJ.setText(intent.getCharSequenceExtra("email"))
-        this.editLocationOBJ.setText(intent.getCharSequenceExtra("location"))
-        if (intent.getCharSequenceExtra("skills")?.toString()?.compareTo("No skills.") == 0)
+        this.editFullNameOBJ.setText(intent.getCharSequenceExtra("group06.lab2.fullname"))
+        this.editNickNameOBJ.setText(intent.getCharSequenceExtra("group06.lab2.nickname"))
+        this.editQualificationOBJ.setText(intent.getCharSequenceExtra("group06.lab2.qualification"))
+        this.editDescriptionOBJ.setText(intent.getCharSequenceExtra("group06.lab2.description"))
+        this.editEmailOBJ.setText(intent.getCharSequenceExtra("group06.lab2.email"))
+        this.editLocationOBJ.setText(intent.getCharSequenceExtra("group06.lab2.location"))
+        if (intent.getCharSequenceExtra("group06.lab2.skills")?.toString()?.compareTo("No skills.") == 0)
             this.editSkillsOBJ.setText("")
         else
-            this.editSkillsOBJ.setText(intent.getCharSequenceExtra("skills"))
-        this.editPhoneOBJ.setText(intent.getCharSequenceExtra("phone"))
+            this.editSkillsOBJ.setText(intent.getCharSequenceExtra("group06.lab2.skills"))
+        this.editPhoneOBJ.setText(intent.getCharSequenceExtra("group06.lab2.phone"))
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         profilePicturePath =
@@ -271,14 +272,14 @@ class EditProfileActivity : AppCompatActivity() {
         val intent = Intent()
         val b = Bundle()
 
-        b.putCharSequence("fullname", this.editFullNameOBJ.text)
-        b.putCharSequence("nickname", this.editNickNameOBJ.text)
-        b.putCharSequence("qualification", this.editQualificationOBJ.text)
-        b.putCharSequence("description", this.editDescriptionOBJ.text)
-        b.putCharSequence("email", this.editEmailOBJ.text)
-        b.putCharSequence("location", this.editLocationOBJ.text)
-        b.putCharSequence("skills", parseSkillString(this.editSkillsOBJ.text.toString()))
-        b.putCharSequence("phone", this.editPhoneOBJ.text)
+        b.putCharSequence("group06.lab2.fullname", this.editFullNameOBJ.text)
+        b.putCharSequence("group06.lab2.nickname", this.editNickNameOBJ.text)
+        b.putCharSequence("group06.lab2.qualification", this.editQualificationOBJ.text)
+        b.putCharSequence("group06.lab2.description", this.editDescriptionOBJ.text)
+        b.putCharSequence("group06.lab2.email", this.editEmailOBJ.text)
+        b.putCharSequence("group06.lab2.location", this.editLocationOBJ.text)
+        b.putCharSequence("group06.lab2.skills", parseSkillString(this.editSkillsOBJ.text.toString()))
+        b.putCharSequence("group06.lab2.phone", this.editPhoneOBJ.text)
 
         intent.putExtras(b)
 
@@ -326,14 +327,14 @@ class EditProfileActivity : AppCompatActivity() {
                 val intent = Intent()
                 val b = Bundle()
 
-                b.putCharSequence("fullname", this.editFullNameOBJ.text)
-                b.putCharSequence("nickname", this.editNickNameOBJ.text)
-                b.putCharSequence("qualification", this.editQualificationOBJ.text)
-                b.putCharSequence("description", this.editDescriptionOBJ.text)
-                b.putCharSequence("email", this.editEmailOBJ.text)
-                b.putCharSequence("location", this.editLocationOBJ.text)
-                b.putCharSequence("skills", parseSkillString(this.editSkillsOBJ.text.toString()))
-                b.putCharSequence("phone", this.editPhoneOBJ.text)
+                b.putCharSequence("group06.lab2.fullname", this.editFullNameOBJ.text)
+                b.putCharSequence("group06.lab2.nickname", this.editNickNameOBJ.text)
+                b.putCharSequence("group06.lab2.qualification", this.editQualificationOBJ.text)
+                b.putCharSequence("group06.lab2.description", this.editDescriptionOBJ.text)
+                b.putCharSequence("group06.lab2.email", this.editEmailOBJ.text)
+                b.putCharSequence("group06.lab2.location", this.editLocationOBJ.text)
+                b.putCharSequence("group06.lab2.skills", parseSkillString(this.editSkillsOBJ.text.toString()))
+                b.putCharSequence("group06.lab2.phone", this.editPhoneOBJ.text)
 
                 intent.putExtras(b)
 
@@ -386,26 +387,26 @@ class EditProfileActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putCharSequence("fullname", this.editFullNameOBJ.text)
-        outState.putCharSequence("nickname", this.editNickNameOBJ.text)
-        outState.putCharSequence("qualification", this.editQualificationOBJ.text)
-        outState.putCharSequence("description", this.editDescriptionOBJ.text)
-        outState.putCharSequence("email", this.editEmailOBJ.text)
-        outState.putCharSequence("location", this.editLocationOBJ.text)
-        outState.putCharSequence("skills", this.editSkillsOBJ.text)
-        outState.putCharSequence("phone", this.editPhoneOBJ.text)
+        outState.putCharSequence("group06.lab2.fullname", this.editFullNameOBJ.text)
+        outState.putCharSequence("group06.lab2.nickname", this.editNickNameOBJ.text)
+        outState.putCharSequence("group06.lab2.qualification", this.editQualificationOBJ.text)
+        outState.putCharSequence("group06.lab2.description", this.editDescriptionOBJ.text)
+        outState.putCharSequence("group06.lab2.email", this.editEmailOBJ.text)
+        outState.putCharSequence("group06.lab2.location", this.editLocationOBJ.text)
+        outState.putCharSequence("group06.lab2.skills", this.editSkillsOBJ.text)
+        outState.putCharSequence("group06.lab2.phone", this.editPhoneOBJ.text)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        this.editFullNameOBJ.setText(savedInstanceState.getCharSequence("fullname"))
-        this.editNickNameOBJ.setText(savedInstanceState.getCharSequence("nickname"))
-        this.editQualificationOBJ.setText(savedInstanceState.getCharSequence("qualification"))
-        this.editDescriptionOBJ.setText(savedInstanceState.getCharSequence("description"))
-        this.editEmailOBJ.setText(savedInstanceState.getCharSequence("email"))
-        this.editLocationOBJ.setText(savedInstanceState.getCharSequence("location"))
-        this.editSkillsOBJ.setText(savedInstanceState.getCharSequence("skills"))
-        this.editPhoneOBJ.setText(savedInstanceState.getCharSequence("phone"))
+        this.editFullNameOBJ.setText(savedInstanceState.getCharSequence("group06.lab2.fullname"))
+        this.editNickNameOBJ.setText(savedInstanceState.getCharSequence("group06.lab2.nickname"))
+        this.editQualificationOBJ.setText(savedInstanceState.getCharSequence("group06.lab2.qualification"))
+        this.editDescriptionOBJ.setText(savedInstanceState.getCharSequence("group06.lab2.description"))
+        this.editEmailOBJ.setText(savedInstanceState.getCharSequence("group06.lab2.email"))
+        this.editLocationOBJ.setText(savedInstanceState.getCharSequence("group06.lab2.location"))
+        this.editSkillsOBJ.setText(savedInstanceState.getCharSequence("group06.lab2.skills"))
+        this.editPhoneOBJ.setText(savedInstanceState.getCharSequence("group06.lab2.phone"))
         getBitmapFromFile(profilePicturePath)?.also {
             this.profilePictureOBJ.setImageBitmap(it)
         }
@@ -502,11 +503,11 @@ class EditProfileActivity : AppCompatActivity() {
     @Throws(IOException::class)
     private fun rotateImageIfRequired(context: Context, img: Bitmap, selectedImage: Uri): Bitmap? {
         val input = context.contentResolver.openInputStream(selectedImage)
-        val ei: ExifInterface
-        ei =
-            if (Build.VERSION.SDK_INT > 23) ExifInterface(input!!) else ExifInterface(selectedImage.path!!)
-        val orientation =
-            ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+        val ei: ExifInterface = if (Build.VERSION.SDK_INT > 23)
+                ExifInterface(input!!)
+            else
+                ExifInterface(selectedImage.path!!)
+        val orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
         return when (orientation) {
             ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(img, 90)
             ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(img, 180)
