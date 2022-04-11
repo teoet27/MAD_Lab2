@@ -19,7 +19,7 @@
                 android:id="@+id/edit_profilePictureID"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_margin="10dp"
+                android:layout_margin="16dp"
                 android:cropToPadding="true"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
