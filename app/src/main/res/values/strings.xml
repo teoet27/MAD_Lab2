@@ -4,7 +4,7 @@
     <string name="information_str">Personal Information</string>
     <string name="description_str">Description</string>
     <string name="fullnamePH">Name Surname</string>
-    <string name="nickanemPH">\@nickname</string>
+    <string name="nickanemPH">nickname</string>
     <string name="qualificationPH">Qualification</string>
     <string name="edit_user_profile">Edit your profile</string>
     <string name="done">Done</string>
@@ -26,5 +26,14 @@
     <string name="floating_menu_shot_picture">Take a photo</string>
     <string name="noskills">No skills.</string>
     <string name="edit_skills_text">Insert here your skills separated by a comma:</string>
+    <string name="atSymbol">\@</string>
+    <string name="insert_here_your_nickname">Insert here your nickname:</string>
+    <string name="insert_here_your_full_name">Insert here your full name:</string>
+    <string name="insert_here_your_qualification">Insert here your qualification:</string>
+    <string name="example_skill1_skill2_skill3">Example: skill1, skill2, skill3...</string>
+    <string name="_00_0000000000">+00 0000000000</string>
+    <string name="you_mail_com">you@mail.com</string>
+    <string name="new_york_new_york_usa">New York, New York, USA</string>
+    <string name="describe_yourself_with_a_long_text">Describe yourself with a long text</string>
 
 </resources>

@@ -39,15 +39,15 @@ class ShowProfileActivity : AppCompatActivity() {
 
         if (profile == null) {
             profile = Profile(
-                "Monkey D. Luffy",
-                "Super Punch, The Mysterious D. Power",
-                "luffy@mail.com",
-                "The Great Sea",
-                "Captain @ Going Merry",
-                "@cappello_di_paglia",
-                "Sono un pirata davvero potente che però in teoria non sa cosa scrivere quindi... Mangiamo?",
+                "Guido Saracco",
+                "Management of Students, Public Relationships, Chemistry, Teaching, R&D",
+                "rettore@polito.it",
+                "Torino - Italia",
+                "Rector @ Politecnico di Torino",
+                "rettore",
+                "I'm the full time Rector of Politecnico di Torino. I used to be a Chemistry teacher in 1994, but eventually I ended up being an institutional figure in the teaching world.",
                 "null",
-                "3775268111"
+                "3331112223"
             )
         }
 
@@ -62,15 +62,24 @@ class ShowProfileActivity : AppCompatActivity() {
         this.profilePictureOBJ = findViewById(R.id.edit_profilePictureID)
 
         this.fullnameOBJ.text = profile.fullname
-        this.nicknameOBJ.text = profile.nickname
+
+        if(profile.nickname.compareTo("") == 0)
+        {
+            this.nicknameOBJ.text = "No nickname provided."
+        }
+        else {
+            this.nicknameOBJ.text = "@" + profile.nickname
+        }
         this.qualificationOBJ.text = profile.qualification
         this.phoneOBJ.text = profile.phoneNumber
         this.locationOBJ.text = profile.location
+
         if (profile.skillList.size == 0) {
             this.skillsOBJ.setText(R.string.noskills)
         } else {
             this.skillsOBJ.text = fromArrayListToString(profile.skillList)
         }
+
         this.emailOBJ.text = profile.email
         this.descriptionOBJ.text = profile.description
 
@@ -112,19 +121,13 @@ class ShowProfileActivity : AppCompatActivity() {
                 val b = Bundle()
 
                 b.putCharSequence("fullname", findViewById<TextView>(R.id.edit_fullnameID).text)
-                b.putCharSequence("nickname", findViewById<TextView>(R.id.edit_nicknameID).text)
-                b.putCharSequence(
-                    "qualification",
-                    findViewById<TextView>(R.id.edit_qualificationID).text
-                )
+                b.putCharSequence("nickname", findViewById<TextView>(R.id.edit_nicknameID).text.toString().split("@")[1])
+                b.putCharSequence("qualification", findViewById<TextView>(R.id.edit_qualificationID).text)
                 b.putCharSequence("phone", findViewById<TextView>(R.id.phone_show_ID).text)
                 b.putCharSequence("location", findViewById<TextView>(R.id.loc_show_ID).text)
                 b.putCharSequence("skills", findViewById<TextView>(R.id.skillsListID).text)
                 b.putCharSequence("email", findViewById<TextView>(R.id.email_show_ID).text)
-                b.putCharSequence(
-                    "description",
-                    findViewById<TextView>(R.id.description_show_ID).text
-                )
+                b.putCharSequence("description", findViewById<TextView>(R.id.description_show_ID).text)
 
                 intent.putExtras(b)
                 startActivityForResult(intent, 1)
@@ -152,16 +155,11 @@ class ShowProfileActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            this.fullnameOBJ.text =
-                data?.getCharSequenceExtra("fullname").toString()
-            this.nicknameOBJ.text =
-                data?.getCharSequenceExtra("nickname").toString()
-            this.qualificationOBJ.text =
-                data?.getCharSequenceExtra("qualification").toString()
-            this.descriptionOBJ.text =
-                data?.getCharSequenceExtra("description").toString()
-            this.emailOBJ.text =
-                data?.getCharSequenceExtra("email").toString()
+            this.fullnameOBJ.text = data?.getCharSequenceExtra("fullname").toString()
+            this.nicknameOBJ.text = "@" + data?.getCharSequenceExtra("nickname").toString()
+            this.qualificationOBJ.text = data?.getCharSequenceExtra("qualification").toString()
+            this.descriptionOBJ.text = data?.getCharSequenceExtra("description").toString()
+            this.emailOBJ.text = data?.getCharSequenceExtra("email").toString()
             if (data?.getCharSequenceExtra("skills")?.length == 0 ||
                 data?.getCharSequenceExtra("skills").toString().split(" ").size == data?.getCharSequenceExtra("skills").toString().length + 1
             ) {
@@ -170,10 +168,8 @@ class ShowProfileActivity : AppCompatActivity() {
                 this.skillsOBJ.text =
                     data?.getCharSequenceExtra("skills").toString()
             }
-            this.locationOBJ.text =
-                data?.getCharSequenceExtra("location").toString()
-            this.phoneOBJ.text =
-                data?.getCharSequenceExtra("phone").toString()
+            this.locationOBJ.text = data?.getCharSequenceExtra("location").toString()
+            this.phoneOBJ.text = data?.getCharSequenceExtra("phone").toString()
             getBitmapFromFile(profilePicturePath)?.also {
                 this.profilePictureOBJ.setImageBitmap(it)
             }

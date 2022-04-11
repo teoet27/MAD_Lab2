@@ -16,6 +16,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/prussian_blue</item>
         <item name="titleTextColor">@color/white</item>
         <item name="actionBarStyle">@style/myActionBar</item>
+        <item name="android:textColorHint">#808080</item>
     </style>
 
     <style name="Theme.MAD_Lab2_EditMode" parent="Theme.MAD_Lab2">
@@ -30,5 +31,6 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
         <item name="titleTextColor">@color/prussian_blue</item>
+        <item name="android:textColorHint">#808080</item>
     </style>
 </resources>
