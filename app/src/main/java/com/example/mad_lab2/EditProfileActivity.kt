@@ -249,12 +249,15 @@ class EditProfileActivity : AppCompatActivity() {
      * @param x  String written by the user
      * @return string of skills
      */
-    fun parseSkillString(x: String): String {
+
+    private fun parseSkillString(x: String): String {
         var out = ""
-        for ((index, kw) in x.split(",").withIndex()) {
-            if (!kw.trim().isEmpty()) {
-                if (index == 0) {
+        var first = true
+        for (kw in x.split(",")) {
+            if (kw.trim().isNotEmpty() && kw.isNotEmpty()) {
+                if (first) {
                     out += kw.trim()
+                    first = false
                 } else {
                     out += ", "
                     out += kw.trim()
@@ -296,7 +299,7 @@ class EditProfileActivity : AppCompatActivity() {
         } else {
             profile = Profile(
                 this.editFullNameOBJ.text.toString(),
-                this.editSkillsOBJ.text.toString(),
+                parseSkillString(this.editSkillsOBJ.text.toString()),
                 this.editEmailOBJ.text.toString(),
                 this.editLocationOBJ.text.toString(),
                 this.editQualificationOBJ.text.toString(),
@@ -351,7 +354,7 @@ class EditProfileActivity : AppCompatActivity() {
                 } else {
                     profile = Profile(
                         this.editFullNameOBJ.text.toString(),
-                        this.editSkillsOBJ.text.toString(),
+                        parseSkillString(this.editSkillsOBJ.text.toString()),
                         this.editEmailOBJ.text.toString(),
                         this.editLocationOBJ.text.toString(),
                         this.editQualificationOBJ.text.toString(),

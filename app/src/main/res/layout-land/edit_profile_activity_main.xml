@@ -47,10 +47,11 @@
 
             <ImageView
                 android:id="@+id/edit_camera_button"
-                android:layout_width="59dp"
-                android:layout_height="47dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:layout_constraintBottom_toBottomOf="@+id/edit_profilePictureID"
-                app:layout_constraintEnd_toEndOf="@+id/edit_profilePictureID"
+                app:layout_constraintDimensionRatio="H, 1:1"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
                 app:layout_constraintTop_toTopOf="@+id/edit_profilePictureID"
