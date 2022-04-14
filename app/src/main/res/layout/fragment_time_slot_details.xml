@@ -166,7 +166,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_expand_less_black_24dp"
-                app:tint="#424242" />
+                app:tint="#515151" />
 
         </LinearLayout>
 
