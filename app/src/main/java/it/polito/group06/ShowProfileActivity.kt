@@ -108,7 +108,7 @@ class ShowProfileActivity : AppCompatActivity() {
      * @param menu  Menu to be inflated
      * @return true
      */
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.show_profile_main_menu, menu)
         return true
