@@ -13,7 +13,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import it.polito.group06.R
 
 class ShowProfileActivity : AppCompatActivity() {
     private lateinit var fullnameOBJ: TextView
