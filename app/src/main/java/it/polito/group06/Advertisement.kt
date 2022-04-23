@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
-data class Advertisement (val adsTitle: String, val adsDescription: String, val adsLocation: String, val adsDate: Date, val adsDuration: Float)
+data class Advertisement (val adsTitle: String, val adsDescription: String, val adsLocation: String, val adsDate: Date, val adsDuration: Float, val adsAccount: String)
 
 class AdsViewHolder (v: View): RecyclerView.ViewHolder(v) {
     val title: TextView = v.findViewById<TextView>(R.id.ads_title)
@@ -15,6 +15,7 @@ class AdsViewHolder (v: View): RecyclerView.ViewHolder(v) {
     val location: TextView = v.findViewById<TextView>(R.id.ads_location)
     val date: TextView = v.findViewById<TextView>(R.id.ads_date)
     val duration: TextView = v.findViewById<TextView>(R.id.ads_duration)
+    val account: TextView = v.findViewById<TextView>(R.id.ads_account)
 }
 
 class AdsAdapter(val adsList: List<Advertisement>) : RecyclerView.Adapter<AdsViewHolder>() {
@@ -31,6 +32,7 @@ class AdsAdapter(val adsList: List<Advertisement>) : RecyclerView.Adapter<AdsVie
         holder.location.text = adsList[position].adsLocation
         holder.date.text = adsList[position].adsDate.toString()
         holder.duration.text = adsList[position].adsDuration.toString()
+        holder.account.text = adsList[position].adsAccount
     }
 
     override fun getItemCount(): Int {
