@@ -18,7 +18,6 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.FileProvider
-import it.polito.group06.R
 import java.io.*
 
 
@@ -72,8 +71,7 @@ class EditProfileActivity : AppCompatActivity() {
         this.editPhoneOBJ.setText(intent.getCharSequenceExtra("group06.lab2.phone"))
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
-        profilePicturePath =
-            getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(
+        profilePicturePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(
                 R.string.profile_picture_filename
             )
         profilePictureDirectoryPath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
