@@ -125,7 +125,7 @@
                 android:paddingRight="32dp"
                 android:paddingBottom="2dp"
                 android:src="@drawable/ic_more_horiz_black_24dp"
-                android:tint="#dbdbdb" />
+                app:tint="#dbdbdb" />
         </LinearLayout>
 
     </LinearLayout>
