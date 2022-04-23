@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import it.polito.group06.exceptions.GenericUnknownError
 import java.util.*
 
 /**
@@ -49,11 +48,8 @@ class AdsAdapter(val adsList: List<Advertisement>) : RecyclerView.Adapter<AdsVie
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val v = inflater.inflate(viewType, parent, false)
-        return when(viewType) {
-            R.layout.fragment_time_slot_details -> AdsViewHolder(v)
-            else -> throw GenericUnknownError()
-        }
+        val v = inflater.inflate(R.layout.fragment_time_slot_details, parent, false)
+        return AdsViewHolder(v)
     }
 
     /**
