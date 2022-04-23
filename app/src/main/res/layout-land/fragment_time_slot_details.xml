@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp"
+        android:background="@drawable/rounded_corners_total"
+        android:backgroundTint="#DADADA"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_corners"
+            android:backgroundTint="@color/prussian_blue"
+            android:orientation="vertical"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/ads_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_vertical"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-black"
+                android:text="Electrician Assistance for Small Houses"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/ads_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:text="I offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). Good reviews available."
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/ads_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_account_circle_black_24dp"
+            android:drawablePadding="5dp"
+            android:text="Mario Rossi"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:drawableTint="@color/prussian_blue" />
+
+        <TextView
+            android:id="@+id/ads_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_location_on_black_24dp"
+            android:drawablePadding="5dp"
+            android:text="Corso Sebastopoli 220, Torino - Italy"
+            android:textColor="#000000"
+            app:drawableTint="@color/prussian_blue" />
+
+        <TextView
+            android:id="@+id/ads_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_watch_later_black_24dp"
+            android:drawablePadding="5dp"
+            android:text="Every monday morning"
+            android:textColor="#000000"
+            app:drawableTint="@color/prussian_blue" />
+
+        <TextView
+            android:id="@+id/ads_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:drawableLeft="@drawable/ic_timer_black_24dp"
+            android:drawablePadding="5dp"
+            android:text="5 hours"
+            android:textColor="#000000"
+            app:drawableTint="@color/prussian_blue" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_corners_down"
+            android:backgroundTint="#9F9F9F"
+            android:orientation="vertical"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                app:tint="@color/orange_poli"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/rounded_corners_total"
+                android:backgroundTint="@color/prussian_blue"
+                android:padding="16dp"
+                android:src="@drawable/ic_edit_black_24dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>
