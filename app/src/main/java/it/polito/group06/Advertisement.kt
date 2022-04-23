@@ -9,7 +9,7 @@ import it.polito.exceptions.GenericUnknownError
 import java.util.*
 
 /**
- * Advertisement data class.
+ * [Advertisement] data class.
  * This data class contains the following information:
  * @param adsTitle The title of the advertisement
  * @param adsDescription A complete description of the work offered
@@ -26,7 +26,7 @@ data class Advertisement(
 )
 
 /**
- * AdsViewHolder extends the ViewHolder of the RecyclerView
+ * [AdsViewHolder] extends the ViewHolder of the [RecyclerView]
  * and provides the references to each component of the advertisement
  * card.
  */
@@ -40,7 +40,7 @@ class AdsViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 }
 
 /**
- * AdsAdapter extends the Adapter of the RecyclerView and implements the required methods.
+ * AdsAdapter extends the Adapter of the [RecyclerView] and implements the required methods.
  */
 class AdsAdapter(val adsList: List<Advertisement>) : RecyclerView.Adapter<AdsViewHolder>() {
 
