@@ -16,28 +16,18 @@
         android:paddingTop="16dp"
         android:paddingBottom="16dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/ads_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="fill_vertical"
-                    android:layout_marginLeft="16dp"
-                    android:fontFamily="sans-serif-black"
-                    android:text="Electrician Assistance for Small Houses"
-                    android:textColor="#000000"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/ads_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-black"
+            android:text="Electrician Assistance for Small Houses"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/ads_description"
@@ -89,6 +79,18 @@
             android:text="5 hours"
             android:textColor="#000000"
             app:drawableTint="@color/prussian_blue" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/rounded_corners_total"
+            android:backgroundTint="@color/prussian_blue"
+            android:padding="16dp"
+            android:src="@drawable/ic_edit_black_24dp"
+            app:tint="@color/orange_poli" />
 
     </LinearLayout>
 
