@@ -25,7 +25,7 @@
             android:layout_weight="1"
             android:fontFamily="sans-serif-black"
             android:text="Electrician Assistance for Small Houses"
-            android:textColor="#000000"
+            android:textColor="@color/prussian_blue"
             android:textSize="20sp"
             android:textStyle="bold" />
 
