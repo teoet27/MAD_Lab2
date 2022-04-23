@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import it.polito.exceptions.GenericUnknownError
 import java.util.*
 
 /**
@@ -44,17 +45,20 @@ class AdsViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 class AdsAdapter(val adsList: List<Advertisement>) : RecyclerView.Adapter<AdsViewHolder>() {
 
     /**
-     * On creating the view holder, based on whether the ads is private or not the
+     * On creating the view holder, based on whether the ads is private or not, it'll be created a regular timeslot layout fragment or an empty one.
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val v = inflater.inflate(viewType, parent, false)
         return when(viewType) {
             R.layout.fragment_time_slot_details -> AdsViewHolder(v)
-            else -> AdsViewHolder(v)
+            else -> throw GenericUnknownError()
         }
     }
 
+    /**
+     * Bind operations.
+     */
     override fun onBindViewHolder(holder: AdsViewHolder, position: Int) {
         holder.title.text = adsList[position].adsTitle
         holder.description.text = adsList[position].adsDescription
@@ -64,15 +68,11 @@ class AdsAdapter(val adsList: List<Advertisement>) : RecyclerView.Adapter<AdsVie
         holder.account.text = adsList[position].adsAccount
     }
 
+    /**
+     * Simply returns the size of the list of advertisement provided to the adapter.
+     */
     override fun getItemCount(): Int {
         return adsList.size
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return when(adsList[position].isPrivate) {
-            true -> R.layout.fragment_time_slot_details
-            false -> R.layout.fragment_time_slot_details
-        }
     }
 
 }
