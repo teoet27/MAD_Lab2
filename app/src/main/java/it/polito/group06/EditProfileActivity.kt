@@ -18,7 +18,6 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.FileProvider
-import it.polito.group06.R
 import java.io.*
 
 
@@ -57,7 +56,7 @@ class EditProfileActivity : AppCompatActivity() {
         this.editLocationOBJ = findViewById(R.id.edit_loc_show_ID)
         this.editSkillsOBJ = findViewById(R.id.edit_skillsListID)
         this.editPhoneOBJ = findViewById(R.id.edit_phone_show_ID)
-        this.profilePictureOBJ = findViewById(R.id.edit_profilePictureID)
+        this.profilePictureOBJ = findViewById(R.id.profilePictureID)
 
         this.editFullNameOBJ.setText(intent.getCharSequenceExtra("group06.lab2.fullname"))
         this.editNickNameOBJ.setText(intent.getCharSequenceExtra("group06.lab2.nickname"))
@@ -169,12 +168,12 @@ class EditProfileActivity : AppCompatActivity() {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             rotatedImage = handleSamplingAndRotationBitmap(applicationContext, this.photoURI)!!
             saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
-            findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(rotatedImage)
+            findViewById<ImageView>(R.id.profilePictureID).setImageBitmap(rotatedImage)
         } else if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             this.photoURI = data?.data!!
             rotatedImage = handleSamplingAndRotationBitmap(applicationContext, this.photoURI)!!
             saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
-            findViewById<ImageView>(R.id.edit_profilePictureID).setImageBitmap(rotatedImage)
+            findViewById<ImageView>(R.id.profilePictureID).setImageBitmap(rotatedImage)
         }
     }
 
@@ -238,7 +237,7 @@ class EditProfileActivity : AppCompatActivity() {
      * @param menu  Menu to be inflated
      * @return true
      */
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.edit_profile_main_menu, menu)
         return true

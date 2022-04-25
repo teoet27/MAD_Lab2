@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="myActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="elevation">0dp</item>
     </style>
@@ -33,4 +34,13 @@
         <item name="titleTextColor">@color/prussian_blue</item>
         <item name="android:textColorHint">#808080</item>
     </style>
+
+    <style name="Theme.MAD_Lab2.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.MAD_Lab2.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.MAD_Lab2.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

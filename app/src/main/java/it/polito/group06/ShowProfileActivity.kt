@@ -13,7 +13,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import it.polito.group06.R
 
 class ShowProfileActivity : AppCompatActivity() {
     private lateinit var fullnameOBJ: TextView
@@ -60,7 +59,7 @@ class ShowProfileActivity : AppCompatActivity() {
         this.locationOBJ = findViewById(R.id.loc_show_ID)
         this.skillsOBJ = findViewById(R.id.skillsListID)
         this.phoneOBJ = findViewById(R.id.phone_show_ID)
-        this.profilePictureOBJ = findViewById(R.id.edit_profilePictureID)
+        this.profilePictureOBJ = findViewById(R.id.profilePictureID)
 
         this.fullnameOBJ.text = profile.fullname
 
@@ -108,7 +107,7 @@ class ShowProfileActivity : AppCompatActivity() {
      * @param menu  Menu to be inflated
      * @return true
      */
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.show_profile_main_menu, menu)
         return true

@@ -16,7 +16,7 @@
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/edit_profilePictureID"
+                android:id="@+id/profilePictureID"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_margin="16dp"
@@ -36,11 +36,11 @@
                 android:layout_height="0dp"
                 android:cropToPadding="true"
                 android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="@+id/edit_profilePictureID"
-                app:layout_constraintEnd_toEndOf="@+id/edit_profilePictureID"
+                app:layout_constraintBottom_toBottomOf="@+id/profilePictureID"
+                app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
-                app:layout_constraintTop_toTopOf="@+id/edit_profilePictureID"
+                app:layout_constraintStart_toStartOf="@+id/profilePictureID"
+                app:layout_constraintTop_toTopOf="@+id/profilePictureID"
                 app:layout_constraintVertical_bias="1.0"
                 app:srcCompat="@drawable/circular_mask"
                 app:tint="@color/prussian_blue" />
@@ -49,11 +49,11 @@
                 android:id="@+id/edit_camera_button"
                 android:layout_width="38dp"
                 android:layout_height="38dp"
-                app:layout_constraintBottom_toBottomOf="@+id/edit_profilePictureID"
-                app:layout_constraintEnd_toEndOf="@+id/edit_profilePictureID"
+                app:layout_constraintBottom_toBottomOf="@+id/profilePictureID"
+                app:layout_constraintEnd_toEndOf="@+id/profilePictureID"
                 app:layout_constraintHorizontal_bias="0.923"
-                app:layout_constraintStart_toStartOf="@+id/edit_profilePictureID"
-                app:layout_constraintTop_toTopOf="@+id/edit_profilePictureID"
+                app:layout_constraintStart_toStartOf="@+id/profilePictureID"
+                app:layout_constraintTop_toTopOf="@+id/profilePictureID"
                 app:layout_constraintVertical_bias="0.0"
                 app:srcCompat="@drawable/ic_verified_black_24dp"
                 app:tint="@color/orange_poli" />
