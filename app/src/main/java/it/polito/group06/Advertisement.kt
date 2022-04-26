@@ -52,7 +52,7 @@ class AdsViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         this.date.text = adv.adsDate.toString()
         this.duration.text = adv.adsDuration.toString()
         this.account.text = adv.adsAccount
-        this.moreButton.setOnClickListener { moreButtonAction() }
+        this.moreButton.setOnClickListener { moreButtonAction }
     }
 
     /**
