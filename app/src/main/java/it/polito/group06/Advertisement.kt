@@ -31,28 +31,28 @@ data class Advertisement(
  * card.
  */
 class AdsViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-    val title: TextView = v.findViewById(R.id.ads_title)
-    val description: TextView = v.findViewById(R.id.ads_description)
-    val location: TextView = v.findViewById(R.id.ads_location)
-    val date: TextView = v.findViewById(R.id.ads_date)
-    val duration: TextView = v.findViewById(R.id.ads_duration)
-    val account: TextView = v.findViewById(R.id.ads_account)
-    val moreButton: ImageView = v.findViewById(R.id.moreButtonID)
+    private val title: TextView = v.findViewById(R.id.ads_title)
+    private val description: TextView = v.findViewById(R.id.ads_description)
+    private val location: TextView = v.findViewById(R.id.ads_location)
+    private val date: TextView = v.findViewById(R.id.ads_date)
+    private val duration: TextView = v.findViewById(R.id.ads_duration)
+    private val account: TextView = v.findViewById(R.id.ads_account)
+    private val moreButton: ImageView = v.findViewById(R.id.moreButtonID)
 
     /**
      * bind:
      * A method to bind the i-th entry of the adsList to the i-th holder properties.
      * @param adv an object of class Advertisement
-     * @param moreButtonCallback the callback to be set at the moreButton listener
+     * @param moreButtonAction the callback to be set at the moreButton listener
      */
-    fun bind(adv: Advertisement, moreButtonCallback: () -> Unit) {
+    fun bind(adv: Advertisement, moreButtonAction: () -> Unit) {
         this.title.text = adv.adsTitle
         this.description.text = adv.adsDescription
         this.location.text = adv.adsLocation
         this.date.text = adv.adsDate.toString()
         this.duration.text = adv.adsDuration.toString()
         this.account.text = adv.adsAccount
-        this.moreButton.setOnClickListener { moreButtonCallback() }
+        this.moreButton.setOnClickListener { moreButtonAction() }
     }
 
     /**
