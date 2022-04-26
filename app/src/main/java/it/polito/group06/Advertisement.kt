@@ -3,6 +3,7 @@ package it.polito.group06
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
@@ -30,12 +31,37 @@ data class Advertisement(
  * card.
  */
 class AdsViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-    val title: TextView = v.findViewById<TextView>(R.id.ads_title)
-    val description: TextView = v.findViewById<TextView>(R.id.ads_description)
-    val location: TextView = v.findViewById<TextView>(R.id.ads_location)
-    val date: TextView = v.findViewById<TextView>(R.id.ads_date)
-    val duration: TextView = v.findViewById<TextView>(R.id.ads_duration)
-    val account: TextView = v.findViewById<TextView>(R.id.ads_account)
+    val title: TextView = v.findViewById(R.id.ads_title)
+    val description: TextView = v.findViewById(R.id.ads_description)
+    val location: TextView = v.findViewById(R.id.ads_location)
+    val date: TextView = v.findViewById(R.id.ads_date)
+    val duration: TextView = v.findViewById(R.id.ads_duration)
+    val account: TextView = v.findViewById(R.id.ads_account)
+    val moreButton: ImageView = v.findViewById(R.id.moreButtonID)
+
+    /**
+     * bind:
+     * A method to bind the i-th entry of the adsList to the i-th holder properties.
+     * @param adv an object of class Advertisement
+     * @param moreButtonCallback the callback to be set at the moreButton listener
+     */
+    fun bind(adv: Advertisement, moreButtonCallback: () -> Unit) {
+        this.title.text = adv.adsTitle
+        this.description.text = adv.adsDescription
+        this.location.text = adv.adsLocation
+        this.date.text = adv.adsDate.toString()
+        this.duration.text = adv.adsDuration.toString()
+        this.account.text = adv.adsAccount
+        this.moreButton.setOnClickListener { moreButtonCallback() }
+    }
+
+    /**
+     * unbind:
+     * A method to provide safeness when recycling a component in a RecyclerView
+     */
+    fun unbind() {
+        moreButton.setOnClickListener(null)
+    }
 }
 
 /**
@@ -56,12 +82,7 @@ class AdsAdapter(val adsList: List<Advertisement>) : RecyclerView.Adapter<AdsVie
      * Bind operations.
      */
     override fun onBindViewHolder(holder: AdsViewHolder, position: Int) {
-        holder.title.text = adsList[position].adsTitle
-        holder.description.text = adsList[position].adsDescription
-        holder.location.text = adsList[position].adsLocation
-        holder.date.text = adsList[position].adsDate.toString()
-        holder.duration.text = adsList[position].adsDuration.toString()
-        holder.account.text = adsList[position].adsAccount
+        holder.bind(adsList[position]) {}
     }
 
     /**
@@ -71,4 +92,11 @@ class AdsAdapter(val adsList: List<Advertisement>) : RecyclerView.Adapter<AdsVie
         return adsList.size
     }
 
+    /**
+     * OnViewRecycled invokes the unbind method to set on null the callback to the listener
+     * of the moreButton
+     */
+    override fun onViewRecycled(holder: AdsViewHolder) {
+        holder.unbind()
+    }
 }
