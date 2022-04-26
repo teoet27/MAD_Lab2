@@ -67,7 +67,7 @@ class AdsViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 /**
  * AdsAdapter extends the Adapter of the [RecyclerView] and implements the required methods.
  */
-class AdsAdapter(val adsList: List<Advertisement>) : RecyclerView.Adapter<AdsViewHolder>() {
+class AdsAdapter(val adsList: MutableList<Advertisement>) : RecyclerView.Adapter<AdsViewHolder>() {
 
     /**
      * On creating the view holder, based on whether the ads is private or not, it'll be created a regular timeslot layout fragment or an empty one.
