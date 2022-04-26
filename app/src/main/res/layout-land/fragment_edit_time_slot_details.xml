@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:background="@drawable/rounded_corners_total"
+        android:backgroundTint="#DADADA"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corners"
+            android:backgroundTint="@color/prussian_blue"
+            android:orientation="vertical"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp">
+
+            <EditText
+                android:id="@+id/ads_edit_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="#989898"
+                android:fontFamily="sans-serif-black"
+                android:text="@string/fragment_title_example"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/ads_edit_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="#989898"
+            android:text="@string/fragment_description_example"
+            android:textColor="#000000" />
+
+        <EditText
+            android:id="@+id/ads_edit_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="#989898"
+            android:drawablePadding="5dp"
+            android:text="@string/fragment_name_example"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/ads_edit_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="#989898"
+            android:drawablePadding="5dp"
+            android:text="@string/fragment_location_example"
+            android:textColor="#000000" />
+
+        <EditText
+            android:id="@+id/ads_edit_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="#989898"
+            android:drawablePadding="5dp"
+            android:text="@string/fragment_date_example"
+            android:textColor="#000000" />
+
+        <EditText
+            android:id="@+id/ads_edit_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="#989898"
+            android:drawablePadding="5dp"
+            android:text="@string/fragment_duration_example"
+            android:textColor="#000000" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@color/orange_poli"
+            android:contentDescription='"Separation line"'
+            android:paddingTop="5dp"
+            android:src="@drawable/rounded_corners_land" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_corners_down"
+            android:backgroundTint="#9F9F9F"
+            android:orientation="vertical"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:id="@+id/moreButtonID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="2dp"
+                android:contentDescription='"More button for opening the edit menu"'
+                android:src="@drawable/ic_more_horiz_black_24dp"
+                android:visibility="invisible"
+                app:tint="#dbdbdb" />
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

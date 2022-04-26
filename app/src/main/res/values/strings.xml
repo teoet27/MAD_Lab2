@@ -34,5 +34,17 @@
     <string name="you_mail_com">you@mail.com</string>
     <string name="new_york_new_york_usa">New York, New York, USA</string>
     <string name="describe_yourself_with_a_long_text">Describe yourself with a long text</string>
+    <string name="fragment_title_example">Electrician for Small Houses</string>
+    <string name="fragment_description_example">I offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). Good reviews available.</string>
+    <string name="fragment_name_example">Mario Rossi</string>
+    <string name="fragment_location_example">Corso Sebastopoli 220, Torino - Italy</string>
+    <string name="fragment_date_example">Every monday morning</string>
+    <string name="fragment_duration_example">5 hours</string>
+    <string name="fragment_title">Time Slot Title</string>
+    <string name="fragment_description">Time Slot Description</string>
+    <string name="fragment_fullname">Name Surname</string>
+    <string name="fragment_location">Location</string>
+    <string name="fragment_date">Service Date Availability</string>
+    <string name="fragment_duration">duration (credits)</string>
 
 </resources>
