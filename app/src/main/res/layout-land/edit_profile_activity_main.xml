@@ -131,7 +131,7 @@
                         android:fontFamily="sans-serif-light"
                         android:paddingLeft="5dp"
                         android:paddingBottom="15dp"
-                        android:text="@string/nickanemPH"
+                        android:text="@string/nicknamePH"
                         android:textAlignment="viewStart"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textColor="@color/orange_poli"

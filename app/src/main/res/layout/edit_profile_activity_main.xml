@@ -132,7 +132,7 @@
                         android:hint="@string/insert_here_your_nickname"
                         android:digits="qwertyuiopasdfghjklzxcvbnm0123456789._"
                         android:paddingBottom="15dp"
-                        android:text="@string/nickanemPH"
+                        android:text="@string/nicknamePH"
                         android:textAlignment="viewStart"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textColor="@color/orange_poli"
