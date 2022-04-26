@@ -119,7 +119,7 @@
             android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:background="@color/orange_poli"
-            android:contentDescription='"Separation line"'
+            android:contentDescription='@string/separation_line'
             android:paddingTop="5dp"
             android:src="@drawable/rounded_corners_land" />
 
@@ -142,7 +142,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="2dp"
-                android:contentDescription='"More button for opening the edit menu"'
+                android:contentDescription='@string/more_button_for_opening_the_edit_menu'
                 android:src="@drawable/ic_more_horiz_black_24dp"
                 app:tint="#dbdbdb" />
         </LinearLayout>
