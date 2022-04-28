@@ -59,7 +59,7 @@ class ShowProfileActivity : AppCompatActivity() {
         this.locationOBJ = findViewById(R.id.loc_show_ID)
         this.skillsOBJ = findViewById(R.id.skillsListID)
         this.phoneOBJ = findViewById(R.id.phone_show_ID)
-        this.profilePictureOBJ = findViewById(R.id.edit_profilePictureID)
+        this.profilePictureOBJ = findViewById(R.id.profilePictureID)
 
         this.fullnameOBJ.text = profile.fullname
 
