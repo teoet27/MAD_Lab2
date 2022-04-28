@@ -19,6 +19,7 @@ class Frag1ShowProfile: Fragment(R.layout.frag1_show_profile) {
             }
         })
 
+
         val tv = view.findViewById<TextView>(R.id.textView5)
         tv.setOnClickListener { findNavController().navigate(R.id.action_frag1ShowProfile_to_frag2EditProfile) }
     }
