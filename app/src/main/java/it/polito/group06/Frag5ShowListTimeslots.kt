@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -24,6 +25,8 @@ class Frag5ShowListTimeslots: Fragment(R.layout.frag5_show_list_timeslots) {
 
         val tv = view.findViewById<TextView>(R.id.textView5)
         tv.setOnClickListener { findNavController().navigate(R.id.action_frag5ShowListTimeslots_to_frag3ShowTimeslot) }
-    }
 
+        val iv = view.findViewById<ImageView>(R.id.profilePictureID2)
+        iv.setOnClickListener { findNavController().navigate(R.id.action_frag5ShowListTimeslots_to_frag1ShowProfile) }
+    }
 }

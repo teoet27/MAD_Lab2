@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_frag1ShowProfile_to_frag2EditProfile"
             app:destination="@id/frag2EditProfile" />
+        <action
+            android:id="@+id/action_frag1ShowProfile_to_frag5ShowListTimeslots"
+            app:destination="@id/frag5ShowListTimeslots" />
     </fragment>
     <fragment
         android:id="@+id/frag2EditProfile"
@@ -28,6 +31,9 @@
         <action
             android:id="@+id/action_frag3ShowTimeslot_to_frag4EditTimeslot"
             app:destination="@id/frag4EditTimeslot" />
+        <action
+            android:id="@+id/action_frag3ShowTimeslot_to_frag5ShowListTimeslots"
+            app:destination="@id/frag5ShowListTimeslots" />
     </fragment>
     <fragment
         android:id="@+id/frag4EditTimeslot"
