@@ -5,7 +5,7 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/timeslots_from_menu"
+            android:id="@+id/Frag5ShowListTimeslots"
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_timeslots" />
 
@@ -13,11 +13,11 @@
             <menu>
                 <group android:checkableBehavior="single">
                     <item
-                        android:id="@+id/show_profile_from_menu"
-                        android:icon="@drawable/ic_menu_camera"
+                        android:id="@+id/Frag1ShowProfile"
+                        android:icon="@drawable/ic_account_circle_black_24dp"
                         android:title="@string/show_profile" />
                     <item
-                        android:id="@+id/edit_profile_from_menu"
+                        android:id="@+id/Frag2EditProfile"
                         android:icon="@drawable/ic_edit_black_24dp"
                         android:title="@string/edit_profile" />
             </group>

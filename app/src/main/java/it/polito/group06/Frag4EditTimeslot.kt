@@ -19,5 +19,4 @@ class Frag4EditTimeslot: Fragment(R.layout.frag4_edit_timeslot) {
             }
         })
     }
-    
 }
