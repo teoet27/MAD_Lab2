@@ -63,11 +63,9 @@ class ShowProfileActivity : AppCompatActivity() {
 
         this.fullnameOBJ.text = profile.fullname
 
-        if(profile.nickname.compareTo("") == 0)
-        {
+        if (profile.nickname.compareTo("") == 0) {
             this.nicknameOBJ.text = "No nickname provided."
-        }
-        else {
+        } else {
             this.nicknameOBJ.text = "@" + profile.nickname
         }
         this.qualificationOBJ.text = profile.qualification
@@ -89,8 +87,8 @@ class ShowProfileActivity : AppCompatActivity() {
         getBitmapFromFile(profilePicturePath)?.also {
             this.profilePictureOBJ.setImageBitmap(it)
         }
-    }
 
+    }
     /**
      * This method returns the Bitmap image from a file whose path is provided
      *

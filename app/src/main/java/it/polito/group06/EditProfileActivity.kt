@@ -71,8 +71,7 @@ class EditProfileActivity : AppCompatActivity() {
         this.editPhoneOBJ.setText(intent.getCharSequenceExtra("group06.lab2.phone"))
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
-        profilePicturePath =
-            getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(
+        profilePicturePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(
                 R.string.profile_picture_filename
             )
         profilePictureDirectoryPath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()

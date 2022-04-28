@@ -9,7 +9,6 @@
     <string name="edit_user_profile">Edit your profile</string>
     <string name="done">Done</string>
     <string name="preference_file_key">profileData</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="phone_number">Phone number:</string>
     <string name="full_name">Full Name</string>
@@ -42,9 +41,22 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
     <string name="menu_timeslots">Timeslots</string>
     <string name="show_profile">Show profile</string>
     <string name="edit_profile">Edit profile</string>
+    <string name="fragment_title_example">Electrician for Small Houses</string>
+    <string name="fragment_description_example">I offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). Good reviews available.</string>
+    <string name="fragment_name_example">Mario Rossi</string>
+    <string name="fragment_location_example">Corso Sebastopoli 220, Torino - Italy</string>
+    <string name="fragment_date_example">Every monday morning</string>
+    <string name="fragment_duration_example">5 hours</string>
+    <string name="fragment_title">Time Slot Title</string>
+    <string name="fragment_description">Time Slot Description</string>
+    <string name="fragment_fullname">Name Surname</string>
+    <string name="fragment_location">Location</string>
+    <string name="fragment_date">Service Date Availability</string>
+    <string name="fragment_duration">duration (credits)</string>
+    <string name="more_button_for_opening_the_edit_menu">More button for opening the edit menu</string>
+    <string name="separation_line">Separation line</string>
 
 </resources>

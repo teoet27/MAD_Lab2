@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".TimeSlotDetailsFragment">
+    android:layout_height="match_parent" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
         android:background="@drawable/rounded_corners_total"
         android:backgroundTint="#DADADA"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/rounded_corners"
             android:backgroundTint="@color/prussian_blue"
@@ -64,11 +56,11 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="16dp"
             android:layout_weight="1"
+            app:drawableStartCompat="@drawable/ic_account_circle_black_24dp"
             android:drawablePadding="5dp"
             android:text="Mario Rossi"
             android:textColor="@color/black"
             android:textStyle="bold"
-            app:drawableStartCompat="@drawable/ic_account_circle_black_24dp"
             app:drawableTint="@color/prussian_blue" />
 
         <TextView
@@ -79,10 +71,10 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="16dp"
             android:layout_weight="1"
+            app:drawableStartCompat="@drawable/ic_location_on_black_24dp"
             android:drawablePadding="5dp"
             android:text="Corso Sebastopoli 220, Torino - Italy"
             android:textColor="#000000"
-            app:drawableStartCompat="@drawable/ic_location_on_black_24dp"
             app:drawableTint="@color/prussian_blue" />
 
         <TextView
@@ -93,10 +85,10 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="16dp"
             android:layout_weight="1"
+            app:drawableStartCompat="@drawable/ic_watch_later_black_24dp"
             android:drawablePadding="5dp"
             android:text="Every monday morning"
             android:textColor="#000000"
-            app:drawableStartCompat="@drawable/ic_watch_later_black_24dp"
             app:drawableTint="@color/prussian_blue" />
 
         <TextView
@@ -106,26 +98,26 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="16dp"
+            app:drawableStartCompat="@drawable/ic_timer_black_24dp"
             android:drawablePadding="5dp"
             android:text="5 hours"
             android:textColor="#000000"
-            app:drawableStartCompat="@drawable/ic_timer_black_24dp"
             app:drawableTint="@color/prussian_blue" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:background="@color/orange_poli"
-            android:contentDescription='@string/separation_line'
+            android:contentDescription='"Separation line"'
             android:paddingTop="5dp"
             android:src="@drawable/rounded_corners_land" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:background="@drawable/rounded_corners_down"
@@ -142,11 +134,10 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="2dp"
-                android:contentDescription='@string/more_button_for_opening_the_edit_menu'
+                android:contentDescription='"More button for opening the edit menu"'
                 android:src="@drawable/ic_more_horiz_black_24dp"
                 app:tint="#dbdbdb" />
         </LinearLayout>
 
     </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
