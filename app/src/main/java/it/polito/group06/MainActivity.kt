@@ -2,15 +2,14 @@ package it.polito.group06
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
 import it.polito.group06.databinding.ActivityMainBinding
 
@@ -31,13 +30,14 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.timeslots_from_menu,
-                R.id.show_profile_from_menu,
-                R.id.edit_profile_from_menu
+                R.id.Frag5ShowListTimeslots,
+                R.id.Frag1ShowProfile,
+                R.id.Frag2EditProfile
             ), drawerLayout
         )
         // setup navigation drawer
@@ -48,15 +48,15 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {
             drawerLayout.closeDrawer(GravityCompat.START)
             when(it.itemId){
-                R.id.timeslots_from_menu->{
+                R.id.Frag5ShowListTimeslots->{
                     replaceFragment(Frag5ShowListTimeslots())
                     true
                 }
-                R.id.show_profile_from_menu->{
+                R.id.Frag1ShowProfile->{
                     replaceFragment(Frag1ShowProfile())
                     true
                 }
-                R.id.edit_profile_from_menu->{
+                R.id.Frag2EditProfile->{
                     replaceFragment(Frag2EditProfile())
                     true
                 }
@@ -67,11 +67,6 @@ class MainActivity : AppCompatActivity() {
 
     // Extension function to replace fragment
     private fun AppCompatActivity.replaceFragment(fragment: Fragment){
-        /*val fl = findViewById<View>(R.id.nav_host_fragment_content_main) as FrameLayout
-        fl.removeAllViews()
-        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.nav_host_fragment_content_main, fragment)
-        transaction.commit()*/
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.nav_host_fragment_content_main,fragment)
@@ -102,21 +97,15 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-
-    /*override fun onOptionsItemSelected(MenuItem item): Boolean {
-        //public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-            if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-    }*/
 
     override fun onBackPressed() {
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
