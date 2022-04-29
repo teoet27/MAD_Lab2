@@ -1,4 +1,4 @@
-package it.polito.group06.MVVM.TimeSlotAdvDatabase
+package com.example.mvvm_profile.MVVM
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
