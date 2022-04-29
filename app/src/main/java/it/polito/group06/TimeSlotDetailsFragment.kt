@@ -16,7 +16,7 @@ class TimeSlotDetailsFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_time_slot_details, container, false)
+        return inflater.inflate(R.layout.time_slot_details_fragment, container, false)
     }
 
     companion object {

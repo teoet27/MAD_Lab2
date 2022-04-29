@@ -74,7 +74,7 @@ class AdsAdapter(val adsList: MutableList<Advertisement>) : RecyclerView.Adapter
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val v = inflater.inflate(R.layout.fragment_time_slot_details, parent, false)
+        val v = inflater.inflate(R.layout.time_slot_details_fragment, parent, false)
         return AdsViewHolder(v)
     }
 
