@@ -44,7 +44,7 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        setContentView(R.layout.edit_profile_fragment)
+        setContentView(R.layout.fragment_edit_profile)
 
         sdh = SaveProfileDataHandler(applicationContext)
 

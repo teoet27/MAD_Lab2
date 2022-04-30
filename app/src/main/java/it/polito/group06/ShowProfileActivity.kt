@@ -32,7 +32,7 @@ class ShowProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        setContentView(R.layout.show_profile_fragment)
+        setContentView(R.layout.fragment_show_profile)
 
         sdh = SaveProfileDataHandler(applicationContext)
         var profile = sdh.retrieveData()
