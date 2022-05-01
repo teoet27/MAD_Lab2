@@ -1,4 +1,4 @@
-package com.example.mvvm_profile.MVVM
+package it.polito.group06.MVVM.TimeSlotAdvDatabase
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -9,5 +9,5 @@ data class TimeSlotAd(
     val title: String?,
     val description: String?,
     val duration: String?,
-    val location: String?,
+    val location: String?
 )

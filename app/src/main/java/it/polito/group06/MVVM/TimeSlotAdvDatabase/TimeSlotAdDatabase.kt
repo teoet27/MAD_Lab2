@@ -1,4 +1,4 @@
-package com.example.mvvm_profile.MVVM
+package it.polito.group06.MVVM.TimeSlotAdvDatabase
 
 import android.content.Context
 import androidx.room.Database
@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [TimeSlotAd::class], version = 1)
 abstract class TimeSlotAdDatabase: RoomDatabase() {
-    abstract fun adsDao():TimeSlotAdDao
+    abstract fun adsDao(): TimeSlotAdDao
 
     companion object{
         @Volatile
@@ -19,9 +19,9 @@ abstract class TimeSlotAdDatabase: RoomDatabase() {
                     val i = INSTANCE ?: Room.databaseBuilder(
                         context.applicationContext,
                         TimeSlotAdDatabase::class.java,
-                        "profile"
+                        "Time-slot Ad"
                     ).build()
-                    INSTANCE=i
+                    INSTANCE =i
                     INSTANCE
                 }
             )!!
