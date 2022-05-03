@@ -6,17 +6,6 @@
     app:startDestination="@id/frag5ShowListTimeslots">
 
     <fragment
-        android:id="@+id/frag1ShowProfile"
-        android:name="it.polito.group06.Frag1ShowProfile"
-        android:label="User profile" >
-        <action
-            android:id="@+id/action_frag1ShowProfile_to_frag5ShowListTimeslots"
-            app:destination="@id/frag5ShowListTimeslots" />
-        <action
-            android:id="@+id/action_frag1ShowProfile_to_editProfileFragment"
-            app:destination="@id/editProfileFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/frag3ShowTimeslot"
         android:name="it.polito.group06.Frag3ShowTimeslot"
         android:label="Timeslot details" >
@@ -43,15 +32,26 @@
             android:id="@+id/action_frag5ShowListTimeslots_to_frag3ShowTimeslot"
             app:destination="@id/frag3ShowTimeslot" />
         <action
-            android:id="@+id/action_frag5ShowListTimeslots_to_frag1ShowProfile"
-            app:destination="@id/frag1ShowProfile" />
+            android:id="@+id/action_frag5ShowListTimeslots_to_showProfileFragment"
+            app:destination="@id/showProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="it.polito.group06.EditProfileFragment"
         android:label="EditProfileFragment" >
         <action
-            android:id="@+id/action_editProfileFragment_to_frag1ShowProfile2"
-            app:destination="@id/frag1ShowProfile" />
+            android:id="@+id/action_editProfileFragment_to_showProfileFragment"
+            app:destination="@id/showProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showProfileFragment"
+        android:name="it.polito.group06.ShowProfileFragment"
+        android:label="ShowProfileFragment" >
+        <action
+            android:id="@+id/action_showProfileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_showProfileFragment_to_frag5ShowListTimeslots"
+            app:destination="@id/frag5ShowListTimeslots" />
     </fragment>
 </navigation>

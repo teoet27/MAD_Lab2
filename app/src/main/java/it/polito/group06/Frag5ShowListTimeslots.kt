@@ -27,6 +27,6 @@ class Frag5ShowListTimeslots: Fragment(R.layout.frag5_show_list_timeslots) {
         tv.setOnClickListener { findNavController().navigate(R.id.action_frag5ShowListTimeslots_to_frag3ShowTimeslot) }
 
         val iv = view.findViewById<ImageView>(R.id.profilePictureID2)
-        iv.setOnClickListener { findNavController().navigate(R.id.action_frag5ShowListTimeslots_to_frag1ShowProfile) }
+        iv.setOnClickListener { findNavController().navigate(R.id.action_frag5ShowListTimeslots_to_showProfileFragment) }
     }
 }

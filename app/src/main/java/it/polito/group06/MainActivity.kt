@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.Frag5ShowListTimeslots,
-                R.id.Frag1ShowProfile,
+                R.id.ShowProfileFragment,
                 R.id.EditProfileFragment
             ), drawerLayout
         )
@@ -52,8 +52,8 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(Frag5ShowListTimeslots())
                     true
                 }
-                R.id.Frag1ShowProfile->{
-                    replaceFragment(Frag1ShowProfile())
+                R.id.ShowProfileFragment->{
+                    replaceFragment(ShowProfileFragment())
                     true
                 }
                 R.id.EditProfileFragment->{

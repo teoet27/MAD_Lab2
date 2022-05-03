@@ -7,7 +7,9 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import it.polito.group06.MVVM.UserProfileDatabase.UserProfileViewModel
 import it.polito.group06.utilities.fromArrayListToString
 import it.polito.group06.utilities.getBitmapFromFile
@@ -36,11 +38,11 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
             this.fullnameOBJ = view.findViewById(R.id.edit_fullnameID)
             this.nicknameOBJ = view.findViewById(R.id.edit_nicknameID)
             this.qualificationOBJ = view.findViewById(R.id.edit_qualificationID)
-            this.descriptionOBJ = view.findViewById(R.id.description_show_ID)
-            this.emailOBJ = view.findViewById(R.id.email_show_ID)
-            this.locationOBJ = view.findViewById(R.id.loc_show_ID)
-            this.skillsOBJ = view.findViewById(R.id.skillsListID)
-            this.phoneOBJ = view.findViewById(R.id.phone_show_ID)
+            this.descriptionOBJ = view.findViewById(R.id.edit_description_show_ID)
+            this.emailOBJ = view.findViewById(R.id.edit_email_show_ID)
+            this.locationOBJ = view.findViewById(R.id.edit_loc_show_ID)
+            this.skillsOBJ = view.findViewById(R.id.edit_skillsListID)
+            this.phoneOBJ = view.findViewById(R.id.edit_phone_show_ID)
             this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
 
             this.fullnameOBJ.text = userProfile.fullName
@@ -71,5 +73,14 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
                 this.profilePictureOBJ.setImageBitmap(it)
             }
         }
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.action_showProfileFragment_to_frag5ShowListTimeslots)
+            }
+        })
+
+        val iv = view.findViewById<ImageView>(R.id.profilePictureID)
+        iv.setOnClickListener { findNavController().navigate(R.id.action_showProfileFragment_to_editProfileFragment) }
     }
 }

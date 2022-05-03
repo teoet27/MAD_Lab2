@@ -8,14 +8,15 @@ import android.os.Bundle
 import android.os.Vibrator
 import android.provider.MediaStore
 import android.view.*
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation.findNavController
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import it.polito.group06.MVVM.UserProfileDatabase.UserProfile
+import it.polito.group06.MVVM.UserProfileDatabase.UserProfileViewModel
 import it.polito.group06.utilities.createImageFile
 import java.io.File
 import java.io.IOException
@@ -23,7 +24,7 @@ import java.io.IOException
 
 class EditProfileFragment : Fragment() {
     private lateinit var editFullNameOBJ: EditText
-    private lateinit var editNickNameOBJ: EditText
+    private lateinit var editNicknameOBJ: EditText
     private lateinit var editQualificationOBJ: EditText
     private lateinit var editDescriptionOBJ: EditText
     private lateinit var editEmailOBJ: EditText
@@ -40,6 +41,8 @@ class EditProfileFragment : Fragment() {
     private val REQUEST_IMAGE_CAPTURE = 1
     private val PICK_IMAGE = 100
 
+    val profile_vm by viewModels<UserProfileViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,15 +54,92 @@ class EditProfileFragment : Fragment() {
         registerForContextMenu(camera)
         camera.setOnClickListener { activity?.openContextMenu(camera) }
 
+        this.editFullNameOBJ = view.findViewById(R.id.edit_fullnameID)
+        this.editNicknameOBJ = view.findViewById(R.id.edit_nicknameID)
+        this.editQualificationOBJ = view.findViewById(R.id.edit_qualificationID)
+        this.editDescriptionOBJ = view.findViewById(R.id.edit_description_show_ID)
+        this.editEmailOBJ = view.findViewById(R.id.edit_email_show_ID)
+        this.editLocationOBJ = view.findViewById(R.id.edit_loc_show_ID)
+        this.editSkillsOBJ = view.findViewById(R.id.edit_skillsListID)
+        this.editPhoneOBJ = view.findViewById(R.id.edit_phone_show_ID)
+        this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
+
+        this.editFullNameOBJ.setOnClickListener{
+            var tmp=profile_vm.profile.value!!
+            tmp.fullName=this.editFullNameOBJ.text.toString()
+            profile_vm.editProfile(tmp)}
+
+        this.editNicknameOBJ.setOnClickListener{
+            var tmp=profile_vm.profile.value!!
+            tmp.fullName=this.editNicknameOBJ.text.toString()
+            profile_vm.editProfile(tmp)}
+
+        this.editQualificationOBJ.setOnClickListener{
+            var tmp=profile_vm.profile.value!!
+            tmp.fullName=this.editQualificationOBJ.text.toString()
+            profile_vm.editProfile(tmp)}
+
+        this.editDescriptionOBJ.setOnClickListener{
+                var tmp=profile_vm.profile.value!!
+                tmp.fullName=this.editDescriptionOBJ.text.toString()
+            profile_vm.editProfile(tmp)}
+
+        this.editEmailOBJ.setOnClickListener{
+            var tmp=profile_vm.profile.value!!
+            tmp.fullName=this.editEmailOBJ.text.toString()
+            profile_vm.editProfile(tmp)}
+
+        this.editPhoneOBJ.setOnClickListener{
+            var tmp=profile_vm.profile.value!!
+            tmp.fullName=this.editPhoneOBJ.text.toString()
+            profile_vm.editProfile(tmp)}
+
+        this.editLocationOBJ.setOnClickListener{
+            var tmp=profile_vm.profile.value!!
+            tmp.fullName=this.editLocationOBJ.text.toString()
+            profile_vm.editProfile(tmp)}
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        /*profile_vm.profile.observe(this.viewLifecycleOwner){ userProfile ->
+
+
+            this.editFullNameOBJ.setText(userProfile.fullName)
+
+            if (userProfile.nickname?.compareTo("") == 0) {
+                this.editNicknameOBJ.setText("No nickname provided.")
+            } else {
+                this.editNicknameOBJ.setText("@" + userProfile.nickname)
+            }
+            this.editQualificationOBJ.setText(userProfile.qualification)
+            this.editPhoneOBJ.setText(userProfile.phoneNumber)
+            this.editLocationOBJ.setText(userProfile.location)
+
+            if(userProfile.skills.isNullOrEmpty()){
+                this.editSkillsOBJ.setText(R.string.noskills)
+            }else{
+                this.editSkillsOBJ.setText(fromArrayListToString(userProfile.skills))
+            }
+
+
+            this.editEmailOBJ.setText(userProfile.email)
+            this.editDescriptionOBJ.setText(userProfile.description)
+
+            profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(R.string.profile_picture_filename)
+            profilePictureDirectoryPath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
+
+            getBitmapFromFile(profilePicturePath)?.also{
+                this.profilePictureOBJ.setImageBitmap(it)
+            }
+        }*/
+
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_editProfileFragment_to_frag1ShowProfile2)
+                findNavController().navigate(R.id.action_editProfileFragment_to_showProfileFragment)
             }
         })
     }
@@ -142,5 +222,123 @@ class EditProfileFragment : Fragment() {
             resources.getString(R.string.floating_menu_load_picture) -> dispatchLoadPictureIntent()
         }
         return true
+    }
+
+    /**
+     * These methods modify a single attribute of the Profile data class
+     *
+     * @param -name- chosen attribute
+     * @return modified profile object
+     */
+    private fun editProfileFullName(profile:UserProfile,fullName:String):UserProfile{
+        return UserProfile(
+            profile.id,
+            profile.nickname,
+            fullName,
+            profile.qualification,
+            profile.description,
+            profile.email,
+            profile.phoneNumber,
+            profile.location,
+            profile.skills
+        )
+    }
+
+    private fun editProfileNickame(profile:UserProfile,nickname:String):UserProfile{
+        return UserProfile(
+            profile.id,
+            nickname,
+            profile.fullName,
+            profile.qualification,
+            profile.description,
+            profile.email,
+            profile.phoneNumber,
+            profile.location,
+            profile.skills
+        )
+    }
+
+    private fun editProfileQualification(profile:UserProfile,qualification:String):UserProfile{
+        return UserProfile(
+            profile.id,
+            profile.nickname,
+            profile.fullName,
+            qualification,
+            profile.description,
+            profile.email,
+            profile.phoneNumber,
+            profile.location,
+            profile.skills
+        )
+    }
+
+    private fun editProfileDescription(profile:UserProfile,description:String):UserProfile{
+        return UserProfile(
+            profile.id,
+            profile.nickname,
+            profile.fullName,
+            profile.qualification,
+            description,
+            profile.email,
+            profile.phoneNumber,
+            profile.location,
+            profile.skills
+        )
+    }
+
+    private fun editProfileEmail(profile:UserProfile,email:String):UserProfile{
+        return UserProfile(
+            profile.id,
+            profile.nickname,
+            profile.fullName,
+            profile.qualification,
+            profile.description,
+            email,
+            profile.phoneNumber,
+            profile.location,
+            profile.skills
+        )
+    }
+
+    private fun editProfilePhoneNumber(profile:UserProfile,phoneNumber:String):UserProfile{
+        return UserProfile(
+            profile.id,
+            profile.nickname,
+            profile.fullName,
+            profile.qualification,
+            profile.description,
+            profile.email,
+            phoneNumber,
+            profile.location,
+            profile.skills
+        )
+    }
+
+    private fun editProfileLocation(profile:UserProfile,location:String):UserProfile{
+        return UserProfile(
+            profile.id,
+            profile.nickname,
+            profile.fullName,
+            profile.qualification,
+            profile.description,
+            profile.email,
+            profile.phoneNumber,
+            location,
+            profile.skills
+        )
+    }
+
+    private fun editProfileSkills(profile:UserProfile,skills:ArrayList<String>):UserProfile{
+        return UserProfile(
+            profile.id,
+            profile.nickname,
+            profile.fullName,
+            profile.qualification,
+            profile.description,
+            profile.email,
+            profile.phoneNumber,
+            profile.location,
+            skills
+        )
     }
 }

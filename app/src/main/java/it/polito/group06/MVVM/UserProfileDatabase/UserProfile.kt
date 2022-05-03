@@ -9,7 +9,7 @@ import androidx.room.TypeConverters
 data class UserProfile(
     @PrimaryKey(autoGenerate = true) val id:Long?,
     val nickname:String?,
-    val fullName: String?,
+    var fullName: String?,
     val qualification: String?,
     val description: String?,
     val email: String?,
