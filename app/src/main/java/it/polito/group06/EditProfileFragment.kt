@@ -14,10 +14,12 @@ import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import it.polito.group06.utilities.createImageFile
 import java.io.File
 import java.io.IOException
+
 
 class EditProfileFragment : Fragment() {
     private lateinit var editFullNameOBJ: EditText
@@ -45,10 +47,11 @@ class EditProfileFragment : Fragment() {
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_edit_profile, container, false)
 
-        val camera_button = view.findViewById<Button>(R.id.edit_camera_button)
-        registerForContextMenu(camera_button)
+        val camera = view.findViewById<ImageView>(R.id.edit_camera_button)
+        registerForContextMenu(camera)
+        camera.setOnClickListener { activity?.openContextMenu(camera) }
 
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -119,7 +122,7 @@ class EditProfileFragment : Fragment() {
         v: View,
         menuInfo: ContextMenu.ContextMenuInfo?
     ) {
-        super.onCreateContextMenu(menu, v, menuInfo)
+        //super.onCreateContextMenu(menu, v, menuInfo)
         val inflater: MenuInflater = requireActivity().menuInflater
         if (view?.context!!.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY))
             inflater.inflate(R.menu.select_take_picture_floating_context_menu, menu)
