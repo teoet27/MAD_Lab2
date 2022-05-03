@@ -59,7 +59,7 @@ class EditProfileFragment : Fragment() {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_editProfileFragment_to_frag1ShowProfile2)
+                findNavController().navigate(R.id.action_editProfileFragment_to_showProfileFragment)
             }
         })
     }

@@ -7,7 +7,9 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import it.polito.group06.MVVM.UserProfileDatabase.UserProfileViewModel
 import it.polito.group06.utilities.fromArrayListToString
 import it.polito.group06.utilities.getBitmapFromFile
@@ -71,5 +73,14 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
                 this.profilePictureOBJ.setImageBitmap(it)
             }
         }
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.action_showProfileFragment_to_frag5ShowListTimeslots)
+            }
+        })
+
+        val iv = view.findViewById<ImageView>(R.id.profilePictureID)
+        iv.setOnClickListener { findNavController().navigate(R.id.action_showProfileFragment_to_editProfileFragment) }
     }
 }

@@ -13,7 +13,7 @@
             <menu>
                 <group android:checkableBehavior="single">
                     <item
-                        android:id="@+id/Frag1ShowProfile"
+                        android:id="@+id/ShowProfileFragment"
                         android:icon="@drawable/ic_account_circle_black_24dp"
                         android:title="@string/show_profile" />
                     <item
