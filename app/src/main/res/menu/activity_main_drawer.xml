@@ -17,7 +17,7 @@
                         android:icon="@drawable/ic_account_circle_black_24dp"
                         android:title="@string/show_profile" />
                     <item
-                        android:id="@+id/Frag2EditProfile"
+                        android:id="@+id/EditProfileFragment"
                         android:icon="@drawable/ic_edit_black_24dp"
                         android:title="@string/edit_profile" />
             </group>

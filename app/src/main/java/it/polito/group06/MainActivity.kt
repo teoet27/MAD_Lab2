@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.Frag5ShowListTimeslots,
                 R.id.Frag1ShowProfile,
-                R.id.Frag2EditProfile
+                R.id.EditProfileFragment
             ), drawerLayout
         )
         // setup navigation drawer
@@ -49,15 +49,15 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             when(it.itemId){
                 R.id.Frag5ShowListTimeslots->{
-                    replaceFragment(Frag5ShowListTimeslots(),"timeslots")
+                    replaceFragment(Frag5ShowListTimeslots())
                     true
                 }
                 R.id.Frag1ShowProfile->{
-                    replaceFragment(Frag1ShowProfile(),"show_profile")
+                    replaceFragment(Frag1ShowProfile())
                     true
                 }
-                R.id.Frag2EditProfile->{
-                    replaceFragment(Frag2EditProfile(),"edit_profile")
+                R.id.EditProfileFragment->{
+                    replaceFragment(EditProfileFragment())
                     true
                 }
                 else->false
@@ -66,11 +66,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Extension function to replace fragment
-    private fun AppCompatActivity.replaceFragment(fragment: Fragment,tag:String){
+    private fun AppCompatActivity.replaceFragment(fragment: Fragment){
         supportFragmentManager
             .beginTransaction()
-            .addToBackStack(tag)
-            .replace(R.id.nav_host_fragment_content_main,fragment,tag)
+            .replace(R.id.nav_host_fragment_content_main,fragment)
+            .addToBackStack(null)
+            //.addToBackStack(fragment.getClass().getName())
             .commit()
     }
 

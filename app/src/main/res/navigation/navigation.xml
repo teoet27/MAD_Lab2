@@ -10,19 +10,11 @@
         android:name="it.polito.group06.Frag1ShowProfile"
         android:label="User profile" >
         <action
-            android:id="@+id/action_frag1ShowProfile_to_frag2EditProfile"
-            app:destination="@id/frag2EditProfile" />
-        <action
             android:id="@+id/action_frag1ShowProfile_to_frag5ShowListTimeslots"
             app:destination="@id/frag5ShowListTimeslots" />
-    </fragment>
-    <fragment
-        android:id="@+id/frag2EditProfile"
-        android:name="it.polito.group06.Frag2EditProfile"
-        android:label="Edit profile" >
         <action
-            android:id="@+id/action_frag2EditProfile_to_frag1ShowProfile"
-            app:destination="@id/frag1ShowProfile" />
+            android:id="@+id/action_frag1ShowProfile_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/frag3ShowTimeslot"
@@ -52,6 +44,14 @@
             app:destination="@id/frag3ShowTimeslot" />
         <action
             android:id="@+id/action_frag5ShowListTimeslots_to_frag1ShowProfile"
+            app:destination="@id/frag1ShowProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="it.polito.group06.EditProfileFragment"
+        android:label="EditProfileFragment" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_frag1ShowProfile2"
             app:destination="@id/frag1ShowProfile" />
     </fragment>
 </navigation>

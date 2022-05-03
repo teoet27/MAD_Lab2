@@ -2,7 +2,6 @@ package it.polito.group06
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
@@ -21,6 +20,6 @@ class Frag1ShowProfile: Fragment(R.layout.frag1_show_profile) {
 
 
         val tv = view.findViewById<TextView>(R.id.textView5)
-        tv.setOnClickListener { findNavController().navigate(R.id.action_frag1ShowProfile_to_frag2EditProfile) }
+        tv.setOnClickListener { findNavController().navigate(R.id.action_frag1ShowProfile_to_editProfileFragment) }
     }
 }
