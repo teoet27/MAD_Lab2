@@ -99,6 +99,9 @@ class EditProfileFragment : Fragment() {
             tmp.fullName=this.editLocationOBJ.text.toString()
             profile_vm.editProfile(tmp)}
 
+        // check this option to open onCreateOptionsMenu method
+        setHasOptionsMenu(true)
+
         return view
     }
 
@@ -222,6 +225,32 @@ class EditProfileFragment : Fragment() {
             resources.getString(R.string.floating_menu_load_picture) -> dispatchLoadPictureIntent()
         }
         return true
+    }
+
+    /**
+     * This method inflates the option menu
+     *
+     * @param menu  Menu to be inflated
+     * @return true
+     */
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.edit_profile_main_menu, menu)
+        super.onCreateOptionsMenu(menu,inflater)
+    }
+
+    /**
+     * This method navigates the view on the basis of the user interaction:
+     * click the check icon -> close the edit profile mode, return to show profile mode
+     *
+     * @param item  Icon chosen by the user interaction
+     * @return true
+     */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.complete_user_editing ->
+                findNavController().navigate(R.id.action_editProfileFragment_to_showProfileFragment)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     /**

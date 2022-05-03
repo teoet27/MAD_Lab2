@@ -1,18 +1,14 @@
 package it.polito.group06
 
-import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import it.polito.group06.MVVM.UserProfileDatabase.UserProfileViewModel
-import it.polito.group06.utilities.fromArrayListToString
-import it.polito.group06.utilities.getBitmapFromFile
 
 class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
     private lateinit var fullnameOBJ: TextView
@@ -34,7 +30,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        profile_vm.profile.observe(this.viewLifecycleOwner){ userProfile ->
+        /*profile_vm.profile.observe(this.viewLifecycleOwner){ userProfile ->
             this.fullnameOBJ = view.findViewById(R.id.edit_fullnameID)
             this.nicknameOBJ = view.findViewById(R.id.edit_nicknameID)
             this.qualificationOBJ = view.findViewById(R.id.edit_qualificationID)
@@ -72,7 +68,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
             getBitmapFromFile(profilePicturePath)?.also{
                 this.profilePictureOBJ.setImageBitmap(it)
             }
-        }
+        }*/
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -80,7 +76,33 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
             }
         })
 
-        val iv = view.findViewById<ImageView>(R.id.profilePictureID)
-        iv.setOnClickListener { findNavController().navigate(R.id.action_showProfileFragment_to_editProfileFragment) }
+        // check this option to open onCreateOptionsMenu method
+        setHasOptionsMenu(true)
+    }
+
+    /**
+     * This method inflates the option menu
+     *
+     * @param menu  Menu to be inflated
+     * @return true
+     */
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.show_profile_main_menu, menu)
+        super.onCreateOptionsMenu(menu,inflater)
+    }
+
+    /**
+     * This method navigates the view on the basis of the user interaction:
+     * click the pen icon -> open the edit profile mode
+     *
+     * @param item  Icon chosen by the user interaction
+     * @return true
+     */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.edit_user_profile ->
+                findNavController().navigate(R.id.action_showProfileFragment_to_editProfileFragment)
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
