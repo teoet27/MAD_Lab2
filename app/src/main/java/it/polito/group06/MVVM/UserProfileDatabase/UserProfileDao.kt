@@ -14,7 +14,7 @@ interface UserProfileDao {
     fun editProfile(profile: UserProfile)
 
     /** Read from database **/
-    @Query("SELECT * FROM time_slot_advertisement_table")
+    @Query("SELECT * FROM user_profile_table")
     fun getProfile(): LiveData<UserProfile>
 
 }

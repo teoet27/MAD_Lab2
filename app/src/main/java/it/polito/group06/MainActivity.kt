@@ -49,15 +49,15 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             when(it.itemId){
                 R.id.Frag5ShowListTimeslots->{
-                    replaceFragment(Frag5ShowListTimeslots())
+                    replaceFragment(Frag5ShowListTimeslots(),"timeslots")
                     true
                 }
                 R.id.Frag1ShowProfile->{
-                    replaceFragment(Frag1ShowProfile())
+                    replaceFragment(Frag1ShowProfile(),"show_profile")
                     true
                 }
                 R.id.Frag2EditProfile->{
-                    replaceFragment(Frag2EditProfile())
+                    replaceFragment(Frag2EditProfile(),"edit_profile")
                     true
                 }
                 else->false
@@ -66,11 +66,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Extension function to replace fragment
-    private fun AppCompatActivity.replaceFragment(fragment: Fragment){
+    private fun AppCompatActivity.replaceFragment(fragment: Fragment,tag:String){
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.nav_host_fragment_content_main,fragment)
-            .addToBackStack(null)
+            .addToBackStack(tag)
+            .replace(R.id.nav_host_fragment_content_main,fragment,tag)
             .commit()
     }
 
