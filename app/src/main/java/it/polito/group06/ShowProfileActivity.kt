@@ -51,9 +51,9 @@ class ShowProfileActivity : AppCompatActivity() {
             )
         }
 
-        this.fullnameOBJ = findViewById(R.id.edit_fullnameID)
-        this.nicknameOBJ = findViewById(R.id.edit_nicknameID)
-        this.qualificationOBJ = findViewById(R.id.edit_qualificationID)
+        this.fullnameOBJ = findViewById(R.id.edit_fullname_ID)
+        this.nicknameOBJ = findViewById(R.id.edit_nickname_ID)
+        this.qualificationOBJ = findViewById(R.id.edit_qualification_ID)
         this.descriptionOBJ = findViewById(R.id.description_show_ID)
         this.emailOBJ = findViewById(R.id.email_show_ID)
         this.locationOBJ = findViewById(R.id.loc_show_ID)
@@ -118,9 +118,9 @@ class ShowProfileActivity : AppCompatActivity() {
                 val intent = Intent(this, EditProfileActivity::class.java)
                 val b = Bundle()
 
-                b.putCharSequence("group06.lab2.fullname", findViewById<TextView>(R.id.edit_fullnameID).text)
-                b.putCharSequence("group06.lab2.nickname", findViewById<TextView>(R.id.edit_nicknameID).text.toString().split("@")[1])
-                b.putCharSequence("group06.lab2.qualification", findViewById<TextView>(R.id.edit_qualificationID).text)
+                b.putCharSequence("group06.lab2.fullname", findViewById<TextView>(R.id.edit_fullname_ID).text)
+                b.putCharSequence("group06.lab2.nickname", findViewById<TextView>(R.id.edit_nickname_ID).text.toString().split("@")[1])
+                b.putCharSequence("group06.lab2.qualification", findViewById<TextView>(R.id.edit_qualification_ID).text)
                 b.putCharSequence("group06.lab2.phone", findViewById<TextView>(R.id.phone_show_ID).text)
                 b.putCharSequence("group06.lab2.location", findViewById<TextView>(R.id.loc_show_ID).text)
                 b.putCharSequence("group06.lab2.skills", findViewById<TextView>(R.id.skillsListID).text)

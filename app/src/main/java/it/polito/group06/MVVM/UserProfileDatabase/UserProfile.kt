@@ -8,12 +8,12 @@ import androidx.room.TypeConverters
 @Entity(tableName = "user_profile_table")
 data class UserProfile(
     @PrimaryKey(autoGenerate = true) val id:Long?,
-    val nickname:String?,
+    var nickname:String?,
     var fullName: String?,
-    val qualification: String?,
-    val description: String?,
-    val email: String?,
-    val phoneNumber: String?,
-    val location: String?,
-    val skills: ArrayList<String>?
+    var qualification: String?,
+    var description: String?,
+    var email: String?,
+    var phoneNumber: String?,
+    var location: String?,
+    var skills: ArrayList<String>?
     )

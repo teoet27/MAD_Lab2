@@ -89,7 +89,7 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/edit_fullnameID"
+                    android:id="@+id/edit_fullname_ID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
@@ -123,7 +123,7 @@
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/edit_nicknameID"
+                        android:id="@+id/edit_nickname_ID"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/insert_here_your_nickname"
@@ -140,7 +140,7 @@
                 </LinearLayout>
 
                 <EditText
-                    android:id="@+id/edit_qualificationID"
+                    android:id="@+id/edit_qualification_ID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#FC7A08"

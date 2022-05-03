@@ -71,7 +71,6 @@ class MainActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.nav_host_fragment_content_main,fragment)
             .addToBackStack(null)
-            //.addToBackStack(fragment.getClass().getName())
             .commit()
     }
 

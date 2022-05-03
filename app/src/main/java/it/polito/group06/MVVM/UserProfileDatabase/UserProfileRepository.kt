@@ -1,6 +1,7 @@
 package it.polito.group06.MVVM.UserProfileDatabase
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 
 class UserProfileRepository(application: Application) {
     private val profileDao=UserProfileDatabase.getDatabase(application).profileDao()

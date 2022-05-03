@@ -1,6 +1,7 @@
 package it.polito.group06
 
 import android.os.Bundle
+import android.os.Environment
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -8,9 +9,11 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import it.polito.group06.MVVM.UserProfileDatabase.UserProfile
 import it.polito.group06.MVVM.UserProfileDatabase.UserProfileViewModel
+import it.polito.group06.utilities.getBitmapFromFile
 
-class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
+class ShowProfileFragment : Fragment() {
     private lateinit var fullnameOBJ: TextView
     private lateinit var nicknameOBJ: TextView
     private lateinit var qualificationOBJ: TextView
@@ -19,7 +22,6 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
     private lateinit var locationOBJ: TextView
     private lateinit var skillsOBJ: TextView
     private lateinit var phoneOBJ: TextView
-    private lateinit var sdh: SaveProfileDataHandler
     private lateinit var profilePictureOBJ: ImageView
 
     private lateinit var profilePictureDirectoryPath: String
@@ -27,19 +29,40 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
 
     val profile_vm by viewModels<UserProfileViewModel>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
-        /*profile_vm.profile.observe(this.viewLifecycleOwner){ userProfile ->
-            this.fullnameOBJ = view.findViewById(R.id.edit_fullnameID)
-            this.nicknameOBJ = view.findViewById(R.id.edit_nicknameID)
-            this.qualificationOBJ = view.findViewById(R.id.edit_qualificationID)
-            this.descriptionOBJ = view.findViewById(R.id.edit_description_show_ID)
-            this.emailOBJ = view.findViewById(R.id.edit_email_show_ID)
-            this.locationOBJ = view.findViewById(R.id.edit_loc_show_ID)
-            this.skillsOBJ = view.findViewById(R.id.edit_skillsListID)
-            this.phoneOBJ = view.findViewById(R.id.edit_phone_show_ID)
-            this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
+        val view: View = inflater.inflate(R.layout.fragment_show_profile, container, false)
+
+        this.fullnameOBJ = view.findViewById(R.id.fullname_ID)
+        this.nicknameOBJ = view.findViewById(R.id.nickname_ID)
+        this.qualificationOBJ = view.findViewById(R.id.qualification_ID)
+        this.descriptionOBJ = view.findViewById(R.id.description_show_ID)
+        this.emailOBJ = view.findViewById(R.id.email_show_ID)
+        this.locationOBJ = view.findViewById(R.id.loc_show_ID)
+        this.skillsOBJ = view.findViewById(R.id.skillsListID)
+        this.phoneOBJ = view.findViewById(R.id.phone_show_ID)
+        this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
+
+        profile_vm.profile.observe(this.viewLifecycleOwner){ userProfile ->
+
+            if (userProfile==null)
+                profile_vm.editProfile(
+                    UserProfile(
+                        null,
+                        "rettore",
+                        "Guido Saracco",
+                        "Rector @ Politecnico di Torino",
+                        "I'm the full time Rector of Politecnico di Torino. I used to be a Chemistry teacher in 1994, but eventually I ended up being an institutional figure in the teaching world.",
+                        "rettore@polito.it",
+                        "3331112223",
+                        "Torino - Italia",
+                        null
+                    )
+                )
 
             this.fullnameOBJ.text = userProfile.fullName
 
@@ -55,7 +78,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
             if(userProfile.skills.isNullOrEmpty()){
                 this.skillsOBJ.setText(R.string.noskills)
             }else{
-                this.skillsOBJ.text = fromArrayListToString(userProfile.skills)
+                //this.skillsOBJ.text = fromArrayListToString(userProfile.skills)
             }
 
 
@@ -68,7 +91,15 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
             getBitmapFromFile(profilePicturePath)?.also{
                 this.profilePictureOBJ.setImageBitmap(it)
             }
-        }*/
+        }
+
+        // check this option to open onCreateOptionsMenu method
+        setHasOptionsMenu(true)
+
+        return view
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

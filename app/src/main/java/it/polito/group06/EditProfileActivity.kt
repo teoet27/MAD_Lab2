@@ -48,9 +48,9 @@ class EditProfileActivity : AppCompatActivity() {
 
         sdh = SaveProfileDataHandler(applicationContext)
 
-        this.editFullNameOBJ = findViewById(R.id.edit_fullnameID)
-        this.editNickNameOBJ = findViewById(R.id.edit_nicknameID)
-        this.editQualificationOBJ = findViewById(R.id.edit_qualificationID)
+        this.editFullNameOBJ = findViewById(R.id.edit_fullname_ID)
+        this.editNickNameOBJ = findViewById(R.id.edit_nickname_ID)
+        this.editQualificationOBJ = findViewById(R.id.edit_qualification_ID)
         this.editDescriptionOBJ = findViewById(R.id.edit_description_show_ID)
         this.editEmailOBJ = findViewById(R.id.edit_email_show_ID)
         this.editLocationOBJ = findViewById(R.id.edit_loc_show_ID)

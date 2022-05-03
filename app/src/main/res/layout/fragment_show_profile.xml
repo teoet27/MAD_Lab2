@@ -88,7 +88,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/edit_fullnameID"
+                    android:id="@+id/fullname_ID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
@@ -104,7 +104,7 @@
                     android:textSize="34sp" />
 
                 <TextView
-                    android:id="@+id/edit_nicknameID"
+                    android:id="@+id/nickname_ID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -120,7 +120,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/edit_qualificationID"
+                    android:id="@+id/qualification_ID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#FC7A08"
