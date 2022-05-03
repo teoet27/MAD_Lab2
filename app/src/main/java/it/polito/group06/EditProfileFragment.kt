@@ -48,18 +48,17 @@ class EditProfileFragment : Fragment() {
         val camera_button = view.findViewById<Button>(R.id.edit_camera_button)
         registerForContextMenu(camera_button)
 
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_frag4EditTimeslot_to_frag3ShowTimeslot)
-            }
-        })
-
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.action_editProfileFragment_to_frag1ShowProfile2)
+            }
+        })
     }
 
     /**
