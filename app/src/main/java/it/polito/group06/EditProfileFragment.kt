@@ -49,9 +49,12 @@ class EditProfileFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
+        return inflater.inflate(R.layout.fragment_edit_profile,container,false)
+    }
 
-        val view: View = inflater.inflate(R.layout.fragment_edit_profile, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val camera = view.findViewById<ImageView>(R.id.edit_camera_button)
         registerForContextMenu(camera)
@@ -119,12 +122,6 @@ class EditProfileFragment : Fragment() {
 
         // check this option to open onCreateOptionsMenu method
         setHasOptionsMenu(true)
-
-        return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

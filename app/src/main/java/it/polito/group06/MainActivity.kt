@@ -34,11 +34,10 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
-            /*setOf(
+            setOf(
                 R.id.frag5ShowListTimeslots,R.id.ShowProfileFragment,R.id.EditProfileFragment,
                 R.id.frag3ShowTimeslot,R.id.frag4EditTimeslot
-            )*/
-            navController.graph, drawerLayout
+            ), drawerLayout
         )
         // setup navigation drawer
         setupActionBarWithNavController(navController, appBarConfiguration)

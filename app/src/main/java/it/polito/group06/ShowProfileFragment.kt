@@ -33,9 +33,12 @@ class ShowProfileFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
+        return inflater.inflate(R.layout.fragment_show_profile,container,false)
+    }
 
-        val view: View = inflater.inflate(R.layout.fragment_show_profile, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         this.fullnameOBJ = view.findViewById(R.id.fullname_ID)
         this.nicknameOBJ = view.findViewById(R.id.nickname_ID)
@@ -95,11 +98,6 @@ class ShowProfileFragment : Fragment() {
 
         // check this option to open onCreateOptionsMenu method
         setHasOptionsMenu(true)
-
-        return view
-    }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
