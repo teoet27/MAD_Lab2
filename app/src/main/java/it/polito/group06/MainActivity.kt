@@ -34,11 +34,11 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.Frag5ShowListTimeslots,
-                R.id.ShowProfileFragment,
-                R.id.EditProfileFragment
-            ), drawerLayout
+            /*setOf(
+                R.id.frag5ShowListTimeslots,R.id.ShowProfileFragment,R.id.EditProfileFragment,
+                R.id.frag3ShowTimeslot,R.id.frag4EditTimeslot
+            )*/
+            navController.graph, drawerLayout
         )
         // setup navigation drawer
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -49,15 +49,18 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             when(it.itemId){
                 R.id.Frag5ShowListTimeslots->{
-                    replaceFragment(Frag5ShowListTimeslots())
+                    navController.navigate(R.id.frag5ShowListTimeslots)
+                    //replaceFragment(Frag5ShowListTimeslots())
                     true
                 }
                 R.id.ShowProfileFragment->{
-                    replaceFragment(ShowProfileFragment())
+                    navController.navigate(R.id.showProfileFragment)
+                    //replaceFragment(ShowProfileFragment())
                     true
                 }
                 R.id.EditProfileFragment->{
-                    replaceFragment(EditProfileFragment())
+                    navController.navigate(R.id.editProfileFragment)
+                    //replaceFragment(EditProfileFragment())
                     true
                 }
                 else->false
