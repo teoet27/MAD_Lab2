@@ -38,7 +38,7 @@
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="it.polito.group06.EditProfileFragment"
-        android:label="EditProfileFragment" >
+        android:label="Edit your profile" >
         <action
             android:id="@+id/action_editProfileFragment_to_showProfileFragment"
             app:destination="@id/showProfileFragment" />
@@ -46,7 +46,7 @@
     <fragment
         android:id="@+id/showProfileFragment"
         android:name="it.polito.group06.ShowProfileFragment"
-        android:label="ShowProfileFragment" >
+        android:label="Your profile" >
         <action
             android:id="@+id/action_showProfileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
