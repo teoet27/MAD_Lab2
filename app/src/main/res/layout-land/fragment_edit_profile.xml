@@ -27,8 +27,7 @@
                 app:layout_constraintDimensionRatio="H,1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/propic" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/profilePicture_mask_ID"
@@ -97,7 +96,6 @@
                     android:paddingLeft="16dp"
                     android:paddingTop="30dp"
                     android:paddingBottom="5dp"
-                    android:text="@string/fullnamePH"
                     android:textAlignment="viewStart"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/white"
@@ -126,12 +124,11 @@
                         android:id="@+id/edit_nickname_ID"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/insert_here_your_nickname"
                         android:digits="qwertyuiopasdfghjklzxcvbnm0123456789._"
                         android:fontFamily="sans-serif-light"
+                        android:hint="@string/insert_here_your_nickname"
                         android:paddingLeft="5dp"
                         android:paddingBottom="15dp"
-                        android:text="@string/nicknamePH"
                         android:textAlignment="viewStart"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textColor="@color/orange_poli"
@@ -148,7 +145,6 @@
                     android:hint="@string/insert_here_your_qualification"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:text="@string/qualificationPH"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/prussian_blue"
@@ -173,10 +169,9 @@
                     android:id="@+id/edit_description_show_ID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/describe_yourself_with_a_long_text"
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
-                    android:text="@string/default_description_text"
-                    android:hint="@string/describe_yourself_with_a_long_text"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -212,7 +207,6 @@
                     android:hint="@string/example_skill1_skill2_skill3"
                     android:paddingLeft="40dp"
                     android:paddingRight="40dp"
-                    android:text="@string/empty_skills"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />

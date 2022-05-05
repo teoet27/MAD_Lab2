@@ -27,8 +27,7 @@
                 app:layout_constraintDimensionRatio="V,1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/propic" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/profilePicture_mask_ID"
@@ -92,12 +91,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
-                    android:hint="No fullname."
                     android:paddingLeft="16dp"
                     android:paddingTop="30dp"
                     android:paddingRight="16dp"
                     android:paddingBottom="5dp"
-                    android:text="@string/fullnamePH"
                     android:textAlignment="viewStart"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/prussian_blue"
@@ -108,11 +105,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:hint="No nickname provided"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:paddingBottom="15dp"
-                    android:text="@string/nicknamePH"
                     android:textAlignment="viewStart"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/orange_poli"
@@ -125,10 +120,8 @@
                     android:layout_height="wrap_content"
                     android:background="#FC7A08"
                     android:fontFamily="sans-serif-light"
-                    android:hint="No qualification provided."
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:text="@string/qualificationPH"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/prussian_blue"
@@ -155,7 +148,6 @@
                     android:hint="No descriprion provided."
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
-                    android:text="@string/default_description_text"
                     android:textSize="16sp" />
 
                 <TextView
@@ -188,7 +180,6 @@
                     android:layout_marginTop="5dp"
                     android:paddingLeft="40dp"
                     android:paddingRight="40dp"
-                    android:text="@string/empty_skills"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
