@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.FileProvider
 import it.polito.group06.R
-import it.polito.group06.utilities.SaveProfileDataHandler
 import java.io.*
 
 
