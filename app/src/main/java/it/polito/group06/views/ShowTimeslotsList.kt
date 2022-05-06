@@ -33,6 +33,9 @@ class ShowTimeslotsList : Fragment(R.layout.show_timeslots_frag) {
         super.onViewCreated(view, savedInstanceState)
         // timeslotsVM.insertAd(TimeSlotAd(null, "Ciao", "x", "x", "x"))
         timeslotsVM.ads.observe(this.viewLifecycleOwner) { listOfAdv ->
+            /**
+             * If there are no advertisements in the DB a proper text is shown.
+             */
             view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = listOfAdv == null || listOfAdv.isEmpty()
             view.findViewById<ImageView>(R.id.create_hint).isVisible = listOfAdv == null || listOfAdv.isEmpty()
         }
