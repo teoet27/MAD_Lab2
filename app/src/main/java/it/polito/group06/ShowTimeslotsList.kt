@@ -9,13 +9,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 
-class Frag5ShowListTimeslots: Fragment(R.layout.frag5_show_list_timeslots) {
+class ShowTimeslotsList: Fragment(R.layout.show_timeslots_frag) {
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?):View?{
 
-        return inflater.inflate(R.layout.frag5_show_list_timeslots,
+        return inflater.inflate(R.layout.show_timeslots_frag,
             container,
             false);
     }
