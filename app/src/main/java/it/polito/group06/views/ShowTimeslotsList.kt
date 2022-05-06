@@ -14,11 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import it.polito.group06.R
 import it.polito.group06.models.time_slot_adv_database.AdsAdapterCard
 import it.polito.group06.models.time_slot_adv_database.Advertisement
-import it.polito.group06.viewmodels.TimeSlotAdViewModel
+import it.polito.group06.viewmodels.AdvertisementViewModel
 
 class ShowTimeslotsList : Fragment(R.layout.show_timeslots_frag) {
 
-    private val timeslotsVM by viewModels<TimeSlotAdViewModel>()
+    private val advViewModel by viewModels<AdvertisementViewModel>()
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
@@ -36,29 +36,42 @@ class ShowTimeslotsList : Fragment(R.layout.show_timeslots_frag) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        timeslotsVM.insertAd(
+
+        /*
+        advViewModel.insertAd(
             Advertisement(
-                null, "Title #1",
+                null, "Help with your homeworks",
                 "This is description #1", "Turin",
-                "null", 3f, "Mark", false
-            )
-        )
-        timeslotsVM.insertAd(
-            Advertisement(
-                null, "Title #2",
-                "This is description #2", "Milan",
-                "null", 3f, "Mark", false
-            )
-        )
-        timeslotsVM.insertAd(
-            Advertisement(
-                null, "Title #3",
-                "This is description #3", "Naples",
-                "null", 3f, "Mark", false
+                "null", 3f, "Alessia", false
             )
         )
 
-        timeslotsVM.ads.observe(this.viewLifecycleOwner) { listOfAdv ->
+        advViewModel.insertAd(
+            Advertisement(
+                null, "Create the design of your dreams!",
+                "This is description #1", "Milan",
+                "null", 6f, "Mark", false
+            )
+        )
+
+        advViewModel.insertAd(
+            Advertisement(
+                null, "A trip on an original gondola",
+                "This is description #1", "Venice",
+                "null", 2f, "Laura", false
+            )
+        )
+
+        advViewModel.insertAd(
+            Advertisement(
+                null, "How to do a pizza: the ultimate tutorial",
+                "This is description #1", "Naples",
+                "null", 0.5f, "Maria Anna", false
+            )
+        )
+         */
+
+        advViewModel.ads.observe(this.viewLifecycleOwner) { listOfAdv ->
             /**
              * If there are no advertisements in the DB a proper text is shown.
              */
