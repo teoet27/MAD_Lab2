@@ -71,21 +71,7 @@ class EditProfileFragment : Fragment() {
 
         profile_vm.profile.observe(this.viewLifecycleOwner) { userProfile ->
 
-            if (userProfile == null) {
-                profile_vm.editProfile(
-                    UserProfile(
-                        null,
-                        "rettore",
-                        "Guido Saracco",
-                        "Rector @ Politecnico di Torino",
-                        "I'm the full time Rector of Politecnico di Torino. I used to be a Chemistry teacher in 1994, but eventually I ended up being an institutional figure in the teaching world.",
-                        "rettore@polito.it",
-                        "3331112223",
-                        "Torino - Italia",
-                        null
-                    )
-                )
-            } else {
+            if (userProfile != null){
                 this.editFullNameOBJ.setText(userProfile.fullName)
 
                 if (userProfile.nickname?.compareTo("") == 0) {
@@ -112,7 +98,8 @@ class EditProfileFragment : Fragment() {
 
                 getBitmapFromFile(profilePicturePath)?.also {
                     this.profilePictureOBJ.setImageBitmap(it)
-                }
+                } ?: this.profilePictureOBJ.setImageResource(R.drawable.propic)
+
             }
 
 

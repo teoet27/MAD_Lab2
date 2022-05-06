@@ -68,6 +68,8 @@ class ShowProfileFragment : Fragment() {
                         null
                     )
                 )
+                this.profilePictureOBJ.setImageResource(R.drawable.propic)
+
             } else {
                 this.fullnameOBJ.text = userProfile.fullName
 
