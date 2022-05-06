@@ -10,17 +10,23 @@ import android.os.Build
 import it.polito.group06.MVVM.UserProfileDatabase.UserProfile
 import java.io.*
 
-fun emptyUserProfile()=UserProfile(
-        null,
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        null
-    )
+/**
+ * Provides an empty user profile.
+ *
+ * @return an empty user profile
+ */
+fun emptyUserProfile() = UserProfile(
+    null,
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    null
+)
+
 /**
  * This utility method changes an array list into a string with a specific format
  *
@@ -44,8 +50,8 @@ fun fromArrayListToString(list: ArrayList<String>): String {
  * @param list  string containing list of skills
  * @return array_list
  */
-fun fromStringToArrayList(s:String): ArrayList<String> {
-    var skillList=ArrayList<String>()
+fun fromStringToArrayList(s: String): ArrayList<String> {
+    var skillList = ArrayList<String>()
     if (s.compareTo("") != 0 && s.split(" ").size != s.length + 1) {
         val x: List<String> = s.split(",")
         for (i in x.indices) {
@@ -74,7 +80,7 @@ fun getBitmapFromFile(path: String): Bitmap? {
  * @throws IOException
  */
 @Throws(IOException::class)
-fun createImageFile(profilePicturePath:String): File {
+fun createImageFile(profilePicturePath: String): File {
     // Create an image file name
     return File(profilePicturePath)
 }
@@ -115,7 +121,9 @@ fun parseSkillString(x: String): String {
     return out
 }
 
+
 //SUPPORT METHODS FOR ROTATING IMAGES///////////////////////////////////////////////////////////
+
 /**
  * This method is responsible for solving the rotation issue if exist. Also scale the images to
  * 1024x1024 resolution
