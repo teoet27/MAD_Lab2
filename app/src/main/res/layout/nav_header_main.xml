@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:layout_weight="1"
-    android:background="@color/orange_poli"
+    android:background="@color/prussian_blue"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -50,7 +50,7 @@
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintVertical_weight="3"
             app:srcCompat="@drawable/circular_mask"
-            app:tint="@color/orange_poli" />
+            app:tint="@color/prussian_blue" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -64,7 +64,7 @@
         android:text="@string/fullnamePH"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-        android:textColor="@color/prussian_blue"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -78,7 +78,7 @@
         android:text="@string/nicknamePH"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="@color/prussian_blue"
+        android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold" />
 
