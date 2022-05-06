@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MAD_Lab2">
         <activity
-            android:name=".MainActivity"
+            android:name=".TBMainActivity"
             android:exported="true"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.MAD_Lab2.NoActionBar" >
