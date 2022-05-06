@@ -43,6 +43,8 @@
         android:background="@drawable/rounded_corners_total"
         android:backgroundTint="@color/orange_poli"
         android:text="+"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
