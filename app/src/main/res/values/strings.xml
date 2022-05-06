@@ -34,7 +34,6 @@
     <string name="you_mail_com">you@mail.com</string>
     <string name="new_york_new_york_usa">New York, New York, USA</string>
     <string name="describe_yourself_with_a_long_text">Describe yourself with a long text</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
