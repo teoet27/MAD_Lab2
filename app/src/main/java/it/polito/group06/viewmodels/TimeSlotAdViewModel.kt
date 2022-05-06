@@ -8,14 +8,26 @@ import kotlin.concurrent.thread
 
 class TimeSlotAdViewModel(application: Application) : AndroidViewModel(application) {
     private val repo = TimeSlotAdRepository(application)
+
+    /**
+     * List of advertisements
+     */
     val ads = repo.advertisements()
 
+    /**
+     * Insertion of a new advertisement
+     * @param ad a new advertisement
+     */
     fun insertAd(ad: TimeSlotAd) {
         thread {
             repo.insertAd(ad)
         }
     }
 
+    /**
+     * Remove an advertisement
+     * @param id integer unique number identifying an advertisement
+     */
     fun removeAd(id: Long) {
         thread {
             repo.removeAdWithId(id)
