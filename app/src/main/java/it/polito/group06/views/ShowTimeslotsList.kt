@@ -1,4 +1,4 @@
-package it.polito.group06
+package it.polito.group06.views
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import it.polito.group06.R
 
 class ShowTimeslotsList: Fragment(R.layout.show_timeslots_frag) {
 
@@ -15,7 +16,8 @@ class ShowTimeslotsList: Fragment(R.layout.show_timeslots_frag) {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?):View?{
 
-        return inflater.inflate(R.layout.show_timeslots_frag,
+        return inflater.inflate(
+            R.layout.show_timeslots_frag,
             container,
             false);
     }

@@ -1,8 +1,7 @@
-package it.polito.group06.MVVM.UserProfileDatabase
+package it.polito.group06.models.user_profile_database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import it.polito.group06.MVVM.TimeSlotAdvDatabase.TimeSlotAd
 
 @Dao
 interface UserProfileDao {

@@ -1,4 +1,4 @@
-package it.polito.group06
+package it.polito.group06.legacy
 
 class Profile(
     name: String, email: String, location: String,

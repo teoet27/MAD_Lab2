@@ -1,4 +1,4 @@
-package it.polito.group06.MVVM.TimeSlotAdvDatabase
+package it.polito.group06.models.time_slot_adv_database
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

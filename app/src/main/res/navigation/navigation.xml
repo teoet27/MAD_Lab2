@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/frag3ShowTimeslot"
-        android:name="it.polito.group06.ShowSingleTimeslot"
+        android:name="it.polito.group06.views.ShowSingleTimeslot"
         android:label="Timeslot details" >
         <action
             android:id="@+id/action_frag3ShowTimeslot_to_frag4EditTimeslot"
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/frag4EditTimeslot"
-        android:name="it.polito.group06.EditSingleTimeslot"
+        android:name="it.polito.group06.views.EditSingleTimeslot"
         android:label="Edit timeslot" >
         <action
             android:id="@+id/action_frag4EditTimeslot_to_frag3ShowTimeslot"
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/frag5ShowListTimeslots"
-        android:name="it.polito.group06.ShowTimeslotsList"
+        android:name="it.polito.group06.views.ShowTimeslotsList"
         android:label="Timeslots" >
         <action
             android:id="@+id/action_frag5ShowListTimeslots_to_frag3ShowTimeslot"
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="it.polito.group06.EditProfileFragment"
+        android:name="it.polito.group06.views.EditProfileFragment"
         android:label="Edit your profile" >
         <action
             android:id="@+id/action_editProfileFragment_to_showProfileFragment"
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/showProfileFragment"
-        android:name="it.polito.group06.ShowProfileFragment"
+        android:name="it.polito.group06.views.ShowProfileFragment"
         android:label="Your profile" >
         <action
             android:id="@+id/action_showProfileFragment_to_editProfileFragment"

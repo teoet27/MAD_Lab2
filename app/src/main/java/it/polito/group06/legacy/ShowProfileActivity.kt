@@ -1,4 +1,4 @@
-package it.polito.group06
+package it.polito.group06.legacy
 
 import android.app.Activity
 import android.content.Intent
@@ -13,6 +13,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import it.polito.group06.R
+import it.polito.group06.utilities.SaveProfileDataHandler
 
 class ShowProfileActivity : AppCompatActivity() {
     private lateinit var fullnameOBJ: TextView

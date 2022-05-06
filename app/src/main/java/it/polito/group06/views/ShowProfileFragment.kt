@@ -1,4 +1,4 @@
-package it.polito.group06
+package it.polito.group06.views
 
 import android.os.Bundle
 import android.os.Environment
@@ -9,8 +9,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import it.polito.group06.MVVM.UserProfileDatabase.UserProfile
-import it.polito.group06.MVVM.UserProfileDatabase.UserProfileViewModel
+import it.polito.group06.R
+import it.polito.group06.models.user_profile_database.UserProfile
+import it.polito.group06.viewmodels.UserProfileViewModel
 import it.polito.group06.utilities.getBitmapFromFile
 
 class ShowProfileFragment : Fragment() {

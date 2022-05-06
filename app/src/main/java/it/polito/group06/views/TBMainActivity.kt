@@ -1,4 +1,4 @@
-package it.polito.group06
+package it.polito.group06.views
 
 import android.os.Bundle
 import android.view.Menu
@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
+import it.polito.group06.R
 import it.polito.group06.databinding.ActivityMainBinding
 
 
@@ -34,8 +35,8 @@ class TBMainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.frag5ShowListTimeslots,R.id.ShowProfileFragment,R.id.EditProfileFragment,
-                R.id.frag3ShowTimeslot,R.id.frag4EditTimeslot
+                R.id.frag5ShowListTimeslots, R.id.ShowProfileFragment, R.id.EditProfileFragment,
+                R.id.frag3ShowTimeslot, R.id.frag4EditTimeslot
             ), drawerLayout
         )
         // setup navigation drawer
@@ -46,17 +47,16 @@ class TBMainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {
             drawerLayout.closeDrawer(GravityCompat.START)
             when(it.itemId){
-                R.id.Frag5ShowListTimeslots->{
-                    navController.navigate(R.id.frag5ShowListTimeslots)
-                    //replaceFragment(Frag5ShowListTimeslots())
+                R.id.Frag5ShowListTimeslots ->{
+                    navController.navigate(R.id.frag5ShowListTimeslots)                    //replaceFragment(Frag5ShowListTimeslots())
                     true
                 }
-                R.id.ShowProfileFragment->{
+                R.id.ShowProfileFragment ->{
                     navController.navigate(R.id.showProfileFragment)
                     //replaceFragment(ShowProfileFragment())
                     true
                 }
-                R.id.EditProfileFragment->{
+                R.id.EditProfileFragment ->{
                     navController.navigate(R.id.editProfileFragment)
                     //replaceFragment(EditProfileFragment())
                     true

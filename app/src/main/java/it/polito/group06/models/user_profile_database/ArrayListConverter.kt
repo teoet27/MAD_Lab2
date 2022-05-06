@@ -1,4 +1,4 @@
-package it.polito.group06.MVVM.UserProfileDatabase
+package it.polito.group06.models.user_profile_database
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

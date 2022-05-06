@@ -1,9 +1,9 @@
-package it.polito.group06.MVVM.TimeSlotAdvDatabase
+package it.polito.group06.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import it.polito.group06.MVVM.TimeSlotAdvDatabase.TimeSlotAd
-import it.polito.group06.MVVM.TimeSlotAdvDatabase.TimeSlotAdRepository
+import it.polito.group06.models.time_slot_adv_database.TimeSlotAd
+import it.polito.group06.models.time_slot_adv_database.TimeSlotAdRepository
 import kotlin.concurrent.thread
 
 class TimeSlotAdViewModel(application: Application) : AndroidViewModel(application) {

@@ -1,9 +1,7 @@
-package it.polito.group06.MVVM.UserProfileDatabase
+package it.polito.group06.models.user_profile_database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
-import androidx.room.TypeConverters
 
 @Entity(tableName = "user_profile_table")
 data class UserProfile(

@@ -1,4 +1,4 @@
-package it.polito.group06
+package it.polito.group06.views
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.os.Vibrator
 import android.provider.MediaStore
 import android.view.*
 import android.widget.EditText
@@ -15,12 +14,12 @@ import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import it.polito.group06.MVVM.UserProfileDatabase.UserProfile
-import it.polito.group06.MVVM.UserProfileDatabase.UserProfileViewModel
+import it.polito.group06.R
+import it.polito.group06.models.user_profile_database.UserProfile
+import it.polito.group06.viewmodels.UserProfileViewModel
 import it.polito.group06.utilities.*
 import java.io.File
 import java.io.IOException

@@ -1,8 +1,6 @@
-package it.polito.group06.MVVM.TimeSlotAdvDatabase
+package it.polito.group06.models.time_slot_adv_database
 
 import android.app.Application
-import it.polito.group06.MVVM.TimeSlotAdvDatabase.TimeSlotAd
-import it.polito.group06.MVVM.TimeSlotAdvDatabase.TimeSlotAdDatabase
 
 class TimeSlotAdRepository(application: Application) {
     private val adsDao = TimeSlotAdDatabase.getDatabase(application).adsDao()

@@ -1,10 +1,11 @@
-package it.polito.group06
+package it.polito.group06.views
 
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import it.polito.group06.R
 
 class EditSingleTimeslot: Fragment(R.layout.edit_single_timeslot_frag) {
 

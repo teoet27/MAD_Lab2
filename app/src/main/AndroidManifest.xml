@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MAD_Lab2">
         <activity
-            android:name=".TBMainActivity"
+            android:name=".views.TBMainActivity"
             android:exported="true"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.MAD_Lab2.NoActionBar" >
@@ -29,11 +29,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EditProfileActivity"
+            android:name=".legacy.EditProfileActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ShowProfileActivity"
+            android:name=".legacy.ShowProfileActivity"
             android:exported="true">
         </activity>
 

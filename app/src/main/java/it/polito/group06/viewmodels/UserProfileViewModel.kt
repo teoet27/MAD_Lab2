@@ -1,10 +1,9 @@
-package it.polito.group06.MVVM.UserProfileDatabase
+package it.polito.group06.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import it.polito.group06.MVVM.TimeSlotAdvDatabase.TimeSlotAd
+import it.polito.group06.models.user_profile_database.UserProfile
+import it.polito.group06.models.user_profile_database.UserProfileRepository
 import kotlin.concurrent.thread
 
 class UserProfileViewModel(application: Application) : AndroidViewModel(application) {
