@@ -12,9 +12,14 @@ abstract class UserProfileDatabase : RoomDatabase() {
     abstract fun profileDao(): UserProfileDao
 
     companion object {
-        @Volatile
-        private var INSTANCE: UserProfileDatabase? = null
+        @Volatile private var INSTANCE: UserProfileDatabase? = null
 
+        /**
+         * There's a single instance of the database and
+         * this method checks whether it's already been instantiated and,
+         * eventually, returns the reference to the unique object shared among
+         * all the callers.
+         */
         fun getDatabase(context: Context): UserProfileDatabase =
             (
                     INSTANCE ?: synchronized(this) {
