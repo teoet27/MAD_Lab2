@@ -71,17 +71,17 @@ class TBMainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        val fullnameHeader = navView.getHeaderView(0).findViewById<TextView>(R.id.fullname_header)
+        val nicknameHeader = navView.getHeaderView(0).findViewById<TextView>(R.id.nickname_header)
+        val pictureHeader = navView.getHeaderView(0).findViewById<ImageView>(R.id.picture_header)
         profile_vm.profile.observe(this) { user ->
-            val fullnameHeader = findViewById<TextView>(R.id.fullname_header)
-            val nicknameHeader = findViewById<TextView>(R.id.nickname_header)
-            val pictureHeader=findViewById<ImageView>(R.id.picture_header)
 
             if(user != null)
             {
                 fullnameHeader.text = user.fullName
                 nicknameHeader.text = "@${user.nickname}"
                 val profilePicturePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(R.string.profile_picture_filename)
-                val profilePictureDirectoryPath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
 
                 getBitmapFromFile(profilePicturePath)?.also {
                     pictureHeader.setImageBitmap(it)

@@ -78,7 +78,7 @@
         android:text="@string/nicknamePH"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="@color/white"
+        android:textColor="@color/orange_poli"
         android:textSize="14sp"
         android:textStyle="bold" />
 
