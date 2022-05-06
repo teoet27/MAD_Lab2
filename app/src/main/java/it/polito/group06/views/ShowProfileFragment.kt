@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import it.polito.group06.R
 import it.polito.group06.models.user_profile_database.UserProfile
+import it.polito.group06.utilities.fromArrayListToString
 import it.polito.group06.viewmodels.UserProfileViewModel
 import it.polito.group06.utilities.getBitmapFromFile
 
@@ -80,9 +81,9 @@ class ShowProfileFragment : Fragment() {
                 this.locationOBJ.text = userProfile.location
 
                 if (userProfile.skills.isNullOrEmpty()) {
-                    this.skillsOBJ.setText(R.string.noskills)
+                    this.skillsOBJ.text = getString(R.string.noskills)
                 } else {
-                    //this.skillsOBJ.text = fromArrayListToString(userProfile.skills)
+                    this.skillsOBJ.text = fromArrayListToString(userProfile.skills!!)
                 }
 
 

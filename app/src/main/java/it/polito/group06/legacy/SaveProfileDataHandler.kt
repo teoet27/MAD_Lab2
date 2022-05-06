@@ -1,8 +1,7 @@
-package it.polito.group06.utilities
+package it.polito.group06.legacy
 
 import android.content.Context
 import com.google.gson.Gson
-import it.polito.group06.legacy.Profile
 
 class SaveProfileDataHandler(context: Context) {
     private val sharedPrefereces =

@@ -97,11 +97,8 @@ class EditProfileFragment : Fragment() {
                 this.editPhoneOBJ.setText(userProfile.phoneNumber)
                 this.editLocationOBJ.setText(userProfile.location)
 
-                if (userProfile.skills.isNullOrEmpty()) {
-                    this.editSkillsOBJ.setText(R.string.noskills)
-                } else {
-                    this.editSkillsOBJ.setText(R.string.noskills)
-                    //this.editSkillsOBJ.setText(fromArrayListToString(userProfile.skills))
+                if (!userProfile.skills.isNullOrEmpty()) {
+                    this.editSkillsOBJ.setText(fromArrayListToString(userProfile.skills!!))
                 }
 
 
