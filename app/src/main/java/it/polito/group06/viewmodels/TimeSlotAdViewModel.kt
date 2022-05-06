@@ -2,12 +2,12 @@ package it.polito.group06.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import it.polito.group06.models.time_slot_adv_database.TimeSlotAd
-import it.polito.group06.models.time_slot_adv_database.TimeSlotAdRepository
+import it.polito.group06.models.time_slot_adv_database.Advertisement
+import it.polito.group06.models.time_slot_adv_database.AdvertisementRepository
 import kotlin.concurrent.thread
 
 class TimeSlotAdViewModel(application: Application) : AndroidViewModel(application) {
-    private val repo = TimeSlotAdRepository(application)
+    private val repo = AdvertisementRepository(application)
 
     /**
      * List of advertisements
@@ -18,7 +18,7 @@ class TimeSlotAdViewModel(application: Application) : AndroidViewModel(applicati
      * Insertion of a new advertisement
      * @param ad a new advertisement
      */
-    fun insertAd(ad: TimeSlotAd) {
+    fun insertAd(ad: Advertisement) {
         thread {
             repo.insertAd(ad)
         }

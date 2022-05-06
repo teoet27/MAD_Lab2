@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [UserProfile::class], version = 1)
+@Database(entities = [UserProfile::class], version = 2)
 @TypeConverters(ArrayListConverter::class)
 abstract class UserProfileDatabase : RoomDatabase() {
     abstract fun profileDao(): UserProfileDao

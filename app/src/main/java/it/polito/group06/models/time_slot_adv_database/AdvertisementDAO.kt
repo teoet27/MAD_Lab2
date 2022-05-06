@@ -7,19 +7,19 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface TimeSlotAdDao {
+interface AdvertisementDAO {
 
     /** Add(Update) to database **/
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAd(timeSlotAd: TimeSlotAd)
+    fun insertAd(timeSlotAd: Advertisement)
 
     /** Read from database **/
-    @Query("SELECT * FROM time_slot_advertisement_table")
-    fun findAll(): LiveData<List<TimeSlotAd>>
+    @Query("SELECT * FROM advertisementTable")
+    fun findAll(): LiveData<List<Advertisement>>
 
 
-    /** Delete TimeSlotAdv **/
-    @Query("DELETE FROM time_slot_advertisement_table WHERE id = :id")
+    /** Delete Advertisement **/
+    @Query("DELETE FROM advertisementTable WHERE id = :id")
     fun removeAdWithId(id: Long)
 
 

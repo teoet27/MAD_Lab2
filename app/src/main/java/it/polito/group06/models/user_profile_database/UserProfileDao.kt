@@ -16,7 +16,7 @@ interface UserProfileDao {
      * getProfile reads the profile data from database.
      * @return a LiveData object with UserProfile
      */
-    @Query("SELECT * FROM user_profile_table")
+    @Query("SELECT * FROM userProfileTable")
     fun getProfile(): LiveData<UserProfile>
 
 }

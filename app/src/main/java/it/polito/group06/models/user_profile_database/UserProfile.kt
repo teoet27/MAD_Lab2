@@ -3,7 +3,7 @@ package it.polito.group06.models.user_profile_database
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "user_profile_table")
+@Entity(tableName = "userProfileTable")
 data class UserProfile(
     @PrimaryKey(autoGenerate = true) val id: Long?,
     var nickname: String?,
