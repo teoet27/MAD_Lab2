@@ -46,31 +46,32 @@ class TBMainActivity : AppCompatActivity() {
         // Navigation view item click listener
         navView.setNavigationItemSelectedListener {
             drawerLayout.closeDrawer(GravityCompat.START)
-            when(it.itemId){
-                R.id.Frag5ShowListTimeslots ->{
-                    navController.navigate(R.id.frag5ShowListTimeslots)                    //replaceFragment(Frag5ShowListTimeslots())
+            when (it.itemId) {
+                R.id.Frag5ShowListTimeslots -> {
+                    navController.navigate(R.id.frag5ShowListTimeslots)
+                    //replaceFragment(Frag5ShowListTimeslots())
                     true
                 }
-                R.id.ShowProfileFragment ->{
+                R.id.ShowProfileFragment -> {
                     navController.navigate(R.id.showProfileFragment)
                     //replaceFragment(ShowProfileFragment())
                     true
                 }
-                R.id.EditProfileFragment ->{
+                R.id.EditProfileFragment -> {
                     navController.navigate(R.id.editProfileFragment)
                     //replaceFragment(EditProfileFragment())
                     true
                 }
-                else->false
+                else -> false
             }
         }
     }
 
     // Extension function to replace fragment
-    private fun AppCompatActivity.replaceFragment(fragment: Fragment){
+    private fun AppCompatActivity.replaceFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.nav_host_fragment_content_main,fragment)
+            .replace(R.id.nav_host_fragment_content_main, fragment)
             .commit()
     }
 
@@ -97,6 +98,7 @@ class TBMainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
