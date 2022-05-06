@@ -14,7 +14,7 @@ import com.google.android.material.navigation.NavigationView
 import it.polito.group06.databinding.ActivityMainBinding
 
 
-class MainActivity : AppCompatActivity() {
+class TBMainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
