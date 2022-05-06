@@ -14,7 +14,7 @@ import it.polito.group06.R
 class AdsViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
     private val title: TextView = v.findViewById(R.id.advCardTitle)
     private val location: TextView = v.findViewById(R.id.advCardLocation)
-    private val duration: TextView = v.findViewById(R.id.advCardLocation)
+    private val duration: TextView = v.findViewById(R.id.advCardDuration)
     private val account: TextView = v.findViewById(R.id.advCardAccount)
 
     /**
