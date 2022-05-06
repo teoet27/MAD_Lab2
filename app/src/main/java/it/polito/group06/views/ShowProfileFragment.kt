@@ -97,7 +97,7 @@ class ShowProfileFragment : Fragment() {
 
                 getBitmapFromFile(profilePicturePath)?.also {
                     this.profilePictureOBJ.setImageBitmap(it)
-                }
+                }?:this.profilePictureOBJ.setImageResource(R.drawable.propic)
             }
 
 
