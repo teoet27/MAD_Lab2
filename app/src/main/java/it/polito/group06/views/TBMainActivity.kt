@@ -1,8 +1,10 @@
 package it.polito.group06.views
 
 import android.os.Bundle
+import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +18,7 @@ import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
 import it.polito.group06.R
 import it.polito.group06.databinding.ActivityMainBinding
+import it.polito.group06.utilities.getBitmapFromFile
 import it.polito.group06.viewmodels.UserProfileViewModel
 
 
@@ -71,15 +74,25 @@ class TBMainActivity : AppCompatActivity() {
         profile_vm.profile.observe(this) { user ->
             val fullnameHeader = findViewById<TextView>(R.id.fullname_header)
             val nicknameHeader = findViewById<TextView>(R.id.nickname_header)
+            val pictureHeader=findViewById<ImageView>(R.id.picture_header)
+
             if(user != null)
             {
                 fullnameHeader.text = user.fullName
                 nicknameHeader.text = "@${user.nickname}"
+                val profilePicturePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(R.string.profile_picture_filename)
+                val profilePictureDirectoryPath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
+
+                getBitmapFromFile(profilePicturePath)?.also {
+                    pictureHeader.setImageBitmap(it)
+                }
             }
             else
             {
                 fullnameHeader.text = "Guido Saracco"
                 nicknameHeader.text = "@rettore"
+                pictureHeader.setImageResource(R.drawable.propic)
+
             }
         }
 
