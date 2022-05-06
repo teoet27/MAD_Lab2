@@ -52,22 +52,6 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/ads_creationTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginRight="16dp"
-                        android:layout_weight="1"
-                        android:drawablePadding="5dp"
-                        android:text="Advertisement created 2 months ago."
-                        android:textAlignment="viewEnd"
-                        android:textColor="@color/material_dynamic_neutral80"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
-                        app:drawableTint="@color/prussian_blue" />
                 </LinearLayout>
 
                 <ImageView
