@@ -6,51 +6,23 @@
     android:layout_height="match_parent"
     android:background="@android:color/background_light">
 
-
-<ImageView
-        android:id="@+id/profilePictureID2"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_margin="16dp"
-        android:cropToPadding="true"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
-        app:layout_constraintDimensionRatio="V,1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/propic" />
-
-    <ImageView
-        android:id="@+id/profilePicture_mask_ID2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:cropToPadding="true"
-        android:scaleType="centerCrop"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/profilePictureID2"
-        app:layout_constraintEnd_toEndOf="@+id/profilePictureID2"
-        app:layout_constraintHeight="wrap_content_constrained"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/profilePictureID2"
-        app:layout_constraintTop_toTopOf="@+id/profilePictureID2"
-        app:layout_constraintVertical_bias="1.0"
-        app:layout_constraintVertical_weight="3"
-        app:srcCompat="@drawable/circular_mask"
-        app:tint="@color/white" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="This fragment will show the advertisement of offered timeslot."
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profilePictureID2" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/newAdvButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/rounded_corners_total"
+        android:backgroundTint="@color/orange_poli"
+        android:text="+"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

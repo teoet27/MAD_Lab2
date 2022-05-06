@@ -24,11 +24,5 @@ class ShowTimeslotsList: Fragment(R.layout.show_timeslots_frag) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val tv = view.findViewById<TextView>(R.id.textView5)
-        tv.setOnClickListener { findNavController().navigate(R.id.action_frag5ShowListTimeslots_to_frag3ShowTimeslot) }
-
-        val iv = view.findViewById<ImageView>(R.id.profilePictureID2)
-        iv.setOnClickListener { findNavController().navigate(R.id.action_frag5ShowListTimeslots_to_showProfileFragment) }
     }
 }
