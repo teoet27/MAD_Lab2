@@ -8,4 +8,5 @@ class AdvertisementRepository(application: Application) {
     fun insertAd(ad: Advertisement) = adsDao.insertAd(ad)
     fun advertisements() = adsDao.findAll()
     fun removeAdWithId(id: Long) = adsDao.removeAdWithId(id)
+    fun clearAll() = adsDao.clearAll()
 }

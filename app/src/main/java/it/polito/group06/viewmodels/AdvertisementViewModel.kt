@@ -6,7 +6,7 @@ import it.polito.group06.models.time_slot_adv_database.Advertisement
 import it.polito.group06.models.time_slot_adv_database.AdvertisementRepository
 import kotlin.concurrent.thread
 
-class TimeSlotAdViewModel(application: Application) : AndroidViewModel(application) {
+class AdvertisementViewModel(application: Application) : AndroidViewModel(application) {
     private val repo = AdvertisementRepository(application)
 
     /**
@@ -31,6 +31,15 @@ class TimeSlotAdViewModel(application: Application) : AndroidViewModel(applicati
     fun removeAd(id: Long) {
         thread {
             repo.removeAdWithId(id)
+        }
+    }
+
+    /**
+     * Clear all the db
+     */
+    fun clearAll() {
+        thread {
+            repo.clearAll()
         }
     }
 }
