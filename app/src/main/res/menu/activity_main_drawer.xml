@@ -5,21 +5,15 @@
 
     <group android:checkableBehavior="single">
 
+        <item
+            android:id="@+id/ShowListOfAdvertisementsMenuItem"
+            android:icon="@drawable/ic_list_black_24dp"
+            android:title="@string/menu_timeslots" />
 
-        <item android:title="Main menu">
-            <menu>
-                <group android:checkableBehavior="single">
-                    <item
-                        android:id="@+id/ShowListOfAdvertisementsMenuItem"
-                        android:icon="@drawable/ic_list_black_24dp"
-                        android:title="@string/menu_timeslots" />
+        <item
+            android:id="@+id/ShowProfileMenuItem"
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            android:title="@string/show_profile" />
 
-                    <item
-                        android:id="@+id/ShowProfileMenuItem"
-                        android:icon="@drawable/ic_account_circle_black_24dp"
-                        android:title="@string/show_profile" />
-                </group>
-            </menu>
-        </item>
     </group>
 </menu>
