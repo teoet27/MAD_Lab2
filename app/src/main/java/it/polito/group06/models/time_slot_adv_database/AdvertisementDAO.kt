@@ -9,18 +9,30 @@ import androidx.room.Query
 @Dao
 interface AdvertisementDAO {
 
-    /** Add(Update) to database **/
+    /**
+     * Add(Update) to database
+     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAd(timeSlotAd: Advertisement)
 
-    /** Read from database **/
+    /**
+     * Read from database
+     */
     @Query("SELECT * FROM advertisementTable")
     fun findAll(): LiveData<List<Advertisement>>
 
 
-    /** Delete Advertisement **/
+    /**
+     * Delete Advertisement
+     */
     @Query("DELETE FROM advertisementTable WHERE id = :id")
     fun removeAdWithId(id: Long)
+
+    /**
+     * Clean up the database
+     */
+    @Query("DELETE FROM advertisementTable")
+    fun clearAll()
 
 
 }
