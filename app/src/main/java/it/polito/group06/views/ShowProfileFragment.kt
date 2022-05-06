@@ -28,14 +28,14 @@ class ShowProfileFragment : Fragment() {
     private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
 
-    val profile_vm by viewModels<UserProfileViewModel>()
+    private val profile_vm by viewModels<UserProfileViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_show_profile,container,false)
+        return inflater.inflate(R.layout.fragment_show_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,9 +51,9 @@ class ShowProfileFragment : Fragment() {
         this.phoneOBJ = view.findViewById(R.id.phone_show_ID)
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
 
-        profile_vm.profile.observe(this.viewLifecycleOwner){ userProfile ->
+        profile_vm.profile.observe(this.viewLifecycleOwner) { userProfile ->
 
-            if (userProfile==null)
+            if (userProfile == null) {
                 profile_vm.editProfile(
                     UserProfile(
                         null,
@@ -67,34 +67,37 @@ class ShowProfileFragment : Fragment() {
                         null
                     )
                 )
-
-            this.fullnameOBJ.text = userProfile.fullName
-
-            if (userProfile.nickname?.compareTo("") == 0) {
-                this.nicknameOBJ.text = "No nickname provided."
             } else {
-                this.nicknameOBJ.text = "@" + userProfile.nickname
+                this.fullnameOBJ.text = userProfile.fullName
+
+                if (userProfile.nickname?.compareTo("") == 0) {
+                    this.nicknameOBJ.text = "No nickname provided."
+                } else {
+                    this.nicknameOBJ.text = "@" + userProfile.nickname
+                }
+                this.qualificationOBJ.text = userProfile.qualification
+                this.phoneOBJ.text = userProfile.phoneNumber
+                this.locationOBJ.text = userProfile.location
+
+                if (userProfile.skills.isNullOrEmpty()) {
+                    this.skillsOBJ.setText(R.string.noskills)
+                } else {
+                    //this.skillsOBJ.text = fromArrayListToString(userProfile.skills)
+                }
+
+
+                this.emailOBJ.text = userProfile.email
+                this.descriptionOBJ.text = userProfile.description
+
+                profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(R.string.profile_picture_filename)
+                profilePictureDirectoryPath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
+
+                getBitmapFromFile(profilePicturePath)?.also {
+                    this.profilePictureOBJ.setImageBitmap(it)
+                }
             }
-            this.qualificationOBJ.text = userProfile.qualification
-            this.phoneOBJ.text = userProfile.phoneNumber
-            this.locationOBJ.text = userProfile.location
-
-            if(userProfile.skills.isNullOrEmpty()){
-                this.skillsOBJ.setText(R.string.noskills)
-            }else{
-                //this.skillsOBJ.text = fromArrayListToString(userProfile.skills)
-            }
 
 
-            this.emailOBJ.text = userProfile.email
-            this.descriptionOBJ.text = userProfile.description
-
-            profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(R.string.profile_picture_filename)
-            profilePictureDirectoryPath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
-
-            getBitmapFromFile(profilePicturePath)?.also{
-                this.profilePictureOBJ.setImageBitmap(it)
-            }
         }
 
         // check this option to open onCreateOptionsMenu method
@@ -118,7 +121,7 @@ class ShowProfileFragment : Fragment() {
      */
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.show_profile_main_menu, menu)
-        super.onCreateOptionsMenu(menu,inflater)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     /**

@@ -49,7 +49,7 @@ class EditProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_edit_profile,container,false)
+        return inflater.inflate(R.layout.fragment_edit_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -85,38 +85,40 @@ class EditProfileFragment : Fragment() {
                         null
                     )
                 )
-            }
-
-            this.editFullNameOBJ.setText(userProfile.fullName)
-
-            if (userProfile.nickname?.compareTo("") == 0) {
-                this.editNicknameOBJ.setText("No nickname provided.")
             } else {
-                this.editNicknameOBJ.setText(userProfile.nickname)
+                this.editFullNameOBJ.setText(userProfile.fullName)
+
+                if (userProfile.nickname?.compareTo("") == 0) {
+                    this.editNicknameOBJ.setText("No nickname provided.")
+                } else {
+                    this.editNicknameOBJ.setText(userProfile.nickname)
+                }
+                this.editQualificationOBJ.setText(userProfile.qualification)
+                this.editPhoneOBJ.setText(userProfile.phoneNumber)
+                this.editLocationOBJ.setText(userProfile.location)
+
+                if (userProfile.skills.isNullOrEmpty()) {
+                    this.editSkillsOBJ.setText(R.string.noskills)
+                } else {
+                    this.editSkillsOBJ.setText(R.string.noskills)
+                    //this.editSkillsOBJ.setText(fromArrayListToString(userProfile.skills))
+                }
+
+
+                this.editEmailOBJ.setText(userProfile.email)
+                this.editDescriptionOBJ.setText(userProfile.description)
+
+                profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                    .toString() + '/' + resources.getString(R.string.profile_picture_filename)
+                profilePictureDirectoryPath =
+                    view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
+
+                getBitmapFromFile(profilePicturePath)?.also {
+                    this.profilePictureOBJ.setImageBitmap(it)
+                }
             }
-            this.editQualificationOBJ.setText(userProfile.qualification)
-            this.editPhoneOBJ.setText(userProfile.phoneNumber)
-            this.editLocationOBJ.setText(userProfile.location)
-
-            if (userProfile.skills.isNullOrEmpty()) {
-                this.editSkillsOBJ.setText(R.string.noskills)
-            } else {
-                this.editSkillsOBJ.setText(R.string.noskills)
-                //this.editSkillsOBJ.setText(fromArrayListToString(userProfile.skills))
-            }
 
 
-            this.editEmailOBJ.setText(userProfile.email)
-            this.editDescriptionOBJ.setText(userProfile.description)
-
-            profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                .toString() + '/' + resources.getString(R.string.profile_picture_filename)
-            profilePictureDirectoryPath =
-                view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
-
-            getBitmapFromFile(profilePicturePath)?.also {
-                this.profilePictureOBJ.setImageBitmap(it)
-            }
         }
 
         // check this option to open onCreateOptionsMenu method
@@ -131,7 +133,7 @@ class EditProfileFragment : Fragment() {
     }
 
     /**Private method for saving data before fragment transaction*/
-    private fun saveData(){
+    private fun saveData() {
         profile_vm.profile.observe(this.viewLifecycleOwner) {
             profile_vm.editProfile(
                 UserProfile(
@@ -261,7 +263,7 @@ class EditProfileFragment : Fragment() {
      */
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.edit_profile_main_menu, menu)
-        super.onCreateOptionsMenu(menu,inflater)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     /**
