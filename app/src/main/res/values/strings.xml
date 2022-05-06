@@ -58,6 +58,7 @@
     <string name="more_button_for_opening_the_edit_menu">More button for opening the edit menu</string>
     <string name="separation_line">Separation line</string>
     <string name="description_of_the_job_offered">Description of the job offered</string>
-    <string name="no_adv_into_db">There are no advertisements yet, start creating your first one clicking the + button on the bottom right.</string>
+    <string name="no_adv_into_db">There are no advertisements yet.</string>
+    <string name="create_tsa_hint">Create your first\nTime Slot Advertisement</string>
 
 </resources>

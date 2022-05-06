@@ -47,4 +47,20 @@
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/create_hint"
+        android:layout_width="275dp"
+        android:layout_height="118dp"
+        android:layout_marginStart="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/newAdvButton"
+        app:layout_constraintEnd_toStartOf="@+id/newAdvButton"
+        app:layout_constraintHorizontal_bias="0.745"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/newAdvButton"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/arrow"
+        app:tint="@color/prussian_blue" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
