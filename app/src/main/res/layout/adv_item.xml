@@ -3,7 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="4dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginRight="4dp"
+    android:layout_marginBottom="2dp"
+    android:background="@drawable/adv_card_bckgrnd"
+    android:backgroundTint="@color/prussian_blue">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,36 +20,71 @@
             android:id="@+id/advCardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="12dp"
+            android:layout_marginRight="16dp"
             android:text="TextView"
             android:textAlignment="viewStart"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@color/orange_poli"
+            android:contentDescription='@string/separation_line'
+            android:paddingTop="2dp"
+            android:src="@drawable/rounded_corners_land" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
 
             <TextView
                 android:id="@+id/advCardAccount"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:drawableLeft="@drawable/ic_account_circle_black_24dp"
+                android:drawablePadding="2dp"
+                android:text="TextView"
+                android:textColor="@color/white"
+                app:drawableTint="@color/orange_poli" />
 
             <TextView
                 android:id="@+id/advCardLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:drawableLeft="@drawable/ic_location_on_black_24dp"
+                android:drawablePadding="2dp"
+                android:text="TextView"
+                android:textColor="@color/white"
+                app:drawableTint="@color/orange_poli" />
 
             <TextView
                 android:id="@+id/advCardDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:drawableLeft="@drawable/ic_schedule_black_24dp"
+                android:drawablePadding="2dp"
+                android:text="TextView"
+                android:textColor="@color/white"
+                app:drawableTint="@color/orange_poli" />
 
         </LinearLayout>
     </LinearLayout>
