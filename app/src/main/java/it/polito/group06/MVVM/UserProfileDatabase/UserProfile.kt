@@ -7,8 +7,8 @@ import androidx.room.TypeConverters
 
 @Entity(tableName = "user_profile_table")
 data class UserProfile(
-    @PrimaryKey(autoGenerate = true) val id:Long?,
-    var nickname:String?,
+    @PrimaryKey(autoGenerate = true) val id: Long?,
+    var nickname: String?,
     var fullName: String?,
     var qualification: String?,
     var description: String?,
@@ -16,4 +16,4 @@ data class UserProfile(
     var phoneNumber: String?,
     var location: String?,
     var skills: ArrayList<String>?
-    )
+)

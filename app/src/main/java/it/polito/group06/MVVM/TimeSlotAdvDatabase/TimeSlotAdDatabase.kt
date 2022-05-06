@@ -6,25 +6,25 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [TimeSlotAd::class], version = 1)
-abstract class TimeSlotAdDatabase: RoomDatabase() {
+abstract class TimeSlotAdDatabase : RoomDatabase() {
     abstract fun adsDao(): TimeSlotAdDao
 
-    companion object{
+    companion object {
         @Volatile
-        private var INSTANCE : TimeSlotAdDatabase?=null
+        private var INSTANCE: TimeSlotAdDatabase? = null
 
         fun getDatabase(context: Context): TimeSlotAdDatabase =
             (
-                INSTANCE ?: synchronized(this) {
-                    val i = INSTANCE ?: Room.databaseBuilder(
-                        context.applicationContext,
-                        TimeSlotAdDatabase::class.java,
-                        "Time-slot Ad"
-                    ).build()
-                    INSTANCE =i
-                    INSTANCE
-                }
-            )!!
+                    INSTANCE ?: synchronized(this) {
+                        val i = INSTANCE ?: Room.databaseBuilder(
+                            context.applicationContext,
+                            TimeSlotAdDatabase::class.java,
+                            "Time-slot Ad"
+                        ).build()
+                        INSTANCE = i
+                        INSTANCE
+                    }
+                    )!!
 
     }
 }

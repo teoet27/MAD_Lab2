@@ -15,13 +15,12 @@ interface TimeSlotAdDao {
 
     /** Read from database **/
     @Query("SELECT * FROM time_slot_advertisement_table")
-    fun findAll():LiveData<List<TimeSlotAd>>
+    fun findAll(): LiveData<List<TimeSlotAd>>
 
 
     /** Delete TimeSlotAdv **/
     @Query("DELETE FROM time_slot_advertisement_table WHERE id = :id")
-    fun removeAdWithId(id:Long)
-
+    fun removeAdWithId(id: Long)
 
 
 }
