@@ -55,36 +55,45 @@
 
             <TextView
                 android:id="@+id/advCardAccount"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/ic_account_circle_black_24dp"
                 android:drawablePadding="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:minLines="1"
                 android:text="TextView"
                 android:textColor="@color/white"
                 app:drawableTint="@color/orange_poli" />
 
             <TextView
                 android:id="@+id/advCardLocation"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/ic_location_on_black_24dp"
                 android:drawablePadding="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:minLines="1"
                 android:text="TextView"
                 android:textColor="@color/white"
                 app:drawableTint="@color/orange_poli" />
 
             <TextView
                 android:id="@+id/advCardDuration"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/ic_schedule_black_24dp"
                 android:drawablePadding="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:minLines="1"
                 android:text="TextView"
                 android:textColor="@color/white"
                 app:drawableTint="@color/orange_poli" />
