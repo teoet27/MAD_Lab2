@@ -49,7 +49,7 @@
                         android:layout_weight="8"
                         android:fontFamily="sans-serif-black"
                         android:hint="Title"
-                        android:textColor="@color/white"
+                        android:textColor="@color/prussian_blue"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -77,7 +77,7 @@
                 android:drawablePadding="5dp"
                 android:hint="Location"
                 android:minHeight="48dp"
-                android:textColor="@color/white"
+                android:textColor="@color/prussian_blue"
                 app:drawableStartCompat="@drawable/ic_location_on_black_24dp"
                 app:drawableTint="#454749" />
 
@@ -91,7 +91,7 @@
                 android:drawablePadding="5dp"
                 android:hint="Date"
                 android:minHeight="48dp"
-                android:textColor="@color/white"
+                android:textColor="@color/prussian_blue"
                 app:drawableStartCompat="@drawable/ic_watch_later_black_24dp"
                 app:drawableTint="#454749" />
 
@@ -105,7 +105,7 @@
                 android:drawablePadding="5dp"
                 android:hint="Duration"
                 android:minHeight="48dp"
-                android:textColor="@color/white"
+                android:textColor="@color/prussian_blue"
                 app:drawableStartCompat="@drawable/ic_timer_black_24dp"
                 app:drawableTint="#454749" />
 
