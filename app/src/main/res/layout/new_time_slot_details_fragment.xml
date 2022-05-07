@@ -141,6 +141,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="24dp"
                 android:hint="Describe accurately what you offer."
+                android:minHeight="48dp"
                 android:textColor="@color/prussian_blue" />
 
             <LinearLayout
