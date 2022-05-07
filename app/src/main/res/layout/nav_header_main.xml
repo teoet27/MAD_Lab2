@@ -61,6 +61,7 @@
         android:layout_gravity="start"
         android:layout_marginTop="20dp"
         android:hint="No fullname."
+        android:maxLines="1"
         android:text="@string/fullnamePH"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
