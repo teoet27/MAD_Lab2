@@ -3,6 +3,7 @@ package it.polito.group06.views
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -18,11 +19,11 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
     private val advViewModel by viewModels<AdvertisementViewModel>()
     private val usrViewModel by viewModels<UserProfileViewModel>()
-    private lateinit var newTitle: TextView
-    private lateinit var newLocation: TextView
-    private lateinit var newDate: TextView
-    private lateinit var newDuration: TextView
-    private lateinit var newDescription: TextView
+    private lateinit var newTitle: EditText
+    private lateinit var newLocation: EditText
+    private lateinit var newDate: EditText
+    private lateinit var newDuration: EditText
+    private lateinit var newDescription: EditText
     private lateinit var closeButton: ImageView
     private lateinit var confirmButton: ImageView
 
