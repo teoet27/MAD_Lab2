@@ -94,13 +94,14 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
                     android:hint="@string/insert_here_your_full_name"
+                    android:maxLength="24"
                     android:paddingLeft="16dp"
                     android:paddingTop="30dp"
                     android:paddingBottom="5dp"
                     android:textAlignment="viewStart"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/white"
-                    android:maxLength="24"
+                    android:textColorHint="#9a9a9a"
                     android:textSize="34sp" />
 
                 <LinearLayout
@@ -134,6 +135,7 @@
                         android:textAlignment="viewStart"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textColor="@color/orange_poli"
+                        android:textColorHint="#9a9a9a"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -174,7 +176,8 @@
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textColorHint="#9a9a9a" />
 
                 <TextView
                     android:id="@+id/skillsID"
@@ -206,6 +209,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:hint="@string/example_skill1_skill2_skill3"
+                    android:textColorHint="#9a9a9a"
                     android:paddingLeft="40dp"
                     android:paddingRight="40dp"
                     android:textColor="@color/white"
@@ -257,6 +261,7 @@
                         android:maxWidth="20dp"
                         android:textAlignment="textEnd"
                         android:textColor="@color/white"
+                        android:textColorHint="#9a9a9a"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -293,6 +298,7 @@
                         android:maxWidth="20dp"
                         android:textAlignment="textEnd"
                         android:textColor="@color/white"
+                        android:textColorHint="#9a9a9a"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -328,6 +334,7 @@
                         android:maxWidth="20dp"
                         android:textAlignment="textEnd"
                         android:textColor="@color/white"
+                        android:textColorHint="#9a9a9a"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
