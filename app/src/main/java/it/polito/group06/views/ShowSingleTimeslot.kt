@@ -8,19 +8,17 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import it.polito.group06.R
 
-class ShowSingleTimeslot: Fragment(R.layout.show_single_timeslot_frag) {
+class ShowSingleTimeslot: Fragment(R.layout.time_slot_details_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_frag3ShowTimeslot_to_frag5ShowListTimeslots)
+                findNavController().navigate(R.id.action_showSingleTimeslot_to_ShowListTimeslots)
             }
         })
 
-        val tv = view.findViewById<TextView>(R.id.textView5)
-        tv.setOnClickListener { findNavController().navigate(R.id.action_frag3ShowTimeslot_to_frag4EditTimeslot) }
     }
 
 }

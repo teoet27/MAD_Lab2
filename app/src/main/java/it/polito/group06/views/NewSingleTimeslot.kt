@@ -42,12 +42,13 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         this.datePicker = view.findViewById(R.id.date_Picker)
 
         val today = Calendar.getInstance()
-        var chosen_date=""
-        datePicker.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
+        var chosen_date = ""
+        datePicker.init(
+            today.get(Calendar.YEAR), today.get(Calendar.MONTH),
             today.get(Calendar.DAY_OF_MONTH)
 
         ) { view, year, month, day ->
-             chosen_date="$day/${month+1}/$year"
+            chosen_date = "$day/${month + 1}/$year"
         }
 
         this.closeButton.setOnClickListener {
@@ -101,7 +102,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
      * @return whether it's possible to actually create an advertisement or not
      */
     private fun isAdvAvailable(): Boolean {
-        return  !(newTitle.text.toString().isNullOrEmpty() ||
+        return !(newTitle.text.toString().isNullOrEmpty() ||
                 newDuration.text.toString().isNullOrEmpty() ||
                 newLocation.text.toString().isNullOrEmpty() ||
                 newDate.text.toString().isNullOrEmpty())

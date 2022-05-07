@@ -6,37 +6,18 @@
     app:startDestination="@id/ShowListTimeslots">
 
     <fragment
-        android:id="@+id/ShowTimeslot"
-        android:name="it.polito.group06.views.ShowSingleTimeslot"
-        android:label="Timeslot details" >
-        <action
-            android:id="@+id/action_frag3ShowTimeslot_to_frag4EditTimeslot"
-            app:destination="@id/EditTimeslot" />
-        <action
-            android:id="@+id/action_frag3ShowTimeslot_to_frag5ShowListTimeslots"
-            app:destination="@id/ShowListTimeslots" />
-    </fragment>
-    <fragment
-        android:id="@+id/EditTimeslot"
-        android:name="it.polito.group06.views.EditSingleTimeslot"
-        android:label="Edit timeslot" >
-        <action
-            android:id="@+id/action_frag4EditTimeslot_to_frag3ShowTimeslot"
-            app:destination="@id/ShowTimeslot" />
-    </fragment>
-    <fragment
         android:id="@+id/ShowListTimeslots"
         android:name="it.polito.group06.views.ShowListOfTimeslots"
         android:label="Timeslots" >
-        <action
-            android:id="@+id/action_frag5ShowListTimeslots_to_frag3ShowTimeslot"
-            app:destination="@id/ShowTimeslot" />
         <action
             android:id="@+id/action_frag5ShowListTimeslots_to_showProfileFragment"
             app:destination="@id/showProfileFragment" />
         <action
             android:id="@+id/action_ShowListTimeslots_to_newTimeSlotDetailsFragment"
             app:destination="@id/newTimeSlotDetailsFragment" />
+        <action
+            android:id="@+id/action_ShowListTimeslots_to_showSingleTimeslot"
+            app:destination="@id/showSingleTimeslot" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -65,5 +46,25 @@
         <action
             android:id="@+id/action_newTimeSlotDetailsFragment_to_ShowListTimeslots"
             app:destination="@id/ShowListTimeslots" />
+    </fragment>
+    <fragment
+        android:id="@+id/showSingleTimeslot"
+        android:name="it.polito.group06.views.ShowSingleTimeslot"
+        android:label="ShowSingleTimeslot" >
+        <action
+            android:id="@+id/action_showSingleTimeslot_to_timeSlotDetailsFragment"
+            app:destination="@id/timeSlotDetailsFragment" />
+        <action
+            android:id="@+id/action_showSingleTimeslot_to_ShowListTimeslots"
+            app:destination="@id/ShowListTimeslots" />
+    </fragment>
+    <fragment
+        android:id="@+id/timeSlotDetailsFragment"
+        android:name="it.polito.group06.views.TimeSlotDetailsFragment"
+        android:label="edit_time_slot_details_fragment"
+        tools:layout="@layout/edit_time_slot_details_fragment" >
+        <action
+            android:id="@+id/action_timeSlotDetailsFragment_to_showSingleTimeslot"
+            app:destination="@id/showSingleTimeslot" />
     </fragment>
 </navigation>

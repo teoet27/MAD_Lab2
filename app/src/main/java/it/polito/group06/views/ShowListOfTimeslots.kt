@@ -54,7 +54,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
             if (!(listOfAdv == null || listOfAdv.isEmpty())) {
                 this.recyclerView = view.findViewById(R.id.rvAdvFullList)
                 this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-                this.recyclerView.adapter = AdsAdapterCard(listOfAdv)
+                this.recyclerView.adapter = AdsAdapterCard(listOfAdv, advViewModel)
             }
         }
     }
