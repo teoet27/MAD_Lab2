@@ -41,7 +41,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         }
 
         this.confirmButton.setOnClickListener {
-            /*if (isAdvAvailable()) {
+            if (isAdvAvailable()) {
                 advViewModel.insertAd(
                     Advertisement(
                         null,
@@ -54,13 +54,13 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         false
                     )
                 )
-            }*/
+            }
             findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
         }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (isAdvAvailable()) {
+                if (true) {
                     advViewModel.insertAd(
                         Advertisement(
                             null,
