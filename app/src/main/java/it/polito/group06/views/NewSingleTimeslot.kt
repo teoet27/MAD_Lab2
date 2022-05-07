@@ -12,9 +12,11 @@ class NewSingleTimeslot: Fragment(R.layout.new_time_slot_details_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_frag4EditTimeslot_to_frag3ShowTimeslot)
+                findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
             }
         })
     }
