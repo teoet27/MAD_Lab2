@@ -12,6 +12,9 @@ import it.polito.group06.R
 import it.polito.group06.models.time_slot_adv_database.Advertisement
 import it.polito.group06.viewmodels.AdvertisementViewModel
 import it.polito.group06.viewmodels.UserProfileViewModel
+import android.widget.DatePicker;
+import android.widget.TextView
+import java.util.*
 
 class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
@@ -19,11 +22,12 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private val usrViewModel by viewModels<UserProfileViewModel>()
     private lateinit var newTitle: EditText
     private lateinit var newLocation: EditText
-    private lateinit var newDate: EditText
+    private lateinit var newDate: TextView
     private lateinit var newDuration: EditText
     private lateinit var newDescription: EditText
     private lateinit var closeButton: ImageView
     private lateinit var confirmButton: ImageView
+    private lateinit var datePicker: DatePicker
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,6 +39,16 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         this.newDescription = view.findViewById(R.id.newDescription)
         this.closeButton = view.findViewById(R.id.closeButton)
         this.confirmButton = view.findViewById(R.id.confirmButton)
+        this.datePicker = view.findViewById(R.id.date_Picker)
+
+        val today = Calendar.getInstance()
+        var chosen_date=""
+        datePicker.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
+            today.get(Calendar.DAY_OF_MONTH)
+
+        ) { view, year, month, day ->
+             chosen_date="$day/${month+1}/$year"
+        }
 
         this.closeButton.setOnClickListener {
             findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
@@ -48,7 +62,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         newTitle.text.toString(),
                         newDescription.text.toString(),
                         newLocation.text.toString(),
-                        newDate.text.toString(),
+                        chosen_date,
                         0f,
                         "Guido Saracco",
                         false

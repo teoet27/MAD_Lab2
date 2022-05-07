@@ -69,34 +69,6 @@
                 android:src="@drawable/rounded_corners_land" />
 
             <EditText
-                android:id="@+id/newLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:drawablePadding="5dp"
-                android:hint="Location"
-                android:minHeight="48dp"
-                android:textColor="@color/prussian_blue"
-                app:drawableStartCompat="@drawable/ic_location_on_black_24dp"
-                app:drawableTint="#454749" />
-
-            <EditText
-                android:id="@+id/newDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:drawablePadding="5dp"
-                android:hint="Date"
-                android:minHeight="48dp"
-                android:textColor="@color/prussian_blue"
-                app:drawableStartCompat="@drawable/ic_watch_later_black_24dp"
-                app:drawableTint="#454749" />
-
-            <EditText
                 android:id="@+id/newDuration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -108,6 +80,42 @@
                 android:minHeight="48dp"
                 android:textColor="@color/prussian_blue"
                 app:drawableStartCompat="@drawable/ic_timer_black_24dp"
+                app:drawableTint="#454749" />
+
+            <TextView
+                android:id="@+id/newDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:minHeight="48dp"
+                android:text="Date"
+                android:textColor="#454749"
+                app:drawableLeftCompat="@drawable/ic_calendar_month"
+                app:drawableTint="#454749" />
+
+            <DatePicker
+                android:id="@+id/date_Picker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner" />
+
+            <EditText
+                android:id="@+id/newLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:drawablePadding="5dp"
+                android:hint="Location"
+                android:minHeight="48dp"
+                android:textColor="@color/prussian_blue"
+                app:drawableStartCompat="@drawable/ic_location_on_black_24dp"
                 app:drawableTint="#454749" />
 
             <ImageView
