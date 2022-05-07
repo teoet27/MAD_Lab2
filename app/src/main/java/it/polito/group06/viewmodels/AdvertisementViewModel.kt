@@ -15,6 +15,11 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     val ads = repo.advertisements()
 
     /**
+     * Single advertisement
+     */
+    var singleAdvertisement = Advertisement(null, "", "", "", "", 0f, "", false)
+
+    /**
      * Insertion of a new advertisement
      * @param ad a new advertisement
      */
