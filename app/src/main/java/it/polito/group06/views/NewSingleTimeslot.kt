@@ -2,10 +2,8 @@ package it.polito.group06.views
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -43,7 +41,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         }
 
         this.confirmButton.setOnClickListener {
-            if (isAdvAvailable()) {
+            /*if (isAdvAvailable()) {
                 advViewModel.insertAd(
                     Advertisement(
                         null,
@@ -56,7 +54,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         false
                     )
                 )
-            }
+            }*/
             findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
         }
 
@@ -82,8 +80,6 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     }
 
     /**
-     * TODO: implement this function based on this class attributes
-     *
      * isAdvAvailable is a method which returns whether it's possible to actually insert a new
      * advertisement. The criteria is that an advertisement should at least have a title, a location,
      * a date and a duration.

@@ -77,9 +77,9 @@
                 android:drawablePadding="5dp"
                 android:hint="Location"
                 android:minHeight="48dp"
-                android:textColor="#000000"
+                android:textColor="@color/white"
                 app:drawableStartCompat="@drawable/ic_location_on_black_24dp"
-                app:drawableTint="@color/material_dynamic_neutral30" />
+                app:drawableTint="#454749" />
 
             <EditText
                 android:id="@+id/newDate"
@@ -91,9 +91,9 @@
                 android:drawablePadding="5dp"
                 android:hint="Date"
                 android:minHeight="48dp"
-                android:textColor="#000000"
+                android:textColor="@color/white"
                 app:drawableStartCompat="@drawable/ic_watch_later_black_24dp"
-                app:drawableTint="@color/material_dynamic_neutral30" />
+                app:drawableTint="#454749" />
 
             <EditText
                 android:id="@+id/newDuration"
@@ -105,9 +105,9 @@
                 android:drawablePadding="5dp"
                 android:hint="Duration"
                 android:minHeight="48dp"
-                android:textColor="#000000"
+                android:textColor="@color/white"
                 app:drawableStartCompat="@drawable/ic_timer_black_24dp"
-                app:drawableTint="@color/material_dynamic_neutral30" />
+                app:drawableTint="#454749" />
 
             <ImageView
                 android:id="@+id/imageView"
@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:background="@color/material_dynamic_neutral70"
+                android:background="#AAABAE"
                 android:contentDescription='@string/separation_line'
                 android:paddingTop="5dp"
                 android:src="@drawable/rounded_corners_land" />
@@ -140,7 +140,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="24dp"
                 android:hint="Describe accurately what you offer."
-                android:textColor="#000000" />
+                android:textColor="@color/white" />
 
             <LinearLayout
                 android:layout_width="match_parent"
