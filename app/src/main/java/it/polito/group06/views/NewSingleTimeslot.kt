@@ -24,6 +24,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private lateinit var newDuration: TextView
     private lateinit var newDescription: TextView
     private lateinit var closeButton: ImageView
+    private lateinit var confirmButton: ImageView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,14 +35,33 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         this.newDuration = view.findViewById(R.id.newDuration)
         this.newDescription = view.findViewById(R.id.newDescription)
         this.closeButton = view.findViewById(R.id.closeButton)
+        this.confirmButton = view.findViewById(R.id.confirmButton)
 
         this.closeButton.setOnClickListener {
             findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
         }
 
+        this.confirmButton.setOnClickListener {
+            if (isAdvAvailable()) {
+                advViewModel.insertAd(
+                    Advertisement(
+                        null,
+                        newTitle.text.toString(),
+                        newDescription.text.toString(),
+                        newLocation.text.toString(),
+                        newDate.text.toString(),
+                        0f,
+                        "Guido Saracco",
+                        false
+                    )
+                )
+            }
+            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
+        }
+
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if(isAdvAvailable()) {
+                if (isAdvAvailable()) {
                     advViewModel.insertAd(
                         Advertisement(
                             null,
@@ -70,6 +90,9 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
      * @return whether it's possible to actually create an advertisement or not
      */
     private fun isAdvAvailable(): Boolean {
-        return true
+        return  !(newTitle.text.toString().isNullOrEmpty() ||
+                newDuration.text.toString().isNullOrEmpty() ||
+                newLocation.text.toString().isNullOrEmpty() ||
+                newDate.text.toString().isNullOrEmpty())
     }
 }
