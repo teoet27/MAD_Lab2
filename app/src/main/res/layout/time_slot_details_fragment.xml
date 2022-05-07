@@ -35,7 +35,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/ads_title"
+                        android:id="@+id/newTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="fill_vertical"
@@ -83,7 +83,7 @@
                 app:drawableTint="@color/material_dynamic_neutral30" />
 
             <TextView
-                android:id="@+id/ads_location"
+                android:id="@+id/newLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -96,7 +96,7 @@
                 app:drawableTint="@color/material_dynamic_neutral30" />
 
             <TextView
-                android:id="@+id/ads_date"
+                android:id="@+id/newDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -109,7 +109,7 @@
                 app:drawableTint="@color/material_dynamic_neutral30" />
 
             <TextView
-                android:id="@+id/ads_duration"
+                android:id="@+id/newDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -144,7 +144,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/ads_description"
+                android:id="@+id/newDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"

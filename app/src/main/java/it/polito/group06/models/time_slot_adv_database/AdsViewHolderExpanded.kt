@@ -12,11 +12,11 @@ import it.polito.group06.R
  * card.
  */
 class AdsViewHolderExpanded(v: View) : RecyclerView.ViewHolder(v) {
-    private val title: TextView = v.findViewById(R.id.ads_title)
-    private val description: TextView = v.findViewById(R.id.ads_description)
-    private val location: TextView = v.findViewById(R.id.ads_location)
-    private val date: TextView = v.findViewById(R.id.ads_date)
-    private val duration: TextView = v.findViewById(R.id.ads_duration)
+    private val title: TextView = v.findViewById(R.id.newTitle)
+    private val description: TextView = v.findViewById(R.id.newDescription)
+    private val location: TextView = v.findViewById(R.id.newLocation)
+    private val date: TextView = v.findViewById(R.id.newDate)
+    private val duration: TextView = v.findViewById(R.id.newDuration)
     private val account: TextView = v.findViewById(R.id.ads_account)
     private val moreButton: ImageView = v.findViewById(R.id.moreButtonID)
 
