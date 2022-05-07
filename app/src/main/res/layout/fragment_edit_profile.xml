@@ -100,7 +100,7 @@
                     android:textAlignment="viewStart"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/white"
-                    android:maxLength="20"
+                    android:maxLength="24"
                     android:textSize="34sp" />
 
                 <LinearLayout
