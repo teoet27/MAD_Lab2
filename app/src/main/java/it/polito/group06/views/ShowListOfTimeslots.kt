@@ -48,7 +48,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
             /**
              * If there are no advertisements in the DB proper texts are shown.
              */
-            view.findViewById<TextView>(R.id.tvListTitle).isVisible = !(listOfAdv == null || listOfAdv.isEmpty())
             view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = listOfAdv == null || listOfAdv.isEmpty()
             view.findViewById<ImageView>(R.id.create_hint).isVisible = listOfAdv == null || listOfAdv.isEmpty()
 
