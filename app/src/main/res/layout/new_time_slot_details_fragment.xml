@@ -73,6 +73,16 @@
 
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:background="@color/orange_poli"
+                android:contentDescription='@string/separation_line'
+                android:paddingTop="2dp"
+                android:src="@drawable/rounded_corners_land" />
+
             <EditText
                 android:id="@+id/newLocation"
                 android:layout_width="match_parent"
