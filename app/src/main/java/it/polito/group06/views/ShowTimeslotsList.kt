@@ -10,13 +10,14 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.group06.R
 import it.polito.group06.models.time_slot_adv_database.AdsAdapterCard
 import it.polito.group06.viewmodels.AdvertisementViewModel
 
-class ShowTimeslotsList : Fragment(R.layout.show_timeslots_frag) {
+class ShowTimeslotsList : Fragment(R.layout.show_timeslots_frag){
 
     private val advViewModel by viewModels<AdvertisementViewModel>()
     private lateinit var recyclerView: RecyclerView
@@ -41,7 +42,7 @@ class ShowTimeslotsList : Fragment(R.layout.show_timeslots_frag) {
 
         this.newAdvButton = view.findViewById(R.id.newAdvButton)
         this.newAdvButton.setOnClickListener {
-
+            findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
         }
 
         /*
@@ -76,7 +77,7 @@ class ShowTimeslotsList : Fragment(R.layout.show_timeslots_frag) {
                 "null", 0.5f, "Maria Anna", false
             )
         )
-         */
+        */
 
         advViewModel.ads.observe(this.viewLifecycleOwner) { listOfAdv ->
             /**

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/ShowListTimeslots">
 
@@ -33,6 +34,9 @@
         <action
             android:id="@+id/action_frag5ShowListTimeslots_to_showProfileFragment"
             app:destination="@id/showProfileFragment" />
+        <action
+            android:id="@+id/action_ShowListTimeslots_to_newTimeSlotDetailsFragment"
+            app:destination="@id/newTimeSlotDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -51,6 +55,15 @@
             app:destination="@id/editProfileFragment" />
         <action
             android:id="@+id/action_showProfileFragment_to_frag5ShowListTimeslots"
+            app:destination="@id/ShowListTimeslots" />
+    </fragment>
+    <fragment
+        android:id="@+id/newTimeSlotDetailsFragment"
+        android:name="it.polito.group06.views.NewSingleTimeslot"
+        android:label="Create a new timeslot"
+        tools:layout="@layout/new_time_slot_details_fragment">
+        <action
+            android:id="@+id/action_newTimeSlotDetailsFragment_to_ShowListTimeslots"
             app:destination="@id/ShowListTimeslots" />
     </fragment>
 </navigation>
