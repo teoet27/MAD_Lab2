@@ -39,45 +39,10 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         this.newAdvButton = view.findViewById(R.id.newAdvButton)
         this.newAdvButton.setOnClickListener {
             findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
         }
-
-        /*
-        advViewModel.insertAd(
-            Advertisement(
-                null, "Help with your homeworks",
-                "This is description #1", "Turin",
-                "null", 3f, "Alessia", false
-            )
-        )
-
-        advViewModel.insertAd(
-            Advertisement(
-                null, "Create the design of your dreams!",
-                "This is description #1", "Milan",
-                "null", 6f, "Mark", false
-            )
-        )
-
-        advViewModel.insertAd(
-            Advertisement(
-                null, "A trip on an original gondola",
-                "This is description #1", "Venice",
-                "null", 2f, "Laura", false
-            )
-        )
-
-        advViewModel.insertAd(
-            Advertisement(
-                null, "How to do a pizza: the ultimate tutorial",
-                "This is description #1", "Naples",
-                "null", 0.5f, "Maria Anna", false
-            )
-        )
-        */
 
         advViewModel.ads.observe(this.viewLifecycleOwner) { listOfAdv ->
             /**
