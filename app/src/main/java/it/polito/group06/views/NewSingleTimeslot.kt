@@ -10,10 +10,12 @@ import androidx.navigation.fragment.findNavController
 import it.polito.group06.R
 import it.polito.group06.models.time_slot_adv_database.Advertisement
 import it.polito.group06.viewmodels.AdvertisementViewModel
+import it.polito.group06.viewmodels.UserProfileViewModel
 
 class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
     private val advViewModel by viewModels<AdvertisementViewModel>()
+    private val usrViewModel by viewModels<UserProfileViewModel>()
     private lateinit var newTitle: TextView
     private lateinit var newLocation: TextView
     private lateinit var newDate: TextView

@@ -17,7 +17,7 @@ import it.polito.group06.R
 import it.polito.group06.models.time_slot_adv_database.AdsAdapterCard
 import it.polito.group06.viewmodels.AdvertisementViewModel
 
-class ShowTimeslotsList : Fragment(R.layout.show_timeslots_frag){
+class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
 
     private val advViewModel by viewModels<AdvertisementViewModel>()
     private lateinit var recyclerView: RecyclerView

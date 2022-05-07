@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/ShowListTimeslots"
-        android:name="it.polito.group06.views.ShowTimeslotsList"
+        android:name="it.polito.group06.views.ShowListOfTimeslots"
         android:label="Timeslots" >
         <action
             android:id="@+id/action_frag5ShowListTimeslots_to_frag3ShowTimeslot"
