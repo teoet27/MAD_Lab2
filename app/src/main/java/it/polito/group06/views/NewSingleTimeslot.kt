@@ -60,7 +60,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (true) {
+                if (isAdvAvailable()) {
                     advViewModel.insertAd(
                         Advertisement(
                             null,
