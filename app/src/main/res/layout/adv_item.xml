@@ -23,11 +23,14 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="12dp"
             android:layout_marginRight="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:minLines="1"
             android:text="TextView"
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <ImageView
