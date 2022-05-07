@@ -1,7 +1,6 @@
 package it.polito.group06.models.time_slot_adv_database
 
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.group06.R
