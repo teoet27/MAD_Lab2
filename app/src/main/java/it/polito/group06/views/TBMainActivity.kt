@@ -19,6 +19,7 @@ import com.google.android.material.navigation.NavigationView
 import it.polito.group06.R
 import it.polito.group06.databinding.ActivityMainBinding
 import it.polito.group06.utilities.getBitmapFromFile
+import it.polito.group06.viewmodels.AdvertisementViewModel
 import it.polito.group06.viewmodels.UserProfileViewModel
 
 
@@ -27,7 +28,8 @@ class TBMainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    private val profile_vm by viewModels<UserProfileViewModel>()
+    private val usrVM by viewModels<UserProfileViewModel>()
+    private val advVM by viewModels<AdvertisementViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +77,7 @@ class TBMainActivity : AppCompatActivity() {
         val fullnameHeader = navView.getHeaderView(0).findViewById<TextView>(R.id.fullname_header)
         val nicknameHeader = navView.getHeaderView(0).findViewById<TextView>(R.id.nickname_header)
         val pictureHeader = navView.getHeaderView(0).findViewById<ImageView>(R.id.picture_header)
-        profile_vm.profile.observe(this) { user ->
+        usrVM.profile.observe(this) { user ->
 
             if(user != null)
             {
@@ -105,24 +107,6 @@ class TBMainActivity : AppCompatActivity() {
             .replace(R.id.nav_host_fragment_content_main, fragment)
             .commit()
     }
-
-    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_settings -> {
-                Toast.makeText(applicationContext, "click on setting", Toast.LENGTH_LONG).show()
-                true
-            }
-            R.id.action_share -> {
-                Toast.makeText(applicationContext, "click on share", Toast.LENGTH_LONG).show()
-                return true
-            }
-            R.id.action_exit -> {
-                Toast.makeText(applicationContext, "click on exit", Toast.LENGTH_LONG).show()
-                return true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }*/
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
