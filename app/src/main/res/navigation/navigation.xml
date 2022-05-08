@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/ShowListTimeslots">
+    app:startDestination="@id/showListTimeslots">
 
     <fragment
-        android:id="@+id/ShowListTimeslots"
+        android:id="@+id/showListTimeslots"
         android:name="it.polito.group06.views.ShowListOfTimeslots"
         android:label="Timeslots" >
         <action
@@ -36,7 +36,7 @@
             app:destination="@id/editProfileFragment" />
         <action
             android:id="@+id/action_showProfileFragment_to_frag5ShowListTimeslots"
-            app:destination="@id/ShowListTimeslots" />
+            app:destination="@id/showListTimeslots" />
     </fragment>
     <fragment
         android:id="@+id/newTimeSlotDetailsFragment"
@@ -45,7 +45,7 @@
         tools:layout="@layout/new_time_slot_details_fragment">
         <action
             android:id="@+id/action_newTimeSlotDetailsFragment_to_ShowListTimeslots"
-            app:destination="@id/ShowListTimeslots" />
+            app:destination="@id/showListTimeslots" />
     </fragment>
     <fragment
         android:id="@+id/showSingleTimeslot"
@@ -56,7 +56,7 @@
             app:destination="@id/timeSlotDetailsFragment" />
         <action
             android:id="@+id/action_showSingleTimeslot_to_ShowListTimeslots"
-            app:destination="@id/ShowListTimeslots" />
+            app:destination="@id/showListTimeslots" />
     </fragment>
     <fragment
         android:id="@+id/timeSlotDetailsFragment"
