@@ -9,8 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +19,7 @@ import it.polito.group06.viewmodels.AdvertisementViewModel
 
 class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
 
-    private val advViewModel by viewModels<AdvertisementViewModel>()
+    private val advViewModel: AdvertisementViewModel by activityViewModels()
     private lateinit var recyclerView: RecyclerView
     private lateinit var newAdvButton: Button
 
