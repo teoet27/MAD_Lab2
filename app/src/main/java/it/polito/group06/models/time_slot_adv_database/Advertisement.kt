@@ -1,6 +1,5 @@
 package it.polito.group06.models.time_slot_adv_database
 
-import java.util.*
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
