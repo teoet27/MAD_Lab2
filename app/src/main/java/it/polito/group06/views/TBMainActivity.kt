@@ -79,8 +79,7 @@ class TBMainActivity : AppCompatActivity() {
         val pictureHeader = navView.getHeaderView(0).findViewById<ImageView>(R.id.picture_header)
         usrVM.profile.observe(this) { user ->
 
-            if(user != null)
-            {
+            if (user != null) {
                 fullnameHeader.text = user.fullName
                 nicknameHeader.text = "@${user.nickname}"
                 val profilePicturePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(R.string.profile_picture_filename)
@@ -88,9 +87,7 @@ class TBMainActivity : AppCompatActivity() {
                 getBitmapFromFile(profilePicturePath)?.also {
                     pictureHeader.setImageBitmap(it)
                 }
-            }
-            else
-            {
+            } else {
                 fullnameHeader.text = "Guido Saracco"
                 nicknameHeader.text = "@rettore"
                 pictureHeader.setImageResource(R.drawable.propic)
