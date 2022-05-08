@@ -10,7 +10,7 @@ import it.polito.group06.viewmodels.AdvertisementViewModel
 /**
  * AdsAdapter extends the Adapter of the [RecyclerView] and implements the required methods.
  */
-class AdsAdapterCard(val adsList: List<Advertisement>, val advViewModel: AdvertisementViewModel) : RecyclerView.Adapter<AdsViewHolderCard>() {
+class AdsAdapterCard(private val adsList: List<Advertisement>, private val advViewModel: AdvertisementViewModel) : RecyclerView.Adapter<AdsViewHolderCard>() {
 
     /**
      * On creating the view holder, based on whether the ads is private or not, it'll be created a regular timeslot layout fragment or an empty one.

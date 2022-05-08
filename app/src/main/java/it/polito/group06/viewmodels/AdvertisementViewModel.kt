@@ -17,7 +17,11 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     /**
      * Single advertisement
      */
-    var singleAdvertisement = Advertisement(null, "", "", "", "", 0f, "", false)
+    var singleAdvertisement = Advertisement(
+        null, "", "",
+        "", "", 0f,
+        "", false
+    )
 
     /**
      * Insertion of a new advertisement

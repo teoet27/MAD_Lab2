@@ -14,7 +14,7 @@ class EditSingleTimeslot: Fragment(R.layout.edit_time_slot_details_fragment) {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_timeSlotDetailsFragment_to_showSingleTimeslot)
+                findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_showSingleTimeslot)
             }
         })
     }

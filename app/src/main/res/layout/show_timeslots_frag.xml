@@ -20,6 +20,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="#919191"
         android:textSize="34sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/rvAdvFullList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
