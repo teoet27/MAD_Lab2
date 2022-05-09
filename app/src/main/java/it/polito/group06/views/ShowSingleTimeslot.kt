@@ -36,12 +36,12 @@ class ShowSingleTimeslot: Fragment(R.layout.time_slot_details_fragment) {
         this.editButton = view.findViewById(R.id.moreButtonID)
 
         advViewModel.advertisement.observe(viewLifecycleOwner) { singleAdvertisement ->
-            this.advTitle.text = singleAdvertisement.adsTitle
-            this.advAccount.text = singleAdvertisement.adsAccount
-            this.advLocation.text = singleAdvertisement.adsLocation
-            this.advDate.text = singleAdvertisement.adsDate
-            this.advDuration.text = singleAdvertisement.adsDuration.toString()
-            this.advDescription.text = singleAdvertisement.adsDescription
+            this.advTitle.text = singleAdvertisement.advTitle
+            this.advAccount.text = singleAdvertisement.advAccount
+            this.advLocation.text = singleAdvertisement.advLocation
+            this.advDate.text = singleAdvertisement.advDate
+            this.advDuration.text = singleAdvertisement.advDuration.toString()
+            this.advDescription.text = singleAdvertisement.advDescription
         }
 
         this.editButton.setOnClickListener {
