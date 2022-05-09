@@ -2,8 +2,10 @@ package it.polito.group06.views
 
 import android.os.Bundle
 import android.view.View
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,8 +14,7 @@ import it.polito.group06.R
 import it.polito.group06.models.time_slot_adv_database.Advertisement
 import it.polito.group06.viewmodels.AdvertisementViewModel
 import it.polito.group06.viewmodels.UserProfileViewModel
-import android.widget.DatePicker;
-import android.widget.TextView
+import java.text.SimpleDateFormat
 import java.util.*
 
 class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
@@ -50,13 +51,12 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         }
 
         val today = Calendar.getInstance()
-        var chosen_date = ""
+        var chosenDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
         datePicker.init(
-            today.get(Calendar.YEAR), today.get(Calendar.MONTH),
-            today.get(Calendar.DAY_OF_MONTH)
-
-        ) { view, year, month, day ->
-            chosen_date = "$day/${month + 1}/$year"
+            today.get(Calendar.DAY_OF_MONTH), today.get(Calendar.MONTH),
+            today.get(Calendar.YEAR)
+        ) { view, day, month, year ->
+            chosenDate = "$day/${month + 1}/$year"
         }
 
         this.closeButton.setOnClickListener {
@@ -71,7 +71,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         newTitle.text.toString(),
                         newDescription.text.toString(),
                         newLocation.text.toString(),
-                        chosen_date,
+                        chosenDate,
                         newDuration.text.toString().toFloat(),
                         accountName,
                         false
@@ -90,7 +90,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             newTitle.text.toString(),
                             newDescription.text.toString(),
                             newLocation.text.toString(),
-                            chosen_date,
+                            chosenDate,
                             newDuration.text.toString().toFloat(),
                             accountName,
                             false
