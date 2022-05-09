@@ -79,13 +79,19 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     }
 
     /**
-     * updateAdv is a method to update the [_pvtAdvertisement] and it's called by the adapter to
+     * setSingleAdvertisement is a method to update the [_pvtAdvertisement] and it's called by the adapter to
      * trigger all the observators.
      * @param newAdv an object of class [Advertisement] which contains all the information to fill
      * the advertisement view.
      */
-    fun updateAdv(newAdv: Advertisement) {
+    fun setSingleAdvertisement(newAdv: Advertisement) {
         this._singleAdvertisementPH = newAdv
         this._pvtAdvertisement.value = _singleAdvertisementPH
     }
+
+    fun editSingleAdvertisement(updatedAdv: Advertisement) {
+
+    }
+
+
 }
