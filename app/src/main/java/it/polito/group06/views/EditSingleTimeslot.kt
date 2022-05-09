@@ -15,8 +15,8 @@ import it.polito.group06.viewmodels.UserProfileViewModel
 
 class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
 
-    private val advViewModel: AdvertisementViewModel by activityViewModels<AdvertisementViewModel>()
-    private val usrViewModel: UserProfileViewModel by activityViewModels<UserProfileViewModel>()
+    private val advViewModel: AdvertisementViewModel by activityViewModels()
+    private val usrViewModel: UserProfileViewModel by activityViewModels()
     private val dumbAdvertisement: Advertisement = Advertisement(
         null, "", "",
         "", "", 0f,
@@ -42,10 +42,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
         this.deleteButton = view.findViewById(R.id.deleteButton)
 
         usrViewModel.profile.observe(viewLifecycleOwner) { user ->
-            if (user == null || user.fullName == null)
-                accountName = "Guido Saracco"
-            else
-                accountName = user.fullName!!
+            accountName = if (user?.fullName == null) "Guido Saracco" else user.fullName!!
         }
 
         advViewModel.advertisement.observe(viewLifecycleOwner) { singleAdvertisement ->
