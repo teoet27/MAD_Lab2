@@ -44,7 +44,7 @@
                         android:fontFamily="sans-serif-black"
                         android:text="Electrician Assistance for Small Houses"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -88,6 +88,7 @@
                 android:drawablePadding="5dp"
                 android:text="Mario Rossi"
                 android:textColor="@color/black"
+                android:textSize="20sp"
                 app:drawableStartCompat="@drawable/ic_account_circle_black_24dp"
                 app:drawableTint="#454749" />
 
@@ -101,6 +102,7 @@
                 android:drawablePadding="5dp"
                 android:text="Corso Sebastopoli 220, Torino (Italy)"
                 android:textColor="#000000"
+                android:textSize="20sp"
                 app:drawableStartCompat="@drawable/ic_location_on_black_24dp"
                 app:drawableTint="#454749" />
 
@@ -114,6 +116,7 @@
                 android:drawablePadding="5dp"
                 android:text="14/02/2022"
                 android:textColor="#000000"
+                android:textSize="20sp"
                 app:drawableStartCompat="@drawable/ic_watch_later_black_24dp"
                 app:drawableTint="#454749" />
 
@@ -128,7 +131,8 @@
                 android:text="5 hours"
                 android:textColor="#000000"
                 app:drawableStartCompat="@drawable/ic_timer_black_24dp"
-                app:drawableTint="#454749" />
+                app:drawableTint="#454749"
+                android:textSize="20sp" />
 
             <ImageView
                 android:id="@+id/imageView"
@@ -150,6 +154,7 @@
                 android:layout_marginRight="16dp"
                 android:text="@string/description_of_the_job_offered"
                 android:textColor="#000000"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -160,7 +165,8 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="16dp"
                 android:text="I offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available.\nI offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available.\nI offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available.\nI offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available.\nI offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available."
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
