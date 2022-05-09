@@ -64,7 +64,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         newDescription.text.toString(),
                         newLocation.text.toString(),
                         chosen_date,
-                        0f,
+                        newDuration.text.toString().toFloat(),
                         "Guido Saracco",
                         false
                     )
@@ -82,8 +82,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             newTitle.text.toString(),
                             newDescription.text.toString(),
                             newLocation.text.toString(),
-                            newDate.text.toString(),
-                            0f,
+                            chosen_date,
+                            newDuration.text.toString().toFloat(),
                             "Guido Saracco",
                             false
                         )
