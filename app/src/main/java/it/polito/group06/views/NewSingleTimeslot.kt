@@ -28,6 +28,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private lateinit var closeButton: ImageView
     private lateinit var confirmButton: ImageView
     private lateinit var datePicker: DatePicker
+    private lateinit var accountName: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,6 +41,13 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         this.closeButton = view.findViewById(R.id.closeButton)
         this.confirmButton = view.findViewById(R.id.confirmButton)
         this.datePicker = view.findViewById(R.id.date_Picker)
+
+        usrViewModel.profile.observe(viewLifecycleOwner) { user ->
+            if (user == null || user.fullName == null)
+                accountName = "Guido Saracco"
+            else
+                accountName = user.fullName!!
+        }
 
         val today = Calendar.getInstance()
         var chosen_date = ""
@@ -65,7 +73,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         newLocation.text.toString(),
                         chosen_date,
                         newDuration.text.toString().toFloat(),
-                        "Guido Saracco",
+                        accountName,
                         false
                     )
                 )
@@ -84,7 +92,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             newLocation.text.toString(),
                             chosen_date,
                             newDuration.text.toString().toFloat(),
-                            "Guido Saracco",
+                            accountName,
                             false
                         )
                     )
