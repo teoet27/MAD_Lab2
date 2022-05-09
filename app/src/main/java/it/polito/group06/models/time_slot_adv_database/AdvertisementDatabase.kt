@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Advertisement::class], version = 2)
+@Database(entities = [Advertisement::class], version = 1)
 abstract class AdvertisementDatabase : RoomDatabase() {
     abstract fun adsDao(): AdvertisementDAO
 
@@ -25,7 +25,7 @@ abstract class AdvertisementDatabase : RoomDatabase() {
                         val i = INSTANCE ?: Room.databaseBuilder(
                             context.applicationContext,
                             AdvertisementDatabase::class.java,
-                            "timeslot_adv_db"
+                            "advertisementsDB"
                         ).build()
                         INSTANCE = i
                         INSTANCE

@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [UserProfile::class], version = 2)
+@Database(entities = [UserProfile::class], version = 1)
 @TypeConverters(ArrayListConverter::class)
 abstract class UserProfileDatabase : RoomDatabase() {
     abstract fun profileDao(): UserProfileDao
@@ -26,7 +26,7 @@ abstract class UserProfileDatabase : RoomDatabase() {
                         val i = INSTANCE ?: Room.databaseBuilder(
                             context.applicationContext,
                             UserProfileDatabase::class.java,
-                            "user_profile_db"
+                            "userProfileDB"
                         ).build()
                         INSTANCE = i
                         INSTANCE
