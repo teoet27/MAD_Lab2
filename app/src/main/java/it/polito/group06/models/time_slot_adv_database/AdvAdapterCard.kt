@@ -8,21 +8,21 @@ import it.polito.group06.R
 import it.polito.group06.viewmodels.AdvertisementViewModel
 
 /**
- * [AdsAdapterCard] extending the Adapter of the [RecyclerView] and implements the required methods.
+ * [AdvAdapterCard] extending the Adapter of the [RecyclerView] and implements the required methods.
  */
-class AdsAdapterCard(private val adsList: List<Advertisement>,
-                     private val advViewModel: AdvertisementViewModel) : RecyclerView.Adapter<AdsViewHolderCard>() {
+class AdvAdapterCard(private val adsList: List<Advertisement>,
+                     private val advViewModel: AdvertisementViewModel) : RecyclerView.Adapter<AdvViewHolderCard>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdsViewHolderCard {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdvViewHolderCard {
         val inflater = LayoutInflater.from(parent.context)
         val v = inflater.inflate(R.layout.adv_item, parent, false)
-        return AdsViewHolderCard(v)
+        return AdvViewHolderCard(v)
     }
 
     /**
      * Bind operations.
      */
-    override fun onBindViewHolder(holder: AdsViewHolderCard, position: Int) {
+    override fun onBindViewHolder(holder: AdvViewHolderCard, position: Int) {
         holder.bind(adsList[position])
         holder.itemView.setOnClickListener { view ->
             advViewModel.setSingleAdvertisement((adsList[adsList.indexOf(adsList[position])]))

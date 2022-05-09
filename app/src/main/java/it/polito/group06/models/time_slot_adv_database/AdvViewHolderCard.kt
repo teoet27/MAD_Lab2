@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import it.polito.group06.R
 
 /**
- * [AdsViewHolderCard] extends the ViewHolder of the [RecyclerView]
+ * [AdvViewHolderCard] extends the ViewHolder of the [RecyclerView]
  * and provides the references to each component of the advertisement
  * card.
  */
-class AdsViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
+class AdvViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
     private val title: TextView = v.findViewById(R.id.advCardTitle)
     private val location: TextView = v.findViewById(R.id.advCardLocation)
     private val duration: TextView = v.findViewById(R.id.advCardDuration)
