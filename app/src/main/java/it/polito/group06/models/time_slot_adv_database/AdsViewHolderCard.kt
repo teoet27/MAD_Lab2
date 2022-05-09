@@ -22,9 +22,9 @@ class AdsViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
      * @param adv an object of class Advertisement
      */
     fun bind(adv: Advertisement) {
-        this.title.text = adv.adsTitle
-        this.location.text = adv.adsLocation
-        this.duration.text = adv.adsDuration.toString()
-        this.account.text = adv.adsAccount
+        this.title.text = adv.advTitle
+        this.location.text = adv.advLocation
+        this.duration.text = adv.advDuration.toString()
+        this.account.text = adv.advAccount
     }
 }

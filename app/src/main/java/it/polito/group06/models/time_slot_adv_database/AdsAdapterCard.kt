@@ -25,7 +25,7 @@ class AdsAdapterCard(private val adsList: List<Advertisement>,
     override fun onBindViewHolder(holder: AdsViewHolderCard, position: Int) {
         holder.bind(adsList[position])
         holder.itemView.setOnClickListener { view ->
-            advViewModel.updateAdv((adsList[adsList.indexOf(adsList[position])]))
+            advViewModel.setSingleAdvertisement((adsList[adsList.indexOf(adsList[position])]))
             Navigation.findNavController(view).navigate(R.id.action_ShowListTimeslots_to_showSingleTimeslot)
         }
     }

@@ -6,21 +6,21 @@ import androidx.room.PrimaryKey
 /**
  * [Advertisement] data class.
  * This data class contains the following information:
- * @param adsTitle The title of the advertisement
- * @param adsDescription A complete description of the work offered
- * @param adsLocation The location where the worker is available
- * @param adsDate Date and time of the timeslot offered
- * @param adsDuration The duration of the offered timeslot
- * @param adsAccount Name and Surname of the worker offering the timeslot
+ * @param advTitle The title of the advertisement
+ * @param advDescription A complete description of the work offered
+ * @param advLocation The location where the worker is available
+ * @param advDate Date and time of the timeslot offered
+ * @param advDuration The duration of the offered timeslot
+ * @param advAccount Name and Surname of the worker offering the timeslot
  */
 
 
 @Entity(tableName = "advertisementTable")
 data class Advertisement(
-    @PrimaryKey(autoGenerate = true) val id: Long?,
-    val adsTitle: String, val adsDescription: String,
-    val adsLocation: String, val adsDate: String,
-    val adsDuration: Float, val adsAccount: String,
-    val isPrivate: Boolean
+    @PrimaryKey(autoGenerate = true) var id: Long?,
+    var advTitle: String, var advDescription: String,
+    var advLocation: String, var advDate: String,
+    var advDuration: Float, var advAccount: String,
+    var isPrivate: Boolean
 )
 

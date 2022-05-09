@@ -27,12 +27,12 @@ class AdsViewHolderEdit(v: View) : RecyclerView.ViewHolder(v) {
      * @param removeButtonAction the callback to be set at the removeButton listener
      */
     fun bind(adv: Advertisement, removeButtonAction: () -> Unit) {
-        this.title.text = adv.adsTitle
-        this.description.text = adv.adsDescription
-        this.location.text = adv.adsLocation
-        this.date.text = adv.adsDate
-        this.duration.text = adv.adsDuration.toString()
-        this.account.text = adv.adsAccount
+        this.title.text = adv.advTitle
+        this.description.text = adv.advDescription
+        this.location.text = adv.advLocation
+        this.date.text = adv.advDate
+        this.duration.text = adv.advDuration.toString()
+        this.account.text = adv.advAccount
         this.removeButton.setOnClickListener { removeButtonAction }
     }
 
