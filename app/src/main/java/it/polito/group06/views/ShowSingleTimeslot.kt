@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import it.polito.group06.R
 import it.polito.group06.viewmodels.AdvertisementViewModel
 
-class ShowSingleTimeslot: Fragment(R.layout.time_slot_details_fragment) {
+class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
 
     private val advViewModel: AdvertisementViewModel by activityViewModels()
 
@@ -41,7 +41,11 @@ class ShowSingleTimeslot: Fragment(R.layout.time_slot_details_fragment) {
             this.advLocation.text = singleAdvertisement.advLocation
             this.advDate.text = singleAdvertisement.advDate
             this.advDuration.text = singleAdvertisement.advDuration.toString()
-            this.advDescription.text = singleAdvertisement.advDescription
+            if (singleAdvertisement.advDescription.isEmpty()) {
+                this.advDescription.text = "No description provided"
+            } else {
+                this.advDescription.text = singleAdvertisement.advDescription
+            }
         }
 
         this.editButton.setOnClickListener {
