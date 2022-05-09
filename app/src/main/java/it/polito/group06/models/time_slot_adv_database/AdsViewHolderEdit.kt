@@ -11,7 +11,7 @@ import it.polito.group06.R
  * and provides the references to each component of the advertisement
  * card.
  */
-class AdsViewHolderExpanded(v: View) : RecyclerView.ViewHolder(v) {
+class AdsViewHolderEdit(v: View) : RecyclerView.ViewHolder(v) {
     private val title: TextView = v.findViewById(R.id.newTitle)
     private val description: TextView = v.findViewById(R.id.newDescription)
     private val location: TextView = v.findViewById(R.id.newLocation)
