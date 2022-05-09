@@ -96,6 +96,7 @@
                 android:minHeight="48dp"
                 android:text="Date"
                 android:textColor="#454749"
+                android:textSize="20sp"
                 app:drawableLeftCompat="@drawable/ic_calendar_month"
                 app:drawableTint="#454749" />
 
