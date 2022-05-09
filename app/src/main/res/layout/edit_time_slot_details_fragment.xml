@@ -27,7 +27,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/rounded_corners"
+                android:background="@drawable/show_details_adv_top"
                 android:backgroundTint="@color/prussian_blue"
                 android:paddingTop="16dp"
                 android:paddingBottom="8dp">
@@ -55,7 +55,7 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/moreButtonID"
+                    android:id="@+id/deleteButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
@@ -81,21 +81,6 @@
                 android:contentDescription='@string/separation_line'
                 android:paddingTop="2dp"
                 android:src="@drawable/rounded_corners_land" />
-
-            <EditText
-                android:id="@+id/ads_account"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:drawablePadding="5dp"
-                android:minHeight="48dp"
-                android:text="Mario Rossi"
-                android:textColor="@color/black"
-                app:drawableStartCompat="@drawable/ic_account_circle_black_24dp"
-                app:drawableTint="#454749" />
 
             <EditText
                 android:id="@+id/newLocation"
