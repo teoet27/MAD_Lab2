@@ -63,7 +63,6 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
         thread {
             repo.removeAdWithId(id)
         }
-        this._listOfAdvertisementPH = this._listOfAdvertisementPH.filter { elem -> elem.id != id }.toMutableList()
         this._pvtListOfAdvertisement.value = _listOfAdvertisementPH
     }
 
@@ -90,8 +89,18 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     }
 
     fun editSingleAdvertisement(updatedAdv: Advertisement) {
-
+        thread {
+            repo.updateAdv(updatedAdv.id!!,
+            updatedAdv.advTitle,
+            updatedAdv.advDescription,
+            updatedAdv.advLocation,
+            updatedAdv.advDate,
+            updatedAdv.advDuration,
+            updatedAdv.advAccount,
+            updatedAdv.isPrivate)
+        }
+        this._pvtListOfAdvertisement.value = this._listOfAdvertisementPH
+        this._singleAdvertisementPH = updatedAdv
+        this._pvtAdvertisement.value = this._singleAdvertisementPH
     }
-
-
 }
