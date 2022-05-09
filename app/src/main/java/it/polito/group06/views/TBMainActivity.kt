@@ -46,8 +46,7 @@ class TBMainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.ShowListTimeslots,
-                R.id.showProfileFragment,
-                R.id.showSingleTimeslot
+                R.id.showProfileFragment
             ), drawerLayout
         )
         // setup navigation drawer
