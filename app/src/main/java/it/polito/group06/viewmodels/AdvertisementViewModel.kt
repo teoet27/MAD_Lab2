@@ -17,7 +17,11 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     /**
      * List of advertisements
      */
-    val ads = repo.advertisements()
+    private var _listOfAdvertisementPH = mutableListOf<Advertisement>()
+    private val _pvtListOfAdvertisement = MutableLiveData<MutableList<Advertisement>>().also {
+        it.value = _listOfAdvertisementPH
+    }
+    val listOfAdvertisement: LiveData<MutableList<Advertisement>> = this._pvtListOfAdvertisement
 
     /**
      * Single [Advertisement]
@@ -33,6 +37,13 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     val advertisement: LiveData<Advertisement> = this._pvtAdvertisement
 
     /**
+     * getFullListOfAdvertisement
+     */
+    fun getFullListOfAdvertisement(): LiveData<List<Advertisement>> {
+        return this.repo.advertisements()
+    }
+
+    /**
      * Insertion of a new [Advertisement]
      * @param ad a new advertisement
      */
@@ -40,6 +51,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
         thread {
             repo.insertAd(ad)
         }
+        this._listOfAdvertisementPH.add(ad)
+        this._pvtListOfAdvertisement.value = _listOfAdvertisementPH
     }
 
     /**
@@ -50,6 +63,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
         thread {
             repo.removeAdWithId(id)
         }
+        this._listOfAdvertisementPH = this._listOfAdvertisementPH.filter { elem -> elem.id != id }.toMutableList()
+        this._pvtListOfAdvertisement.value = _listOfAdvertisementPH
     }
 
     /**
@@ -59,6 +74,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
         thread {
             repo.clearAll()
         }
+        this._listOfAdvertisementPH.clear()
+        this._pvtListOfAdvertisement.value = _listOfAdvertisementPH
     }
 
     /**
