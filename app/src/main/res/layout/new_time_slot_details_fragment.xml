@@ -27,7 +27,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/rounded_corners"
+                android:background="@drawable/show_details_adv_top"
                 android:backgroundTint="@color/prussian_blue"
                 android:paddingTop="16dp"
                 android:paddingBottom="8dp">
@@ -49,8 +49,8 @@
                         android:layout_weight="8"
                         android:fontFamily="sans-serif-black"
                         android:hint="Title"
-                        android:textColorHint="#9a9a9a"
                         android:textColor="@color/white"
+                        android:textColorHint="#9a9a9a"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
