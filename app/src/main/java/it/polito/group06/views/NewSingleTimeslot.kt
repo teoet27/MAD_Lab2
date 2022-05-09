@@ -53,9 +53,9 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         val today = Calendar.getInstance()
         var chosenDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
         datePicker.init(
-            today.get(Calendar.DAY_OF_MONTH), today.get(Calendar.MONTH),
-            today.get(Calendar.YEAR)
-        ) { view, day, month, year ->
+            today.get(Calendar.YEAR), today.get(Calendar.MONTH),
+            today.get(Calendar.DAY_OF_MONTH)
+        ) { view, year, month, day ->
             chosenDate = "$day/${month + 1}/$year"
         }
 
