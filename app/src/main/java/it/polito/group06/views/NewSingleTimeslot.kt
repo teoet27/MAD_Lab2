@@ -78,7 +78,20 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         }
 
         this.confirmButton.setOnClickListener {
-            if (isAdvValid()) {
+            val (timeDifference, isTimeDifferenceOk) = computeTimeDifference(newStartingTime.text.toString(), newEndingTime.text.toString())
+            if (areAllFieldsEmpty()) {
+                Snackbar.make(
+                    requireView(), "All fields are empty: fill them to create a new Advertisement.", Snackbar.LENGTH_LONG
+                ).show()
+            } else if (!isTimeDifferenceOk && timeDifference < 0) {
+                Snackbar.make(
+                    requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_LONG
+                ).show()
+            } else if (!isTimeDifferenceOk) {
+                Snackbar.make(
+                    requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_LONG
+                ).show()
+            } else if (isAdvValid()) {
                 advViewModel.insertAd(
                     Advertisement(
                         null,
@@ -88,7 +101,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         chosenDate,
                         newStartingTime.text.toString(),
                         newEndingTime.text.toString(),
-                        computeTimeDifference(newStartingTime.text.toString(), newEndingTime.text.toString()),
+                        timeDifference,
                         accountName,
                         false
                     )
@@ -106,7 +119,21 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (isAdvValid()) {
+                val (timeDifference, isTimeDifferenceOk) = computeTimeDifference(newStartingTime.text.toString(), newEndingTime.text.toString())
+                if (areAllFieldsEmpty()) {
+                    Snackbar.make(
+                        requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
+                    ).show()
+                    findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
+                } else if (!isTimeDifferenceOk && timeDifference < 0) {
+                    Snackbar.make(
+                        requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_LONG
+                    ).show()
+                } else if (!isTimeDifferenceOk) {
+                    Snackbar.make(
+                        requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_LONG
+                    ).show()
+                } else if (isAdvValid()) {
                     advViewModel.insertAd(
                         Advertisement(
                             null,
@@ -116,7 +143,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             chosenDate,
                             newStartingTime.text.toString(),
                             newEndingTime.text.toString(),
-                            computeTimeDifference(newStartingTime.text.toString(), newEndingTime.text.toString()),
+                            timeDifference,
                             accountName,
                             false
                         )
@@ -124,12 +151,13 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                     Snackbar.make(
                         requireView(), "Advertisement created successfully!", Snackbar.LENGTH_LONG
                     ).show()
+                    findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
                 } else {
                     Snackbar.make(
                         requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
                     ).show()
+                    findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
                 }
-                findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
             }
         })
     }
@@ -150,7 +178,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     }
 
     /**
-     *
+     * popTimePickerStarting is the callback to launch the TimePicker for inserting the starting time
+     * @param timeBox reference to the TextView of the starting time
      */
     private fun popTimePickerStarting(timeBox: TextView) {
         val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
@@ -165,7 +194,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     }
 
     /**
-     *
+     * popTimePickerEnding is the callback to launch the TimePicker for inserting the ending time
+     * @param timeBox reference to the TextView of the ending time
      */
     private fun popTimePickerEnding(timeBox: TextView) {
         val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
@@ -180,10 +210,18 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     }
 
     /**
+     * computeTimeDifference is a method which return the time difference from two "time-strings" and whether
+     * they are acceptable or not.
      *
+     * @param startingTime the starting time
+     * @param endingTime the ending time
+     * @return a Pair<Float, Boolean> where it's specified the time difference and its acceptability
      */
-    private fun computeTimeDifference(startingTime: String, endingTime: String): Float {
+    private fun computeTimeDifference(startingTime: String, endingTime: String): Pair<Float, Boolean> {
         var timeDifference: Float = 0.00f
+        if (startingTime.isNullOrEmpty() || endingTime.isNullOrEmpty()) {
+            return Pair(-1f, false)
+        }
         val startingHour = startingTime.split(":")[0].toInt()
         val startingMinute = startingTime.split(":")[1].toInt()
         val endingHour = endingTime.split(":")[0].toInt()
@@ -191,6 +229,21 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
         timeDifference += (endingHour - startingHour) + ((endingMinute - startingMinute) / 60f)
 
-        return String.format("%.2f", timeDifference).toFloat()
+        return Pair(
+            String.format("%.2f", timeDifference).toFloat(),
+            String.format("%.2f", timeDifference).toFloat() >= 0
+        )
+    }
+
+    /**
+     * areAllFieldsEmpty to check whether all fields are empty or not
+     * @return whether all fields are empty or not
+     */
+    private fun areAllFieldsEmpty(): Boolean {
+        return this.newTitle.text.toString().isNullOrEmpty() &&
+                this.newLocation.text.toString().isNullOrEmpty() &&
+                this.newStartingTime.text.toString().isNullOrEmpty() &&
+                this.newEndingTime.text.toString().isNullOrEmpty() &&
+                this.newDescription.text.toString().isNullOrEmpty()
     }
 }
