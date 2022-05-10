@@ -82,9 +82,9 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         newDescription.text.toString(),
                         newLocation.text.toString(),
                         chosenDate,
-                        newStartingTime.text.toString().toInt(),
-                        newEndingTime.text.toString().toInt(),
-                        0.0f,
+                        newStartingTime.text.toString(),
+                        newEndingTime.text.toString(),
+                        computeTimeDifference(newStartingTime.text.toString(), newEndingTime.text.toString()),
                         accountName,
                         false
                     )
@@ -103,9 +103,9 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             newDescription.text.toString(),
                             newLocation.text.toString(),
                             chosenDate,
-                            newStartingTime.text.toString().toInt(),
-                            newEndingTime.text.toString().toInt(),
-                            0.0f,
+                            newStartingTime.text.toString(),
+                            newEndingTime.text.toString(),
+                            computeTimeDifference(newStartingTime.text.toString(), newEndingTime.text.toString()),
                             accountName,
                             false
                         )
@@ -131,9 +131,11 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                 newDate.text.toString().isNullOrEmpty())
     }
 
+    /**
+     *
+     */
     private fun popTimePickerStarting(timeBox: TextView) {
-        val onTimeSetListener : TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() {
-            timepicker, selectedHour, selectedMinute ->
+        val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
             timeStartingHour = selectedHour
             timeStartingMinute = selectedMinute
             timeBox.text = String.format(Locale.getDefault(), "%02d:%02d", timeStartingHour, timeStartingMinute)
@@ -144,9 +146,11 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         timePickerDialog.show()
     }
 
+    /**
+     *
+     */
     private fun popTimePickerEnding(timeBox: TextView) {
-        val onTimeSetListener : TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() {
-                timepicker, selectedHour, selectedMinute ->
+        val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
             timeEndingHour = selectedHour
             timeEndingMinute = selectedMinute
             timeBox.text = String.format(Locale.getDefault(), "%02d:%02d", timeEndingHour, timeEndingMinute)
@@ -155,5 +159,20 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         val timePickerDialog: TimePickerDialog = TimePickerDialog(this.context, onTimeSetListener, timeEndingHour, timeEndingMinute, true)
         timePickerDialog.setTitle("Select time")
         timePickerDialog.show()
+    }
+
+    /**
+     *
+     */
+    private fun computeTimeDifference(startingTime: String, endingTime: String): Float {
+        var timeDifference: Float = 0.00f
+        val startingHour = startingTime.split(":")[0].toInt()
+        val startingMinute = startingTime.split(":")[1].toInt()
+        val endingHour = endingTime.split(":")[0].toInt()
+        val endingMinute = endingTime.split(":")[1].toInt()
+
+        timeDifference += (endingHour - startingHour) + ((endingMinute - startingMinute) / 60f)
+
+        return String.format("%.2f", timeDifference).toFloat()
     }
 }
