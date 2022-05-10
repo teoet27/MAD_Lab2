@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.DatePicker
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -86,8 +87,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
             this.advDescription.text = singleAdvertisement.advDescription
             this.deleteButton.setOnClickListener {
                 advViewModel.removeAd(singleAdvertisement.id!!)
-                Snackbar.make(
-                    requireView(), "Advertisement removed successfully!", Snackbar.LENGTH_LONG
+                Toast.makeText(
+                    context, "Advertisement removed successfully!", Toast.LENGTH_LONG
                 ).show()
                 findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
             }
@@ -113,8 +114,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                     dumbAdvertisement.advEndingTime = advEndingTime.text.toString()
                     dumbAdvertisement.advDuration = timeDifference
                     advViewModel.editSingleAdvertisement(dumbAdvertisement)
-                    Snackbar.make(
-                        requireView(), "Advertisement created successfully!", Snackbar.LENGTH_LONG
+                    Toast.makeText(
+                        context, "Advertisement edited successfully!", Toast.LENGTH_LONG
                     ).show()
                     findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_showSingleTimeslot)
                 } else {
@@ -200,17 +201,5 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
             String.format("%.2f", timeDifference).toFloat(),
             String.format("%.2f", timeDifference).toFloat() >= 0
         )
-    }
-
-    /**
-     * areAllFieldsEmpty to check whether all fields are empty or not
-     * @return whether all fields are empty or not
-     */
-    private fun areAllFieldsEmpty(): Boolean {
-        return this.advTitle.text.toString().isNullOrEmpty() &&
-                this.advLocation.text.toString().isNullOrEmpty() &&
-                this.advStartingTime.text.toString().isNullOrEmpty() &&
-                this.advEndingTime.text.toString().isNullOrEmpty() &&
-                this.advDescription.text.toString().isNullOrEmpty()
     }
 }

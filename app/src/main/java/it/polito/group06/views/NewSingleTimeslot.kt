@@ -3,10 +3,7 @@ package it.polito.group06.views
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.View
-import android.widget.DatePicker
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -106,8 +103,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         false
                     )
                 )
-                Snackbar.make(
-                    requireView(), "Advertisement created successfully!", Snackbar.LENGTH_LONG
+                Toast.makeText(
+                    context, "Advertisement created successfully!", Toast.LENGTH_LONG
                 ).show()
                 findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
             } else {
@@ -148,8 +145,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             false
                         )
                     )
-                    Snackbar.make(
-                        requireView(), "Advertisement created successfully!", Snackbar.LENGTH_LONG
+                    Toast.makeText(
+                        context, "Advertisement created successfully!", Toast.LENGTH_LONG
                     ).show()
                     findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
                 } else {
