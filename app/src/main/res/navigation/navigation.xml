@@ -35,7 +35,7 @@
             android:id="@+id/action_showProfileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
         <action
-            android:id="@+id/action_showProfileFragment_to_frag5ShowListTimeslots"
+            android:id="@+id/action_showProfileFragment_to_ShowListTimeslots"
             app:destination="@id/ShowListTimeslots" />
     </fragment>
     <fragment

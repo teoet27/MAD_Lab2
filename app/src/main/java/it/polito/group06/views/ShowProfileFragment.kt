@@ -9,6 +9,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import it.polito.group06.R
 import it.polito.group06.models.user_profile_database.UserProfile
 import it.polito.group06.utilities.fromArrayListToString
@@ -108,7 +109,7 @@ class ShowProfileFragment : Fragment() {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_showProfileFragment_to_frag5ShowListTimeslots)
+                findNavController().navigate(R.id.action_showProfileFragment_to_ShowListTimeslots)
             }
         })
 
@@ -136,8 +137,12 @@ class ShowProfileFragment : Fragment() {
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.edit_user_profile ->
+            R.id.edit_user_profile -> {
+                Snackbar.make(
+                    requireView(), "Edit mode.", Snackbar.LENGTH_LONG
+                ).show()
                 findNavController().navigate(R.id.action_showProfileFragment_to_editProfileFragment)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
