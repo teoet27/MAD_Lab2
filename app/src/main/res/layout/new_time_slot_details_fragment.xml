@@ -68,16 +68,32 @@
                 android:paddingTop="2dp"
                 android:src="@drawable/rounded_corners_land" />
 
-            <EditText
-                android:id="@+id/newDuration"
+            <TextView
+                android:id="@+id/newStartingTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="16dp"
                 android:drawablePadding="5dp"
-                android:hint="Duration"
-                android:inputType="numberDecimal"
+                android:hint="Starting time"
+                android:inputType="none"
+                android:minHeight="48dp"
+                android:textColor="@color/prussian_blue"
+                android:textSize="20sp"
+                app:drawableStartCompat="@drawable/ic_timer_black_24dp"
+                app:drawableTint="#454749" />
+
+            <TextView
+                android:id="@+id/newEndingTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:drawablePadding="5dp"
+                android:hint="Ending time"
+                android:inputType="none"
                 android:minHeight="48dp"
                 android:textColor="@color/prussian_blue"
                 android:textSize="20sp"
