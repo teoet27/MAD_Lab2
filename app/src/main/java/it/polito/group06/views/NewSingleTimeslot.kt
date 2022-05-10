@@ -11,6 +11,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import it.polito.group06.R
 import it.polito.group06.models.time_slot_adv_database.Advertisement
 import it.polito.group06.viewmodels.AdvertisementViewModel
@@ -70,11 +71,14 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         }
 
         this.closeButton.setOnClickListener {
+            Snackbar.make(
+                requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
+            ).show()
             findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
         }
 
         this.confirmButton.setOnClickListener {
-            if (isAdvAvailable()) {
+            if (isAdvValid()) {
                 advViewModel.insertAd(
                     Advertisement(
                         null,
@@ -89,13 +93,20 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         false
                     )
                 )
+                Snackbar.make(
+                    requireView(), "Advertisement created successfully!", Snackbar.LENGTH_LONG
+                ).show()
+                findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
+            } else {
+                Snackbar.make(
+                    requireView(), "Error: you need to provide at least a title, a starting and ending time, a location and a date. Try again.", Snackbar.LENGTH_LONG
+                ).show()
             }
-            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
         }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (isAdvAvailable()) {
+                if (isAdvValid()) {
                     advViewModel.insertAd(
                         Advertisement(
                             null,
@@ -110,6 +121,13 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             false
                         )
                     )
+                    Snackbar.make(
+                        requireView(), "Advertisement created successfully!", Snackbar.LENGTH_LONG
+                    ).show()
+                } else {
+                    Snackbar.make(
+                        requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
+                    ).show()
                 }
                 findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
             }
@@ -117,13 +135,13 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     }
 
     /**
-     * isAdvAvailable is a method which returns whether it's possible to actually insert a new
+     * isAdvValid is a method which returns whether it's possible to actually insert a new
      * advertisement. The criteria is that an advertisement should at least have a title, a location,
      * a date and a duration.
      *
      * @return whether it's possible to actually create an advertisement or not
      */
-    private fun isAdvAvailable(): Boolean {
+    private fun isAdvValid(): Boolean {
         return !(newTitle.text.toString().isNullOrEmpty() ||
                 newStartingTime.text.toString().isNullOrEmpty() ||
                 newEndingTime.text.toString().isNullOrEmpty() ||
