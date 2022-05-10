@@ -66,7 +66,7 @@ class ShowProfileFragment : Fragment() {
                         "rettore@polito.it",
                         "3331112223",
                         "Torino - Italia",
-                        null
+                        arrayListOf<String>("Management", "Public Relationship")
                     )
                 )
                 this.profilePictureOBJ.setImageResource(R.drawable.propic)
