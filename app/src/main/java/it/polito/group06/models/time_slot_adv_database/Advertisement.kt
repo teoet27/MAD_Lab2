@@ -22,7 +22,7 @@ data class Advertisement(
     @PrimaryKey(autoGenerate = true) var id: Long?,
     var advTitle: String, var advDescription: String,
     var advLocation: String, var advDate: String,
-    var advStartingTime: Int, var advEndingTime: Int,
+    var advStartingTime: String, var advEndingTime: String,
     var advDuration: Float, var advAccount: String,
     var isPrivate: Boolean
 )
