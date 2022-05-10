@@ -63,9 +63,6 @@
         android:name="it.polito.group06.views.EditSingleTimeslot"
         android:label="Edit your timeslot">
         <action
-            android:id="@+id/action_editTimeSlotDetailsFragment_to_showSingleTimeslot"
-            app:destination="@id/showSingleTimeslot" />
-        <action
             android:id="@+id/action_editTimeSlotDetailsFragment_to_ShowListTimeslots"
             app:destination="@id/ShowListTimeslots" />
     </fragment>
