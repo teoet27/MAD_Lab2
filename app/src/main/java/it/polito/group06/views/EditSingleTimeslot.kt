@@ -10,6 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import it.polito.group06.R
 import it.polito.group06.models.time_slot_adv_database.Advertisement
 import it.polito.group06.viewmodels.AdvertisementViewModel
@@ -85,6 +86,9 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
             this.advDescription.text = singleAdvertisement.advDescription
             this.deleteButton.setOnClickListener {
                 advViewModel.removeAd(singleAdvertisement.id!!)
+                Snackbar.make(
+                    requireView(), "Advertisement removed successfully!", Snackbar.LENGTH_LONG
+                ).show()
                 findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
             }
         }
