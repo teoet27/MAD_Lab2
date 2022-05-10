@@ -95,21 +95,55 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                dumbAdvertisement.advTitle = advTitle.text.toString()
-                dumbAdvertisement.advLocation = advLocation.text.toString()
-                dumbAdvertisement.advDescription = advDescription.text.toString()
-                dumbAdvertisement.advDate = chosenDate
-                dumbAdvertisement.advStartingTime = advStartingTime.text.toString()
-                dumbAdvertisement.advEndingTime = advEndingTime.text.toString()
-                dumbAdvertisement.advDuration = computeTimeDifference(advStartingTime.text.toString(), advEndingTime.text.toString())
-                advViewModel.editSingleAdvertisement(dumbAdvertisement)
-                findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_showSingleTimeslot)
+                val (timeDifference, isTimeDifferenceOk) = computeTimeDifference(advStartingTime.text.toString(), advEndingTime.text.toString())
+                if (!isTimeDifferenceOk && timeDifference < 0) {
+                    Snackbar.make(
+                        requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_LONG
+                    ).show()
+                } else if (!isTimeDifferenceOk) {
+                    Snackbar.make(
+                        requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_LONG
+                    ).show()
+                } else if (isAdvValid()) {
+                    dumbAdvertisement.advTitle = advTitle.text.toString()
+                    dumbAdvertisement.advLocation = advLocation.text.toString()
+                    dumbAdvertisement.advDescription = advDescription.text.toString()
+                    dumbAdvertisement.advDate = chosenDate
+                    dumbAdvertisement.advStartingTime = advStartingTime.text.toString()
+                    dumbAdvertisement.advEndingTime = advEndingTime.text.toString()
+                    dumbAdvertisement.advDuration = timeDifference
+                    advViewModel.editSingleAdvertisement(dumbAdvertisement)
+                    Snackbar.make(
+                        requireView(), "Advertisement created successfully!", Snackbar.LENGTH_LONG
+                    ).show()
+                    findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_showSingleTimeslot)
+                } else {
+                    Snackbar.make(
+                        requireView(), "Error: you need to provide at least a title, a starting and ending time, a location and a date. Try again.", Snackbar.LENGTH_LONG
+                    ).show()
+                }
             }
         })
     }
 
     /**
+     * isAdvValid is a method which returns whether it's possible to actually insert a new
+     * advertisement. The criteria is that an advertisement should at least have a title, a location,
+     * a date and a duration.
      *
+     * @return whether it's possible to actually create an advertisement or not
+     */
+    private fun isAdvValid(): Boolean {
+        return !(advTitle.text.toString().isNullOrEmpty() ||
+                advStartingTime.text.toString().isNullOrEmpty() ||
+                advEndingTime.text.toString().isNullOrEmpty() ||
+                advLocation.text.toString().isNullOrEmpty() ||
+                chosenDate.isNullOrEmpty())
+    }
+
+    /**
+     * popTimePickerStarting is the callback to launch the TimePicker for inserting the starting time
+     * @param timeBox reference to the TextView of the starting time
      */
     private fun popTimePickerStarting(timeBox: TextView) {
         val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
@@ -124,7 +158,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     }
 
     /**
-     *
+     * popTimePickerEnding is the callback to launch the TimePicker for inserting the ending time
+     * @param timeBox reference to the TextView of the ending time
      */
     private fun popTimePickerEnding(timeBox: TextView) {
         val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
@@ -139,10 +174,21 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     }
 
     /**
+     * computeTimeDifference is a method which return the time difference from two "time-strings" and whether
+     * they are acceptable or not.
      *
+     * @param startingTime the starting time
+     * @param endingTime the ending time
+     * @return a Pair<Float, Boolean> where it's specified the time difference and its acceptability
      */
-    private fun computeTimeDifference(startingTime: String, endingTime: String): Float {
+    private fun computeTimeDifference(startingTime: String, endingTime: String): Pair<Float, Boolean> {
         var timeDifference: Float = 0.00f
+        if (startingTime.isNullOrEmpty() || endingTime.isNullOrEmpty()) {
+            Snackbar.make(
+                requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_LONG
+            ).show()
+            return Pair(0f, false)
+        }
         val startingHour = startingTime.split(":")[0].toInt()
         val startingMinute = startingTime.split(":")[1].toInt()
         val endingHour = endingTime.split(":")[0].toInt()
@@ -150,6 +196,21 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
 
         timeDifference += (endingHour - startingHour) + ((endingMinute - startingMinute) / 60f)
 
-        return String.format("%.2f", timeDifference).toFloat()
+        return Pair(
+            String.format("%.2f", timeDifference).toFloat(),
+            String.format("%.2f", timeDifference).toFloat() >= 0
+        )
+    }
+
+    /**
+     * areAllFieldsEmpty to check whether all fields are empty or not
+     * @return whether all fields are empty or not
+     */
+    private fun areAllFieldsEmpty(): Boolean {
+        return this.advTitle.text.toString().isNullOrEmpty() &&
+                this.advLocation.text.toString().isNullOrEmpty() &&
+                this.advStartingTime.text.toString().isNullOrEmpty() &&
+                this.advEndingTime.text.toString().isNullOrEmpty() &&
+                this.advDescription.text.toString().isNullOrEmpty()
     }
 }
