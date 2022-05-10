@@ -15,12 +15,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import it.polito.group06.R
 import it.polito.group06.models.user_profile_database.UserProfile
 import it.polito.group06.viewmodels.UserProfileViewModel
 import it.polito.group06.utilities.*
+import it.polito.group06.viewmodels.AdvertisementViewModel
 import java.io.File
 import java.io.IOException
 
@@ -42,7 +43,8 @@ class EditProfileFragment : Fragment() {
     private val REQUEST_IMAGE_CAPTURE = 1
     private val PICK_IMAGE = 100
 
-    private val usrViewModel by viewModels<UserProfileViewModel>()
+    private val advViewModel by activityViewModels<AdvertisementViewModel>()
+    private val usrViewModel by activityViewModels<UserProfileViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,8 +72,7 @@ class EditProfileFragment : Fragment() {
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
 
         usrViewModel.profile.observe(this.viewLifecycleOwner) { userProfile ->
-
-            if (userProfile != null){
+            if (userProfile != null) {
                 this.editFullNameOBJ.setText(userProfile.fullName)
 
                 if (userProfile.nickname?.compareTo("") == 0) {
@@ -87,7 +88,6 @@ class EditProfileFragment : Fragment() {
                     this.editSkillsOBJ.setText(fromArrayListToString(userProfile.skills!!))
                 }
 
-
                 this.editEmailOBJ.setText(userProfile.email)
                 this.editDescriptionOBJ.setText(userProfile.description)
 
@@ -99,10 +99,7 @@ class EditProfileFragment : Fragment() {
                 getBitmapFromFile(profilePicturePath)?.also {
                     this.profilePictureOBJ.setImageBitmap(it)
                 } ?: this.profilePictureOBJ.setImageResource(R.drawable.propic)
-
             }
-
-
         }
 
         // check this option to open onCreateOptionsMenu method
@@ -116,7 +113,9 @@ class EditProfileFragment : Fragment() {
         })
     }
 
-    /**Private method for saving data before fragment transaction*/
+    /**
+     * saveData is a private method for saving data before fragment transaction
+     */
     private fun saveData() {
         usrViewModel.profile.observe(this.viewLifecycleOwner) {
             usrViewModel.editProfile(
@@ -132,6 +131,9 @@ class EditProfileFragment : Fragment() {
                     fromStringToArrayList(editSkillsOBJ.text.toString()),
                 )
             )
+        }
+        advViewModel.getFullListOfAdvertisement().observe(viewLifecycleOwner) { fullList ->
+            advViewModel.updateAccountName(fullList, editFullNameOBJ.text.toString())
         }
     }
 
