@@ -28,7 +28,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      */
     private var _singleAdvertisementPH = Advertisement(
         null, "", "",
-        "", "", 0f,
+        "", "", 0, 0, 0f,
         "", false
     )
     private val _pvtAdvertisement = MutableLiveData<Advertisement>().also {

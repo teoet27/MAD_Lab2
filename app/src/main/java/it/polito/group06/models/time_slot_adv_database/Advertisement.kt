@@ -10,6 +10,8 @@ import androidx.room.PrimaryKey
  * @param advDescription A complete description of the work offered
  * @param advLocation The location where the worker is available
  * @param advDate Date and time of the timeslot offered
+ * @param advStartingTime Starting time for the offered timeslot
+ * @param advEndingTime Ending time for the offered timeslot
  * @param advDuration The duration of the offered timeslot
  * @param advAccount Name and Surname of the worker offering the timeslot
  */
@@ -20,6 +22,7 @@ data class Advertisement(
     @PrimaryKey(autoGenerate = true) var id: Long?,
     var advTitle: String, var advDescription: String,
     var advLocation: String, var advDate: String,
+    var advStartingTime: Int, var advEndingTime: Int,
     var advDuration: Float, var advAccount: String,
     var isPrivate: Boolean
 )
