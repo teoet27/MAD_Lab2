@@ -36,24 +36,52 @@ interface AdvertisementDAO {
     /**
      * Edit a single advertisement
      */
-    @Query("UPDATE advertisementTable " +
-            "SET id = :id," +
-            "advTitle = :advTitle," +
-            "advDescription = :advDescription," +
-            "advLocation = :advLocation," +
-            "advDate = :advDate," +
-            "advDuration = :advDuration," +
-            "advAccount = :advAccount," +
-            "isPrivate = :isPrivate" +
-            " WHERE id = :id")
-    fun updateAdv(id: Long,
-                  advTitle: String,
-                  advDescription: String,
-                  advLocation: String,
-                  advDate: String,
-                  advDuration: Float,
-                  advAccount: String,
-                  isPrivate: Boolean)
+    @Query(
+        "UPDATE advertisementTable " +
+                "SET id = :id," +
+                "advTitle = :advTitle," +
+                "advDescription = :advDescription," +
+                "advLocation = :advLocation," +
+                "advDate = :advDate," +
+                "advDuration = :advDuration," +
+                "advAccount = :advAccount," +
+                "isPrivate = :isPrivate" +
+                " WHERE id = :id"
+    )
+    fun updateAdv(
+        id: Long,
+        advTitle: String,
+        advDescription: String,
+        advLocation: String,
+        advDate: String,
+        advDuration: Float,
+        advAccount: String,
+        isPrivate: Boolean
+    )
 
-
+    /**
+     * Update the account name for all the advertisement
+     */
+    @Query(
+        "UPDATE advertisementTable " +
+                "SET id = :id," +
+                "advTitle = :advTitle," +
+                "advDescription = :advDescription," +
+                "advLocation = :advLocation," +
+                "advDate = :advDate," +
+                "advDuration = :advDuration," +
+                "advAccount = :advAccount," +
+                "isPrivate = :isPrivate " +
+                "WHERE id = :id"
+    )
+    fun updateAccountName(
+        id: Long,
+        advTitle: String,
+        advDescription: String,
+        advLocation: String,
+        advDate: String,
+        advDuration: Float,
+        advAccount: String,
+        isPrivate: Boolean
+    )
 }
