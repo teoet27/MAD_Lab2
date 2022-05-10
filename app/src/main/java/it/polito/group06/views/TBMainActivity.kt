@@ -91,7 +91,6 @@ class TBMainActivity : AppCompatActivity() {
 
             }
         }
-
     }
 
     // Extension function to replace fragment
