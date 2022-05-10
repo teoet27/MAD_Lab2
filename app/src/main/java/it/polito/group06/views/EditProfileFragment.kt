@@ -42,7 +42,7 @@ class EditProfileFragment : Fragment() {
     private val REQUEST_IMAGE_CAPTURE = 1
     private val PICK_IMAGE = 100
 
-    val profile_vm by viewModels<UserProfileViewModel>()
+    private val usrViewModel by viewModels<UserProfileViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,7 +69,7 @@ class EditProfileFragment : Fragment() {
         this.editPhoneOBJ = view.findViewById(R.id.edit_phone_show_ID)
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
 
-        profile_vm.profile.observe(this.viewLifecycleOwner) { userProfile ->
+        usrViewModel.profile.observe(this.viewLifecycleOwner) { userProfile ->
 
             if (userProfile != null){
                 this.editFullNameOBJ.setText(userProfile.fullName)
@@ -118,8 +118,8 @@ class EditProfileFragment : Fragment() {
 
     /**Private method for saving data before fragment transaction*/
     private fun saveData() {
-        profile_vm.profile.observe(this.viewLifecycleOwner) {
-            profile_vm.editProfile(
+        usrViewModel.profile.observe(this.viewLifecycleOwner) {
+            usrViewModel.editProfile(
                 UserProfile(
                     it.id,
                     editNicknameOBJ.text.toString(),
