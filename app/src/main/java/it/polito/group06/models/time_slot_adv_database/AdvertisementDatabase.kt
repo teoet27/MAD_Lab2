@@ -25,7 +25,7 @@ abstract class AdvertisementDatabase : RoomDatabase() {
                         val i = INSTANCE ?: Room.databaseBuilder(
                             context.applicationContext,
                             AdvertisementDatabase::class.java,
-                            "advertisementDB"
+                            "advDB"
                         ).build()
                         INSTANCE = i
                         INSTANCE
