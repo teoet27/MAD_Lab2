@@ -105,7 +105,6 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     fun updateAccountName(advList: List<Advertisement>, accountName: String) {
         thread {
             for (adv in advList) {
-                println(adv)
                 repositoryAdv.updateAccountName(
                     adv.id!!,
                     adv.advTitle,
