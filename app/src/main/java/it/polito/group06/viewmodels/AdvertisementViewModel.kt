@@ -12,16 +12,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     /**
      * Repository
      */
-    private val repo = AdvertisementRepository(application)
-
-    /**
-     * List of advertisements
-     */
-    private var _listOfAdvertisementPH = mutableListOf<Advertisement>()
-    private val _pvtListOfAdvertisement = MutableLiveData<MutableList<Advertisement>>().also {
-        it.value = _listOfAdvertisementPH
-    }
-    val listOfAdvertisement: LiveData<MutableList<Advertisement>> = this._pvtListOfAdvertisement
+    private val repositoryAdv = AdvertisementRepository(application)
 
     /**
      * Single [Advertisement]
@@ -40,7 +31,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      * getFullListOfAdvertisement
      */
     fun getFullListOfAdvertisement(): LiveData<List<Advertisement>> {
-        return this.repo.advertisements()
+        return this.repositoryAdv.advertisements()
     }
 
     /**
@@ -49,10 +40,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      */
     fun insertAd(ad: Advertisement) {
         thread {
-            repo.insertAd(ad)
+            repositoryAdv.insertAd(ad)
         }
-        this._listOfAdvertisementPH.add(ad)
-        this._pvtListOfAdvertisement.value = _listOfAdvertisementPH
     }
 
     /**
@@ -61,9 +50,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      */
     fun removeAd(id: Long) {
         thread {
-            repo.removeAdWithId(id)
+            repositoryAdv.removeAdWithId(id)
         }
-        this._pvtListOfAdvertisement.value = _listOfAdvertisementPH
     }
 
     /**
@@ -71,10 +59,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      */
     fun clearAll() {
         thread {
-            repo.clearAll()
+            repositoryAdv.clearAll()
         }
-        this._listOfAdvertisementPH.clear()
-        this._pvtListOfAdvertisement.value = _listOfAdvertisementPH
     }
 
     /**
@@ -88,19 +74,49 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
         this._pvtAdvertisement.value = _singleAdvertisementPH
     }
 
+    /**
+     * editSingleAdvertisement is a method to update the info about a single [Advertisement] with the
+     * new ones read from the edit view.
+     * @param updatedAdv the object of class [Advertisement] which contains all the information to update
+     * the advertisement with a certain id.
+     */
     fun editSingleAdvertisement(updatedAdv: Advertisement) {
         thread {
-            repo.updateAdv(updatedAdv.id!!,
-            updatedAdv.advTitle,
-            updatedAdv.advDescription,
-            updatedAdv.advLocation,
-            updatedAdv.advDate,
-            updatedAdv.advDuration,
-            updatedAdv.advAccount,
-            updatedAdv.isPrivate)
+            repositoryAdv.updateAdv(
+                updatedAdv.id!!,
+                updatedAdv.advTitle,
+                updatedAdv.advDescription,
+                updatedAdv.advLocation,
+                updatedAdv.advDate,
+                updatedAdv.advDuration,
+                updatedAdv.advAccount,
+                updatedAdv.isPrivate
+            )
         }
-        this._pvtListOfAdvertisement.value = this._listOfAdvertisementPH
         this._singleAdvertisementPH = updatedAdv
-        this._pvtAdvertisement.value = this._singleAdvertisementPH
+    }
+
+    /**
+     * updateAccountName is a method to update the name of the creator of the advertisement
+     * after it's been changed from the edit view for the profile.
+     * @param advList a complete list of advertisement
+     * @param accountName the new account name from the update profile
+     */
+    fun updateAccountName(advList: List<Advertisement>, accountName: String) {
+        thread {
+            for (adv in advList) {
+                println(adv)
+                repositoryAdv.updateAccountName(
+                    adv.id!!,
+                    adv.advTitle,
+                    adv.advDescription,
+                    adv.advLocation,
+                    adv.advDate,
+                    adv.advDuration,
+                    accountName,
+                    adv.isPrivate
+                )
+            }
+        }
     }
 }
