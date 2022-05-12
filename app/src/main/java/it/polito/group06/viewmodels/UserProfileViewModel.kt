@@ -2,8 +2,8 @@ package it.polito.group06.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import it.polito.group06.models.user_profile_database.UserProfile
-import it.polito.group06.models.user_profile_database.UserProfileRepository
+import it.polito.group06.models.userprofile.UserProfile
+import it.polito.group06.repository.UserProfileRepository
 import kotlin.concurrent.thread
 
 class UserProfileViewModel(application: Application) : AndroidViewModel(application) {

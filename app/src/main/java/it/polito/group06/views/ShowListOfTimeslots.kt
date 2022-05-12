@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.group06.R
-import it.polito.group06.models.time_slot_adv_database.AdvAdapterCard
+import it.polito.group06.models.advertisement.AdvAdapterCard
 import it.polito.group06.viewmodels.AdvertisementViewModel
 
 class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){

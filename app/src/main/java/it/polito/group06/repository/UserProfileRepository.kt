@@ -1,6 +1,8 @@
-package it.polito.group06.models.user_profile_database
+package it.polito.group06.repository
 
 import android.app.Application
+import it.polito.group06.models.userprofile.UserProfile
+import it.polito.group06.models.userprofile.UserProfileDatabase
 
 class UserProfileRepository(application: Application) {
     private val profileDao = UserProfileDatabase.getDatabase(application).profileDao()

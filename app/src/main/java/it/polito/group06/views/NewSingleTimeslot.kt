@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import it.polito.group06.R
-import it.polito.group06.models.time_slot_adv_database.Advertisement
+import it.polito.group06.models.advertisement.Advertisement
 import it.polito.group06.viewmodels.AdvertisementViewModel
 import it.polito.group06.viewmodels.UserProfileViewModel
 import java.text.SimpleDateFormat

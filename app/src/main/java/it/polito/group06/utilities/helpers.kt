@@ -7,7 +7,7 @@ import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
-import it.polito.group06.models.user_profile_database.UserProfile
+import it.polito.group06.models.userprofile.UserProfile
 import java.io.*
 
 /**

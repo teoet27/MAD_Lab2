@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import it.polito.group06.R
-import it.polito.group06.models.user_profile_database.UserProfile
+import it.polito.group06.models.userprofile.UserProfile
 import it.polito.group06.utilities.fromArrayListToString
 import it.polito.group06.viewmodels.UserProfileViewModel
 import it.polito.group06.utilities.getBitmapFromFile

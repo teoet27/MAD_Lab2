@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import it.polito.group06.models.time_slot_adv_database.Advertisement
-import it.polito.group06.models.time_slot_adv_database.AdvertisementRepository
+import it.polito.group06.models.advertisement.Advertisement
+import it.polito.group06.repository.AdvertisementRepository
 import kotlin.concurrent.thread
 
 class AdvertisementViewModel(application: Application) : AndroidViewModel(application) {
@@ -82,16 +82,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      */
     fun editSingleAdvertisement(updatedAdv: Advertisement) {
         thread {
-            repositoryAdv.updateAdv(
-                updatedAdv.id!!,
-                updatedAdv.advTitle,
-                updatedAdv.advDescription,
-                updatedAdv.advLocation,
-                updatedAdv.advDate,
-                updatedAdv.advDuration,
-                updatedAdv.advAccount,
-                updatedAdv.isPrivate
-            )
+            repositoryAdv.updateAdv(updatedAdv)
         }
         this._singleAdvertisementPH = updatedAdv
     }
@@ -105,16 +96,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     fun updateAccountName(advList: List<Advertisement>, accountName: String) {
         thread {
             for (adv in advList) {
-                repositoryAdv.updateAccountName(
-                    adv.id!!,
-                    adv.advTitle,
-                    adv.advDescription,
-                    adv.advLocation,
-                    adv.advDate,
-                    adv.advDuration,
-                    accountName,
-                    adv.isPrivate
-                )
+                adv.advAccount = accountName
+                repositoryAdv.updateAccountName(adv)
             }
         }
     }

@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import it.polito.group06.R
-import it.polito.group06.models.user_profile_database.UserProfile
+import it.polito.group06.models.userprofile.UserProfile
 import it.polito.group06.viewmodels.UserProfileViewModel
 import it.polito.group06.utilities.*
 import it.polito.group06.viewmodels.AdvertisementViewModel

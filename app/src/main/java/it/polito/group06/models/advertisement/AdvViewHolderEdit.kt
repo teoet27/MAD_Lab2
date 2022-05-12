@@ -1,4 +1,4 @@
-package it.polito.group06.models.time_slot_adv_database
+package it.polito.group06.models.advertisement
 
 import android.view.View
 import android.widget.ImageView
