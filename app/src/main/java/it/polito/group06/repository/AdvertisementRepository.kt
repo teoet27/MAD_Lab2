@@ -5,12 +5,12 @@ import it.polito.group06.models.advertisement.Advertisement
 import it.polito.group06.models.advertisement.AdvertisementDatabase
 
 class AdvertisementRepository(application: Application) {
-    private val adsDao = AdvertisementDatabase.getDatabase(application).adsDao()
+    private val adsDAO = AdvertisementDatabase.getDatabase(application).adsDao()
 
-    fun insertAd(ad: Advertisement) = adsDao.insertAd(ad)
-    fun advertisements() = adsDao.findAll()
-    fun removeAdWithId(id: Long) = adsDao.removeAdWithId(id)
-    fun clearAll() = adsDao.clearAll()
-    fun updateAdv(adv: Advertisement) = adsDao.updateAccountName(adv)
-    fun updateAccountName(adv: Advertisement) = adsDao.updateAccountName(adv)
+    fun insertAd(ad: Advertisement) = adsDAO.insertAd(ad)
+    fun advertisements() = adsDAO.findAll()
+    fun removeAdWithId(id: Long) = adsDAO.removeAdWithId(id)
+    fun clearAll() = adsDAO.clearAll()
+    fun updateAdv(adv: Advertisement) = adsDAO.updateAccountName(adv)
+    fun updateAccountName(adv: Advertisement) = adsDAO.updateAccountName(adv)
 }

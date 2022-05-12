@@ -4,7 +4,7 @@ import android.app.Application
 import it.polito.group06.models.userprofile.UserProfile
 import it.polito.group06.models.userprofile.UserProfileDatabase
 
-class UserProfileRepository(application: Application) {
+class UserLoginRepository(application: Application) {
     private val profileDAO = UserProfileDatabase.getDatabase(application).profileDao()
 
     /**
