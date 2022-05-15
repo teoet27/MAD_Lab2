@@ -58,12 +58,10 @@ class TBMainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.ShowListOfAdvertisementsMenuItem -> {
                     navController.navigate(R.id.ShowListTimeslots)
-                    //replaceFragment(Frag5ShowListTimeslots())
                     true
                 }
                 R.id.ShowProfileMenuItem -> {
                     navController.navigate(R.id.showProfileFragment)
-                    //replaceFragment(ShowProfileFragment())
                     true
                 }
                 else -> false
@@ -90,14 +88,6 @@ class TBMainActivity : AppCompatActivity() {
 
             }
         }
-    }
-
-    // Extension function to replace fragment
-    private fun AppCompatActivity.replaceFragment(fragment: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.nav_host_fragment_content_main, fragment)
-            .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
