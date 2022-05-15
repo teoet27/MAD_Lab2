@@ -37,12 +37,12 @@ class GoogleLoginActivity : AppCompatActivity() {
             .requestEmail()
             .build()
         // getting the value of gso inside the GoogleSigninClient
-        mGoogleSignInClient = GoogleSignIn.getClient(this,gso)
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         // initialize the firebaseAuth variable
         firebaseAuth = FirebaseAuth.getInstance()
 
-        val signIn = findViewById<CardView>(R.id.cardView3) as CardView
-        signIn.setOnClickListener{ view: View? ->
+        val signInButton = findViewById<CardView>(R.id.cardView3) as CardView
+        signInButton.setOnClickListener{ view: View? ->
             signInGoogle()
         }
 
@@ -69,12 +69,12 @@ class GoogleLoginActivity : AppCompatActivity() {
     // handleResult() function -  this is where we update the UI after Google signin takes place
     private fun handleResult(completedTask: Task<GoogleSignInAccount>){
         try {
-            val account: GoogleSignInAccount? =completedTask.getResult(ApiException::class.java)
+            val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             if (account != null) {
                 UpdateUI(account)
             }
         } catch (e: ApiException){
-            Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
