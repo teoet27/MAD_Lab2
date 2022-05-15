@@ -60,7 +60,7 @@
     <string name="description_of_the_job_offered">Description of the job offered</string>
     <string name="no_adv_into_db">There are no advertisements yet.</string>
     <string name="create_tsa_hint">Create your first\nTime Slot Advertisement</string>
-    <string name="default_web_client_id">168871995200-aolppl82fjns7u2bmhude92grh6elfrq.apps.googleusercontent.com</string>
+    <!-- <string name="default_web_client_id">168871995200-aolppl82fjns7u2bmhude92grh6elfrq.apps.googleusercontent.com</string> -->
     <string name="logOut">Log out</string>
 
 </resources>

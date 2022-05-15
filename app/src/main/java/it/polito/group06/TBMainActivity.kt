@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -85,8 +84,13 @@ class TBMainActivity : AppCompatActivity() {
                     navController.navigate(R.id.showProfileFragment)
                     true
                 }
-                R.id.logOut -> {
-                    navController.navigate(R.id.showProfileFragment)
+                R.id.logOutMenuItem -> {
+                    // log out from Google and go back to log in activity
+                    mGoogleSignInClient.signOut().addOnCompleteListener {
+                        val intent = Intent(this, GoogleLoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
                     true
                 }
                 else -> false
@@ -110,16 +114,6 @@ class TBMainActivity : AppCompatActivity() {
                 nicknameHeader.text = "@rettore"
                 pictureHeader.setImageResource(R.drawable.propic)
 
-            }
-        }
-
-        // log out from Google and go back to log in activity
-        val logOut = findViewById<CardView>(R.id.Signin) as CardView
-        logOut.setOnClickListener {
-            mGoogleSignInClient.signOut().addOnCompleteListener {
-                val intent = Intent(this, GoogleLoginActivity::class.java)
-                startActivity(intent)
-                finish()
             }
         }
     }
