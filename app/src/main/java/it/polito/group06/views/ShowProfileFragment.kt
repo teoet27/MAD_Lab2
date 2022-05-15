@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import it.polito.group06.R
 import it.polito.group06.models.userprofile.UserProfile
+import it.polito.group06.utilities.GoogleLoginSavedPreferencesObject.getEmail
+import it.polito.group06.utilities.GoogleLoginSavedPreferencesObject.getUsername
 import it.polito.group06.utilities.fromArrayListToString
 import it.polito.group06.viewmodels.UserProfileViewModel
 import it.polito.group06.utilities.getBitmapFromFile
@@ -78,6 +80,7 @@ class ShowProfileFragment : Fragment() {
                     this.nicknameOBJ.text = "No nickname provided."
                 } else {
                     this.nicknameOBJ.text = "@" + userProfile.nickname
+                    //this.nicknameOBJ.text = "@" + context?.let { getUsername(it) }
                 }
                 this.qualificationOBJ.text = userProfile.qualification
                 this.phoneOBJ.text = userProfile.phoneNumber
@@ -90,7 +93,8 @@ class ShowProfileFragment : Fragment() {
                 }
 
 
-                this.emailOBJ.text = userProfile.email
+                //this.emailOBJ.text = userProfile.email
+                this.emailOBJ.text = context?.let { getEmail(it) }
                 this.descriptionOBJ.text = userProfile.description
 
                 profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(R.string.profile_picture_filename)
