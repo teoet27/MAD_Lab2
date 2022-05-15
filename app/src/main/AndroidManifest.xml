@@ -22,7 +22,7 @@
             android:name=".GoogleLoginActivity"
             android:exported="false" />
         <activity
-            android:name=".views.TBMainActivity"
+            android:name=".TBMainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.MAD_Lab2.NoActionBar">

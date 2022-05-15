@@ -3,7 +3,9 @@ package it.polito.group06
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -13,7 +15,6 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import it.polito.group06.utilities.GoogleLoginSavedPreferencesObject
-import it.polito.group06.views.TBMainActivity
 
 class GoogleLoginActivity : AppCompatActivity() {
 
@@ -34,6 +35,11 @@ class GoogleLoginActivity : AppCompatActivity() {
         mGoogleSignInClient = GoogleSignIn.getClient(this,gso)
         // initialize the firebaseAuth variable
         firebaseAuth = FirebaseAuth.getInstance()
+
+        val signIn = findViewById<CardView>(R.id.Signin) as CardView
+        signIn.setOnClickListener{ view: View? ->
+            signInGoogle()
+        }
     }
 
 
@@ -80,6 +86,7 @@ class GoogleLoginActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        // if you do not add this check, then you would have to login everytime you start your application on your phone.
         if(GoogleSignIn.getLastSignedInAccount(this)!=null){
             startActivity(Intent(this, TBMainActivity::class.java))
             finish()

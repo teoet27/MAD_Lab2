@@ -1,4 +1,4 @@
-package it.polito.group06.views
+package it.polito.group06
 
 import android.os.Bundle
 import android.os.Environment
@@ -10,7 +10,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
@@ -18,7 +17,6 @@ import it.polito.group06.databinding.ActivityMainBinding
 import it.polito.group06.utilities.getBitmapFromFile
 import it.polito.group06.viewmodels.AdvertisementViewModel
 import it.polito.group06.viewmodels.UserProfileViewModel
-import it.polito.group06.R
 
 class TBMainActivity : AppCompatActivity() {
 
