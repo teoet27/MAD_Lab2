@@ -14,12 +14,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
-import it.polito.group06.R
 import it.polito.group06.databinding.ActivityMainBinding
 import it.polito.group06.utilities.getBitmapFromFile
 import it.polito.group06.viewmodels.AdvertisementViewModel
 import it.polito.group06.viewmodels.UserProfileViewModel
-
+import it.polito.group06.R
 
 class TBMainActivity : AppCompatActivity() {
 

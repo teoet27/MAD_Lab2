@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import it.polito.group06.models.userprofile.UserProfile
 import it.polito.group06.repository.UserLoginRepository
-import it.polito.group06.repository.UserProfileRepository
 import kotlin.concurrent.thread
 
 class UserLoginViewModel(application: Application) : AndroidViewModel(application) {

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "168871995200",
+    "project_id": "mad-timebanking",
+    "storage_bucket": "mad-timebanking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168871995200:android:fcdeafa9ce7a8bc0bc3ca5",
+        "android_client_info": {
+          "package_name": "it.polito.group06"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168871995200-mmpitf8tou8sq3lgj156q8eb7seqjj71.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "it.polito.group06",
+            "certificate_hash": "fddfa031f95871c49ec6a8658bc910845b50800e"
+          }
+        },
+        {
+          "client_id": "168871995200-pvfuhkhis5rs8pls16p1oprtpcnn27ru.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWtqX031GQHr1x6oR3yf_2cZtQEDH2jRw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168871995200-pvfuhkhis5rs8pls16p1oprtpcnn27ru.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
