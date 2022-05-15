@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MAD_Lab2">
         <activity
-            android:name=".GoogleLoginActivity"
+            android:name=".activities.GoogleLoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TBMainActivity"
+            android:name=".activities.TBMainActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.MAD_Lab2.NoActionBar" />

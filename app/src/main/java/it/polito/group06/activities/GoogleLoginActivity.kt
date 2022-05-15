@@ -1,4 +1,4 @@
-package it.polito.group06
+package it.polito.group06.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +14,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import it.polito.group06.R
 import it.polito.group06.utilities.GoogleLoginSavedPreferencesObject
 
 class GoogleLoginActivity : AppCompatActivity() {

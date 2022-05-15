@@ -1,4 +1,4 @@
-package it.polito.group06
+package it.polito.group06.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -19,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import it.polito.group06.R
 import it.polito.group06.databinding.ActivityMainBinding
 import it.polito.group06.utilities.getBitmapFromFile
 import it.polito.group06.viewmodels.AdvertisementViewModel
@@ -104,7 +104,9 @@ class TBMainActivity : AppCompatActivity() {
             if (user != null) {
                 fullnameHeader.text = user.fullName
                 nicknameHeader.text = "@${user.nickname}"
-                val profilePicturePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(R.string.profile_picture_filename)
+                val profilePicturePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(
+                    R.string.profile_picture_filename
+                )
 
                 getBitmapFromFile(profilePicturePath)?.also {
                     pictureHeader.setImageBitmap(it)
