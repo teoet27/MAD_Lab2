@@ -1,16 +1,17 @@
 package it.polito.group06.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -27,6 +28,8 @@ class GoogleLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_google_login)
+        // Define ActionBar object to change colour later
+        val actionBar: ActionBar? = supportActionBar
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -38,12 +41,15 @@ class GoogleLoginActivity : AppCompatActivity() {
         // initialize the firebaseAuth variable
         firebaseAuth = FirebaseAuth.getInstance()
 
-        val signIn = findViewById<SignInButton>(R.id.Signin) as SignInButton
+        val signIn = findViewById<CardView>(R.id.cardView3) as CardView
         signIn.setOnClickListener{ view: View? ->
             signInGoogle()
         }
-    }
 
+        // change upper bar colour to orange_poli for login
+        window.statusBarColor = this.resources.getColor(R.color.orange_poli)
+        supportActionBar!!.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.orange_poli)));
+    }
 
     // signInGoogle() function
     private  fun signInGoogle(){
