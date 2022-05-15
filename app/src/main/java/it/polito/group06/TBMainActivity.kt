@@ -1,18 +1,25 @@
 package it.polito.group06
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import it.polito.group06.databinding.ActivityMainBinding
 import it.polito.group06.utilities.getBitmapFromFile
 import it.polito.group06.viewmodels.AdvertisementViewModel
@@ -26,9 +33,25 @@ class TBMainActivity : AppCompatActivity() {
     private val usrVM by viewModels<UserProfileViewModel>()
     private val advVM by viewModels<AdvertisementViewModel>()
 
+    // declare the GoogleSignInClient
+    lateinit var mGoogleSignInClient: GoogleSignInClient
+
+    // val auth is initialized by lazy
+    private val auth by lazy {
+        FirebaseAuth.getInstance()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // configure the GoogleSignInOptions with the same server client ID used for logging in
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        mGoogleSignInClient= GoogleSignIn.getClient(this, gso)
+
+        // inflate the view hierarchy
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -62,6 +85,10 @@ class TBMainActivity : AppCompatActivity() {
                     navController.navigate(R.id.showProfileFragment)
                     true
                 }
+                R.id.logOut -> {
+                    navController.navigate(R.id.showProfileFragment)
+                    true
+                }
                 else -> false
             }
         }
@@ -70,7 +97,6 @@ class TBMainActivity : AppCompatActivity() {
         val nicknameHeader = navView.getHeaderView(0).findViewById<TextView>(R.id.nickname_header)
         val pictureHeader = navView.getHeaderView(0).findViewById<ImageView>(R.id.picture_header)
         usrVM.profile.observe(this) { user ->
-
             if (user != null) {
                 fullnameHeader.text = user.fullName
                 nicknameHeader.text = "@${user.nickname}"
@@ -84,6 +110,16 @@ class TBMainActivity : AppCompatActivity() {
                 nicknameHeader.text = "@rettore"
                 pictureHeader.setImageResource(R.drawable.propic)
 
+            }
+        }
+
+        // log out from Google and go back to log in activity
+        val logOut = findViewById<CardView>(R.id.Signin) as CardView
+        logOut.setOnClickListener {
+            mGoogleSignInClient.signOut().addOnCompleteListener {
+                val intent = Intent(this, GoogleLoginActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         }
     }
