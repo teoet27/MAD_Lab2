@@ -62,5 +62,8 @@
     <string name="create_tsa_hint">Create your first\nTime Slot Advertisement</string>
     <!-- <string name="default_web_client_id">168871995200-aolppl82fjns7u2bmhude92grh6elfrq.apps.googleusercontent.com</string> -->
     <string name="logOut">Log out</string>
+    <string name="logIn">Login with Google</string>
+    <string name="welcome">Welcome!</string>
+    <string name="logInToContinue">Login to continue.</string>
 
 </resources>
