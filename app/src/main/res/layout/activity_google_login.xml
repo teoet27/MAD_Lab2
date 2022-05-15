@@ -67,7 +67,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="start"
-                        android:src="@drawable/common_google_signin_btn_icon_light_normal"
+                        android:src="@drawable/common_google_signin_btn_icon_dark"
                         android:layout_marginEnd="5dp"/>
 
                     <TextView
