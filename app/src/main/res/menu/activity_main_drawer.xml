@@ -14,8 +14,8 @@
             android:icon="@drawable/ic_list_black_24dp"
             android:title="@string/menu_timeslots" />
         <item
-        android:id="@+id/logOutMenuItem"
-        android:title="@string/logOut" />
+            android:id="@+id/logOutMenuItem"
+            android:title="@string/logOut" />
 
     </group>
 </menu>
