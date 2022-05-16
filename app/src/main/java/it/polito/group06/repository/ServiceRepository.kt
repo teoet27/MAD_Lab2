@@ -7,7 +7,7 @@ import it.polito.group06.models.service.ServiceDatabase
 class ServiceRepository(application: Application) {
     private val serviceDAO = ServiceDatabase.getDatabase(application).serviceDao()
 
-    fun insertService(service: Service) = serviceDAO.insertService(service)
+    fun insertService(name:String) = serviceDAO.insertService(Service(name))
     fun services() = serviceDAO.findAll()
     fun removeServiceWithName(name: String) = serviceDAO.removeServiceWithName(name)
 }

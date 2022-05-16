@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.group06.R
 import it.polito.group06.models.advertisement.AdvAdapterCard
+import it.polito.group06.models.service.Service
 import it.polito.group06.models.service.ServiceAdapterCard
 import it.polito.group06.viewmodels.AdvertisementViewModel
 import it.polito.group06.viewmodels.ServiceViewModel
@@ -39,6 +40,8 @@ class ShowListOfServices : Fragment(R.layout.fragment_service_list){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        serviceViewModel.insertService("Giardinaggio")
+        serviceViewModel.insertService("Dog sitter")
         serviceViewModel.getFullListOfServices().observe(this.viewLifecycleOwner) { listOfServices ->
             /**
              * If there are no services in the DB proper texts are shown.

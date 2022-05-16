@@ -18,9 +18,8 @@ class ServiceViewModel(application: Application) : AndroidViewModel(application)
     /**
      * Single [Service]
      */
-    private var _singleServicePH = Service(
-        null, ""
-    )
+    private var _singleServicePH = Service("")
+
     private val _pvtService = MutableLiveData<Service>().also {
         it.value = _singleServicePH
     }
@@ -37,9 +36,9 @@ class ServiceViewModel(application: Application) : AndroidViewModel(application)
      * Insertion of a new [Service]
      * @param service a new service
      */
-    fun insertAd(service: Service) {
+    fun insertService(name:String) {
         thread {
-            repositoryService.insertService(service)
+            repositoryService.insertService(name)
         }
     }
 

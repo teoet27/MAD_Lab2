@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "serviceTable")
 data class Service(
-    @PrimaryKey(autoGenerate = true) var id: Long?,
+    @PrimaryKey
     var serviceName: String
 )
 
