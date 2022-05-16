@@ -14,9 +14,10 @@ class AdvAdapterCard(private val adsList: List<Advertisement>,
                      private val advViewModel: AdvertisementViewModel) : RecyclerView.Adapter<AdvViewHolderCard>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdvViewHolderCard {
-        val inflater = LayoutInflater.from(parent.context)
-        val v = inflater.inflate(R.layout.adv_item, parent, false)
-        return AdvViewHolderCard(v)
+        val vg = LayoutInflater
+            .from(parent.context)
+            .inflate(R.layout.adv_item, parent, false)
+        return AdvViewHolderCard(vg)
     }
 
     /**

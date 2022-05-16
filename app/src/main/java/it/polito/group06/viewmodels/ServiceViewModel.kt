@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import it.polito.group06.models.advertisement.Advertisement
 import it.polito.group06.models.service.Service
 import it.polito.group06.repository.ServiceRepository
 import kotlin.concurrent.thread
@@ -50,5 +51,16 @@ class ServiceViewModel(application: Application) : AndroidViewModel(application)
         thread {
             repositoryService.removeServiceWithName(name)
         }
+    }
+
+    /**
+     * setSingleService is a method to update the [_pvtService] and it's called by the adapter to
+     * trigger all the observators.
+     * @param newService an object of class [Service] which contains all the information to fill
+     * the Service view.
+     */
+    fun setSingleService(newService: Service) {
+        this._singleServicePH = newService
+        this._pvtService.value = _singleServicePH
     }
 }
