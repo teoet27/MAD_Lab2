@@ -88,7 +88,9 @@ class EditProfileFragment : Fragment() {
                     this.editSkillsOBJ.setText(fromArrayListToString(userProfile.skills!!))
                 }
 
-                this.editEmailOBJ.setText(userProfile.email)
+                //this.editEmailOBJ.setText(userProfile.email)
+                this.editEmailOBJ.setText(context?.let { GoogleLoginSavedPreferencesObject.getEmail(it) })
+
                 this.editDescriptionOBJ.setText(userProfile.description)
 
                 profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
