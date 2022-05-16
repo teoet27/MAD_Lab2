@@ -21,18 +21,18 @@
 
         <activity
             android:name=".activities.GoogleLoginActivity"
-            android:exported="false" >
-        </activity>
-        <activity
-            android:name=".activities.TBMainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.MAD_Lab2.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.TBMainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.MAD_Lab2.NoActionBar"
+            android:exported="false">
         </activity>
         <activity
             android:name=".legacy.EditProfileActivity"
