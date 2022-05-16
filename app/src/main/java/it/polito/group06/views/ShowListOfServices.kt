@@ -40,8 +40,8 @@ class ShowListOfServices : Fragment(R.layout.fragment_service_list){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        serviceViewModel.insertService("Giardinaggio")
-        serviceViewModel.insertService("Dog sitter")
+        /*serviceViewModel.insertService("Gardening")
+        serviceViewModel.insertService("Dog sitter")*/
         serviceViewModel.getFullListOfServices().observe(this.viewLifecycleOwner) { listOfServices ->
             /**
              * If there are no services in the DB proper texts are shown.
