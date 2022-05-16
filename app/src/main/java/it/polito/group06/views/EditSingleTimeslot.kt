@@ -90,7 +90,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                 Toast.makeText(
                     context, "Advertisement removed successfully!", Toast.LENGTH_LONG
                 ).show()
-                findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
+                findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_showSingleTimeslot)
             }
         }
 
@@ -117,7 +117,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                     Toast.makeText(
                         context, "Advertisement edited successfully!", Toast.LENGTH_LONG
                     ).show()
-                    findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
+                    findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_showSingleTimeslot)
                 } else {
                     Snackbar.make(
                         requireView(), "Error: you need to provide at least a title, a starting and ending time, a location and a date. Try again.", Snackbar.LENGTH_LONG

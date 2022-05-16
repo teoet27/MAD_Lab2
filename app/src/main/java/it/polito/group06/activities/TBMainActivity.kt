@@ -65,6 +65,7 @@ class TBMainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.ShowListTimeslots,
+                R.id.ShowListOfServices,
                 R.id.showProfileFragment
             ), drawerLayout
         )
@@ -76,6 +77,10 @@ class TBMainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {
             drawerLayout.closeDrawer(GravityCompat.START)
             when (it.itemId) {
+                R.id.ShowListOfServicesMenuItem->{
+                    navController.navigate(R.id.ShowListOfServices)
+                    true
+                }
                 R.id.ShowListOfAdvertisementsMenuItem -> {
                     navController.navigate(R.id.ShowListTimeslots)
                     true

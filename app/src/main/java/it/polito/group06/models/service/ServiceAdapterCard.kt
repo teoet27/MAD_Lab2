@@ -3,6 +3,7 @@ package it.polito.group06.models.service
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.group06.R
 import it.polito.group06.viewmodels.ServiceViewModel
@@ -27,7 +28,7 @@ class ServiceAdapterCard(val serviceList:List<Service>,
         holder.bind(serviceList[position])
         holder.itemView.setOnClickListener { view ->
             serviceViewModel.setSingleService((serviceList[serviceList.indexOf(serviceList[position])]))
-            Navigation.findNavController(view).navigate(R.id.action_ShowListTimeslots_to_showSingleTimeslot)
+            Navigation.findNavController(view).navigate(R.id.action_showListOfServices_to_ShowListTimeslots)
         }
     }
 

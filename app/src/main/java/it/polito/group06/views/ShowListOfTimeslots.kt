@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -57,5 +58,11 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
                 this.recyclerView.adapter = AdvAdapterCard(listOfAdv, advViewModel)
             }
         }
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
+            }
+        })
     }
 }

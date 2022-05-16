@@ -43,11 +43,10 @@ class ShowListOfServices : Fragment(R.layout.fragment_service_list){
             /**
              * If there are no services in the DB proper texts are shown.
              */
-            view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = listOfServices == null || listOfServices.isEmpty()
-            view.findViewById<ImageView>(R.id.create_hint).isVisible = listOfServices == null || listOfServices.isEmpty()
+            view.findViewById<TextView>(R.id.defaultTextServicesList).isVisible = listOfServices == null || listOfServices.isEmpty()
 
             if (!(listOfServices == null || listOfServices.isEmpty())) {
-                this.recyclerView = view.findViewById(R.id.rvAdvFullList)
+                this.recyclerView = view.findViewById(R.id.rvServicesFullList)
                 this.recyclerView.layoutManager = LinearLayoutManager(this.context)
                 this.recyclerView.adapter = ServiceAdapterCard(listOfServices,serviceViewModel)
             }
