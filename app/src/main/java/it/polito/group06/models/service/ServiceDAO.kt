@@ -18,12 +18,12 @@ interface ServiceDAO {
     /**
      * Read from database
      */
-    @Query("SELECT * FROM advertisementTable")
+    @Query("SELECT * FROM serviceTable")
     fun findAll(): LiveData<List<Service>>
 
     /**
      * Delete Service
      */
-    @Query("DELETE FROM advertisementTable WHERE serviceName = :name")
+    @Query("DELETE FROM serviceTable WHERE serviceName = :name")
     fun removeServiceWithName(name: String)
 }
