@@ -1,21 +1,25 @@
 package it.polito.MAD.group06.views
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Environment
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.MAD.group06.R
 import it.polito.MAD.group06.models.userprofile.UserProfile
 import it.polito.MAD.group06.utilities.GoogleLoginSavedPreferencesObject.getEmail
-import it.polito.MAD.group06.utilities.fromArrayListToString
-import it.polito.MAD.group06.viewmodels.UserProfileViewModel
 import it.polito.MAD.group06.utilities.getBitmapFromFile
+import it.polito.MAD.group06.viewmodels.UserProfileViewModel
+
 
 class ShowProfileFragment : Fragment() {
     private lateinit var fullnameOBJ: TextView
@@ -27,6 +31,7 @@ class ShowProfileFragment : Fragment() {
     private lateinit var skillsOBJ: TextView
     private lateinit var phoneOBJ: TextView
     private lateinit var profilePictureOBJ: ImageView
+    private lateinit var skills_chips:ChipGroup
 
     private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
@@ -53,6 +58,7 @@ class ShowProfileFragment : Fragment() {
         this.skillsOBJ = view.findViewById(R.id.skillsListID)
         this.phoneOBJ = view.findViewById(R.id.phone_show_ID)
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
+        this.skills_chips=view.findViewById(R.id.skill_chips_group)
 
         profile_vm.profile.observe(this.viewLifecycleOwner) { userProfile ->
 
@@ -88,7 +94,14 @@ class ShowProfileFragment : Fragment() {
                 if (userProfile.skills.isNullOrEmpty()) {
                     this.skillsOBJ.text = getString(R.string.noskills)
                 } else {
-                    this.skillsOBJ.text = fromArrayListToString(userProfile.skills!!)
+                    //this.skillsOBJ.text = fromArrayListToString(userProfile.skills!!)
+                    userProfile.skills!!.forEach {
+                        this.skills_chips.addChip(requireContext(),it)
+                        this.skills_chips.setOnCheckedChangeListener { chipGroup, checkedId ->
+                                val selected_service = chipGroup.findViewById<Chip>(checkedId)?.text
+                                Toast.makeText(chipGroup.context, selected_service ?: "No Choice", Toast.LENGTH_LONG).show()
+                            }
+                    }
                 }
 
 
@@ -120,6 +133,32 @@ class ShowProfileFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
+    /**
+     * Dinamically create a chip within a chip group
+     *
+     * @param context       parent view context
+     * @param label         chip name
+     */
+    private fun ChipGroup.addChip(context: Context, label: String) {
+
+        Chip(context).apply {
+
+            id = View.generateViewId()
+
+            text = label
+
+            isClickable = true
+
+            isCheckable = false
+
+            isCheckedIconVisible = false
+
+            isFocusable = true
+
+            addView(this)
+
+        }
+    }
     /**
      * This method inflates the option menu
      *

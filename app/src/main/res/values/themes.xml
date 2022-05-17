@@ -4,7 +4,7 @@
         <item name="elevation">0dp</item>
     </style>
 
-    <style name="Theme.MAD_Lab2" parent="Theme.AppCompat.Light">
+    <style name="Theme.MAD_Lab2" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/prussian_blue</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
