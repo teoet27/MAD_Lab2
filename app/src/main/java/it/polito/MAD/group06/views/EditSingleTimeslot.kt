@@ -90,7 +90,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                 Toast.makeText(
                     context, "Advertisement removed successfully!", Toast.LENGTH_LONG
                 ).show()
-                findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_showSingleTimeslot)
+                findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
             }
         }
 
