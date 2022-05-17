@@ -72,7 +72,7 @@
     <fragment
         android:id="@+id/ShowListOfServices"
         android:name="it.polito.MAD.group06.views.ShowListOfServices"
-        android:label="ShowListOfServices" >
+        android:label="List of services offered">
         <action
             android:id="@+id/action_showListOfServices_to_ShowListTimeslots"
             app:destination="@id/ShowListTimeslots" />
