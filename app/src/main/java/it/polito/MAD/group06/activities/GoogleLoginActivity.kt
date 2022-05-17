@@ -10,56 +10,26 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.ktx.FirebaseCommonKtxRegistrar
 import it.polito.MAD.group06.R
 import it.polito.MAD.group06.utilities.GoogleLoginSavedPreferencesObject
 
 class GoogleLoginActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
+    private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_google_login)
-        // Define ActionBar object to change colour later
-        val actionBar: ActionBar? = supportActionBar
-
-        // Configure Google Sign In
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id_bis))
-            .requestEmail()
-            .build()
-
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-
-        // Initialize Firebase Auth
-        auth = Firebase.auth
-
-        val signInButton = findViewById<CardView>(R.id.cardView3) as CardView
-        signInButton.setOnClickListener{ view: View? ->
-            signIn()
-        }
-
-        // change upper bar colour to orange_poli for login
-        window.statusBarColor = this.resources.getColor(R.color.orange_poli)
-        supportActionBar!!.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.orange_poli)));
-    }
 
     override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
+        val currentUser = firebaseAuth.currentUser
         updateUI(currentUser)
 
         // if you do not add this check, then you would have to login everytime you start your application on your phone.
@@ -69,6 +39,40 @@ class GoogleLoginActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_google_login)
+
+        // Define ActionBar object to change colour
+        val actionBar: ActionBar? = supportActionBar
+        // change upper bar colour to orange_poli for login
+        window.statusBarColor = this.resources.getColor(R.color.orange_poli)
+        supportActionBar!!.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.orange_poli)));
+
+        // Configure Google Sign In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id_bis))
+            .requestEmail()
+            .build()
+
+        // getting the value of gso inside the GoogleSigninClient
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        // Initialize Firebase Auth variable
+        firebaseAuth = Firebase.auth
+
+        val signInButton = findViewById<CardView>(R.id.cardView3) as CardView
+        signInButton.setOnClickListener{ view: View? ->
+            signIn()
+        }
+    }
+
+    private fun signIn() {
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    // onActivityResult() function : this is where we provide the task and data for the Google Account
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -83,19 +87,22 @@ class GoogleLoginActivity : AppCompatActivity() {
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.e(TAG, "Google sign in failed", e)
+                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
+        firebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
-                    val user = auth.currentUser
+                    val user = firebaseAuth.currentUser
                     updateUI(user)
+
+                    // start main activity
                     val intent = Intent(this, TBMainActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -107,20 +114,19 @@ class GoogleLoginActivity : AppCompatActivity() {
             }
     }
 
-    private fun signIn() {
-        val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
-    }
-
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
             GoogleLoginSavedPreferencesObject.setEmail(this,user.email.toString())
             GoogleLoginSavedPreferencesObject.setUsername(this,user.displayName.toString())
         }
+        else {
+            GoogleLoginSavedPreferencesObject.setEmail(this, "")
+            GoogleLoginSavedPreferencesObject.setUsername(this, "")
+        }
     }
 
     companion object {
-        private const val TAG = "GoogleActivity"
+        private const val TAG = "GoogleLoginActivity"
         private const val RC_SIGN_IN = 9001
     }
 
