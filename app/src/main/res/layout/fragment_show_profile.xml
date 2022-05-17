@@ -183,6 +183,25 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
+                <com.google.android.material.chip.ChipGroup
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+
+                android:id="@+id/skill_chips_group"
+
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+
+                android:padding="16dp"
+
+                app:singleLine="true"
+
+                app:singleSelection="true">
+
+                </com.google.android.material.chip.ChipGroup>
+
                 <TextView
                     android:id="@+id/personalInfoID"
                     android:layout_width="match_parent"
