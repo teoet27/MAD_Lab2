@@ -8,8 +8,8 @@ android {
     compileSdk 32
 
     defaultConfig {
-        namespace 'it.polito.group06'
-        applicationId "it.polito.group06"
+        namespace 'it.polito.MAD.group06'
+        applicationId "it.polito.MAD.group06"
         minSdk 21
         targetSdk 32
         versionCode 1

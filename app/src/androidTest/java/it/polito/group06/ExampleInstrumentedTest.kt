@@ -1,4 +1,4 @@
-package it.polito.group06
+package it.
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
