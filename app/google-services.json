@@ -14,16 +14,12 @@
       },
       "oauth_client": [
         {
-          "client_id": "512352892448-4i2pk62qonq8p1uv4k1f0376vo21r3o1.apps.googleusercontent.com",
+          "client_id": "512352892448-78oaj777809anttu86hor3kbgpofs1g2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "it.polito.MAD.group06",
             "certificate_hash": "fddfa031f95871c49ec6a8658bc910845b50800e"
           }
-        },
-        {
-          "client_id": "512352892448-eqbufjs2ioj5aqej65n0ujgnnj8f333m.apps.googleusercontent.com",
-          "client_type": 3
         }
       ],
       "api_key": [
@@ -33,49 +29,7 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "512352892448-eqbufjs2ioj5aqej65n0ujgnnj8f333m.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:512352892448:android:892ea38079e60312f96e45",
-        "android_client_info": {
-          "package_name": "it.polito.group06"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "512352892448-pg7pbkqkb39gtlt4vjp0crgn9nvu7i16.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "it.polito.group06",
-            "certificate_hash": "fddfa031f95871c49ec6a8658bc910845b50800e"
-          }
-        },
-        {
-          "client_id": "512352892448-eqbufjs2ioj5aqej65n0ujgnnj8f333m.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyChDv6NNuwrIZI6dms-pjNJR9LJDHVxvCE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "512352892448-eqbufjs2ioj5aqej65n0ujgnnj8f333m.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
