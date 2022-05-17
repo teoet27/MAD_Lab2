@@ -113,7 +113,10 @@ class GoogleLoginActivity : AppCompatActivity() {
     }
 
     private fun updateUI(user: FirebaseUser?) {
-
+        if (user != null) {
+            GoogleLoginSavedPreferencesObject.setEmail(this,user.email.toString())
+            GoogleLoginSavedPreferencesObject.setUsername(this,user.displayName.toString())
+        }
     }
 
     companion object {
