@@ -1,4 +1,4 @@
-package it.
+package it.polito.MAD.group06
 
 import org.junit.Test
 
