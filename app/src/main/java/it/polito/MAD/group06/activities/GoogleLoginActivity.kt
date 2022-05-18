@@ -155,6 +155,7 @@ class GoogleLoginActivity : AppCompatActivity() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
+            .requestIdToken(getString(R.string.default_web_client_id_bis))
             .build()
         // getting the value of gso inside the GoogleSigninClient
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
@@ -194,6 +195,7 @@ class GoogleLoginActivity : AppCompatActivity() {
                 UpdateUI(account)
             }
         } catch (e: ApiException){
+            e.printStackTrace()
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
         }
     }
