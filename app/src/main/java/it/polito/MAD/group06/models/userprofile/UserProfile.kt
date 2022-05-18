@@ -14,5 +14,5 @@ data class UserProfile(
     var email: String?,
     var phoneNumber: String?,
     var location: String?,
-    var skills: String?
+    var skills: ArrayList<String>?
 )

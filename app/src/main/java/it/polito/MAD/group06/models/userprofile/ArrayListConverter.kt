@@ -17,15 +17,4 @@ class ArrayListConverter {
         val collectionType: Type = object : TypeToken<ArrayList<String>?>() {}.type
         return Gson().fromJson(s, collectionType)
     }
-
-    @TypeConverter
-    fun fromListOfSkillsToString(list: ArrayList<Skill>?): String? {
-        return Gson().toJson(list)
-    }
-
-    @TypeConverter
-    fun fromStringToListOfSkills(s: String?): MutableList<Skill>? {
-        val collectionType: Type = object : TypeToken<MutableList<Skill>?>() {}.type
-        return Gson().fromJson(s, collectionType)
-    }
 }
