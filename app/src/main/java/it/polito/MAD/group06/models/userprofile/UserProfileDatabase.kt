@@ -26,7 +26,7 @@ abstract class UserProfileDatabase : RoomDatabase() {
                         val i = INSTANCE ?: Room.databaseBuilder(
                             context.applicationContext,
                             UserProfileDatabase::class.java,
-                            "usrProfileDB"
+                            "uuuusrProfileDB"
                         ).build()
                         INSTANCE = i
                         INSTANCE
