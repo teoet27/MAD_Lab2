@@ -20,6 +20,14 @@
             "package_name": "it.polito.MAD.group06",
             "certificate_hash": "fddfa031f95871c49ec6a8658bc910845b50800e"
           }
+        },
+        {
+          "client_id": "512352892448-upeoh6aef1gnjnromh8mhng3uhhdukei.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "it.polito.MAD.group06",
+            "certificate_hash": "53972067b349a905eae08414b5c2077bd5768d69"
+          }
         }
       ],
       "api_key": [
