@@ -3,8 +3,10 @@ package it.polito.MAD.group06.repository
 import android.app.Application
 import it.polito.MAD.group06.models.userprofile.UserProfile
 import it.polito.MAD.group06.models.userprofile.UserProfileDatabase
+import it.polito.MAD.group06.remote.FirestoreDatabase
 
 class UserProfileRepository(application: Application) {
+    private val db = FirestoreDatabase.getDatabase(application)
     private val profileDAO = UserProfileDatabase.getDatabase(application).profileDao()
 
     /**
