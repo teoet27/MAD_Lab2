@@ -48,14 +48,17 @@ class GoogleLoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         FirebaseApp.initializeApp(this)
         setContentView(R.layout.activity_google_login)
+
 
         // Define ActionBar object to change colour
         val actionBar: ActionBar? = supportActionBar
         // change upper bar colour to orange_poli for login
         window.statusBarColor = this.resources.getColor(R.color.orange_poli)
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.orange_poli)));
+
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
