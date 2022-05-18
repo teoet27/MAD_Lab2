@@ -133,8 +133,7 @@ class EditProfileFragment : Fragment() {
                     editEmailOBJ.text.toString(),
                     editPhoneOBJ.text.toString(),
                     editLocationOBJ.text.toString(),
-                    ArrayListConverter().fromListOfSkillsToString(arrayListOf(Skill(0, "", "")))
-                    //fromStringToArrayList(editSkillsOBJ.text.toString()),
+                    fromStringToArrayList(editSkillsOBJ.text.toString()),
                 )
             )
         }

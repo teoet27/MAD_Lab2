@@ -75,10 +75,7 @@ class ShowProfileFragment : Fragment() {
                         "rettore@polito.it",
                         "3331112223",
                         "Torino - Italia",
-                        ArrayListConverter().fromListOfSkillsToString(arrayListOf<Skill>(
-                            Skill(0, "Management", "Rector Stuff"),
-                            Skill(1, "Public Relationship", "Rector Stuff")
-                        ))
+                        arrayListOf("Management","Public Relationship")
                     )
                 )
                 this.profilePictureOBJ.setImageResource(R.drawable.propic)
@@ -100,15 +97,12 @@ class ShowProfileFragment : Fragment() {
                     this.skillsOBJ.text = getString(R.string.noskills)
                 } else {
                     //this.skillsOBJ.text = fromArrayListToString(userProfile.skills!!)
-                    userProfile.skills!!.also {
-                        val listOfSkills = ArrayListConverter().fromStringToListOfSkills(it)
-                        for(sk in listOfSkills!!) {
-                            this.skills_chips.addChip(requireContext(), sk.skillName)
+                    userProfile.skills!!.forEach { sk->
+                            this.skills_chips.addChip(requireContext(), sk)
                             this.skills_chips.setOnCheckedChangeListener { chipGroup, checkedId ->
                                 val selected_service = chipGroup.findViewById<Chip>(checkedId)?.text
                                 Toast.makeText(chipGroup.context, selected_service ?: "No Choice", Toast.LENGTH_LONG).show()
                             }
-                        }
                     }
                 }
 
