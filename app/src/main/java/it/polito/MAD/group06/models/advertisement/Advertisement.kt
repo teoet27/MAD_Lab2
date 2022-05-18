@@ -21,6 +21,8 @@ import com.google.firebase.firestore.PropertyName
 @Entity(tableName = "advertisementTable")
 data class Advertisement(
     @PrimaryKey(autoGenerate = true)
+    @get:PropertyName("id")
+    @set:PropertyName("id")
     var id: Long?,
 
     @get:PropertyName("title")
@@ -54,7 +56,7 @@ data class Advertisement(
 
     @get:PropertyName("duration")
     @set:PropertyName("duration")
-    var advDuration: Float,
+    var advDuration: Double,
 
 
     @get:PropertyName("account_name")
@@ -64,6 +66,6 @@ data class Advertisement(
 
     @get:PropertyName("accountID")
     @set:PropertyName("accountID")
-    var accountID: Int
+    var accountID: Long
 )
 
