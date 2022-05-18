@@ -2,6 +2,7 @@ package it.polito.MAD.group06.models.advertisement
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.firebase.firestore.PropertyName
 
 /**
  * [Advertisement] data class.
@@ -19,11 +20,50 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "advertisementTable")
 data class Advertisement(
-    @PrimaryKey(autoGenerate = true) var id: Long?,
-    var advTitle: String, var advDescription: String,
-    var advLocation: String, var advDate: String,
-    var advStartingTime: String, var advEndingTime: String,
-    var advDuration: Float, var advAccount: String,
-    var isPrivate: Boolean
+    @PrimaryKey(autoGenerate = true)
+    var id: Long?,
+
+    @get:PropertyName("title")
+    @set:PropertyName("title")
+    var advTitle: String,
+
+    @get:PropertyName("description")
+    @set:PropertyName("description")
+    var advDescription: String,
+
+
+    @get:PropertyName("location")
+    @set:PropertyName("location")
+    var advLocation: String,
+
+
+    @get:PropertyName("date")
+    @set:PropertyName("date")
+    var advDate: String,
+
+
+    @get:PropertyName("starting_time")
+    @set:PropertyName("starting_time")
+    var advStartingTime: String,
+
+
+    @get:PropertyName("ending_time")
+    @set:PropertyName("ending_time")
+    var advEndingTime: String,
+
+
+    @get:PropertyName("duration")
+    @set:PropertyName("duration")
+    var advDuration: Float,
+
+
+    @get:PropertyName("account")
+    @set:PropertyName("account")
+    var advAccount: String,
+
+
+    @get:PropertyName("accountID")
+    @set:PropertyName("accountID")
+    var accountID: Int
 )
 
