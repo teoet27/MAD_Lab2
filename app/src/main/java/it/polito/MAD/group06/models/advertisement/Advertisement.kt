@@ -57,8 +57,8 @@ data class Advertisement(
     var advDuration: Float,
 
 
-    @get:PropertyName("account")
-    @set:PropertyName("account")
+    @get:PropertyName("account_name")
+    @set:PropertyName("account_name")
     var advAccount: String,
 
 

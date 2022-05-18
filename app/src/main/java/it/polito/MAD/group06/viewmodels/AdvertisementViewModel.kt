@@ -5,6 +5,8 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.ListenerRegistration
 import it.polito.MAD.group06.models.advertisement.Advertisement
 import it.polito.MAD.group06.remote.FirestoreDatabase
 import it.polito.MAD.group06.repository.AdvertisementRepository
@@ -17,6 +19,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      */
     private val repositoryAdv = AdvertisementRepository(application)
     private val db = FirestoreDatabase.getDatabase(application)
+    private var listenerRegistration: ListenerRegistration
     private val context = application
 
     /**
@@ -31,6 +34,43 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
         it.value = _singleAdvertisementPH
     }
     val advertisement: LiveData<Advertisement> = this._pvtAdvertisement
+
+    private val _advertisements = MutableLiveData<List<Advertisement>>()
+    val listOfAdvertisement = _advertisements
+
+    init {
+        listenerRegistration = db.collection("Advertisement").addSnapshotListener { value, error ->
+            if (error != null) {
+                _advertisements.value = emptyList()
+            } else {
+                _advertisements.value = value!!.mapNotNull { elem -> elem.toAdvertisement() }
+            }
+        }
+    }
+
+    private fun DocumentSnapshot.toAdvertisement(): Advertisement? {
+        return try {
+            val id = get("id") as Long
+            val title = get("title") as String
+            val description = get("description") as String
+            val location = get("location") as String
+            val date = get("date") as String
+            val startingTime = get("starting_time") as String
+            val endingTime = get("ending_time") as String
+            val duration = get("duration") as Float
+            val accountName = get("account_name") as String
+            val accountID = get("accountID") as Int
+            Advertisement(
+                id, title, description,
+                location, date, startingTime,
+                endingTime, duration, accountName,
+                accountID
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 
     /**
      * Insertion of a new [Advertisement]
@@ -113,7 +153,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                 if (e != null) {
                     throw Exception()
                 } else {
-                    for(elem in value!!) {
+                    for (elem in value!!) {
                         outAdv.add(elem.toObject(Advertisement::class.java))
                     }
                 }
@@ -132,7 +172,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                 if (e != null) {
                     throw Exception()
                 } else {
-                    for(elem in value!!) {
+                    for (elem in value!!) {
                         outAdv.add(elem.toObject(Advertisement::class.java))
                     }
                 }
