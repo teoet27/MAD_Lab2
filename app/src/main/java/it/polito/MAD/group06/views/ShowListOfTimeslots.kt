@@ -45,14 +45,14 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
             findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
         }
 
-        advViewModel.getFullListOfAdvertisement().observe(this.viewLifecycleOwner) { listOfAdv ->
+        advViewModel.getListOfAdvertisements().also { listOfAdv ->
             /**
              * If there are no advertisements in the DB proper texts are shown.
              */
-            view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = listOfAdv == null || listOfAdv.isEmpty()
-            view.findViewById<ImageView>(R.id.create_hint).isVisible = listOfAdv == null || listOfAdv.isEmpty()
+            view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = listOfAdv.isEmpty()
+            view.findViewById<ImageView>(R.id.create_hint).isVisible = listOfAdv.isEmpty()
 
-            if (!(listOfAdv == null || listOfAdv.isEmpty())) {
+            if (listOfAdv.isNotEmpty()) {
                 this.recyclerView = view.findViewById(R.id.rvAdvFullList)
                 this.recyclerView.layoutManager = LinearLayoutManager(this.context)
                 this.recyclerView.adapter = AdvAdapterCard(listOfAdv, advViewModel)

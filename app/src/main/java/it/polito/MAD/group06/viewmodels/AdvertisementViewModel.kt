@@ -1,11 +1,14 @@
 package it.polito.MAD.group06.viewmodels
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import it.polito.MAD.group06.models.advertisement.Advertisement
+import it.polito.MAD.group06.remote.FirestoreDatabase
 import it.polito.MAD.group06.repository.AdvertisementRepository
+import java.lang.Exception
 import kotlin.concurrent.thread
 
 class AdvertisementViewModel(application: Application) : AndroidViewModel(application) {
@@ -13,6 +16,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      * Repository
      */
     private val repositoryAdv = AdvertisementRepository(application)
+    private val db = FirestoreDatabase.getDatabase(application)
+    private val context = application
 
     /**
      * Single [Advertisement]
@@ -20,7 +25,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     private var _singleAdvertisementPH = Advertisement(
         null, "", "",
         "", "", "", "", 0f,
-        "", false
+        "", -1
     )
     private val _pvtAdvertisement = MutableLiveData<Advertisement>().also {
         it.value = _singleAdvertisementPH
@@ -28,39 +33,112 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     val advertisement: LiveData<Advertisement> = this._pvtAdvertisement
 
     /**
-     * getFullListOfAdvertisement
-     */
-    fun getFullListOfAdvertisement(): LiveData<List<Advertisement>> {
-        return this.repositoryAdv.advertisements()
-    }
-
-    /**
      * Insertion of a new [Advertisement]
      * @param ad a new advertisement
      */
-    fun insertAd(ad: Advertisement) {
-        thread {
-            repositoryAdv.insertAd(ad)
-        }
+    fun insertAdvertisement(ad: Advertisement) {
+        db
+            .collection("Advertisement")
+            .document()
+            .set(mapOf(ad.id.toString() to ad))
+            .addOnSuccessListener {
+                Toast.makeText(context, "Creation completed.", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Creation failed", Toast.LENGTH_SHORT).show()
+            }
     }
 
-    /**
-     * Remove an advertisement
-     * @param id integer unique number identifying an [Advertisement]
-     */
-    fun removeAd(id: Long) {
-        thread {
-            repositoryAdv.removeAdWithId(id)
-        }
+    fun removeAdvertisement(ad: Advertisement) {
+        db
+            .collection("Advertisement")
+            .document(ad.id.toString())
+            .delete()
+            .addOnSuccessListener {
+                Toast.makeText(context, "Deletion completed.", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Deletion failed.", Toast.LENGTH_SHORT).show()
+            }
     }
 
-    /**
-     * Clear all the db
-     */
-    fun clearAll() {
-        thread {
-            repositoryAdv.clearAll()
-        }
+    fun removeAdvertisementByAccount(accountID: Int) {
+        db
+            .collection("Advertisement")
+            .document()
+            .delete()
+            .addOnSuccessListener {
+                Toast.makeText(context, "Deletion completed.", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Deletion failed.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    fun editAdvertisement(ad: Advertisement) {
+        db
+            .collection("Advertisement")
+            .document()
+            .set(mapOf(ad.id.toString() to ad))
+            .addOnSuccessListener {
+                Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    fun getAdvertisementByID(id: Int): Advertisement? {
+        var outAdv: Advertisement? = null
+        db
+            .collection("Advertisement")
+            .document(id.toString())
+            .get()
+            .addOnSuccessListener { dbAdv ->
+                outAdv = dbAdv.toObject(Advertisement::class.java)
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Error in get", Toast.LENGTH_SHORT).show()
+            }
+
+        return outAdv
+    }
+
+    fun getListOfAdvertisements(): List<Advertisement> {
+        val outAdv: MutableList<Advertisement> = mutableListOf()
+
+        db
+            .collection("Advertisement")
+            .addSnapshotListener { value, e ->
+                if (e != null) {
+                    throw Exception()
+                } else {
+                    for(elem in value!!) {
+                        outAdv.add(elem.toObject(Advertisement::class.java))
+                    }
+                }
+            }
+
+        return outAdv
+    }
+
+    fun getListOfAdvertisementsByAccountID(accountID: Int): List<Advertisement>? {
+        val outAdv: MutableList<Advertisement> = mutableListOf()
+
+        db
+            .collection("Advertisement")
+            .whereEqualTo("accountID", accountID)
+            .addSnapshotListener { value, e ->
+                if (e != null) {
+                    throw Exception()
+                } else {
+                    for(elem in value!!) {
+                        outAdv.add(elem.toObject(Advertisement::class.java))
+                    }
+                }
+            }
+
+        return outAdv
     }
 
     /**

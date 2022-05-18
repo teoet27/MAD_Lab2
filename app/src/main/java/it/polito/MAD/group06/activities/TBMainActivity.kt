@@ -3,6 +3,7 @@ package it.polito.MAD.group06.activities
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
@@ -20,6 +21,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import it.polito.MAD.group06.R
 import it.polito.MAD.group06.databinding.ActivityMainBinding
+import it.polito.MAD.group06.models.advertisement.Advertisement
 import it.polito.MAD.group06.utilities.getBitmapFromFile
 import it.polito.MAD.group06.viewmodels.AdvertisementViewModel
 import it.polito.MAD.group06.viewmodels.UserProfileViewModel
@@ -105,6 +107,7 @@ class TBMainActivity : AppCompatActivity() {
         val fullnameHeader = navView.getHeaderView(0).findViewById<TextView>(R.id.fullname_header)
         val nicknameHeader = navView.getHeaderView(0).findViewById<TextView>(R.id.nickname_header)
         val pictureHeader = navView.getHeaderView(0).findViewById<ImageView>(R.id.picture_header)
+
         usrVM.profile.observe(this) { user ->
             if (user != null) {
                 fullnameHeader.text = user.fullName
