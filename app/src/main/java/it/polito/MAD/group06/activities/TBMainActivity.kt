@@ -50,7 +50,7 @@ class TBMainActivity : AppCompatActivity() {
             .requestIdToken(getString(R.string.default_web_client_id_bis))
             .requestEmail()
             .build()
-        mGoogleSignInClient= GoogleSignIn.getClient(this, gso)
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
         // inflate the view hierarchy
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -79,7 +79,7 @@ class TBMainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {
             drawerLayout.closeDrawer(GravityCompat.START)
             when (it.itemId) {
-                R.id.ShowListOfServicesMenuItem->{
+                R.id.ShowListOfServicesMenuItem -> {
                     navController.navigate(R.id.ShowListOfServices)
                     true
                 }
@@ -107,6 +107,14 @@ class TBMainActivity : AppCompatActivity() {
         val fullnameHeader = navView.getHeaderView(0).findViewById<TextView>(R.id.fullname_header)
         val nicknameHeader = navView.getHeaderView(0).findViewById<TextView>(R.id.nickname_header)
         val pictureHeader = navView.getHeaderView(0).findViewById<ImageView>(R.id.picture_header)
+
+        /*
+        advVM.insertAdvertisement(Advertisement(0, "ok", "ok", "ok", "ok", "ok", "ok", 0.0, "guidino", 0))
+        advVM.insertAdvertisement(Advertisement(1, "ok", "ok", "ok", "ok", "ok", "ok", 0.0, "guidino", 0))
+        advVM.insertAdvertisement(Advertisement(2, "no", "no", "no", "no", "no", "no", 0.0, "giacomino", 0))
+        advVM.insertAdvertisement(Advertisement(3, "no", "no", "no", "no", "no", "no", 0.0, "giacomino", 0))
+        advVM.insertAdvertisement(Advertisement(4, "ok", "ok", "ok", "ok", "ok", "ok", 0.0, "guidino", 0))
+        */
 
         usrVM.profile.observe(this) { user ->
             if (user != null) {

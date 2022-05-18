@@ -127,7 +127,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                     requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_LONG
                 ).show()
             } else if (isAdvValid()) {
-                advViewModel.insertAd(
+                advViewModel.insertAdvertisement(
                     Advertisement(
                         null,
                         newTitle.text.toString(),
@@ -138,7 +138,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         newEndingTime.text.toString(),
                         timeDifference,
                         accountName,
-                        false
+                        -1
                     )
                 )
                 Toast.makeText(
@@ -169,7 +169,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_LONG
                     ).show()
                 } else if (isAdvValid()) {
-                    advViewModel.insertAd(
+                    advViewModel.insertAdvertisement(
                         Advertisement(
                             null,
                             newTitle.text.toString(),
@@ -180,7 +180,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             newEndingTime.text.toString(),
                             timeDifference,
                             accountName,
-                            false
+                            -1
                         )
                     )
                     Toast.makeText(
@@ -353,21 +353,21 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
      * @param endingTime the ending time
      * @return a Pair<Float, Boolean> where it's specified the time difference and its acceptability
      */
-    private fun computeTimeDifference(startingTime: String, endingTime: String): Pair<Float, Boolean> {
-        var timeDifference: Float = 0.00f
+    private fun computeTimeDifference(startingTime: String, endingTime: String): Pair<Double, Boolean> {
+        var timeDifference: Double = 0.0
         if (startingTime.isNullOrEmpty() || endingTime.isNullOrEmpty()) {
-            return Pair(-1f, false)
+            return Pair(-1.0, false)
         }
         val startingHour = startingTime.split(":")[0].toInt()
         val startingMinute = startingTime.split(":")[1].toInt()
         val endingHour = endingTime.split(":")[0].toInt()
         val endingMinute = endingTime.split(":")[1].toInt()
 
-        timeDifference += (endingHour - startingHour) + ((endingMinute - startingMinute) / 60f)
+        timeDifference += (endingHour - startingHour) + ((endingMinute - startingMinute) / 60.0)
 
         return Pair(
-            String.format("%.2f", timeDifference).toFloat(),
-            String.format("%.2f", timeDifference).toFloat() >= 0
+            String.format("%.2f", timeDifference).toDouble(),
+            String.format("%.2f", timeDifference).toDouble() >= 0
         )
     }
 

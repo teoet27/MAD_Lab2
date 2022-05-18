@@ -1,6 +1,7 @@
 package it.polito.MAD.group06.viewmodels
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -27,7 +28,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      */
     private var _singleAdvertisementPH = Advertisement(
         null, "", "",
-        "", "", "", "", 0f,
+        "", "", "", "", 0.0,
         "", -1
     )
     private val _pvtAdvertisement = MutableLiveData<Advertisement>().also {
@@ -35,31 +36,37 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     }
     val advertisement: LiveData<Advertisement> = this._pvtAdvertisement
 
+    /**
+     * List of Advertisements
+     */
     private val _advertisements = MutableLiveData<List<Advertisement>>()
-    val listOfAdvertisement = _advertisements
+    val listOfAdvertisements: LiveData<List<Advertisement>> = _advertisements
 
     init {
-        listenerRegistration = db.collection("Advertisement").addSnapshotListener { value, error ->
-            if (error != null) {
-                _advertisements.value = emptyList()
-            } else {
-                _advertisements.value = value!!.mapNotNull { elem -> elem.toAdvertisement() }
+        listenerRegistration = db.collection("Advertisement")
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    _advertisements.value = emptyList()
+                } else {
+                    _advertisements.value = value!!.mapNotNull { elem ->
+                        elem.toAdvertisement()
+                    }
+                }
             }
-        }
     }
 
     private fun DocumentSnapshot.toAdvertisement(): Advertisement? {
         return try {
-            val id = get("id") as Long
-            val title = get("title") as String
-            val description = get("description") as String
-            val location = get("location") as String
-            val date = get("date") as String
-            val startingTime = get("starting_time") as String
-            val endingTime = get("ending_time") as String
-            val duration = get("duration") as Float
-            val accountName = get("account_name") as String
-            val accountID = get("accountID") as Int
+            val id = this.get("id") as Long
+            val title = this.get("title") as String
+            val description = this.get("description") as String
+            val location = this.get("location") as String
+            val date = this.get("date") as String
+            val startingTime = this.get("starting_time") as String
+            val endingTime = this.get("ending_time") as String
+            val duration = this.get("duration") as Double
+            val accountName = this.get("account_name") as String
+            val accountID = this.get("accountID") as Long
             Advertisement(
                 id, title, description,
                 location, date, startingTime,
@@ -79,8 +86,21 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     fun insertAdvertisement(ad: Advertisement) {
         db
             .collection("Advertisement")
-            .document()
-            .set(mapOf(ad.id.toString() to ad))
+            .document(ad.id.toString())
+            .set(
+                mapOf(
+                    "id" to ad.id,
+                    "title" to ad.advTitle,
+                    "description" to ad.advDescription,
+                    "location" to ad.advLocation,
+                    "date" to ad.advDate,
+                    "starting_time" to ad.advStartingTime,
+                    "ending_time" to ad.advEndingTime,
+                    "duration" to ad.advDuration,
+                    "account_name" to ad.advAccount,
+                    "accountID" to ad.accountID
+                )
+            )
             .addOnSuccessListener {
                 Toast.makeText(context, "Creation completed.", Toast.LENGTH_SHORT).show()
             }

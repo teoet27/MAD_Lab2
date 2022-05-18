@@ -26,7 +26,8 @@ class AdvAdapterEdit(private val adsList: List<Advertisement>, private val adver
      */
     override fun onBindViewHolder(holder: AdvViewHolderEdit, position: Int) {
         holder.bind(adsList[position]) {
-            advertisementViewModel.removeAd(adsList.indexOf(adsList[position]).toLong())
+            // TODO
+            //advertisementViewModel.removeAd(adsList.indexOf(adsList[position]).toLong())
             notifyItemRemoved(adsList.indexOf(adsList[position]))
             Navigation.findNavController(holder.itemView).navigate(R.id.action_editTimeSlotDetailsFragment_to_showSingleTimeslot)
         }

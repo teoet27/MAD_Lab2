@@ -18,8 +18,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import it.polito.MAD.group06.R
-import it.polito.MAD.group06.models.skill.Skill
-import it.polito.MAD.group06.models.userprofile.ArrayListConverter
 import it.polito.MAD.group06.models.userprofile.UserProfile
 import it.polito.MAD.group06.viewmodels.UserProfileViewModel
 import it.polito.MAD.group06.utilities.*
@@ -137,7 +135,7 @@ class EditProfileFragment : Fragment() {
                 )
             )
         }
-        advViewModel.getFullListOfAdvertisement().observe(viewLifecycleOwner) { fullList ->
+        advViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { fullList ->
             advViewModel.updateAccountName(fullList, editFullNameOBJ.text.toString())
         }
     }

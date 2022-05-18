@@ -45,7 +45,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
             findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
         }
 
-        advViewModel.getListOfAdvertisements().also { listOfAdv ->
+        advViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
             /**
              * If there are no advertisements in the DB proper texts are shown.
              */

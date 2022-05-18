@@ -25,8 +25,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     private val usrViewModel: UserProfileViewModel by activityViewModels()
     private val dumbAdvertisement: Advertisement = Advertisement(
         null, "", "",
-        "", "", "", "", 0f,
-        "", false
+        "", "", "", "", 0.0,
+        "", -1
     )
 
     private lateinit var advTitle: TextView
@@ -86,7 +86,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
 
             this.advDescription.text = singleAdvertisement.advDescription
             this.deleteButton.setOnClickListener {
-                advViewModel.removeAd(singleAdvertisement.id!!)
+                // TODO
+                //advViewModel.removeAd(singleAdvertisement.id!!)
                 Toast.makeText(
                     context, "Advertisement removed successfully!", Toast.LENGTH_LONG
                 ).show()
@@ -182,24 +183,24 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
      * @param endingTime the ending time
      * @return a Pair<Float, Boolean> where it's specified the time difference and its acceptability
      */
-    private fun computeTimeDifference(startingTime: String, endingTime: String): Pair<Float, Boolean> {
-        var timeDifference: Float = 0.00f
+    private fun computeTimeDifference(startingTime: String, endingTime: String): Pair<Double, Boolean> {
+        var timeDifference: Double = 0.0
         if (startingTime.isNullOrEmpty() || endingTime.isNullOrEmpty()) {
             Snackbar.make(
                 requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_LONG
             ).show()
-            return Pair(0f, false)
+            return Pair(0.0, false)
         }
         val startingHour = startingTime.split(":")[0].toInt()
         val startingMinute = startingTime.split(":")[1].toInt()
         val endingHour = endingTime.split(":")[0].toInt()
         val endingMinute = endingTime.split(":")[1].toInt()
 
-        timeDifference += (endingHour - startingHour) + ((endingMinute - startingMinute) / 60f)
+        timeDifference += (endingHour - startingHour) + ((endingMinute - startingMinute) / 60.0)
 
         return Pair(
-            String.format("%.2f", timeDifference).toFloat(),
-            String.format("%.2f", timeDifference).toFloat() >= 0
+            String.format("%.2f", timeDifference).toDouble(),
+            String.format("%.2f", timeDifference).toDouble() >= 0
         )
     }
 }
