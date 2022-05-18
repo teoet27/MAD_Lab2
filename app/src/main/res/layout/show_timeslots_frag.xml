@@ -46,7 +46,7 @@
         android:backgroundTint="@color/orange_poli"
         android:text="+"
         android:textColor="#FFFFFF"
-        android:textSize="34sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

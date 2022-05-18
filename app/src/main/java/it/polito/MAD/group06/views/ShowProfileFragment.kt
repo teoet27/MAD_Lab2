@@ -15,6 +15,8 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.MAD.group06.R
+import it.polito.MAD.group06.models.skill.Skill
+import it.polito.MAD.group06.models.userprofile.ArrayListConverter
 import it.polito.MAD.group06.models.userprofile.UserProfile
 import it.polito.MAD.group06.utilities.GoogleLoginSavedPreferencesObject.getEmail
 import it.polito.MAD.group06.utilities.getBitmapFromFile
@@ -31,7 +33,7 @@ class ShowProfileFragment : Fragment() {
     private lateinit var skillsOBJ: TextView
     private lateinit var phoneOBJ: TextView
     private lateinit var profilePictureOBJ: ImageView
-    private lateinit var skills_chips:ChipGroup
+    private lateinit var skills_chips: ChipGroup
 
     private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
@@ -58,7 +60,7 @@ class ShowProfileFragment : Fragment() {
         this.skillsOBJ = view.findViewById(R.id.skillsListID)
         this.phoneOBJ = view.findViewById(R.id.phone_show_ID)
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
-        this.skills_chips=view.findViewById(R.id.skill_chips_group)
+        this.skills_chips = view.findViewById(R.id.skill_chips_group)
 
         profile_vm.profile.observe(this.viewLifecycleOwner) { userProfile ->
 
@@ -73,7 +75,10 @@ class ShowProfileFragment : Fragment() {
                         "rettore@polito.it",
                         "3331112223",
                         "Torino - Italia",
-                        arrayListOf<String>("Management", "Public Relationship")
+                        ArrayListConverter().fromListOfSkillsToString(arrayListOf<Skill>(
+                            Skill(0, "Management", "Rector Stuff"),
+                            Skill(1, "Public Relationship", "Rector Stuff")
+                        ))
                     )
                 )
                 this.profilePictureOBJ.setImageResource(R.drawable.propic)
@@ -95,12 +100,15 @@ class ShowProfileFragment : Fragment() {
                     this.skillsOBJ.text = getString(R.string.noskills)
                 } else {
                     //this.skillsOBJ.text = fromArrayListToString(userProfile.skills!!)
-                    userProfile.skills!!.forEach {
-                        this.skills_chips.addChip(requireContext(),it)
-                        this.skills_chips.setOnCheckedChangeListener { chipGroup, checkedId ->
+                    userProfile.skills!!.also {
+                        val listOfSkills = ArrayListConverter().fromStringToListOfSkills(it)
+                        for(sk in listOfSkills!!) {
+                            this.skills_chips.addChip(requireContext(), sk.skillName)
+                            this.skills_chips.setOnCheckedChangeListener { chipGroup, checkedId ->
                                 val selected_service = chipGroup.findViewById<Chip>(checkedId)?.text
                                 Toast.makeText(chipGroup.context, selected_service ?: "No Choice", Toast.LENGTH_LONG).show()
                             }
+                        }
                     }
                 }
 
@@ -114,7 +122,7 @@ class ShowProfileFragment : Fragment() {
 
                 getBitmapFromFile(profilePicturePath)?.also {
                     this.profilePictureOBJ.setImageBitmap(it)
-                }?:this.profilePictureOBJ.setImageResource(R.drawable.propic)
+                } ?: this.profilePictureOBJ.setImageResource(R.drawable.propic)
             }
 
 
@@ -159,6 +167,7 @@ class ShowProfileFragment : Fragment() {
 
         }
     }
+
     /**
      * This method inflates the option menu
      *

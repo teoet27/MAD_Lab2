@@ -59,6 +59,7 @@
     <string name="separation_line">Separation line</string>
     <string name="description_of_the_job_offered">Description of the job offered</string>
     <string name="select_your_skills">Select the skills associated to the advertisement your\'re creating</string>
+    <string name="add_your_skills">...or add a new skill!</string>
     <string name="no_adv_into_db">There are no advertisements yet.</string>
     <string name="create_tsa_hint">Create your first\nTime Slot Advertisement</string>
     <string name="default_web_client_id_bis">512352892448-34de1u53602su25jgtcgo2ogt3ssmk66.apps.googleusercontent.com</string>

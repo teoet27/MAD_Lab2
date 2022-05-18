@@ -1,25 +1,39 @@
 package it.polito.MAD.group06.views
 
+import android.app.AlertDialog
 import android.app.TimePickerDialog
+import android.content.Context
+import android.content.DialogInterface
+import android.content.res.ColorStateList
 import android.os.Bundle
+import android.text.InputType
+import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.MAD.group06.R
 import it.polito.MAD.group06.models.advertisement.Advertisement
+import it.polito.MAD.group06.models.skill.Skill
+import it.polito.MAD.group06.models.userprofile.ArrayListConverter
 import it.polito.MAD.group06.viewmodels.AdvertisementViewModel
+import it.polito.MAD.group06.viewmodels.SkillViewModel
 import it.polito.MAD.group06.viewmodels.UserProfileViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
-    private val advViewModel by viewModels<AdvertisementViewModel>()
-    private val usrViewModel by viewModels<UserProfileViewModel>()
+    private val advViewModel by activityViewModels<AdvertisementViewModel>()
+    private val usrViewModel by activityViewModels<UserProfileViewModel>()
+    private val skillViewModel by activityViewModels<SkillViewModel>()
     private lateinit var newTitle: EditText
     private lateinit var newLocation: EditText
     private lateinit var newDate: TextView
@@ -30,10 +44,16 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private lateinit var confirmButton: ImageView
     private lateinit var datePicker: DatePicker
     private lateinit var accountName: String
+    private lateinit var skillsChipGroup: ChipGroup
+    private lateinit var addToSkillListButton: ImageView
     private var timeStartingHour: Int = 0
     private var timeStartingMinute: Int = 0
     private var timeEndingHour: Int = 0
     private var timeEndingMinute: Int = 0
+    private var newSkillTitleLabel: String = ""
+    private var newSkillCategoryLabel: String = ""
+    private var skillList: MutableList<Skill> = mutableListOf()
+    private val selectedSkillsList: MutableList<Skill> = mutableListOf()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,6 +67,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         this.closeButton = view.findViewById(R.id.closeButton)
         this.confirmButton = view.findViewById(R.id.confirmButton)
         this.datePicker = view.findViewById(R.id.date_Picker)
+        this.skillsChipGroup = view.findViewById(R.id.skillsGroupID)
+        this.addToSkillListButton = view.findViewById(R.id.addNewSkillToListButtonID)
 
         usrViewModel.profile.observe(viewLifecycleOwner) { user ->
             if (user == null || user.fullName == null)
@@ -54,6 +76,11 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             else
                 accountName = user.fullName!!
         }
+        /*
+        usrViewModel.profile.observe(viewLifecycleOwner) {
+            this.skillList = ArrayListConverter().fromStringToListOfSkills(it.skills)!!
+        }
+         */
 
         this.newStartingTime.setOnClickListener { popTimePickerStarting(this.newStartingTime) }
         this.newEndingTime.setOnClickListener { popTimePickerEnding(this.newEndingTime) }
@@ -65,6 +92,17 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             today.get(Calendar.DAY_OF_MONTH)
         ) { view, year, month, day ->
             chosenDate = "$day/${month + 1}/$year"
+        }
+
+        /**
+         * TODO: https://www.youtube.com/watch?v=pU0mvwIMAe0
+         */
+        for (skill in skillList) {
+            this.skillsChipGroup.addChip(requireContext(), skill)
+        }
+
+        this.addToSkillListButton.setOnClickListener {
+            showNewSkillInputWindow(requireContext(), this.skillsChipGroup)
         }
 
         this.closeButton.setOnClickListener {
@@ -160,6 +198,105 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     }
 
     /**
+     * TODO
+     * addChip
+     * @param
+     * @param
+     */
+    private fun ChipGroup.addChip(context: Context, skill: Skill) {
+        Chip(context).apply {
+            id = View.generateViewId()
+            text = skill.skillName
+            isClickable = true
+            isCheckable = true
+            isCheckedIconVisible = true
+            isFocusable = true
+            setOnClickListener {
+                if (selectedSkillsList.any { x ->
+                        x.id == skill.id
+                    }) {
+                    for (s in selectedSkillsList) {
+                        if (s.id == skill.id) {
+                            selectedSkillsList.remove(s)
+                            break
+                        }
+                    }
+                } else {
+                    selectedSkillsList.add(skill)
+                }
+                if (isChecked) {
+                    setTextColor(ContextCompat.getColor(context, R.color.white))
+                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.prussian_blue))
+                } else {
+                    setTextColor(ContextCompat.getColor(context, R.color.black))
+                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lightGray))
+                }
+
+            }
+            addView(this)
+        }
+    }
+
+
+    /**
+     * showNewSkillInputWindow
+     *
+     * @param context current context
+     * @param chipGroup the related chip group in which the new skill will be added
+     */
+    private fun showNewSkillInputWindow(context: Context, chipGroup: ChipGroup) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this.context)
+        val newSkillTitle = EditText(this.context)
+        val newSkillCategory = EditText(this.context)
+        val linearLayout = LinearLayout(this.context)
+
+        builder.setTitle("Insert here your new skill")
+
+        newSkillTitle.hint = "What is your new skill?"
+        newSkillCategory.hint = "What category does it belong to?"
+
+        newSkillTitle.inputType = InputType.TYPE_CLASS_TEXT
+        newSkillCategory.inputType = InputType.TYPE_CLASS_TEXT
+
+        newSkillTitle.gravity = Gravity.LEFT
+        newSkillCategory.gravity = Gravity.LEFT
+
+        linearLayout.orientation = LinearLayout.VERTICAL
+        linearLayout.setPadding(64, 0, 64, 0)
+        linearLayout.addView(newSkillTitle)
+        linearLayout.addView(newSkillCategory)
+
+        builder.setView(linearLayout)
+
+        /**
+         * setPositiveButton
+         */
+        builder.setPositiveButton("Create", DialogInterface.OnClickListener { dialog, which ->
+            newSkillTitleLabel = newSkillTitle.text.toString()
+            newSkillCategoryLabel = newSkillCategory.text.toString()
+            if (newSkillTitleLabel.isNotEmpty() && newSkillCategoryLabel.isNotEmpty()) {
+                val newSkill = Skill(Random().nextLong(), newSkillTitleLabel, newSkillCategoryLabel)
+                chipGroup.addChip(context, newSkill)
+                Snackbar.make(
+                    requireView(), "New skill added!", Snackbar.LENGTH_LONG
+                ).show()
+            } else {
+                Snackbar.make(
+                    requireView(), "You must provide a name and a category for the new skill.", Snackbar.LENGTH_LONG
+                ).show()
+            }
+        })
+
+        /**
+         * setNegativeButton
+         */
+        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->
+            dialog.cancel()
+        })
+        builder.show()
+    }
+
+    /**
      * isAdvValid is a method which returns whether it's possible to actually insert a new
      * advertisement. The criteria is that an advertisement should at least have a title, a location,
      * a date and a duration.
@@ -176,6 +313,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
     /**
      * popTimePickerStarting is the callback to launch the TimePicker for inserting the starting time
+     *
      * @param timeBox reference to the TextView of the starting time
      */
     private fun popTimePickerStarting(timeBox: TextView) {
@@ -192,6 +330,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
     /**
      * popTimePickerEnding is the callback to launch the TimePicker for inserting the ending time
+     *
      * @param timeBox reference to the TextView of the ending time
      */
     private fun popTimePickerEnding(timeBox: TextView) {

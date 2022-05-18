@@ -2,6 +2,7 @@ package it.polito.MAD.group06.models.userprofile
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import it.polito.MAD.group06.models.skill.Skill
 
 @Entity(tableName = "userProfileTable")
 data class UserProfile(
@@ -13,5 +14,5 @@ data class UserProfile(
     var email: String?,
     var phoneNumber: String?,
     var location: String?,
-    var skills: ArrayList<String>?
+    var skills: String?
 )

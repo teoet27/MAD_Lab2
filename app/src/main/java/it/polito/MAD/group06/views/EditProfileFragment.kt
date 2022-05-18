@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import it.polito.MAD.group06.R
+import it.polito.MAD.group06.models.skill.Skill
+import it.polito.MAD.group06.models.userprofile.ArrayListConverter
 import it.polito.MAD.group06.models.userprofile.UserProfile
 import it.polito.MAD.group06.viewmodels.UserProfileViewModel
 import it.polito.MAD.group06.utilities.*
@@ -85,7 +87,8 @@ class EditProfileFragment : Fragment() {
                 this.editLocationOBJ.setText(userProfile.location)
 
                 if (!userProfile.skills.isNullOrEmpty()) {
-                    this.editSkillsOBJ.setText(fromArrayListToString(userProfile.skills!!))
+                    //ArrayListConverter().fromStringToListOfSkills(userProfile.skills!!)
+                    this.editSkillsOBJ.setText("wait")
                 }
 
                 //this.editEmailOBJ.setText(userProfile.email)
@@ -130,7 +133,8 @@ class EditProfileFragment : Fragment() {
                     editEmailOBJ.text.toString(),
                     editPhoneOBJ.text.toString(),
                     editLocationOBJ.text.toString(),
-                    fromStringToArrayList(editSkillsOBJ.text.toString()),
+                    ArrayListConverter().fromListOfSkillsToString(arrayListOf(Skill(0, "", "")))
+                    //fromStringToArrayList(editSkillsOBJ.text.toString()),
                 )
             )
         }

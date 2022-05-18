@@ -2,6 +2,8 @@ package it.polito.MAD.group06.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import it.polito.MAD.group06.models.skill.Skill
+import it.polito.MAD.group06.models.userprofile.ArrayListConverter
 import it.polito.MAD.group06.models.userprofile.UserProfile
 import it.polito.MAD.group06.repository.UserProfileRepository
 import kotlin.concurrent.thread
@@ -12,7 +14,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     /**
      * This is the instance of the profile fetched from the database through the repository
      */
-    val profile = repo.profile()
+    var profile = repo.profile()
 
     /**
      * editProfile
