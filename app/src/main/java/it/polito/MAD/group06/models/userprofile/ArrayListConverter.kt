@@ -3,8 +3,8 @@ package it.polito.MAD.group06.models.userprofile
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import it.polito.MAD.group06.models.skill.Skill
 import java.lang.reflect.Type
-
 
 class ArrayListConverter {
     @TypeConverter
@@ -15,6 +15,17 @@ class ArrayListConverter {
     @TypeConverter
     fun toArrayList(s: String?): ArrayList<String>? {
         val collectionType: Type = object : TypeToken<ArrayList<String>?>() {}.type
+        return Gson().fromJson(s, collectionType)
+    }
+
+    @TypeConverter
+    fun fromListOfSkillsToString(list: ArrayList<Skill>?): String? {
+        return Gson().toJson(list)
+    }
+
+    @TypeConverter
+    fun fromStringToListOfSkills(s: String?): MutableList<Skill>? {
+        val collectionType: Type = object : TypeToken<MutableList<Skill>?>() {}.type
         return Gson().fromJson(s, collectionType)
     }
 }
