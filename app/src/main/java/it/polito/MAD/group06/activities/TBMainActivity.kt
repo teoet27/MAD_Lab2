@@ -54,7 +54,11 @@ class TBMainActivity : AppCompatActivity() {
         val fullname = intent.getStringExtra("fullname")
         val email = intent.getStringExtra("email")
 
-        userProfileViewModel.setCurrentUserProfile(id!!, fullname!!, email!!)
+        try {
+            userProfileViewModel.setCurrentUserProfile(id!!, fullname!!, email!!)
+        } catch (npe: NullPointerException) {
+            // TODO: if the user is already logged their data should be retrieved
+        }
 
         // inflate the view hierarchy
         binding = ActivityMainBinding.inflate(layoutInflater)

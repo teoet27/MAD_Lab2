@@ -202,18 +202,12 @@
                     android:textColor="#FFFFFF"
                     android:textSize="16sp" />
 
-                <EditText
-                    android:id="@+id/edit_skillsListID"
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/editProfileChipGroup"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:hint="@string/example_skill1_skill2_skill3"
-                    android:textColorHint="#9a9a9a"
-                    android:paddingLeft="40dp"
-                    android:paddingRight="40dp"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:layout_height="match_parent">
+
+                </com.google.android.material.chip.ChipGroup>
 
                 <TextView
                     android:id="@+id/personalInfoID"

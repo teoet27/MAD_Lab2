@@ -3,12 +3,14 @@ package it.polito.MAD.group06.views.profile
 import android.content.Context
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
@@ -34,7 +36,7 @@ class ShowProfileFragment : Fragment() {
     private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
 
-    private val userProfileViewModel by viewModels<UserProfileViewModel>()
+    private val userProfileViewModel: UserProfileViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,6 +61,7 @@ class ShowProfileFragment : Fragment() {
         this.skills_chips = view.findViewById(R.id.skill_chips_group)
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
+            Log.e("profile", userProfile.toString())
             // Fullname
             this.fullnameOBJ.text = userProfile.fullName
 

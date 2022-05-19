@@ -11,6 +11,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.MAD.group06.R
 import it.polito.MAD.group06.models.advertisement.Advertisement
@@ -38,6 +39,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     private lateinit var accountName: String
     private lateinit var datePicker: DatePicker
     private lateinit var chosenDate: String
+    private lateinit var skillsChips: ChipGroup
     private var timeStartingHour: Int = 0
     private var timeStartingMinute: Int = 0
     private var timeEndingHour: Int = 0
@@ -53,6 +55,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
         this.advEndingTime = view.findViewById(R.id.editEndingTime)
         this.deleteButton = view.findViewById(R.id.deleteButton)
         this.datePicker = view.findViewById(R.id.editDatePicker)
+        this.skillsChips = view.findViewById(R.id.edit_skill_chips_group)
 
         usrViewModel.currentUser.observe(viewLifecycleOwner) { user ->
             accountName = if (user?.fullName == null) "Guido Saracco" else user.fullName!!
