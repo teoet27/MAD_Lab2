@@ -162,7 +162,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                 } else if (isAdvValid()) {
                     advertisementViewModel.insertAdvertisement(
                         Advertisement(
-                            null,
+                            0,
                             newTitle.text.toString(),
                             newDescription.text.toString(),
                             arrayListOf<String>(),
