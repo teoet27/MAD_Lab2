@@ -39,7 +39,7 @@
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/newTitle"
+                        android:id="@+id/editTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="fill_vertical"
@@ -82,43 +82,107 @@
                 android:paddingTop="2dp"
                 android:src="@drawable/rounded_corners_land" />
 
+            <TextView
+                android:id="@+id/ads_descriptionTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/description_of_the_job_offered"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
             <EditText
-                android:id="@+id/newLocation"
+                android:id="@+id/editDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:hint="Describe accurately what you offer."
+                android:minHeight="48dp"
+                android:textColor="@color/prussian_blue"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/ads_listOfSkillsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/select_your_skills"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/edit_skill_chips_group"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="24dp">
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ads_listOfSkillsTitle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="1"
+                    android:text="@string/add_your_skills"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/editAddNewSkillToListButtonID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/adv_card_bckgrnd"
+                    android:backgroundTint="@color/orange_poli"
+                    android:src="@drawable/ic_add_black_24dp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="#AAABAE"
+                android:contentDescription='@string/separation_line'
+                android:paddingTop="5dp"
+                android:src="@drawable/rounded_corners_land" />
+
+            <EditText
+                android:id="@+id/editLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="16dp"
                 android:drawablePadding="5dp"
+                android:hint="Location"
                 android:minHeight="48dp"
-                android:text="Corso Sebastopoli 220, Torino (Italy)"
-                android:textColor="#000000"
+                android:textColor="@color/prussian_blue"
                 android:textSize="20sp"
                 app:drawableStartCompat="@drawable/ic_location_on_black_24dp"
                 app:drawableTint="#454749" />
-
-            <TextView
-                android:id="@+id/dateLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:drawablePadding="5dp"
-                android:gravity="center_vertical"
-                android:minHeight="48dp"
-                android:text="Date"
-                android:textColor="#454749"
-                android:textSize="20sp"
-                app:drawableLeftCompat="@drawable/ic_calendar_month"
-                app:drawableTint="#454749" />
-
-            <DatePicker
-                android:id="@+id/newDateDP"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner" />
 
             <TextView
                 android:id="@+id/editStartingTime"
@@ -152,52 +216,64 @@
                 app:drawableStartCompat="@drawable/ic_watch_later_black_24dp"
                 app:drawableTint="#454749" />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:background="#AAABAE"
-                android:contentDescription='@string/separation_line'
-                android:paddingTop="5dp"
-                android:src="@drawable/rounded_corners_land" />
-
             <TextView
-                android:id="@+id/ads_descriptionTitle"
+                android:id="@+id/editDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="16dp"
-                android:text="@string/description_of_the_job_offered"
-                android:textColor="#000000"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:minHeight="48dp"
+                android:text="Date"
+                android:textColor="#808080"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                app:drawableLeftCompat="@drawable/ic_calendar_month"
+                app:drawableTint="#454749" />
 
-            <EditText
-                android:id="@+id/newDescription"
+            <DatePicker
+                android:id="@+id/date_Picker"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="16dp"
-                android:text="I offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available.\nI offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available.\nI offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available.\nI offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available.\nI offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available."
-                android:textColor="#000000"
-                android:textSize="20sp" />
+                android:layout_height="match_parent"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="40dp"
                 android:layout_marginTop="8dp"
-                android:layout_weight="1"
+                android:layout_marginBottom="30dp"
                 android:background="@drawable/rounded_corners_down"
-                android:backgroundTint="@color/prussian_blue"
-                android:orientation="vertical"
-                android:paddingTop="16dp"
-                android:paddingBottom="8dp">
+                android:backgroundTint="@color/prussian_blue">
 
+                <ImageView
+                    android:id="@+id/closeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:layout_weight="1"
+                    android:background="@drawable/cancel_rounded_corners_right"
+                    android:backgroundTint="#FF0000"
+                    android:contentDescription='@string/more_button_for_opening_the_edit_menu'
+                    android:padding="2dp"
+                    android:src="@drawable/ic_close_black_24dp"
+                    app:tint="@color/white" />
+
+                <ImageView
+                    android:id="@+id/confirmButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:layout_weight="1"
+                    android:background="@drawable/confirm_rounded_corners_left"
+                    android:backgroundTint="#106C00"
+                    android:contentDescription='@string/more_button_for_opening_the_edit_menu'
+                    android:padding="2dp"
+                    android:src="@drawable/ic_done_black_24dp"
+                    app:tint="@color/white" />
             </LinearLayout>
+
 
         </LinearLayout>
     </ScrollView>
