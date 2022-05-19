@@ -3,7 +3,6 @@ package it.polito.MAD.group06.models.userprofile
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.firebase.firestore.PropertyName
-import it.polito.MAD.group06.models.skill.Skill
 
 @Entity(tableName = "userProfileTable")
 data class UserProfile(
