@@ -11,10 +11,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.MAD.group06.R
+import it.polito.MAD.group06.models.skill.SkillAdapterCard
+import it.polito.MAD.group06.viewmodels.AdvertisementViewModel
 
 class ShowListOfSkills : Fragment(R.layout.fragment_service_list){
 
-    // private val serviceViewModel: ServiceViewModel by activityViewModels()
+    private val advViewModel: AdvertisementViewModel by activityViewModels()
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
@@ -33,21 +35,23 @@ class ShowListOfSkills : Fragment(R.layout.fragment_service_list){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*serviceViewModel.insertService("Gardening")
-        serviceViewModel.insertService("Dog sitter")*/
-        /*
-        serviceViewModel.getFullListOfServices().observe(this.viewLifecycleOwner) { listOfServices ->
+        advViewModel.listOfAdvertisements.observe(this.viewLifecycleOwner) { listOfAds ->
             /**
              * If there are no services in the DB proper texts are shown.
              */
-            view.findViewById<TextView>(R.id.defaultTextServicesList).isVisible = listOfServices == null || listOfServices.isEmpty()
+            val listOfSkills=(listOfAds.map{it.listOfSkills}.flatten() as MutableList<String>)
+            view.findViewById<TextView>(R.id.defaultTextServicesList).isVisible = listOfSkills.isNullOrEmpty()
 
-            if (!(listOfServices == null || listOfServices.isEmpty())) {
+            if (!listOfSkills.isNullOrEmpty()) {
+
+                listOfSkills.apply {
+                    add("All")
+                    sortWith(compareBy(String.CASE_INSENSITIVE_ORDER, {it})) }
+
                 this.recyclerView = view.findViewById(R.id.rvServicesFullList)
                 this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-                this.recyclerView.adapter = ServiceAdapterCard(listOfServices,serviceViewModel)
+                this.recyclerView.adapter = SkillAdapterCard(listOfSkills)
             }
         }
-        */
     }
 }
