@@ -11,12 +11,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.MAD.group06.R
-import it.polito.MAD.group06.models.service.ServiceAdapterCard
-import it.polito.MAD.group06.viewmodels.ServiceViewModel
 
 class ShowListOfServices : Fragment(R.layout.fragment_service_list){
 
-    private val serviceViewModel: ServiceViewModel by activityViewModels()
+    // private val serviceViewModel: ServiceViewModel by activityViewModels()
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
@@ -37,6 +35,7 @@ class ShowListOfServices : Fragment(R.layout.fragment_service_list){
 
         /*serviceViewModel.insertService("Gardening")
         serviceViewModel.insertService("Dog sitter")*/
+        /*
         serviceViewModel.getFullListOfServices().observe(this.viewLifecycleOwner) { listOfServices ->
             /**
              * If there are no services in the DB proper texts are shown.
@@ -49,5 +48,6 @@ class ShowListOfServices : Fragment(R.layout.fragment_service_list){
                 this.recyclerView.adapter = ServiceAdapterCard(listOfServices,serviceViewModel)
             }
         }
+        */
     }
 }

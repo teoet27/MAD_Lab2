@@ -14,15 +14,12 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.MAD.group06.R
 import it.polito.MAD.group06.models.advertisement.Advertisement
-import it.polito.MAD.group06.models.skill.Skill
-import it.polito.MAD.group06.models.userprofile.ArrayListConverter
 import it.polito.MAD.group06.viewmodels.AdvertisementViewModel
 import it.polito.MAD.group06.viewmodels.SkillViewModel
 import it.polito.MAD.group06.viewmodels.UserProfileViewModel
@@ -52,8 +49,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private var timeEndingMinute: Int = 0
     private var newSkillTitleLabel: String = ""
     private var newSkillCategoryLabel: String = ""
-    private var skillList: MutableList<Skill> = mutableListOf()
-    private val selectedSkillsList: MutableList<Skill> = mutableListOf()
+    private var skillList: MutableList<String> = mutableListOf()
+    private val selectedSkillsList: MutableList<String> = mutableListOf()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -132,6 +129,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         null,
                         newTitle.text.toString(),
                         newDescription.text.toString(),
+                        arrayListOf<String>(),
                         newLocation.text.toString(),
                         chosenDate,
                         newStartingTime.text.toString(),
@@ -174,6 +172,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             null,
                             newTitle.text.toString(),
                             newDescription.text.toString(),
+                            arrayListOf<String>(),
                             newLocation.text.toString(),
                             chosenDate,
                             newStartingTime.text.toString(),
@@ -203,20 +202,20 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
      * @param
      * @param
      */
-    private fun ChipGroup.addChip(context: Context, skill: Skill) {
+    private fun ChipGroup.addChip(context: Context, skill: String) {
         Chip(context).apply {
             id = View.generateViewId()
-            text = skill.skillName
+            text = skill
             isClickable = true
             isCheckable = true
             isCheckedIconVisible = true
             isFocusable = true
             setOnClickListener {
                 if (selectedSkillsList.any { x ->
-                        x.id == skill.id
+                        x == skill
                     }) {
                     for (s in selectedSkillsList) {
-                        if (s.id == skill.id) {
+                        if (s == skill) {
                             selectedSkillsList.remove(s)
                             break
                         }
@@ -250,17 +249,12 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         val linearLayout = LinearLayout(this.context)
 
         builder.setTitle("Insert here your new skill")
-
         newSkillTitle.hint = "What is your new skill?"
-
         newSkillTitle.inputType = InputType.TYPE_CLASS_TEXT
-
         newSkillTitle.gravity = Gravity.LEFT
-
         linearLayout.orientation = LinearLayout.VERTICAL
         linearLayout.setPadding(64, 0, 64, 0)
         linearLayout.addView(newSkillTitle)
-
         builder.setView(linearLayout)
 
         /**
@@ -269,7 +263,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         builder.setPositiveButton("Create", DialogInterface.OnClickListener { dialog, which ->
             newSkillTitleLabel = newSkillTitle.text.toString()
             if (newSkillTitleLabel.isNotEmpty() && newSkillCategoryLabel.isNotEmpty()) {
-                val newSkill = Skill(Random().nextLong(), newSkillTitleLabel)
+                val newSkill = ""
                 chipGroup.addChip(context, newSkill)
                 Snackbar.make(
                     requireView(), "New skill added!", Snackbar.LENGTH_LONG

@@ -9,7 +9,6 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import it.polito.MAD.group06.models.advertisement.Advertisement
-import it.polito.MAD.group06.models.skill.Skill
 import it.polito.MAD.group06.repository.AdvertisementRepository
 import java.lang.Exception
 import kotlin.concurrent.thread
@@ -27,7 +26,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      * Single [Advertisement]
      */
     private var _singleAdvertisementPH = Advertisement(
-        null, "", "", arrayListOf<Skill>(),
+        null, "", "", arrayListOf<String>(),
         "", "", "", "", 0.0,
         "", -1
     )
@@ -60,7 +59,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             val id = this.get("id") as Long
             val title = this.get("title") as String
             val description = this.get("description") as String
-            val listOfSkills = this.get("list_of_skills") as ArrayList<Skill>
+            val listOfSkills = this.get("list_of_skills") as ArrayList<String>
             val location = this.get("location") as String
             val date = this.get("date") as String
             val startingTime = this.get("starting_time") as String

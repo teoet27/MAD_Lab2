@@ -8,7 +8,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
-import it.polito.MAD.group06.models.skill.Skill
 import it.polito.MAD.group06.models.userprofile.ArrayListConverter
 import it.polito.MAD.group06.models.userprofile.UserProfile
 import it.polito.MAD.group06.repository.UserProfileRepository
