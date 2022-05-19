@@ -14,7 +14,7 @@ import it.polito.MAD.group06.R
 import it.polito.MAD.group06.models.skill.SkillAdapterCard
 import it.polito.MAD.group06.viewmodels.AdvertisementViewModel
 
-class ShowListOfSkills : Fragment(R.layout.fragment_service_list){
+class ShowListOfSkills : Fragment(R.layout.fragment_service_list) {
 
     private val advViewModel: AdvertisementViewModel by activityViewModels()
     private lateinit var recyclerView: RecyclerView
@@ -39,14 +39,11 @@ class ShowListOfSkills : Fragment(R.layout.fragment_service_list){
             /**
              * If there are no services in the DB proper texts are shown.
              */
-            val listOfSkills=(listOfAds.map{it.listOfSkills}.flatten() as MutableList<String>)
+            val listOfSkills = (listOfAds.map { it.listOfSkills }.flatten() as MutableList<String>)
             view.findViewById<TextView>(R.id.defaultTextServicesList).isVisible = listOfSkills.isNullOrEmpty()
 
             if (!listOfSkills.isNullOrEmpty()) {
-
-                listOfSkills.apply {
-                    add("All")
-                    sortWith(compareBy(String.CASE_INSENSITIVE_ORDER, {it})) }
+                listOfSkills.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER, { it }))
 
                 this.recyclerView = view.findViewById(R.id.rvServicesFullList)
                 this.recyclerView.layoutManager = LinearLayoutManager(this.context)
