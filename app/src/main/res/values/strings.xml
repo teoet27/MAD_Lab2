@@ -69,5 +69,23 @@
     <string name="logInToContinue">Login to continue.</string>
     <string name="menu_services">All services</string>
     <string name="no_services_into_db">No available services</string>
-
+    <string name="cancel">Cancel</string>
+    <string name="advanced_search">Advanced Search</string>
+    <string name="reset_filters">Reset filters</string>
+    <string name="where">Where</string>
+    <string name="date">Date</string>
+    <string name="location">location</string>
+    <string name="time">Time</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string-array name="durations">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
 </resources>
