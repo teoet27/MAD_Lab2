@@ -46,7 +46,7 @@ class EditProfileFragment : Fragment() {
     private lateinit var photoURI: Uri
     private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
-    private lateinit var skills_chips: ChipGroup
+    private lateinit var skillsChips: ChipGroup
     private var userID: Long = -1
     private val skillList = arrayListOf<String>()
 
@@ -81,7 +81,7 @@ class EditProfileFragment : Fragment() {
         this.editSkillsOBJ = view.findViewById(R.id.edit_skillsListID)
         this.editPhoneOBJ = view.findViewById(R.id.edit_phone_show_ID)
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
-        this.skills_chips = view.findViewById(R.id.edit_skill_chips_group)
+        this.skillsChips = view.findViewById(R.id.editProfileChipGroup)
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
             // Save the ID
@@ -108,8 +108,8 @@ class EditProfileFragment : Fragment() {
             // Skills
             if (!userProfile.skills.isNullOrEmpty()) {
                 userProfile.skills!!.forEach { skill ->
-                    this.skills_chips.addChipForEdit(requireContext(), skill)
-                    this.skills_chips.setOnCheckedChangeListener { chipGroup, checkedId ->
+                    this.skillsChips.addChipForEdit(requireContext(), skill)
+                    this.skillsChips.setOnCheckedChangeListener { chipGroup, checkedId ->
                         val selected_service = chipGroup.findViewById<Chip>(checkedId)?.text
                         Toast.makeText(chipGroup.context, selected_service ?: "No Choice", Toast.LENGTH_LONG).show()
                     }
