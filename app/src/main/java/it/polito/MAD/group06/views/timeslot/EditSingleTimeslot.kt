@@ -1,4 +1,4 @@
-package it.polito.MAD.group06.views
+package it.polito.MAD.group06.views.timeslot
 
 import android.app.TimePickerDialog
 import android.os.Bundle

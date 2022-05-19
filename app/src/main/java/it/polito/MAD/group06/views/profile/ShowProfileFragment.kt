@@ -1,4 +1,4 @@
-package it.polito.MAD.group06.views
+package it.polito.MAD.group06.views.profile
 
 import android.content.Context
 import android.os.Bundle
