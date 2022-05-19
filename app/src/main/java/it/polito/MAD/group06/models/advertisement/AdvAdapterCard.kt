@@ -10,9 +10,10 @@ import it.polito.MAD.group06.viewmodels.AdvertisementViewModel
 /**
  * [AdvAdapterCard] extending the Adapter of the [RecyclerView] and implements the required methods.
  */
-class AdvAdapterCard(private val adsList: List<Advertisement>,
-                     private val advViewModel: AdvertisementViewModel,
-                     private val selectedSkill:String) : RecyclerView.Adapter<AdvViewHolderCard>() {
+class AdvAdapterCard(
+    private val adsList: List<Advertisement>,
+    private val advViewModel: AdvertisementViewModel
+) : RecyclerView.Adapter<AdvViewHolderCard>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdvViewHolderCard {
         val vg = LayoutInflater
@@ -25,13 +26,11 @@ class AdvAdapterCard(private val adsList: List<Advertisement>,
      * Bind operations.
      */
     override fun onBindViewHolder(holder: AdvViewHolderCard, position: Int) {
-        if(selectedSkill=="All" || adsList[position].listOfSkills.contains(selectedSkill)) {
-            holder.bind(adsList[position])
-            holder.itemView.setOnClickListener { view ->
-                advViewModel.setSingleAdvertisement((adsList[adsList.indexOf(adsList[position])]))
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_ShowListTimeslots_to_showSingleTimeslot)
-            }
+        holder.bind(adsList[position])
+        holder.itemView.setOnClickListener { view ->
+            advViewModel.setSingleAdvertisement((adsList[adsList.indexOf(adsList[position])]))
+            Navigation.findNavController(view)
+                .navigate(R.id.action_ShowListTimeslots_to_showSingleTimeslot)
         }
     }
 

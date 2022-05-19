@@ -1,6 +1,7 @@
 package it.polito.MAD.group06.views.timeslot
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,7 +56,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
             if (listOfAdv.isNotEmpty()) {
                 this.recyclerView = view.findViewById(R.id.rvAdvFullList)
                 this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-                this.recyclerView.adapter = AdvAdapterCard(listOfAdv, advertisementViewModel, arguments?.getString("selected_skill")?:"All")
+                this.recyclerView.adapter = AdvAdapterCard(listOfAdv, advertisementViewModel)
             }
         }
 
