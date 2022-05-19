@@ -72,4 +72,8 @@ class SkillViewModel(application: Application) : AndroidViewModel(application) {
         this.repositorySkill.insertSkill(skill)
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        listenerRegistration.remove()
+    }
 }

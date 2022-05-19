@@ -75,4 +75,9 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        listenerRegistration.remove()
+    }
+
 }

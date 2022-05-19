@@ -98,4 +98,10 @@ class ServiceViewModel(application: Application) : AndroidViewModel(application)
         this._singleServicePH = newService
         this._pvtService.value = _singleServicePH
     }
+
+
+    override fun onCleared() {
+        super.onCleared()
+        listenerRegistration.remove()
+    }
 }

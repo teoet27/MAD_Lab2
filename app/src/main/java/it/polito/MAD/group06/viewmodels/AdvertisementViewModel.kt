@@ -238,4 +238,10 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             }
         }
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        listenerRegistration.remove()
+    }
+
 }
