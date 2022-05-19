@@ -20,7 +20,7 @@ import it.polito.MAD.group06.viewmodels.AdvertisementViewModel
 
 class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
 
-    private val advViewModel: AdvertisementViewModel by activityViewModels()
+    private val advertisementViewModel: AdvertisementViewModel by activityViewModels()
     private lateinit var recyclerView: RecyclerView
     private lateinit var newAdvButton: Button
 
@@ -45,7 +45,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
             findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
         }
 
-        advViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
+        advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
             /**
              * If there are no advertisements in the DB proper texts are shown.
              */
@@ -55,7 +55,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
             if (listOfAdv.isNotEmpty()) {
                 this.recyclerView = view.findViewById(R.id.rvAdvFullList)
                 this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-                this.recyclerView.adapter = AdvAdapterCard(listOfAdv, advViewModel, arguments?.getString("selected_skill")?:"All")
+                this.recyclerView.adapter = AdvAdapterCard(listOfAdv, advertisementViewModel, arguments?.getString("selected_skill")?:"All")
             }
         }
 
