@@ -62,7 +62,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         this.newDescription = view.findViewById(R.id.newDescription)
         this.closeButton = view.findViewById(R.id.closeButton)
         this.confirmButton = view.findViewById(R.id.confirmButton)
-        this.datePicker = view.findViewById(R.id.date_Picker)
+        this.datePicker = view.findViewById(R.id.newDatePicker)
         this.skillsChipGroup = view.findViewById(R.id.skillsGroupID)
         this.addToSkillListButton = view.findViewById(R.id.addNewSkillToListButtonID)
 

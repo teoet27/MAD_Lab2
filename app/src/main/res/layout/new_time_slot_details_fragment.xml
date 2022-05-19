@@ -220,7 +220,7 @@
                 app:drawableTint="#454749" />
 
             <DatePicker
-                android:id="@+id/date_Picker"
+                android:id="@+id/newDatePicker"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:calendarViewShown="false"
