@@ -71,6 +71,7 @@ class EditProfileFragment : Fragment() {
         this.editSkillsOBJ = view.findViewById(R.id.edit_skillsListID)
         this.editPhoneOBJ = view.findViewById(R.id.edit_phone_show_ID)
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
+        this.skills_chips = view.findViewById(R.id.edit_skill_chips_group)
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
             // Fullname
