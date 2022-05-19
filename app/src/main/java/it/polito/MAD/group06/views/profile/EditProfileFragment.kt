@@ -84,22 +84,14 @@ class EditProfileFragment : Fragment() {
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
             // Save the ID
             this.userID = userProfile.id!!
-
             // Fullname
             this.editFullNameOBJ.setText(userProfile.fullName)
-
             // Nickname
-            if (userProfile.nickname?.compareTo("") == 0) {
-                this.editNicknameOBJ.setText("No nickname provided.")
-            } else {
-                this.editNicknameOBJ.setText(userProfile.nickname)
-            }
-
+            this.editNicknameOBJ.setText(userProfile.nickname)
             // Qualification
             this.editQualificationOBJ.setText(userProfile.qualification)
             // Phone Number
             this.editPhoneOBJ.setText(userProfile.phoneNumber)
-
             // Location
             this.editLocationOBJ.setText(userProfile.location)
 
@@ -173,17 +165,19 @@ class EditProfileFragment : Fragment() {
      * saveData is a private method for saving data before fragment transaction
      */
     private fun saveData() {
-        userProfileViewModel.editUserProfile(UserProfile(
-            this.userID,
-            this.editNicknameOBJ.text.toString(),
-            editFullNameOBJ.text.toString(),
-            editQualificationOBJ.text.toString(),
-            editDescriptionOBJ.text.toString(),
-            editEmailOBJ.text.toString(),
-            editPhoneOBJ.text.toString(),
-            editLocationOBJ.text.toString(),
-            this.skillList
-        ))
+        userProfileViewModel.editUserProfile(
+            UserProfile(
+                this.userID,
+                this.editNicknameOBJ.text.toString(),
+                editFullNameOBJ.text.toString(),
+                editQualificationOBJ.text.toString(),
+                editDescriptionOBJ.text.toString(),
+                editEmailOBJ.text.toString(),
+                editPhoneOBJ.text.toString(),
+                editLocationOBJ.text.toString(),
+                this.skillList
+            )
+        )
         advertisementViewModel.updateAdvAccountNameByAccountID(this.userID, editFullNameOBJ.text.toString())
     }
 
