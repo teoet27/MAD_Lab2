@@ -57,7 +57,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             val id = this.get("id") as Long
             val title = this.get("title") as String
             val description = this.get("description") as String
-            val listOfSkills = this.get("list_of_skills") as ArrayList<String>
+            val listOfSkills = this.get("list_of_skills") as ArrayList<String>?
             val location = this.get("location") as String
             val date = this.get("date") as String
             val startingTime = this.get("starting_time") as String
@@ -66,7 +66,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             val accountName = this.get("account_name") as String
             val accountID = this.get("accountID") as Long
             Advertisement(
-                id, title, description, listOfSkills,
+                id, title, description, listOfSkills?: arrayListOf<String>(),
                 location, date, startingTime,
                 endingTime, duration, accountName,
                 accountID
@@ -84,7 +84,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     fun insertAdvertisement(ad: Advertisement) {
         db
             .collection("Advertisement")
-            .document(ad.id.toString())
+            .document(/*ad.id.toString()*/)
             .set(
                 mapOf(
                     "id" to ad.id,
