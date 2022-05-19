@@ -150,8 +150,49 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     fun editAdvertisement(ad: Advertisement) {
         db
             .collection("Advertisement")
-            .document()
-            .set(mapOf(ad.id.toString() to ad))
+            .document(ad.id.toString())
+            .set(
+                mapOf(
+                    "id" to ad.id,
+                    "title" to ad.advTitle,
+                    "description" to ad.advDescription,
+                    "list_of_skills" to ad.listOfSkills,
+                    "location" to ad.advLocation,
+                    "date" to ad.advDate,
+                    "starting_time" to ad.advStartingTime,
+                    "ending_time" to ad.advEndingTime,
+                    "duration" to ad.advDuration,
+                    "account_name" to ad.advAccount,
+                    "accountID" to ad.accountID
+                )
+            )
+            .addOnSuccessListener {
+                Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    fun editAdvertisementByID(id: Long, ad: Advertisement) {
+        db
+            .collection("Advertisement")
+            .document(id.toString())
+            .set(
+                mapOf(
+                    "id" to ad.id,
+                    "title" to ad.advTitle,
+                    "description" to ad.advDescription,
+                    "list_of_skills" to ad.listOfSkills,
+                    "location" to ad.advLocation,
+                    "date" to ad.advDate,
+                    "starting_time" to ad.advStartingTime,
+                    "ending_time" to ad.advEndingTime,
+                    "duration" to ad.advDuration,
+                    "account_name" to ad.advAccount,
+                    "accountID" to ad.accountID
+                )
+            )
             .addOnSuccessListener {
                 Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
             }
@@ -211,6 +252,25 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             }
 
         return outAdv
+    }
+
+    fun updateAdvAccountNameByAccountID(accountID: Long, newAccountName: String) {
+        db
+            .collection("Advertisement")
+            .addSnapshotListener { listOfAdvs, e ->
+                if (e != null) {
+                    throw Exception()
+                } else {
+                    for (adv in listOfAdvs!!) {
+                        val thatAdv = adv.toObject(Advertisement::class.java)
+                        if (thatAdv.accountID == accountID)
+                        {
+                            thatAdv.advAccount = newAccountName
+                            this.editAdvertisementByID(thatAdv.id!!, thatAdv)
+                        }
+                    }
+                }
+            }
     }
 
     /**
