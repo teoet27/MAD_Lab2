@@ -262,8 +262,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     throw Exception()
                 } else {
                     for (adv in listOfAdvs!!) {
-                        val thatAdv = adv.toObject(Advertisement::class.java)
-                        if (thatAdv.accountID == accountID)
+                        val thatAdv = adv.toAdvertisement()
+                        if (thatAdv?.accountID == accountID)
                         {
                             thatAdv.advAccount = newAccountName
                             this.editAdvertisementByID(thatAdv.id!!, thatAdv)
