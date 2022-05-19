@@ -121,6 +121,19 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             }
     }
 
+    fun removeAdvertisementByID(id: Long) {
+        db
+            .collection("Advertisement")
+            .document(id.toString())
+            .delete()
+            .addOnSuccessListener {
+                Toast.makeText(context, "Deletion completed.", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Deletion failed.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
     fun removeAdvertisementByAccount(accountID: Int) {
         db
             .collection("Advertisement")
