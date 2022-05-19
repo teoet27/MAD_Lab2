@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
@@ -19,6 +20,17 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     private val db = FirebaseFirestore.getInstance()
     private var listenerRegistration: ListenerRegistration
     private val context = application
+
+    /**
+     * Single [UserProfile]
+     */
+    private var _singleUserProfilePH = UserProfile(
+        -1, "", "", "", "", "", "", "", null
+    )
+    private val _pvtUserProfile = MutableLiveData<UserProfile>().also {
+        it.value = _singleUserProfilePH
+    }
+    val currentUser: LiveData<UserProfile> = this._pvtUserProfile
 
     /**
      * List of Advertisements
@@ -58,6 +70,14 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             e.printStackTrace()
             null
         }
+    }
+
+    fun setCurrentUserProfile(account: GoogleSignInAccount){
+        this._singleUserProfilePH.fullName = account.displayName
+        this._singleUserProfilePH.email = account.email
+        this._singleUserProfilePH.location = "placeholder location"
+        this._singleUserProfilePH.phoneNumber = "000 000 000"
+        this._pvtUserProfile.value = this._singleUserProfilePH
     }
 
     /**

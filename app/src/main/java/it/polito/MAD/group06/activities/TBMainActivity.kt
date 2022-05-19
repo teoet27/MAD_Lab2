@@ -31,8 +31,8 @@ class TBMainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    private val usrVM by viewModels<UserProfileViewModel>()
-    private val advVM by viewModels<AdvertisementViewModel>()
+    private val usrViewModel: UserProfileViewModel by viewModels<UserProfileViewModel>()
+    private val advViewModel: AdvertisementViewModel by viewModels<AdvertisementViewModel>()
 
     // declare the GoogleSignInClient
     lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -116,7 +116,7 @@ class TBMainActivity : AppCompatActivity() {
         advVM.insertAdvertisement(Advertisement(4, "ok", "ok", "ok", "ok", "ok", "ok", 0.0, "guidino", 0))
         */
 
-        usrVM.profile.observe(this) { user ->
+        usrViewModel.currentUser.observe(this) { user ->
             if (user != null) {
                 fullnameHeader.text = user.fullName
                 nicknameHeader.text = "@${user.nickname}"
