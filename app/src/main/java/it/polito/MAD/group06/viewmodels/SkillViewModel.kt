@@ -64,6 +64,8 @@ class SkillViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+
+
     fun getAll(): LiveData<List<Skill>> {
         return this.repositorySkill.getAll()
     }

@@ -106,7 +106,6 @@ class ShowProfileFragment : Fragment() {
                     }
                 }
 
-
                 //this.emailOBJ.text = userProfile.email
                 this.emailOBJ.text = context?.let { getEmail(it) }
                 this.descriptionOBJ.text = userProfile.description

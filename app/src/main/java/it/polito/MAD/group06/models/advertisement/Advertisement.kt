@@ -3,6 +3,7 @@ package it.polito.MAD.group06.models.advertisement
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.firebase.firestore.PropertyName
+import it.polito.MAD.group06.models.skill.Skill
 
 /**
  * [Advertisement] data class.
@@ -33,36 +34,33 @@ data class Advertisement(
     @set:PropertyName("description")
     var advDescription: String,
 
+    @get:PropertyName("list_of_skills")
+    @set:PropertyName("list_of_skills")
+    var listOfSkills: ArrayList<Skill>,
 
     @get:PropertyName("location")
     @set:PropertyName("location")
     var advLocation: String,
 
-
     @get:PropertyName("date")
     @set:PropertyName("date")
     var advDate: String,
-
 
     @get:PropertyName("starting_time")
     @set:PropertyName("starting_time")
     var advStartingTime: String,
 
-
     @get:PropertyName("ending_time")
     @set:PropertyName("ending_time")
     var advEndingTime: String,
-
 
     @get:PropertyName("duration")
     @set:PropertyName("duration")
     var advDuration: Double,
 
-
     @get:PropertyName("account_name")
     @set:PropertyName("account_name")
     var advAccount: String,
-
 
     @get:PropertyName("accountID")
     @set:PropertyName("accountID")

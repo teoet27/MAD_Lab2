@@ -11,7 +11,6 @@ data class Skill(
     @set:PropertyName("id")
     var id: Long,
 
-
     @get:PropertyName("skill_name")
     @set:PropertyName("skill_name")
     var skillName: String

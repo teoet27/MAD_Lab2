@@ -15,6 +15,7 @@ import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -32,7 +33,7 @@ class GoogleLoginActivity : AppCompatActivity() {
 
     private lateinit var oneTapClient: SignInClient
     private lateinit var signInRequest: BeginSignInRequest
-
+    private lateinit var account: GoogleSignInAccount
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
 
@@ -100,7 +101,7 @@ class GoogleLoginActivity : AppCompatActivity() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 // Google Sign In was successful, authenticate with Firebase
-                val account = task.getResult(ApiException::class.java)!!
+                this.account = task.getResult(ApiException::class.java)!!
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
                 firebaseAuthWithGoogle(account.idToken!!)
                 /*
@@ -130,6 +131,9 @@ class GoogleLoginActivity : AppCompatActivity() {
 
                     // start main activity
                     val intent = Intent(this, TBMainActivity::class.java)
+                    intent.putExtra("id", this.account.id)
+                    intent.putExtra("fullname", this.account.displayName)
+                    intent.putExtra("email", this.account.email)
                     startActivity(intent)
                     finish()
                 } else {

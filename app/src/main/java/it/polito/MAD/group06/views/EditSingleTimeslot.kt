@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import it.polito.MAD.group06.R
 import it.polito.MAD.group06.models.advertisement.Advertisement
+import it.polito.MAD.group06.models.skill.Skill
 import it.polito.MAD.group06.viewmodels.AdvertisementViewModel
 import it.polito.MAD.group06.viewmodels.UserProfileViewModel
 import java.text.SimpleDateFormat
@@ -24,7 +25,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     private val advViewModel: AdvertisementViewModel by activityViewModels()
     private val usrViewModel: UserProfileViewModel by activityViewModels()
     private val dumbAdvertisement: Advertisement = Advertisement(
-        null, "", "",
+        null, "", "", arrayListOf<Skill>(),
         "", "", "", "", 0.0,
         "", -1
     )
