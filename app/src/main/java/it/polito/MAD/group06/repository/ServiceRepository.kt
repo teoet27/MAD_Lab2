@@ -1,12 +1,12 @@
 package it.polito.MAD.group06.repository
 
 import android.app.Application
+import com.google.firebase.firestore.FirebaseFirestore
 import it.polito.MAD.group06.models.service.Service
 import it.polito.MAD.group06.models.service.ServiceDatabase
-import it.polito.MAD.group06.remote.FirestoreDatabase
 
 class ServiceRepository(application: Application) {
-    private val db = FirestoreDatabase.getDatabase(application)
+    private val db = FirebaseFirestore.getInstance()
     private val serviceDAO = ServiceDatabase.getDatabase(application).serviceDao()
 
     fun insertService(name:String) = serviceDAO.insertService(Service(name))
