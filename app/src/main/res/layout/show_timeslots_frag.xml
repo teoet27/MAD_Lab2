@@ -42,11 +42,8 @@
         android:layout_height="50dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        android:background="@drawable/rounded_corners_total"
-        android:backgroundTint="@color/orange_poli"
-        android:text="+"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:background="@drawable/plus_button"
+        app:backgroundTint="@color/orange_poli"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
