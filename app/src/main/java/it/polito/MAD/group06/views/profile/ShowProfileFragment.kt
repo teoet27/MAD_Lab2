@@ -80,7 +80,6 @@ class ShowProfileFragment : Fragment() {
             if (userProfile.skills.isNullOrEmpty()) {
                 this.skillsOBJ.text = getString(R.string.noskills)
             } else {
-                //this.skillsOBJ.text = fromArrayListToString(userProfile.skills!!)
                 userProfile.skills!!.forEach { sk ->
                     this.skills_chips.addChip(requireContext(), sk)
                     this.skills_chips.setOnCheckedChangeListener { chipGroup, checkedId ->

@@ -182,7 +182,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="16dp"
-                android:text="I offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available.\nI offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available.\nI offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available.\nI offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available.\nI offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available."
+                android:text="xxxxx"
                 android:textColor="#000000"
                 android:textSize="20sp" />
 
