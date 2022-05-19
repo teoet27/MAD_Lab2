@@ -54,7 +54,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
         this.deleteButton = view.findViewById(R.id.deleteButton)
         this.datePicker = view.findViewById(R.id.newDateDP)
 
-        usrViewModel.profile.observe(viewLifecycleOwner) { user ->
+        usrViewModel.currentUser.observe(viewLifecycleOwner) { user ->
             accountName = if (user?.fullName == null) "Guido Saracco" else user.fullName!!
         }
 
@@ -114,7 +114,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                     dumbAdvertisement.advStartingTime = advStartingTime.text.toString()
                     dumbAdvertisement.advEndingTime = advEndingTime.text.toString()
                     dumbAdvertisement.advDuration = timeDifference
-                    advViewModel.editSingleAdvertisement(dumbAdvertisement)
+                    // TODO
+                    // advViewModel.editSingleAdvertisement(dumbAdvertisement)
                     Toast.makeText(
                         context, "Advertisement edited successfully!", Toast.LENGTH_LONG
                     ).show()

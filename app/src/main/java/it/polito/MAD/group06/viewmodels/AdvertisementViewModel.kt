@@ -9,7 +9,6 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import it.polito.MAD.group06.models.advertisement.Advertisement
-import it.polito.MAD.group06.repository.AdvertisementRepository
 import java.lang.Exception
 import kotlin.concurrent.thread
 
@@ -17,7 +16,6 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     /**
      * Repository
      */
-    private val repositoryAdv = AdvertisementRepository(application)
     private val db = FirebaseFirestore.getInstance()
     private var listenerRegistration: ListenerRegistration
     private val context = application
@@ -211,34 +209,6 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     fun setSingleAdvertisement(newAdv: Advertisement) {
         this._singleAdvertisementPH = newAdv
         this._pvtAdvertisement.value = _singleAdvertisementPH
-    }
-
-    /**
-     * editSingleAdvertisement is a method to update the info about a single [Advertisement] with the
-     * new ones read from the edit view.
-     * @param updatedAdv the object of class [Advertisement] which contains all the information to update
-     * the advertisement with a certain id.
-     */
-    fun editSingleAdvertisement(updatedAdv: Advertisement) {
-        thread {
-            repositoryAdv.updateAdv(updatedAdv)
-        }
-        this._singleAdvertisementPH = updatedAdv
-    }
-
-    /**
-     * updateAccountName is a method to update the name of the creator of the advertisement
-     * after it's been changed from the edit view for the profile.
-     * @param advList a complete list of advertisement
-     * @param accountName the new account name from the update profile
-     */
-    fun updateAccountName(advList: List<Advertisement>, accountName: String) {
-        thread {
-            for (adv in advList) {
-                adv.advAccount = accountName
-                repositoryAdv.updateAccountName(adv)
-            }
-        }
     }
 
     /**

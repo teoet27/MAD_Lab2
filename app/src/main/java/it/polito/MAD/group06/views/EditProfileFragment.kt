@@ -43,8 +43,8 @@ class EditProfileFragment : Fragment() {
     private val REQUEST_IMAGE_CAPTURE = 1
     private val PICK_IMAGE = 100
 
-    private val advViewModel by activityViewModels<AdvertisementViewModel>()
-    private val usrViewModel by activityViewModels<UserProfileViewModel>()
+    private val advertisementViewModel by activityViewModels<AdvertisementViewModel>()
+    private val userProfileViewModel by activityViewModels<UserProfileViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,7 +71,7 @@ class EditProfileFragment : Fragment() {
         this.editPhoneOBJ = view.findViewById(R.id.edit_phone_show_ID)
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
 
-        usrViewModel.profile.observe(this.viewLifecycleOwner) { userProfile ->
+        userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
             if (userProfile != null) {
                 this.editFullNameOBJ.setText(userProfile.fullName)
 
@@ -120,8 +120,9 @@ class EditProfileFragment : Fragment() {
      * saveData is a private method for saving data before fragment transaction
      */
     private fun saveData() {
-        usrViewModel.profile.observe(this.viewLifecycleOwner) {
-            usrViewModel.editProfile(
+        userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) {
+            // TODO
+            /*userProfileViewModel.editProfile(
                 UserProfile(
                     it.id,
                     editNicknameOBJ.text.toString(),
@@ -133,10 +134,11 @@ class EditProfileFragment : Fragment() {
                     editLocationOBJ.text.toString(),
                     fromStringToArrayList(editSkillsOBJ.text.toString()),
                 )
-            )
+            )*/
         }
-        advViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { fullList ->
-            advViewModel.updateAccountName(fullList, editFullNameOBJ.text.toString())
+        advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { fullList ->
+            // TODO
+            // advertisementViewModel.updateAccountName(fullList, editFullNameOBJ.text.toString())
         }
     }
 
