@@ -247,24 +247,19 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private fun showNewSkillInputWindow(context: Context, chipGroup: ChipGroup) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this.context)
         val newSkillTitle = EditText(this.context)
-        val newSkillCategory = EditText(this.context)
         val linearLayout = LinearLayout(this.context)
 
         builder.setTitle("Insert here your new skill")
 
         newSkillTitle.hint = "What is your new skill?"
-        newSkillCategory.hint = "What category does it belong to?"
 
         newSkillTitle.inputType = InputType.TYPE_CLASS_TEXT
-        newSkillCategory.inputType = InputType.TYPE_CLASS_TEXT
 
         newSkillTitle.gravity = Gravity.LEFT
-        newSkillCategory.gravity = Gravity.LEFT
 
         linearLayout.orientation = LinearLayout.VERTICAL
         linearLayout.setPadding(64, 0, 64, 0)
         linearLayout.addView(newSkillTitle)
-        linearLayout.addView(newSkillCategory)
 
         builder.setView(linearLayout)
 
@@ -273,16 +268,15 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
          */
         builder.setPositiveButton("Create", DialogInterface.OnClickListener { dialog, which ->
             newSkillTitleLabel = newSkillTitle.text.toString()
-            newSkillCategoryLabel = newSkillCategory.text.toString()
             if (newSkillTitleLabel.isNotEmpty() && newSkillCategoryLabel.isNotEmpty()) {
-                val newSkill = Skill(Random().nextLong(), newSkillTitleLabel, newSkillCategoryLabel)
+                val newSkill = Skill(Random().nextLong(), newSkillTitleLabel)
                 chipGroup.addChip(context, newSkill)
                 Snackbar.make(
                     requireView(), "New skill added!", Snackbar.LENGTH_LONG
                 ).show()
             } else {
                 Snackbar.make(
-                    requireView(), "You must provide a name and a category for the new skill.", Snackbar.LENGTH_LONG
+                    requireView(), "You must provide a name for the new skill.", Snackbar.LENGTH_LONG
                 ).show()
             }
         })

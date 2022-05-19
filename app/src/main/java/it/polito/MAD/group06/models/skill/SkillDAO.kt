@@ -18,7 +18,4 @@ interface SkillDAO {
     @Query("DELETE FROM skillTable WHERE id = :id")
     fun removeSkill(id: Long)
 
-    @Query("SELECT * FROM skillTable WHERE skillCategory = :category")
-    fun findByCategory(category: String): LiveData<List<Skill>>
-
 }
