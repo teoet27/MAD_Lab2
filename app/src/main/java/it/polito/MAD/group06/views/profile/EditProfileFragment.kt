@@ -1,8 +1,10 @@
 package it.polito.MAD.group06.views.profile
 
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
@@ -14,11 +16,14 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipDrawable
+import com.google.android.material.chip.ChipGroup
 import it.polito.MAD.group06.R
 import it.polito.MAD.group06.viewmodels.UserProfileViewModel
 import it.polito.MAD.group06.utilities.*
@@ -37,9 +42,11 @@ class EditProfileFragment : Fragment() {
     private lateinit var editSkillsOBJ: EditText
     private lateinit var editPhoneOBJ: EditText
     private lateinit var profilePictureOBJ: ImageView
+    private lateinit var deleteButton: ImageView
     private lateinit var photoURI: Uri
     private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
+    private lateinit var skills_chips: ChipGroup
 
     private val REQUEST_IMAGE_CAPTURE = 1
     private val PICK_IMAGE = 100
@@ -58,6 +65,7 @@ class EditProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Camera
         val camera = view.findViewById<ImageView>(R.id.edit_camera_button)
         registerForContextMenu(camera)
         camera.setOnClickListener { activity?.openContextMenu(camera) }
@@ -94,8 +102,8 @@ class EditProfileFragment : Fragment() {
 
             // Skills
             if (!userProfile.skills.isNullOrEmpty()) {
-                userProfile.skills!!.forEach { sk ->
-                    this.skills_chips.addChip(requireContext(), sk)
+                userProfile.skills!!.forEach { skill ->
+                    this.skills_chips.addChipForEdit(requireContext(), skill)
                     this.skills_chips.setOnCheckedChangeListener { chipGroup, checkedId ->
                         val selected_service = chipGroup.findViewById<Chip>(checkedId)?.text
                         Toast.makeText(chipGroup.context, selected_service ?: "No Choice", Toast.LENGTH_LONG).show()
@@ -103,16 +111,16 @@ class EditProfileFragment : Fragment() {
                 }
             }
 
-            //this.editEmailOBJ.setText(userProfile.email)
-            this.editEmailOBJ.setText(context?.let { GoogleLoginSavedPreferencesObject.getEmail(it) })
-
+            // Email
+            this.editEmailOBJ.setText(userProfile.email)
+            // Description
             this.editDescriptionOBJ.setText(userProfile.description)
 
+            // Profile Picture
             profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
                 .toString() + '/' + resources.getString(R.string.profile_picture_filename)
             profilePictureDirectoryPath =
                 view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
-
             getBitmapFromFile(profilePicturePath)?.also {
                 this.profilePictureOBJ.setImageBitmap(it)
             } ?: this.profilePictureOBJ.setImageResource(R.drawable.propic)
@@ -127,6 +135,34 @@ class EditProfileFragment : Fragment() {
                 findNavController().navigate(R.id.action_editProfileFragment_to_showProfileFragment)
             }
         })
+    }
+
+    /**
+     * Dinamically create a chip within a chip group
+     *
+     * @param context       parent view context
+     * @param label         chip name
+     */
+    private fun ChipGroup.addChipForEdit(context: Context, label: String) {
+        Chip(context).apply {
+            id = View.generateViewId()
+            text = label
+            setChipDrawable(ContextCompat.getDrawable(context, R.drawable.ic_close_black_24dp) as ChipDrawable)
+            isClickable = true
+            isCheckable = false
+            isCheckedIconVisible = false
+            isFocusable = true
+            setOnClickListener {
+                if (isChecked) {
+                    setTextColor(ContextCompat.getColor(context, R.color.white))
+                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.red_deleting))
+                } else {
+                    setTextColor(ContextCompat.getColor(context, R.color.black))
+                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lightGray))
+                }
+            }
+            addView(this)
+        }
     }
 
     /**
