@@ -36,7 +36,7 @@ class ShowProfileFragment : Fragment() {
     private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
 
-    private val profile_vm by viewModels<UserProfileViewModel>()
+    private val userProfileViewModel by viewModels<UserProfileViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,10 +60,10 @@ class ShowProfileFragment : Fragment() {
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
         this.skills_chips = view.findViewById(R.id.skill_chips_group)
 
-        profile_vm.profile.observe(this.viewLifecycleOwner) { userProfile ->
+        userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
 
-            if (userProfile == null) {
-                profile_vm.editProfile(
+            /*if (userProfile == null) {
+                userProfileViewModel.editProfile(
                     UserProfile(
                         null,
                         "rettore",
@@ -114,7 +114,7 @@ class ShowProfileFragment : Fragment() {
                 getBitmapFromFile(profilePicturePath)?.also {
                     this.profilePictureOBJ.setImageBitmap(it)
                 } ?: this.profilePictureOBJ.setImageResource(R.drawable.propic)
-            }
+            }*/
 
 
         }

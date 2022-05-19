@@ -29,7 +29,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
     private val advViewModel by activityViewModels<AdvertisementViewModel>()
     private val usrViewModel by activityViewModels<UserProfileViewModel>()
-    private val skillViewModel by activityViewModels<SkillViewModel>()
+
     private lateinit var newTitle: EditText
     private lateinit var newLocation: EditText
     private lateinit var newDate: TextView
@@ -66,17 +66,9 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         this.skillsChipGroup = view.findViewById(R.id.skillsGroupID)
         this.addToSkillListButton = view.findViewById(R.id.addNewSkillToListButtonID)
 
-        usrViewModel.profile.observe(viewLifecycleOwner) { user ->
-            if (user == null || user.fullName == null)
-                accountName = "Guido Saracco"
-            else
-                accountName = user.fullName!!
+        usrViewModel.currentUser.observe(viewLifecycleOwner) { user ->
+            accountName = user.fullName!!
         }
-        /*
-        usrViewModel.profile.observe(viewLifecycleOwner) {
-            this.skillList = ArrayListConverter().fromStringToListOfSkills(it.skills)!!
-        }
-         */
 
         this.newStartingTime.setOnClickListener { popTimePickerStarting(this.newStartingTime) }
         this.newEndingTime.setOnClickListener { popTimePickerEnding(this.newEndingTime) }

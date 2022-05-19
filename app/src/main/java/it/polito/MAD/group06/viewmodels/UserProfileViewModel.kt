@@ -2,20 +2,16 @@ package it.polito.MAD.group06.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
-import it.polito.MAD.group06.models.userprofile.ArrayListConverter
 import it.polito.MAD.group06.models.userprofile.UserProfile
-import it.polito.MAD.group06.repository.UserProfileRepository
 import java.lang.Exception
-import kotlin.concurrent.thread
 
 class UserProfileViewModel(application: Application) : AndroidViewModel(application) {
-    private val repo = UserProfileRepository(application)
     private val db = FirebaseFirestore.getInstance()
     private var listenerRegistration: ListenerRegistration
     private val context = application
@@ -80,11 +76,10 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
         this._pvtUserProfile.value = this._singleUserProfilePH
     }
 
-/*
-    fun getListOfSkills(): LiveData<MutableSet<String>> {
+    fun getListOfSkills(viewLifecycleOwner: LifecycleOwner): LiveData<MutableSet<String>> {
         val outListOfSkills = MutableLiveData<MutableSet<String>>()
 
-        listOfUsers.observe() {
+        listOfUsers.observe(viewLifecycleOwner) {
             for (u in it) {
                 for(skill in u.skills!!) {
                     outListOfSkills.value?.add(skill)
@@ -93,22 +88,6 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
         }
 
         return outListOfSkills
-    }
-*/
-
-    /**
-     * This is the instance of the profile fetched from the database through the repository
-     */
-    var profile = repo.profile()
-
-    /**
-     * editProfile
-     * @param profile the data structure with all the updating fields
-     */
-    fun editProfile(profile: UserProfile) {
-        thread {
-            repo.editProfile(profile)
-        }
     }
 
     /**
