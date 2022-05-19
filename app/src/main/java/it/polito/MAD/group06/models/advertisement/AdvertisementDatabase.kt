@@ -4,8 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import it.polito.MAD.group06.models.userprofile.ArrayListConverter
 
 @Database(entities = [Advertisement::class], version = 1)
+@TypeConverters(ArrayListConverter::class)
 abstract class AdvertisementDatabase : RoomDatabase() {
     abstract fun adsDao(): AdvertisementDAO
 
