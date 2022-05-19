@@ -4,8 +4,13 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import it.polito.MAD.group06.models.advertisement.Advertisement
 import it.polito.MAD.group06.models.service.Service
 import it.polito.MAD.group06.repository.ServiceRepository
+import java.lang.Exception
 import kotlin.concurrent.thread
 
 class ServiceViewModel(application: Application) : AndroidViewModel(application) {
@@ -13,6 +18,9 @@ class ServiceViewModel(application: Application) : AndroidViewModel(application)
      * Repository
      */
     private val repositoryService = ServiceRepository(application)
+    private val db = FirebaseFirestore.getInstance()
+    private var listenerRegistration: ListenerRegistration
+    private val context = application
 
     /**
      * Single [Service]
@@ -23,6 +31,35 @@ class ServiceViewModel(application: Application) : AndroidViewModel(application)
         it.value = _singleServicePH
     }
     val service: LiveData<Service> = this._pvtService
+
+    /**
+     * List of Services
+     */
+    private val _services = MutableLiveData<List<Service>>()
+    val listOfServices: LiveData<List<Service>> = _services
+
+    init {
+        listenerRegistration = db.collection("Service")
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    _services.value = emptyList()
+                } else {
+                    _services.value = value!!.mapNotNull { elem ->
+                        elem.toService()
+                    }
+                }
+            }
+    }
+
+    private fun DocumentSnapshot.toService(): Service? {
+        return try {
+            val serviceName = get("service_name") as String
+            Service(serviceName)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 
     /**
      * getFullListOfServices

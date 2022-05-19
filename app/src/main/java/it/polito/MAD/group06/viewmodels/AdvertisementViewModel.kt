@@ -1,15 +1,14 @@
 package it.polito.MAD.group06.viewmodels
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import it.polito.MAD.group06.models.advertisement.Advertisement
-import it.polito.MAD.group06.remote.FirestoreDatabase
 import it.polito.MAD.group06.repository.AdvertisementRepository
 import java.lang.Exception
 import kotlin.concurrent.thread
@@ -19,7 +18,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      * Repository
      */
     private val repositoryAdv = AdvertisementRepository(application)
-    private val db = FirestoreDatabase.getDatabase(application)
+    private val db = FirebaseFirestore.getInstance()
     private var listenerRegistration: ListenerRegistration
     private val context = application
 
