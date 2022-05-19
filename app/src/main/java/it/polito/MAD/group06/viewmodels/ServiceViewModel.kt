@@ -99,7 +99,9 @@ class ServiceViewModel(application: Application) : AndroidViewModel(application)
         this._pvtService.value = _singleServicePH
     }
 
-
+    /**
+     * Unsubscribe from the Listener Registration
+     */
     override fun onCleared() {
         super.onCleared()
         listenerRegistration.remove()

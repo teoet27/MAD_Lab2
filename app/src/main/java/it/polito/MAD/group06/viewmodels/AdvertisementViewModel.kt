@@ -239,6 +239,9 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
+    /**
+     * Unsubscribe from the Listener Registration
+     */
     override fun onCleared() {
         super.onCleared()
         listenerRegistration.remove()

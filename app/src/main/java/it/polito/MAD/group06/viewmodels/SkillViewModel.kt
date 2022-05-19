@@ -72,6 +72,9 @@ class SkillViewModel(application: Application) : AndroidViewModel(application) {
         this.repositorySkill.insertSkill(skill)
     }
 
+    /**
+     * Unsubscribe from the Listener Registration
+     */
     override fun onCleared() {
         super.onCleared()
         listenerRegistration.remove()
