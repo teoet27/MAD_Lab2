@@ -21,7 +21,6 @@ import com.google.android.material.snackbar.Snackbar
 import it.polito.MAD.group06.R
 import it.polito.MAD.group06.models.advertisement.Advertisement
 import it.polito.MAD.group06.viewmodels.AdvertisementViewModel
-import it.polito.MAD.group06.viewmodels.SkillViewModel
 import it.polito.MAD.group06.viewmodels.UserProfileViewModel
 import java.text.SimpleDateFormat
 import java.util.*
