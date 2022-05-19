@@ -3,7 +3,6 @@ package it.polito.MAD.group06.activities
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
@@ -21,7 +20,6 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import it.polito.MAD.group06.R
 import it.polito.MAD.group06.databinding.ActivityMainBinding
-import it.polito.MAD.group06.models.advertisement.Advertisement
 import it.polito.MAD.group06.utilities.getBitmapFromFile
 import it.polito.MAD.group06.viewmodels.AdvertisementViewModel
 import it.polito.MAD.group06.viewmodels.UserProfileViewModel
@@ -31,8 +29,8 @@ class TBMainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    private val userViewModel: UserProfileViewModel by viewModels<UserProfileViewModel>()
-    private val advViewModel: AdvertisementViewModel by viewModels<AdvertisementViewModel>()
+    private val userProfileViewModel: UserProfileViewModel by viewModels<UserProfileViewModel>()
+    private val advertisementViewModel: AdvertisementViewModel by viewModels<AdvertisementViewModel>()
 
     // declare the GoogleSignInClient
     lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -56,7 +54,7 @@ class TBMainActivity : AppCompatActivity() {
         val fullname = intent.getStringExtra("fullname")
         val email = intent.getStringExtra("email")
 
-        userViewModel.setCurrentUserProfile(id!!, fullname!!, email!!)
+        userProfileViewModel.setCurrentUserProfile(id!!, fullname!!, email!!)
 
         // inflate the view hierarchy
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -114,15 +112,7 @@ class TBMainActivity : AppCompatActivity() {
         val nicknameHeader = navView.getHeaderView(0).findViewById<TextView>(R.id.nickname_header)
         val pictureHeader = navView.getHeaderView(0).findViewById<ImageView>(R.id.picture_header)
 
-        /*
-        advVM.insertAdvertisement(Advertisement(0, "ok", "ok", "ok", "ok", "ok", "ok", 0.0, "guidino", 0))
-        advVM.insertAdvertisement(Advertisement(1, "ok", "ok", "ok", "ok", "ok", "ok", 0.0, "guidino", 0))
-        advVM.insertAdvertisement(Advertisement(2, "no", "no", "no", "no", "no", "no", 0.0, "giacomino", 0))
-        advVM.insertAdvertisement(Advertisement(3, "no", "no", "no", "no", "no", "no", 0.0, "giacomino", 0))
-        advVM.insertAdvertisement(Advertisement(4, "ok", "ok", "ok", "ok", "ok", "ok", 0.0, "guidino", 0))
-        */
-
-        userViewModel.currentUser.observe(this) { user ->
+        userProfileViewModel.currentUser.observe(this) { user ->
             if (user != null) {
                 fullnameHeader.text = user.fullName
                 nicknameHeader.text = "@${user.nickname}"
