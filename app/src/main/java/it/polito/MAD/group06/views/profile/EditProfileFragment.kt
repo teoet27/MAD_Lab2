@@ -42,7 +42,6 @@ class EditProfileFragment : Fragment() {
     private lateinit var editSkillsOBJ: EditText
     private lateinit var editPhoneOBJ: EditText
     private lateinit var profilePictureOBJ: ImageView
-    private lateinit var deleteButton: ImageView
     private lateinit var photoURI: Uri
     private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
