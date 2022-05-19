@@ -15,8 +15,6 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.MAD.group06.R
-import it.polito.MAD.group06.models.skill.Skill
-import it.polito.MAD.group06.models.userprofile.ArrayListConverter
 import it.polito.MAD.group06.models.userprofile.UserProfile
 import it.polito.MAD.group06.utilities.GoogleLoginSavedPreferencesObject.getEmail
 import it.polito.MAD.group06.utilities.getBitmapFromFile
