@@ -77,7 +77,7 @@
         android:name="it.polito.MAD.group06.views.ShowListOfSkills"
         android:label="List of services offered">
         <action
-            android:id="@+id/action_showListOfServices_to_ShowListTimeslots"
+            android:id="@+id/action_showListOfSkills_to_ShowListTimeslots"
             app:destination="@id/ShowListTimeslots" />
     </fragment>
 </navigation>
