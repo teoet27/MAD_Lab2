@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.activityViewModels
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -24,6 +26,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import it.polito.MAD.group06.R
 import it.polito.MAD.group06.utilities.GoogleLoginSavedPreferencesObject
+import it.polito.MAD.group06.viewmodels.UserProfileViewModel
 
 class GoogleLoginActivity : AppCompatActivity() {
 
@@ -33,6 +36,11 @@ class GoogleLoginActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
 
+    /*
+    waiting for this to be a fragment
+    private val usrViewModel: UserProfileViewModel by activityViewModels()
+     */
+
     override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
@@ -40,7 +48,7 @@ class GoogleLoginActivity : AppCompatActivity() {
         updateUI(currentUser)
 
         // if you do not add this check, then you would have to login everytime you start your application on your phone.
-        if(GoogleSignIn.getLastSignedInAccount(this)!=null){
+        if (GoogleSignIn.getLastSignedInAccount(this) != null) {
             startActivity(Intent(this, TBMainActivity::class.java))
             finish()
         }
@@ -73,7 +81,7 @@ class GoogleLoginActivity : AppCompatActivity() {
         firebaseAuth = Firebase.auth
 
         val signInButton = findViewById<CardView>(R.id.cardView3) as CardView
-        signInButton.setOnClickListener{ view: View? ->
+        signInButton.setOnClickListener { view: View? ->
             signIn()
         }
     }
@@ -95,6 +103,13 @@ class GoogleLoginActivity : AppCompatActivity() {
                 val account = task.getResult(ApiException::class.java)!!
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
                 firebaseAuthWithGoogle(account.idToken!!)
+                /*
+                waiting for this to be a fragment
+                userViewModel.setCurrentUserProfile(account)
+                userViewModel.currentUser.observe(this) {
+                    Log.e("userprofile", it!!.toString())
+                }
+                */
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.e(TAG, "Google sign in failed", e)
@@ -127,10 +142,9 @@ class GoogleLoginActivity : AppCompatActivity() {
 
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
-            GoogleLoginSavedPreferencesObject.setEmail(this,user.email.toString())
-            GoogleLoginSavedPreferencesObject.setUsername(this,user.displayName.toString())
-        }
-        else {
+            GoogleLoginSavedPreferencesObject.setEmail(this, user.email.toString())
+            GoogleLoginSavedPreferencesObject.setUsername(this, user.displayName.toString())
+        } else {
             GoogleLoginSavedPreferencesObject.setEmail(this, "")
             GoogleLoginSavedPreferencesObject.setUsername(this, "")
         }
