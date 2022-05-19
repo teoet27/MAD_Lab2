@@ -3,7 +3,6 @@ package it.polito.MAD.group06.models.advertisement
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.firebase.firestore.PropertyName
-import it.polito.MAD.group06.models.skill.Skill
 
 /**
  * [Advertisement] data class.
@@ -36,7 +35,7 @@ data class Advertisement(
 
     @get:PropertyName("list_of_skills")
     @set:PropertyName("list_of_skills")
-    var listOfSkills: ArrayList<Skill>,
+    var listOfSkills: ArrayList<String>,
 
     @get:PropertyName("location")
     @set:PropertyName("location")
