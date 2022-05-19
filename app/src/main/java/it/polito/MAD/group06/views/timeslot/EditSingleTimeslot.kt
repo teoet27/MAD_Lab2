@@ -52,7 +52,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
         this.advStartingTime = view.findViewById(R.id.editStartingTime)
         this.advEndingTime = view.findViewById(R.id.editEndingTime)
         this.deleteButton = view.findViewById(R.id.deleteButton)
-        this.datePicker = view.findViewById(R.id.newDateDP)
+        this.datePicker = view.findViewById(R.id.editDatePicker)
 
         usrViewModel.currentUser.observe(viewLifecycleOwner) { user ->
             accountName = if (user?.fullName == null) "Guido Saracco" else user.fullName!!

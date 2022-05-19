@@ -27,8 +27,8 @@ import java.util.*
 
 class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
-    private val advViewModel by activityViewModels<AdvertisementViewModel>()
-    private val usrViewModel by activityViewModels<UserProfileViewModel>()
+    private val advertisementViewModel by activityViewModels<AdvertisementViewModel>()
+    private val userProfileViewModel by activityViewModels<UserProfileViewModel>()
 
     private lateinit var newTitle: EditText
     private lateinit var newLocation: EditText
@@ -62,11 +62,11 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         this.newDescription = view.findViewById(R.id.newDescription)
         this.closeButton = view.findViewById(R.id.closeButton)
         this.confirmButton = view.findViewById(R.id.confirmButton)
-        this.datePicker = view.findViewById(R.id.date_Picker)
+        this.datePicker = view.findViewById(R.id.newDatePicker)
         this.skillsChipGroup = view.findViewById(R.id.skillsGroupID)
         this.addToSkillListButton = view.findViewById(R.id.addNewSkillToListButtonID)
 
-        usrViewModel.currentUser.observe(viewLifecycleOwner) { user ->
+        userProfileViewModel.currentUser.observe(viewLifecycleOwner) { user ->
             accountName = user.fullName!!
         }
 
@@ -115,7 +115,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                     requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_LONG
                 ).show()
             } else if (isAdvValid()) {
-                advViewModel.insertAdvertisement(
+                advertisementViewModel.insertAdvertisement(
                     Advertisement(
                         null,
                         newTitle.text.toString(),
@@ -158,7 +158,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_LONG
                     ).show()
                 } else if (isAdvValid()) {
-                    advViewModel.insertAdvertisement(
+                    advertisementViewModel.insertAdvertisement(
                         Advertisement(
                             null,
                             newTitle.text.toString(),

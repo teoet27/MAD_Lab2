@@ -147,6 +147,8 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             .addOnFailureListener {
                 Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
             }
+        this._singleUserProfilePH = userProfile
+        this._pvtUserProfile.value = this._singleUserProfilePH
     }
 
     fun getUserProfileByID(id: Int): UserProfile? {
