@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.MAD.group06.R
 
-class ShowListOfServices : Fragment(R.layout.fragment_service_list){
+class ShowListOfSkills : Fragment(R.layout.fragment_service_list){
 
     // private val serviceViewModel: ServiceViewModel by activityViewModels()
     private lateinit var recyclerView: RecyclerView
