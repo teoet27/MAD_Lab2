@@ -1,4 +1,4 @@
-package it.polito.MAD.group06.views
+package it.polito.MAD.group06.views.profile
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -11,14 +11,15 @@ import android.provider.MediaStore
 import android.view.*
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.chip.Chip
 import it.polito.MAD.group06.R
-import it.polito.MAD.group06.models.userprofile.UserProfile
 import it.polito.MAD.group06.viewmodels.UserProfileViewModel
 import it.polito.MAD.group06.utilities.*
 import it.polito.MAD.group06.viewmodels.AdvertisementViewModel
@@ -70,39 +71,51 @@ class EditProfileFragment : Fragment() {
         this.editSkillsOBJ = view.findViewById(R.id.edit_skillsListID)
         this.editPhoneOBJ = view.findViewById(R.id.edit_phone_show_ID)
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
+        this.skills_chips = view.findViewById(R.id.edit_skill_chips_group)
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
-            if (userProfile != null) {
-                this.editFullNameOBJ.setText(userProfile.fullName)
+            // Fullname
+            this.editFullNameOBJ.setText(userProfile.fullName)
 
-                if (userProfile.nickname?.compareTo("") == 0) {
-                    this.editNicknameOBJ.setText("No nickname provided.")
-                } else {
-                    this.editNicknameOBJ.setText(userProfile.nickname)
-                }
-                this.editQualificationOBJ.setText(userProfile.qualification)
-                this.editPhoneOBJ.setText(userProfile.phoneNumber)
-                this.editLocationOBJ.setText(userProfile.location)
-
-                if (!userProfile.skills.isNullOrEmpty()) {
-                    //ArrayListConverter().fromStringToListOfSkills(userProfile.skills!!)
-                    this.editSkillsOBJ.setText("wait")
-                }
-
-                //this.editEmailOBJ.setText(userProfile.email)
-                this.editEmailOBJ.setText(context?.let { GoogleLoginSavedPreferencesObject.getEmail(it) })
-
-                this.editDescriptionOBJ.setText(userProfile.description)
-
-                profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                    .toString() + '/' + resources.getString(R.string.profile_picture_filename)
-                profilePictureDirectoryPath =
-                    view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
-
-                getBitmapFromFile(profilePicturePath)?.also {
-                    this.profilePictureOBJ.setImageBitmap(it)
-                } ?: this.profilePictureOBJ.setImageResource(R.drawable.propic)
+            // Nickname
+            if (userProfile.nickname?.compareTo("") == 0) {
+                this.editNicknameOBJ.setText("No nickname provided.")
+            } else {
+                this.editNicknameOBJ.setText(userProfile.nickname)
             }
+
+            // Qualification
+            this.editQualificationOBJ.setText(userProfile.qualification)
+            // Phone Number
+            this.editPhoneOBJ.setText(userProfile.phoneNumber)
+
+            // Location
+            this.editLocationOBJ.setText(userProfile.location)
+
+            // Skills
+            if (!userProfile.skills.isNullOrEmpty()) {
+                userProfile.skills!!.forEach { sk ->
+                    this.skills_chips.addChip(requireContext(), sk)
+                    this.skills_chips.setOnCheckedChangeListener { chipGroup, checkedId ->
+                        val selected_service = chipGroup.findViewById<Chip>(checkedId)?.text
+                        Toast.makeText(chipGroup.context, selected_service ?: "No Choice", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+
+            //this.editEmailOBJ.setText(userProfile.email)
+            this.editEmailOBJ.setText(context?.let { GoogleLoginSavedPreferencesObject.getEmail(it) })
+
+            this.editDescriptionOBJ.setText(userProfile.description)
+
+            profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                .toString() + '/' + resources.getString(R.string.profile_picture_filename)
+            profilePictureDirectoryPath =
+                view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
+
+            getBitmapFromFile(profilePicturePath)?.also {
+                this.profilePictureOBJ.setImageBitmap(it)
+            } ?: this.profilePictureOBJ.setImageResource(R.drawable.propic)
         }
 
         // check this option to open onCreateOptionsMenu method

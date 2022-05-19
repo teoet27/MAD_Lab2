@@ -1,4 +1,4 @@
-package it.polito.MAD.group06.views
+package it.polito.MAD.group06.views.profile
 
 import android.content.Context
 import android.os.Bundle
@@ -15,8 +15,6 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.MAD.group06.R
-import it.polito.MAD.group06.models.userprofile.UserProfile
-import it.polito.MAD.group06.utilities.GoogleLoginSavedPreferencesObject.getEmail
 import it.polito.MAD.group06.utilities.getBitmapFromFile
 import it.polito.MAD.group06.viewmodels.UserProfileViewModel
 
@@ -61,65 +59,50 @@ class ShowProfileFragment : Fragment() {
         this.skills_chips = view.findViewById(R.id.skill_chips_group)
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
+            // Fullname
+            this.fullnameOBJ.text = userProfile.fullName
 
-            /*if (userProfile == null) {
-                userProfileViewModel.editProfile(
-                    UserProfile(
-                        null,
-                        "rettore",
-                        "Guido Saracco",
-                        "Rector @ Politecnico di Torino",
-                        "I'm the full time Rector of Politecnico di Torino. I used to be a Chemistry teacher in 1994, but eventually I ended up being an institutional figure in the teaching world.",
-                        "rettore@polito.it",
-                        "3331112223",
-                        "Torino - Italia",
-                        arrayListOf("Management","Public Relationship")
-                    )
-                )
-                this.profilePictureOBJ.setImageResource(R.drawable.propic)
-
+            // Nickname
+            if (userProfile.nickname?.compareTo("") == 0) {
+                this.nicknameOBJ.text = "No nickname provided."
             } else {
-                this.fullnameOBJ.text = userProfile.fullName
+                this.nicknameOBJ.text = "@${userProfile.nickname}"
+            }
 
-                if (userProfile.nickname?.compareTo("") == 0) {
-                    this.nicknameOBJ.text = "No nickname provided."
-                } else {
-                    this.nicknameOBJ.text = "@" + userProfile.nickname
-                    //this.nicknameOBJ.text = "@" + context?.let { getUsername(it) }
-                }
-                this.qualificationOBJ.text = userProfile.qualification
-                this.phoneOBJ.text = userProfile.phoneNumber
-                this.locationOBJ.text = userProfile.location
+            // Qualification
+            this.qualificationOBJ.text = userProfile.qualification
+            // Phone Number
+            this.phoneOBJ.text = userProfile.phoneNumber
+            // Location
+            this.locationOBJ.text = userProfile.location
 
-                if (userProfile.skills.isNullOrEmpty()) {
-                    this.skillsOBJ.text = getString(R.string.noskills)
-                } else {
-                    //this.skillsOBJ.text = fromArrayListToString(userProfile.skills!!)
-                    userProfile.skills!!.forEach { sk->
-                            this.skills_chips.addChip(requireContext(), sk)
-                            this.skills_chips.setOnCheckedChangeListener { chipGroup, checkedId ->
-                                val selected_service = chipGroup.findViewById<Chip>(checkedId)?.text
-                                Toast.makeText(chipGroup.context, selected_service ?: "No Choice", Toast.LENGTH_LONG).show()
-                            }
+            // Skills
+            if (userProfile.skills.isNullOrEmpty()) {
+                this.skillsOBJ.text = getString(R.string.noskills)
+            } else {
+                userProfile.skills!!.forEach { sk ->
+                    this.skills_chips.addChip(requireContext(), sk)
+                    this.skills_chips.setOnCheckedChangeListener { chipGroup, checkedId ->
+                        val selected_service = chipGroup.findViewById<Chip>(checkedId)?.text
+                        Toast.makeText(chipGroup.context, selected_service ?: "No Choice", Toast.LENGTH_LONG).show()
                     }
                 }
+            }
 
-                //this.emailOBJ.text = userProfile.email
-                this.emailOBJ.text = context?.let { getEmail(it) }
-                this.descriptionOBJ.text = userProfile.description
+            // Email
+            this.emailOBJ.text = userProfile.email
+            // Description
+            this.descriptionOBJ.text = userProfile.description
 
-                profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(R.string.profile_picture_filename)
-                profilePictureDirectoryPath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
-
-                getBitmapFromFile(profilePicturePath)?.also {
-                    this.profilePictureOBJ.setImageBitmap(it)
-                } ?: this.profilePictureOBJ.setImageResource(R.drawable.propic)
-            }*/
-
-
+            // Profile Picture
+            profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(R.string.profile_picture_filename)
+            profilePictureDirectoryPath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
+            getBitmapFromFile(profilePicturePath)?.also {
+                this.profilePictureOBJ.setImageBitmap(it)
+            } ?: this.profilePictureOBJ.setImageResource(R.drawable.propic)
         }
 
-        // check this option to open onCreateOptionsMenu method
+        // Check this option to open onCreateOptionsMenu method
         setHasOptionsMenu(true)
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
@@ -139,23 +122,14 @@ class ShowProfileFragment : Fragment() {
      * @param label         chip name
      */
     private fun ChipGroup.addChip(context: Context, label: String) {
-
         Chip(context).apply {
-
             id = View.generateViewId()
-
             text = label
-
             isClickable = true
-
             isCheckable = false
-
             isCheckedIconVisible = false
-
             isFocusable = true
-
             addView(this)
-
         }
     }
 
