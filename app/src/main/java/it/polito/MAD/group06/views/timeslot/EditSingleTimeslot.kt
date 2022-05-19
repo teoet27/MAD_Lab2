@@ -48,9 +48,9 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        this.advTitle = view.findViewById(R.id.newTitle)
+        this.advTitle = view.findViewById(R.id.editTitle)
         this.advLocation = view.findViewById(R.id.newLocation)
-        this.advDescription = view.findViewById(R.id.newDescription)
+        this.advDescription = view.findViewById(R.id.editDescription)
         this.advStartingTime = view.findViewById(R.id.editStartingTime)
         this.advEndingTime = view.findViewById(R.id.editEndingTime)
         this.deleteButton = view.findViewById(R.id.deleteButton)

@@ -64,8 +64,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         this.closeButton = view.findViewById(R.id.closeButton)
         this.confirmButton = view.findViewById(R.id.confirmButton)
         this.datePicker = view.findViewById(R.id.newDatePicker)
-        this.skillsChipGroup = view.findViewById(R.id.skillsGroupID)
-        this.addToSkillListButton = view.findViewById(R.id.addNewSkillToListButtonID)
+        this.skillsChipGroup = view.findViewById(R.id.skill_chips_group)
+        this.addToSkillListButton = view.findViewById(R.id.AddNewSkillToListButtonID)
 
         userProfileViewModel.currentUser.observe(viewLifecycleOwner) { user ->
             accountName = user.fullName!!

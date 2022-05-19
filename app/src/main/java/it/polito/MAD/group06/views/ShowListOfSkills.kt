@@ -42,6 +42,10 @@ class ShowListOfSkills : Fragment(R.layout.fragment_service_list) {
             val listOfSkills = (listOfAds.map { it.listOfSkills }.flatten() as MutableList<String>)
             view.findViewById<TextView>(R.id.defaultTextServicesList).isVisible = listOfSkills.isNullOrEmpty()
 
+            //temporary
+            listOfSkills.apply {
+                add("All")
+                sortWith(compareBy(String.CASE_INSENSITIVE_ORDER, {it})) }
             if (!listOfSkills.isNullOrEmpty()) {
                 listOfSkills.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER, { it }))
 

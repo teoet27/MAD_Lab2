@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import it.polito.MAD.group06.R
 import it.polito.MAD.group06.models.advertisement.AdvAdapterCard
 import it.polito.MAD.group06.viewmodels.AdvertisementViewModel
+import it.polito.MAD.group06.utilities.ServiceTools
 
 class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
 
@@ -50,6 +51,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
             /**
              * If there are no advertisements in the DB proper texts are shown.
              */
+            listOfAdv.filter{ it.listOfSkills.contains(arguments?.getString("selected_skill")) }
             view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = listOfAdv.isEmpty()
             view.findViewById<ImageView>(R.id.create_hint).isVisible = listOfAdv.isEmpty()
 

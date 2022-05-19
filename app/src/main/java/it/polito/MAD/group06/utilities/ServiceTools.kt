@@ -136,10 +136,6 @@ class ServiceTools {
     }
 
     //Useful extension functions
-
     private fun Boolean.toInt() = if (this) 1 else 0
 
-    fun Advertisement.concerns(skill:String):Boolean{
-        return this.listOfSkills.contains(skill)
-    }
 }

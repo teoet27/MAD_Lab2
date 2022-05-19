@@ -69,6 +69,18 @@
                 android:paddingTop="2dp"
                 android:src="@drawable/rounded_corners_land" />
 
+            <TextView
+                android:id="@+id/ads_descriptionTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/description_of_the_job_offered"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
             <EditText
                 android:id="@+id/newDescription"
                 android:layout_width="match_parent"
@@ -94,7 +106,7 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/skillsGroupID"
+                android:id="@+id/new_skill_chips_group"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="16dp"
@@ -122,7 +134,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/addNewSkillToListButtonID"
+                    android:id="@+id/AddNewSkillToListButtonID"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="16dp"
@@ -143,18 +155,6 @@
                 android:contentDescription='@string/separation_line'
                 android:paddingTop="5dp"
                 android:src="@drawable/rounded_corners_land" />
-
-            <TextView
-                android:id="@+id/ads_descriptionTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:text="@string/description_of_the_job_offered"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/newLocation"
