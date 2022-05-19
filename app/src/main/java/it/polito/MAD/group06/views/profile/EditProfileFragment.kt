@@ -25,6 +25,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import com.google.android.material.chip.ChipGroup
 import it.polito.MAD.group06.R
+import it.polito.MAD.group06.models.userprofile.UserProfile
 import it.polito.MAD.group06.viewmodels.UserProfileViewModel
 import it.polito.MAD.group06.utilities.*
 import it.polito.MAD.group06.viewmodels.AdvertisementViewModel
@@ -46,6 +47,8 @@ class EditProfileFragment : Fragment() {
     private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
     private lateinit var skills_chips: ChipGroup
+    private var userID: Long = -1
+    private val skillList = arrayListOf<String>()
 
     private val REQUEST_IMAGE_CAPTURE = 1
     private val PICK_IMAGE = 100
@@ -81,6 +84,9 @@ class EditProfileFragment : Fragment() {
         this.skills_chips = view.findViewById(R.id.edit_skill_chips_group)
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
+            // Save the ID
+            this.userID = userProfile.id!!
+
             // Fullname
             this.editFullNameOBJ.setText(userProfile.fullName)
 
@@ -108,6 +114,7 @@ class EditProfileFragment : Fragment() {
                         Toast.makeText(chipGroup.context, selected_service ?: "No Choice", Toast.LENGTH_LONG).show()
                     }
                 }
+                this.skillList.addAll(userProfile.skills!!)
             }
 
             // Email
@@ -168,26 +175,18 @@ class EditProfileFragment : Fragment() {
      * saveData is a private method for saving data before fragment transaction
      */
     private fun saveData() {
-        userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) {
-            // TODO
-            /*userProfileViewModel.editProfile(
-                UserProfile(
-                    it.id,
-                    editNicknameOBJ.text.toString(),
-                    editFullNameOBJ.text.toString(),
-                    editQualificationOBJ.text.toString(),
-                    editDescriptionOBJ.text.toString(),
-                    editEmailOBJ.text.toString(),
-                    editPhoneOBJ.text.toString(),
-                    editLocationOBJ.text.toString(),
-                    fromStringToArrayList(editSkillsOBJ.text.toString()),
-                )
-            )*/
-        }
-        advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { fullList ->
-            // TODO
-            // advertisementViewModel.updateAccountName(fullList, editFullNameOBJ.text.toString())
-        }
+        userProfileViewModel.editUserProfile(UserProfile(
+            this.userID,
+            this.editNicknameOBJ.text.toString(),
+            editFullNameOBJ.text.toString(),
+            editQualificationOBJ.text.toString(),
+            editDescriptionOBJ.text.toString(),
+            editEmailOBJ.text.toString(),
+            editPhoneOBJ.text.toString(),
+            editLocationOBJ.text.toString(),
+            this.skillList
+        ))
+        advertisementViewModel.updateAdvAccountNameByAccountID(this.userID, editFullNameOBJ.text.toString())
     }
 
     /**
