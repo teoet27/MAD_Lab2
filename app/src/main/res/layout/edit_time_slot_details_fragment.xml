@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".views.TimeSlotDetailsFragment">
+    tools:context=".views.timeslot.EditSingleTimeslot">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -233,7 +233,7 @@
                 app:drawableTint="#454749" />
 
             <DatePicker
-                android:id="@+id/date_Picker"
+                android:id="@+id/editDatePicker"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:calendarViewShown="false"
