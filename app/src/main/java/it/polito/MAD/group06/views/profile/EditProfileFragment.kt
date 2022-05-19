@@ -40,7 +40,6 @@ class EditProfileFragment : Fragment() {
     private lateinit var editDescriptionOBJ: EditText
     private lateinit var editEmailOBJ: EditText
     private lateinit var editLocationOBJ: EditText
-    private lateinit var editSkillsOBJ: EditText
     private lateinit var editPhoneOBJ: EditText
     private lateinit var profilePictureOBJ: ImageView
     private lateinit var photoURI: Uri
@@ -78,7 +77,6 @@ class EditProfileFragment : Fragment() {
         this.editDescriptionOBJ = view.findViewById(R.id.edit_description_show_ID)
         this.editEmailOBJ = view.findViewById(R.id.edit_email_show_ID)
         this.editLocationOBJ = view.findViewById(R.id.edit_loc_show_ID)
-        this.editSkillsOBJ = view.findViewById(R.id.edit_skillsListID)
         this.editPhoneOBJ = view.findViewById(R.id.edit_phone_show_ID)
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
         this.skillsChips = view.findViewById(R.id.editProfileChipGroup)
