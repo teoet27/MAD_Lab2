@@ -72,13 +72,30 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
-    fun setCurrentUserProfile(account: GoogleSignInAccount){
-        this._singleUserProfilePH.fullName = account.displayName
-        this._singleUserProfilePH.email = account.email
+    fun setCurrentUserProfile(id: String, fullname: String, email: String) {
+        //this._singleUserProfilePH.id = id.toLong()
+        this._singleUserProfilePH.fullName = fullname
+        this._singleUserProfilePH.email = email
         this._singleUserProfilePH.location = "placeholder location"
         this._singleUserProfilePH.phoneNumber = "000 000 000"
         this._pvtUserProfile.value = this._singleUserProfilePH
     }
+
+/*
+    fun getListOfSkills(): LiveData<MutableSet<String>> {
+        val outListOfSkills = MutableLiveData<MutableSet<String>>()
+
+        listOfUsers.observe() {
+            for (u in it) {
+                for(skill in u.skills!!) {
+                    outListOfSkills.value?.add(skill)
+                }
+            }
+        }
+
+        return outListOfSkills
+    }
+*/
 
     /**
      * This is the instance of the profile fetched from the database through the repository
