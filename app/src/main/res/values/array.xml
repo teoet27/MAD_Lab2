@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="durations">
+        <item>  1  h</item>
+        <item>  2  h</item>
+        <item>  3  h</item>
+        <item>  4  h</item>
+        <item>  5  h</item>
+        <item>  6  h</item>
+        <item>  7  h</item>
+        <item>  8  h</item>
+    </string-array>
+</resources>
