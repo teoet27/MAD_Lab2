@@ -49,7 +49,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
         this.advTitle = view.findViewById(R.id.editTitle)
-        this.advLocation = view.findViewById(R.id.newLocation)
+        this.advLocation = view.findViewById(R.id.editDescription)
         this.advDescription = view.findViewById(R.id.editDescription)
         this.advStartingTime = view.findViewById(R.id.editStartingTime)
         this.advEndingTime = view.findViewById(R.id.editEndingTime)
