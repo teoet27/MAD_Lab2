@@ -72,9 +72,9 @@
     <string name="cancel">Cancel</string>
     <string name="advanced_search">Advanced Search</string>
     <string name="reset_filters">Reset filters</string>
-    <string name="where">Where</string>
+    <string name="where">Location</string>
     <string name="date">Date</string>
-    <string name="location">location</string>
+    <string name="location">Specify here the location</string>
     <string name="time">Time</string>
     <string name="from">From</string>
     <string name="to">To</string>
