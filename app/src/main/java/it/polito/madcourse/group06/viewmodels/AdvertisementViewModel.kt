@@ -81,12 +81,13 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      * @param ad a new advertisement
      */
     fun insertAdvertisement(ad: Advertisement) {
+        var advID: String = ""
         db
             .collection("Advertisement")
-            .document(/*ad.id.toString()*/)
+            .document(/*ad.id.toString()*/).also { advID = it.id }
             .set(
                 mapOf(
-                    "id" to ad.id,
+                    "id" to advID,
                     "title" to ad.advTitle,
                     "description" to ad.advDescription,
                     "list_of_skills" to ad.listOfSkills,
@@ -110,7 +111,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     fun removeAdvertisement(ad: Advertisement) {
         db
             .collection("Advertisement")
-            .document(ad.id.toString())
+            .document(ad.id!!)
             .delete()
             .addOnSuccessListener {
                 Toast.makeText(context, "Deletion completed.", Toast.LENGTH_SHORT).show()
