@@ -1,20 +1,19 @@
-package it.polito.MAD.group06.views.timeslot
+package it.polito.madcourse.group06.views.timeslot
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
-import it.polito.MAD.group06.R
-import it.polito.MAD.group06.utilities.ServiceTools.AdvFilter
-import it.polito.MAD.group06.viewmodels.SharedViewModel
+import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.utilities.ServiceTools.AdvFilter
+import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import java.util.*
 
 /**

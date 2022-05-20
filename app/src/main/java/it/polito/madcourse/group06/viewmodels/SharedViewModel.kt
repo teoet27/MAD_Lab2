@@ -1,4 +1,4 @@
-package it.polito.MAD.group06.viewmodels
+package it.polito.madcourse.group06.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

@@ -103,9 +103,6 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             .addOnSuccessListener {
                 Toast.makeText(context, "Creation completed.", Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener {
-                Toast.makeText(context, "Creation failed", Toast.LENGTH_SHORT).show()
-            }
     }
 
     fun removeAdvertisement(ad: Advertisement) {
