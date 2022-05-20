@@ -46,7 +46,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
             this.advDate.text = singleAdvertisement.advDate
             this.advStartingTime.text = "Starting time: ${singleAdvertisement.advStartingTime}"
             this.advEndingTime.text = "Ending time: ${singleAdvertisement.advEndingTime}"
-            this.advDuration.text = "${singleAdvertisement.advDuration.toString()} hours"
+            this.advDuration.text = "${singleAdvertisement.advDuration} hours"
             if (singleAdvertisement.advDescription.isEmpty()) {
                 this.advDescription.text = "No description provided"
             } else {
