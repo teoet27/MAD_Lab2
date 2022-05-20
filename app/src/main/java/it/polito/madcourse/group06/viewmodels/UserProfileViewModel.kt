@@ -22,7 +22,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * Single [UserProfile]
      */
     private var _singleUserProfilePH = UserProfile(
-        -1, "", "", "", "", "", "", "", null
+        "", "", "", "", "", "", "", "", null
     )
     private val _pvtUserProfile = MutableLiveData<UserProfile>().also {
         it.value = _singleUserProfilePH
@@ -50,7 +50,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
 
     private fun DocumentSnapshot.toUser(): UserProfile? {
         return try {
-            val id = this.get("id") as Long
+            val id = this.get("id") as String
             val nickname = this.get("nickname") as String
             val fullname = this.get("fullname") as String
             val qualification = this.get("qualification") as String

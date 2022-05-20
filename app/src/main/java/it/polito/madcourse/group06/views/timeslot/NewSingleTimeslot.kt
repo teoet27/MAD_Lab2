@@ -40,7 +40,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private lateinit var confirmButton: ImageView
     private lateinit var datePicker: DatePicker
     private lateinit var accountName: String
-    private var accountID: Long = -1
+    private var accountID: String = ""
     private lateinit var skillsChipGroup: ChipGroup
     private lateinit var addToSkillListButton: ImageView
     private var timeStartingHour: Int = 0
@@ -118,7 +118,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             } else if (isAdvValid()) {
                 advertisementViewModel.insertAdvertisement(
                     Advertisement(
-                        0,
+                        "",
                         newTitle.text.toString(),
                         newDescription.text.toString(),
                         arrayListOf<String>(),
@@ -161,7 +161,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                 } else if (isAdvValid()) {
                     advertisementViewModel.insertAdvertisement(
                         Advertisement(
-                            0,
+                            "",
                             newTitle.text.toString(),
                             newDescription.text.toString(),
                             arrayListOf<String>(),
@@ -171,7 +171,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             newEndingTime.text.toString(),
                             timeDifference,
                             accountName,
-                            -1
+                            accountID
                         )
                     )
                     Toast.makeText(

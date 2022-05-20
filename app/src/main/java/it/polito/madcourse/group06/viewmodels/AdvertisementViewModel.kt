@@ -23,9 +23,9 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      * Single [Advertisement]
      */
     private var _singleAdvertisementPH = Advertisement(
-        null, "", "", arrayListOf<String>(),
+        "", "", "", arrayListOf<String>(),
         "", "", "", "", 0.0,
-        "", -1
+        "", ""
     )
     private val _pvtAdvertisement = MutableLiveData<Advertisement>().also {
         it.value = _singleAdvertisementPH
@@ -53,7 +53,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
 
     private fun DocumentSnapshot.toAdvertisement(): Advertisement? {
         return try {
-            val id = this.get("id") as Long
+            val id = this.get("id") as String
             val title = this.get("title") as String
             val description = this.get("description") as String
             val listOfSkills = this.get("list_of_skills") as ArrayList<String>?
@@ -63,7 +63,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             val endingTime = this.get("ending_time") as String
             val duration = this.get("duration") as Double
             val accountName = this.get("account_name") as String
-            val accountID = this.get("accountID") as Long
+            val accountID = this.get("accountID") as String
             Advertisement(
                 id, title, description, listOfSkills?: arrayListOf<String>(),
                 location, date, startingTime,
@@ -173,10 +173,10 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             }
     }
 
-    fun editAdvertisementByID(id: Long, ad: Advertisement) {
+    fun editAdvertisementByID(id: String, ad: Advertisement) {
         db
             .collection("Advertisement")
-            .document(id.toString())
+            .document(id)
             .set(
                 mapOf(
                     "id" to ad.id,
@@ -253,7 +253,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
         return outAdv
     }
 
-    fun updateAdvAccountNameByAccountID(accountID: Long, newAccountName: String) {
+    fun updateAdvAccountNameByAccountID(accountID: String, newAccountName: String) {
         db
             .collection("Advertisement")
             .addSnapshotListener { listOfAdvs, e ->

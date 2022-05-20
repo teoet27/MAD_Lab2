@@ -45,7 +45,7 @@ class NewProfileFragment : Fragment() {
     private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
     private lateinit var skillsChips: ChipGroup
-    private var userID: Long = -1
+    private var userID: String = ""
     private val skillList = arrayListOf<String>()
 
     private val REQUEST_IMAGE_CAPTURE = 1

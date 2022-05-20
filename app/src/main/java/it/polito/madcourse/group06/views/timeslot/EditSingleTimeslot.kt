@@ -25,9 +25,9 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     private val advViewModel: AdvertisementViewModel by activityViewModels()
     private val usrViewModel: UserProfileViewModel by activityViewModels()
     private val dumbAdvertisement: Advertisement = Advertisement(
-        null, "", "", arrayListOf<String>(),
+        "", "", "", arrayListOf<String>(),
         "", "", "", "", 0.0,
-        "", -1
+        "", ""
     )
 
     private lateinit var advTitle: TextView
