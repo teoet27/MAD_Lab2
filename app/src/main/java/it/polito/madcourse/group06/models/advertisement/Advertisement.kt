@@ -23,7 +23,7 @@ data class Advertisement(
     @PrimaryKey(autoGenerate = true)
     @get:PropertyName("id")
     @set:PropertyName("id")
-    var id: Long?,
+    var id: String?,
 
     @get:PropertyName("title")
     @set:PropertyName("title")
@@ -63,6 +63,6 @@ data class Advertisement(
 
     @get:PropertyName("accountID")
     @set:PropertyName("accountID")
-    var accountID: Long
+    var accountID: String
 )
 

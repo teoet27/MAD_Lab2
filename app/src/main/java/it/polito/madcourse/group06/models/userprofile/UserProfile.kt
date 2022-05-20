@@ -9,7 +9,7 @@ data class UserProfile(
     @PrimaryKey(autoGenerate = true)
     @get:PropertyName("id")
     @set:PropertyName("id")
-    var id: Long?,
+    var id: String?,
 
     @get:PropertyName("nickname")
     @set:PropertyName("nickname")
