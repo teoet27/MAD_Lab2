@@ -17,13 +17,16 @@
             android:background="@color/orange_poli"
             android:text="Welcome!"
             android:textAlignment="center"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/message_box_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
             android:paddingTop="16dp"
+            android:paddingRight="16dp"
             android:paddingBottom="16dp"
             android:text="To start using your TimeBanking app, please insert your personal details to complete your profile."
             android:textAlignment="center"
