@@ -127,7 +127,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     fun editUserProfile(userProfile: UserProfile) {
         db
             .collection("UserProfile")
-            .document(userProfile.id.toString())
+            .document(userProfile.id!!)
             .set(
                 mapOf(
                     "id" to userProfile.id,
