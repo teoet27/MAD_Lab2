@@ -85,12 +85,12 @@ class FilterTimeslots : Fragment(R.layout.fragment_filter_timeslots) {
                     ending_date=if(toDate.text=="+") null else toDate.text.substring(0,9),
                 )
             //navigate back and put transmit advFilter
-            findNavController().navigate(R.id.action_FilterTimeslots_to_ShowListTimeslots)//,bundleOf("filter" to advFilter))
+            findNavController().navigate(R.id.action_filterTimeslots_to_ShowListTimeslots)//,bundleOf("filter" to advFilter))
         }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_FilterTimeslots_to_ShowListTimeslots)
+                findNavController().navigate(R.id.action_filterTimeslots_to_ShowListTimeslots)
             }
         })
 
