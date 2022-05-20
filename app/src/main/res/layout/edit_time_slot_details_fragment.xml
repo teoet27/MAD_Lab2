@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
     tools:context=".views.timeslot.EditSingleTimeslot">
 
     <ScrollView
@@ -238,41 +239,6 @@
                 android:layout_height="match_parent"
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/rounded_corners_down"
-                android:backgroundTint="@color/prussian_blue">
-
-                <ImageView
-                    android:id="@+id/closeButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end"
-                    android:layout_weight="1"
-                    android:background="@drawable/cancel_rounded_corners_right"
-                    android:backgroundTint="#FF0000"
-                    android:contentDescription='@string/more_button_for_opening_the_edit_menu'
-                    android:padding="2dp"
-                    android:src="@drawable/ic_close_black_24dp"
-                    app:tint="@color/white" />
-
-                <ImageView
-                    android:id="@+id/confirmButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end"
-                    android:layout_weight="1"
-                    android:background="@drawable/confirm_rounded_corners_left"
-                    android:backgroundTint="#106C00"
-                    android:contentDescription='@string/more_button_for_opening_the_edit_menu'
-                    android:padding="2dp"
-                    android:src="@drawable/ic_done_black_24dp"
-                    app:tint="@color/white" />
-            </LinearLayout>
 
 
         </LinearLayout>
