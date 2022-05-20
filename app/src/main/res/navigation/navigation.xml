@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_ShowListTimeslots_to_showListOfServices"
             app:destination="@id/ShowListOfServices" />
+        <action
+            android:id="@+id/action_ShowListTimeslots_to_filterTimeslots"
+            app:destination="@id/filterTimeslots" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -84,4 +87,12 @@
         android:id="@+id/newProfileFragment"
         android:name="it.polito.madcourse.group06.views.profile.NewProfileFragment"
         android:label="NewProfileFragment" />
+    <fragment
+        android:id="@+id/filterTimeslots"
+        android:name="it.polito.MAD.group06.views.timeslot.FilterTimeslots"
+        android:label="FilterTimeslots" >
+        <action
+            android:id="@+id/action_filterTimeslots_to_ShowListTimeslots"
+            app:destination="@id/ShowListTimeslots" />
+    </fragment>
 </navigation>
