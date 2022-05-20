@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.utilities.ServiceTools
 import it.polito.madcourse.group06.utilities.ServiceTools.AdvFilter
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import java.util.*
@@ -55,16 +56,7 @@ class FilterTimeslots : Fragment(R.layout.fragment_filter_timeslots) {
         this.toDate.setOnClickListener{ popUpEndingDatePicker() }
         this.toTime.setOnClickListener{ popUpEndingTimePicker() }
 
-        this.cancel.setOnClickListener{
-
-            view.startAnimation(AnimationUtils.loadAnimation(requireContext(),R.anim.slide_out_down))
-            sharedViewModel.select(false)
-
-            activity?.supportFragmentManager?.
-            beginTransaction()?.
-            remove(this)?.
-            commit()
-        }
+        this.cancel.setOnClickListener{slideOutFragment(this)}
 
         this.reset.setOnClickListener{
             //reset filters
@@ -77,16 +69,15 @@ class FilterTimeslots : Fragment(R.layout.fragment_filter_timeslots) {
         }
 
         this.applyButton.setOnClickListener{
-            var advFilter=
-                AdvFilter(location=location.text.toString(),
-                    starting_time=if(fromDate.text=="+") null else fromDate.text.substring(11,15),
-                    ending_time=if(toDate.text=="+") null else fromDate.text.substring(11,15),
-                    duration=durationSpinner.selectedItem.toString().toDouble(),
-                    starting_date=if(fromDate.text=="+") null else fromDate.text.substring(0,9),
-                    ending_date=if(toDate.text=="+") null else toDate.text.substring(0,9),
-                )
-            //navigate back and put transmit advFilter
-            findNavController().navigate(R.id.action_filterTimeslots_to_ShowListTimeslots,bundleOf("filter" to advFilter))
+            sharedViewModel.setFilter(AdvFilter(
+                location=location.text.toString(),
+                starting_time=if(fromDate.text=="+") null else fromDate.text.substring(11,15),
+                ending_time=if(toDate.text=="+") null else fromDate.text.substring(11,15),
+                duration=durationSpinner.selectedItem.toString().toDouble(),
+                starting_date=if(fromDate.text=="+") null else fromDate.text.substring(0,9),
+                ending_date=if(toDate.text=="+") null else toDate.text.substring(0,9),
+            ))
+            slideOutFragment(this)
         }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
@@ -114,7 +105,16 @@ class FilterTimeslots : Fragment(R.layout.fragment_filter_timeslots) {
             // Apply the adapter to the spinner
             durationSpinner.adapter = adapter
         }
+    }
 
+    fun slideOutFragment(frag:Fragment){
+        view?.startAnimation(AnimationUtils.loadAnimation(requireContext(),R.anim.slide_out_down))
+        sharedViewModel.select(false)
+
+        activity?.supportFragmentManager?.
+        beginTransaction()?.
+        remove(frag)?.
+        commit()
     }
 
     /**
