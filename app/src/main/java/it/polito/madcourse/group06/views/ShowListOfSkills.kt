@@ -45,9 +45,10 @@ class ShowListOfSkills : Fragment(R.layout.fragment_service_list) {
             //temporary
             listOfSkills.apply {
                 add("All")
-                sortWith(compareBy(String.CASE_INSENSITIVE_ORDER, {it})) }
+                sortWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it })
+            }
             if (!listOfSkills.isNullOrEmpty()) {
-                listOfSkills.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER, { it }))
+                listOfSkills.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it })
 
                 this.recyclerView = view.findViewById(R.id.rvServicesFullList)
                 this.recyclerView.layoutManager = LinearLayoutManager(this.context)

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
@@ -85,12 +86,12 @@ class FilterTimeslots : Fragment(R.layout.fragment_filter_timeslots) {
                     ending_date=if(toDate.text=="+") null else toDate.text.substring(0,9),
                 )
             //navigate back and put transmit advFilter
-            findNavController().navigate(R.id.action_filterTimeslots_to_ShowListTimeslots)//,bundleOf("filter" to advFilter))
+            findNavController().navigate(R.id.action_filterTimeslots_to_ShowListTimeslots,bundleOf("filter" to advFilter))
         }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                //view.startAnimation(AnimationUtils.loadAnimation(requireContext(),R.anim.slide_out_down))
+                view.startAnimation(AnimationUtils.loadAnimation(requireContext(),R.anim.slide_out_down))
                 if (activity?.supportFragmentManager?.backStackEntryCount!! > 0)
                     activity?.supportFragmentManager?.popBackStackImmediate()
             }

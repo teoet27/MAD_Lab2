@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.AdvAdapterCard
+import it.polito.madcourse.group06.utilities.ServiceTools
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import kotlin.math.sqrt
@@ -66,13 +67,16 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
             /**
              * If there are no advertisements in the DB proper texts are shown.
              */
-            listOfAdv.filter{ it.listOfSkills.contains(arguments?.getString("selected_skill")) }
-            view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = listOfAdv.isEmpty()
-            view.findViewById<ImageView>(R.id.create_hint).isVisible = listOfAdv.isEmpty()
+            listOfAdv.filter{ it.listOfSkills.contains(arguments?.getString("selected_skill"))}.also{ filtered_list ->
+                ServiceTools().filterAdvertisementList(filtered_list,arguments?.get("filter") as ServiceTools.AdvFilter?)?.also {
+                    view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = it.isEmpty()
+                    view.findViewById<ImageView>(R.id.create_hint).isVisible = it.isEmpty()
 
-            if (listOfAdv.isNotEmpty()) {
-                this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-                this.recyclerView.adapter = AdvAdapterCard(listOfAdv, advertisementViewModel)
+                    if (it.isNotEmpty()) {
+                        this.recyclerView.layoutManager = LinearLayoutManager(this.context)
+                        this.recyclerView.adapter = AdvAdapterCard(it, advertisementViewModel)
+                    }
+                }
             }
         }
 

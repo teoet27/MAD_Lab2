@@ -123,10 +123,10 @@ class ServiceTools {
      * @return the list of Advertisements matching the constraints
      */
     fun filterAdvertisementList(
-        advList:MutableList<Advertisement>?,
-        advFilter: AdvFilter
+        advList:List<Advertisement>?,
+        advFilter: AdvFilter?
     ):List<Advertisement>?{
-        return advList?.filter{ adv->
+        return if(advFilter==null) advList else advList?.filter{ adv->
             (advFilter.location!=null && adv.advLocation==advFilter.location)||(advFilter.location==null) &&
             (advFilter.duration!=null && adv.advDuration<=advFilter.duration)||(advFilter.duration==null) &&
             (advFilter.starting_time!=null && adv.advStartingTime.isLaterThanTime(advFilter.starting_time))||(advFilter.starting_time==null) &&
