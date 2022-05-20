@@ -100,13 +100,7 @@ class GoogleLoginActivity : AppCompatActivity() {
                 this.account = task.getResult(ApiException::class.java)!!
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
                 firebaseAuthWithGoogle(account.idToken!!)
-                /*
-                waiting for this to be a fragment
-                userViewModel.setCurrentUserProfile(account)
-                userViewModel.currentUser.observe(this) {
-                    Log.e("userprofile", it!!.toString())
-                }
-                */
+
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.e(TAG, "Google sign in failed", e)

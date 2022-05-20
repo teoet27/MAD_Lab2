@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "945943999004-qnssbqunlnqfeqoo1ggkjsfo9lgmrrsm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "it.polito.MAD.group06",
+            "certificate_hash": "227fdf1ed5d1cd26364b34a195ea2abd422d640d"
+          }
+        },
+        {
           "client_id": "945943999004-8ogsr5hkmtuqpgqac0lu172qp8kfigf7.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -48,6 +56,22 @@
           "android_info": {
             "package_name": "it.polito.madcourse.group06",
             "certificate_hash": "227fdf1ed5d1cd26364b34a195ea2abd422d640d"
+          }
+        },
+        {
+          "client_id": "945943999004-1drgavbqr37bcs44ctrer44r17m37i9i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "it.polito.madcourse.group06",
+            "certificate_hash": "fddfa031f95871c49ec6a8658bc910845b50800e"
+          }
+        },
+        {
+          "client_id": "945943999004-1s0bjps1l3i99go7o98967ovfhuo9d56.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "it.polito.madcourse.group06",
+            "certificate_hash": "53972067b349a905eae08414b5c2077bd5768d69"
           }
         },
         {
