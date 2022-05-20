@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/ShowListTimeslots"
-        android:name="it.polito.MAD.group06.views.timeslot.ShowListOfTimeslots"
+        android:name="it.polito.madcourse.group06.views.timeslot.ShowListOfTimeslots"
         android:label="Timeslots" >
         <action
             android:id="@+id/action_frag5ShowListTimeslots_to_showProfileFragment"
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="it.polito.MAD.group06.views.profile.EditProfileFragment"
+        android:name="it.polito.madcourse.group06.views.profile.EditProfileFragment"
         android:label="Edit your profile" >
         <action
             android:id="@+id/action_editProfileFragment_to_showProfileFragment"
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/showProfileFragment"
-        android:name="it.polito.MAD.group06.views.profile.ShowProfileFragment"
+        android:name="it.polito.madcourse.group06.views.profile.ShowProfileFragment"
         android:label="Your profile" >
         <action
             android:id="@+id/action_showProfileFragment_to_editProfileFragment"
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/newTimeSlotDetailsFragment"
-        android:name="it.polito.MAD.group06.views.timeslot.NewSingleTimeslot"
+        android:name="it.polito.madcourse.group06.views.timeslot.NewSingleTimeslot"
         android:label="Create a new timeslot"
         tools:layout="@layout/new_time_slot_details_fragment">
         <action
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/showSingleTimeslot"
-        android:name="it.polito.MAD.group06.views.timeslot.ShowSingleTimeslot"
+        android:name="it.polito.madcourse.group06.views.timeslot.ShowSingleTimeslot"
         android:label="Expanded timeslot">
         <action
             android:id="@+id/action_showSingleTimeslot_to_editTimeSlotDetailsFragment"
@@ -63,7 +63,7 @@
     </fragment>
     <fragment
         android:id="@+id/editTimeSlotDetailsFragment"
-        android:name="it.polito.MAD.group06.views.timeslot.EditSingleTimeslot"
+        android:name="it.polito.madcourse.group06.views.timeslot.EditSingleTimeslot"
         android:label="Edit your timeslot">
         <action
             android:id="@+id/action_editTimeSlotDetailsFragment_to_showSingleTimeslot"
@@ -74,10 +74,14 @@
     </fragment>
     <fragment
         android:id="@+id/ShowListOfServices"
-        android:name="it.polito.MAD.group06.views.ShowListOfSkills"
-        android:label="List of services offered">
+        android:name="it.polito.madcourse.group06.views.ShowListOfSkills"
+        android:label="List of offered services">
         <action
             android:id="@+id/action_showListOfSkills_to_ShowListTimeslots"
             app:destination="@id/ShowListTimeslots" />
     </fragment>
+    <fragment
+        android:id="@+id/newProfileFragment"
+        android:name="it.polito.madcourse.group06.views.profile.NewProfileFragment"
+        android:label="NewProfileFragment" />
 </navigation>

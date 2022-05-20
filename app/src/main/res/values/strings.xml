@@ -62,7 +62,7 @@
     <string name="add_your_skills">...or add a new skill!</string>
     <string name="no_adv_into_db">There are no advertisements yet.</string>
     <string name="create_tsa_hint">Create your first\nTime Slot Advertisement</string>
-    <string name="default_web_client_id_bis">512352892448-34de1u53602su25jgtcgo2ogt3ssmk66.apps.googleusercontent.com</string>
+    <string name="default_web_client_id_bis">945943999004-8ogsr5hkmtuqpgqac0lu172qp8kfigf7.apps.googleusercontent.com</string>
     <string name="logOut">Log out</string>
     <string name="logIn">Login with Google</string>
     <string name="welcome">Welcome!</string>
@@ -78,6 +78,8 @@
     <string name="time">Time</string>
     <string name="from">From</string>
     <string name="to">To</string>
+    <string name="welcome_message">Welcome to TimeBanking! Please insert your details to complete your profile.</string>
+    <string name="ok">OK</string>
     <string-array name="durations">
         <item>1</item>
         <item>2</item>
