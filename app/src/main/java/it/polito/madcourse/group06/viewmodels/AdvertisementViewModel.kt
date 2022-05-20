@@ -121,10 +121,10 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             }
     }
 
-    fun removeAdvertisementByID(id: Long) {
+    fun removeAdvertisementByID(id: String) {
         db
             .collection("Advertisement")
-            .document(id.toString())
+            .document(id)
             .delete()
             .addOnSuccessListener {
                 Toast.makeText(context, "Deletion completed.", Toast.LENGTH_SHORT).show()
