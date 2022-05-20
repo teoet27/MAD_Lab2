@@ -1,53 +1,70 @@
 {
   "project_info": {
-    "project_number": "512352892448",
-    "project_id": "mad-timebanking-62917",
-    "storage_bucket": "mad-timebanking-62917.appspot.com"
+    "project_number": "945943999004",
+    "project_id": "timebankingmadg06",
+    "storage_bucket": "timebankingmadg06.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:512352892448:android:659d3ee26a5fbd5ef96e45",
+        "mobilesdk_app_id": "1:945943999004:android:403f786d7c16880bda25d9",
         "android_client_info": {
           "package_name": "it.polito.MAD.group06"
         }
       },
       "oauth_client": [
         {
-          "client_id": "512352892448-3nh2a8q7fpsdsjv0otm0n2ii8a611uf6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "it.polito.MAD.group06",
-            "certificate_hash": "fddfa031f95871c49ec6a8658bc910845b50800e"
-          }
-        },
-        {
-          "client_id": "512352892448-4kh995tug05ovfogpaui1mou5tqpksij.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "it.polito.MAD.group06",
-            "certificate_hash": "227fdf1ed5d1cd26364b34a195ea2abd422d640d"
-          }
-        },
-        {
-          "client_id": "512352892448-q5mhn1l0pkf732vp51avkgb9n2631m29.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "it.polito.MAD.group06",
-            "certificate_hash": "53972067b349a905eae08414b5c2077bd5768d69"
-          }
+          "client_id": "945943999004-8ogsr5hkmtuqpgqac0lu172qp8kfigf7.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyChDv6NNuwrIZI6dms-pjNJR9LJDHVxvCE"
+          "current_key": "AIzaSyD_qwLEfdH7RFq95XCjjgfgDVJeozlXK2U"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "512352892448-34de1u53602su25jgtcgo2ogt3ssmk66.apps.googleusercontent.com",
+              "client_id": "945943999004-8ogsr5hkmtuqpgqac0lu172qp8kfigf7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945943999004:android:55831d0a7b7a3d3dda25d9",
+        "android_client_info": {
+          "package_name": "it.polito.madcourse.group06"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "945943999004-0e1jdfboimrjn2d4pe0qm85d9qtqiacm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "it.polito.madcourse.group06",
+            "certificate_hash": "227fdf1ed5d1cd26364b34a195ea2abd422d640d"
+          }
+        },
+        {
+          "client_id": "945943999004-8ogsr5hkmtuqpgqac0lu172qp8kfigf7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_qwLEfdH7RFq95XCjjgfgDVJeozlXK2U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "945943999004-8ogsr5hkmtuqpgqac0lu172qp8kfigf7.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
