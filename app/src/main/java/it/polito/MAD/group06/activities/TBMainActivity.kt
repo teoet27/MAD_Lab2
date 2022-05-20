@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -76,7 +77,8 @@ class TBMainActivity : AppCompatActivity() {
             setOf(
                 R.id.ShowListTimeslots,
                 R.id.ShowListOfServices,
-                R.id.showProfileFragment
+                R.id.showProfileFragment,
+                R.id.newProfileFragment
             ), drawerLayout
         )
         // setup navigation drawer
@@ -106,6 +108,10 @@ class TBMainActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     }
+                    true
+                }
+                R.id.newProfileMenuItem -> { //TODO: to be deleted from here
+                    navController.navigate(R.id.newProfileFragment)
                     true
                 }
                 else -> false
