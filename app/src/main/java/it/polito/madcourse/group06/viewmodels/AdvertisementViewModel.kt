@@ -65,7 +65,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             val accountName = this.get("account_name") as String
             val accountID = this.get("accountID") as String
             Advertisement(
-                id, title, description, listOfSkills?: arrayListOf<String>(),
+                id, title, description, listOfSkills ?: arrayListOf<String>(),
                 location, date, startingTime,
                 endingTime, duration, accountName,
                 accountID
