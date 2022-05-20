@@ -48,7 +48,6 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private var timeEndingHour: Int = 0
     private var timeEndingMinute: Int = 0
     private var newSkillTitleLabel: String = ""
-    private var newSkillCategoryLabel: String = ""
     private var skillList: MutableList<String> = mutableListOf()
     private val selectedSkillsList: MutableList<String> = mutableListOf()
 
@@ -255,7 +254,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
          */
         builder.setPositiveButton("Create", DialogInterface.OnClickListener { dialog, which ->
             newSkillTitleLabel = newSkillTitle.text.toString()
-            if (newSkillTitleLabel.isNotEmpty() && newSkillCategoryLabel.isNotEmpty()) {
+            if (newSkillTitleLabel.isNotEmpty()) {
                 val newSkill = ""
                 chipGroup.addChip(context, newSkill)
                 Snackbar.make(
