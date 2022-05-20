@@ -78,6 +78,8 @@
     <string name="time">Time</string>
     <string name="from">From</string>
     <string name="to">To</string>
+    <string name="welcome_message">Welcome to TimeBanking! Please insert your details to complete your profile.</string>
+    <string name="ok">OK</string>
     <string-array name="durations">
         <item>1</item>
         <item>2</item>
