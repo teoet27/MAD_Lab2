@@ -90,9 +90,6 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
             this.advDescription.text = singleAdvertisement.advDescription
             this.deleteButton.setOnClickListener {
                 advViewModel.removeAdvertisementByID(singleAdvertisement.id!!)
-                Toast.makeText(
-                    context, "Advertisement removed successfully!", Toast.LENGTH_LONG
-                ).show()
                 findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
             }
         }

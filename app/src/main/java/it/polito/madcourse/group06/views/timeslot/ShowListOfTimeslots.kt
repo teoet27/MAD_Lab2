@@ -1,6 +1,7 @@
 package it.polito.madcourse.group06.views.timeslot
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,7 @@ import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.AdvAdapterCard
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 
-class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
+class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
     private val advertisementViewModel: AdvertisementViewModel by activityViewModels()
     private lateinit var recyclerView: RecyclerView
@@ -49,15 +50,13 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
             /**
              * If there are no advertisements in the DB proper texts are shown.
              */
-            listOfAdv.filter{ it.listOfSkills.contains(arguments?.getString("selected_skill")) }
+            // val filteredListOfAdv = listOfAdv.filter { it.listOfSkills.contains(arguments?.getString("selected_skill")) }
             view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = listOfAdv.isEmpty()
             view.findViewById<ImageView>(R.id.create_hint).isVisible = listOfAdv.isEmpty()
 
-            if (listOfAdv.isNotEmpty()) {
-                this.recyclerView = view.findViewById(R.id.rvAdvFullList)
-                this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-                this.recyclerView.adapter = AdvAdapterCard(listOfAdv, advertisementViewModel)
-            }
+            this.recyclerView = view.findViewById(R.id.rvAdvFullList)
+            this.recyclerView.layoutManager = LinearLayoutManager(this.context)
+            this.recyclerView.adapter = AdvAdapterCard(listOfAdv, advertisementViewModel)
         }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
