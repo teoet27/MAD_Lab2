@@ -90,7 +90,9 @@ class FilterTimeslots : Fragment(R.layout.fragment_filter_timeslots) {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_filterTimeslots_to_ShowListTimeslots)
+                //view.startAnimation(AnimationUtils.loadAnimation(requireContext(),R.anim.slide_out_down))
+                if (activity?.supportFragmentManager?.backStackEntryCount!! > 0)
+                    activity?.supportFragmentManager?.popBackStackImmediate()
             }
         })
 
