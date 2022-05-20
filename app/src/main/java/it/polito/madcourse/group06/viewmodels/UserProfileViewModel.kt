@@ -48,6 +48,11 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             }
     }
 
+    /**
+     * toUser is an extension function which provide translation from
+     * [DocumentSnapshot] to [UserProfile]
+     * @return [UserProfile]
+     */
     private fun DocumentSnapshot.toUser(): UserProfile? {
         return try {
             val id = this.get("id") as String
@@ -70,16 +75,17 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     /**
-     * Insertion of a new [Advertisement]
-     * @param ad a new advertisement
+     * Insertion of a new [UserProfile]
+     * @param userProfile a new advertisement
      */
     fun insertUserProfile(userProfile: UserProfile) {
+        var userID: String = ""
         db
             .collection("UserProfile")
-            .document(userProfile.id.toString())
+            .document().also { userID = it.id }
             .set(
                 mapOf(
-                    "id" to userProfile.id,
+                    "id" to userID,
                     "nickname" to userProfile.nickname,
                     "fullName" to userProfile.fullName,
                     "qualification" to userProfile.qualification,
@@ -90,40 +96,23 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                     "skills" to userProfile.skills
                 )
             )
-            .addOnSuccessListener {
-                Toast.makeText(context, "Creation completed.", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Creation failed", Toast.LENGTH_SHORT).show()
-            }
     }
 
-    fun removeUserProfile(userProfile: UserProfile) {
+    /**
+     * Removing of a [UserProfile] by their ID
+     * @param id user's ID
+     */
+    fun removeUserProfileByID(id: String) {
         db
             .collection("UserProfile")
-            .document(userProfile.id.toString())
+            .document(id)
             .delete()
-            .addOnSuccessListener {
-                Toast.makeText(context, "Deletion completed.", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Deletion failed.", Toast.LENGTH_SHORT).show()
-            }
     }
 
-    fun removeUserProfileByID(id: Long) {
-        db
-            .collection("UserProfile")
-            .document(id.toString())
-            .delete()
-            .addOnSuccessListener {
-                Toast.makeText(context, "Deletion completed.", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Deletion failed.", Toast.LENGTH_SHORT).show()
-            }
-    }
-
+    /**
+     * Edit the [UserProfile] information with the newer ones passed as parameter.
+     * @param userProfile the object containing the most updated values
+     */
     fun editUserProfile(userProfile: UserProfile) {
         db
             .collection("UserProfile")
