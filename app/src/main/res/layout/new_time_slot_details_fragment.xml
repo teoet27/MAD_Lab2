@@ -106,7 +106,7 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/new_skill_chips_group"
+                android:id="@+id/newSkillChipGroup"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="16dp"
