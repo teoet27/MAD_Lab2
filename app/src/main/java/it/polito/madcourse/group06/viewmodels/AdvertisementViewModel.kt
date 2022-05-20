@@ -105,19 +105,10 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             }
     }
 
-    fun removeAdvertisement(ad: Advertisement) {
-        db
-            .collection("Advertisement")
-            .document(ad.id!!)
-            .delete()
-            .addOnSuccessListener {
-                Toast.makeText(context, "Deletion completed.", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Deletion failed.", Toast.LENGTH_SHORT).show()
-            }
-    }
-
+    /**
+     * Deletion of an [Advertisement] by its ID
+     * @param id the ID of the Advertisement
+     */
     fun removeAdvertisementByID(id: String) {
         db
             .collection("Advertisement")
@@ -131,6 +122,10 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             }
     }
 
+    /**
+     * A method to remove all the [Advertisement] related to a single account
+     * @param accountID the ID of the account
+     */
     fun removeAdvertisementByAccount(accountID: Int) {
         db
             .collection("Advertisement")
@@ -144,6 +139,10 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             }
     }
 
+    /**
+     * Edit an [Advertisement] with the info passed through an Object of class [Advertisement]
+     * @param ad the updated [Advertisement]
+     */
     fun editAdvertisement(ad: Advertisement) {
         db
             .collection("Advertisement")
@@ -251,6 +250,11 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
         return outAdv
     }
 
+    /**
+     * Update the name of the account which created the [Advertisement] with a new one
+     * @param accountID the ID of the account
+     * @param newAccountName the new name for the account creating the advertisement
+     */
     fun updateAdvAccountNameByAccountID(accountID: String, newAccountName: String) {
         db
             .collection("Advertisement")
