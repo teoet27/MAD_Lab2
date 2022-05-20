@@ -30,7 +30,7 @@ class ShowProfileFragment : Fragment() {
     private lateinit var skillsOBJ: TextView
     private lateinit var phoneOBJ: TextView
     private lateinit var profilePictureOBJ: ImageView
-    private lateinit var skills_chips: ChipGroup
+    private lateinit var skillsChips: ChipGroup
 
     private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
@@ -57,7 +57,7 @@ class ShowProfileFragment : Fragment() {
         this.skillsOBJ = view.findViewById(R.id.skillsListID)
         this.phoneOBJ = view.findViewById(R.id.phone_show_ID)
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
-        this.skills_chips = view.findViewById(R.id.skill_chips_group)
+        this.skillsChips = view.findViewById(R.id.skill_chips_group)
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
             Log.e("profile", userProfile.toString())
@@ -83,8 +83,8 @@ class ShowProfileFragment : Fragment() {
                 this.skillsOBJ.text = getString(R.string.noskills)
             } else {
                 userProfile.skills!!.forEach { sk ->
-                    this.skills_chips.addChip(requireContext(), sk)
-                    this.skills_chips.setOnCheckedChangeListener { chipGroup, checkedId ->
+                    this.skillsChips.addChip(requireContext(), sk)
+                    this.skillsChips.setOnCheckedChangeListener { chipGroup, checkedId ->
                         val selected_service = chipGroup.findViewById<Chip>(checkedId)?.text
                         Toast.makeText(chipGroup.context, selected_service ?: "No Choice", Toast.LENGTH_LONG).show()
                     }
