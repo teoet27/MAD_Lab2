@@ -255,8 +255,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         builder.setPositiveButton("Create", DialogInterface.OnClickListener { dialog, which ->
             newSkillTitleLabel = newSkillTitle.text.toString()
             if (newSkillTitleLabel.isNotEmpty()) {
-                val newSkill = ""
-                chipGroup.addChip(context, newSkill)
+                chipGroup.addChip(context, newSkillTitleLabel)
                 Snackbar.make(
                     requireView(), "New skill added!", Snackbar.LENGTH_LONG
                 ).show()
