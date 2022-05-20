@@ -129,13 +129,16 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     fun removeAdvertisementByAccount(accountID: Int) {
         db
             .collection("Advertisement")
-            .document()
-            .delete()
-            .addOnSuccessListener {
-                Toast.makeText(context, "Deletion completed.", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Deletion failed.", Toast.LENGTH_SHORT).show()
+            .whereEqualTo("accountID", accountID)
+            .addSnapshotListener { listOfAdv, e ->
+                if (e != null) {
+                    throw Exception()
+                } else {
+                    for (adv in listOfAdv!!) {
+                        val convertedAdv = adv.toAdvertisement()
+                        removeAdvertisementByID(convertedAdv?.id!!)
+                    }
+                }
             }
     }
 
@@ -146,7 +149,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     fun editAdvertisement(ad: Advertisement) {
         db
             .collection("Advertisement")
-            .document(ad.id.toString())
+            .document(ad.id!!)
             .set(
                 mapOf(
                     "id" to ad.id,
@@ -164,33 +167,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             )
             .addOnSuccessListener {
                 Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    fun editAdvertisementByID(id: String, ad: Advertisement) {
-        db
-            .collection("Advertisement")
-            .document(id)
-            .set(
-                mapOf(
-                    "id" to ad.id,
-                    "title" to ad.advTitle,
-                    "description" to ad.advDescription,
-                    "list_of_skills" to ad.listOfSkills,
-                    "location" to ad.advLocation,
-                    "date" to ad.advDate,
-                    "starting_time" to ad.advStartingTime,
-                    "ending_time" to ad.advEndingTime,
-                    "duration" to ad.advDuration,
-                    "account_name" to ad.advAccount,
-                    "accountID" to ad.accountID
-                )
-            )
-            .addOnSuccessListener {
-                Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
+                this._singleAdvertisementPH = ad
+                this._pvtAdvertisement.value = this._singleAdvertisementPH
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
@@ -264,10 +242,9 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                 } else {
                     for (adv in listOfAdvs!!) {
                         val thatAdv = adv.toAdvertisement()
-                        if (thatAdv?.accountID == accountID)
-                        {
+                        if (thatAdv?.accountID == accountID) {
                             thatAdv.advAccount = newAccountName
-                            this.editAdvertisementByID(thatAdv.id!!, thatAdv)
+                            this.editAdvertisement(thatAdv)
                         }
                     }
                 }

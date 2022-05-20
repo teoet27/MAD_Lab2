@@ -36,7 +36,6 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     private lateinit var advEndingTime: TextView
     private lateinit var advDescription: TextView
     private lateinit var deleteButton: ImageView
-    private lateinit var accountName: String
     private lateinit var datePicker: DatePicker
     private lateinit var chosenDate: String
     private lateinit var skillsChips: ChipGroup
@@ -49,7 +48,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
         this.advTitle = view.findViewById(R.id.editTitle)
-        this.advLocation = view.findViewById(R.id.editDescription)
+        this.advLocation = view.findViewById(R.id.editLocation)
         this.advDescription = view.findViewById(R.id.editDescription)
         this.advStartingTime = view.findViewById(R.id.editStartingTime)
         this.advEndingTime = view.findViewById(R.id.editEndingTime)
@@ -57,22 +56,31 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
         this.datePicker = view.findViewById(R.id.editDatePicker)
         this.skillsChips = view.findViewById(R.id.edit_skill_chips_group)
 
+        /*// Retrieve the account name of the current user
         usrViewModel.currentUser.observe(viewLifecycleOwner) { user ->
             accountName = if (user?.fullName == null) "Guido Saracco" else user.fullName!!
-        }
+        }*/
 
         advViewModel.advertisement.observe(viewLifecycleOwner) { singleAdvertisement ->
+            // A dumb advertisement which will be filled with the newest information
             dumbAdvertisement.id = singleAdvertisement.id
             dumbAdvertisement.advAccount = singleAdvertisement.advAccount
+
+            // Title
             this.advTitle.text = singleAdvertisement.advTitle
+
+            // Location
             this.advLocation.text = singleAdvertisement.advLocation
 
+            // Starting Time
             this.advStartingTime.text = singleAdvertisement.advStartingTime
-            this.advEndingTime.text = singleAdvertisement.advEndingTime
-
             this.advStartingTime.setOnClickListener { popTimePickerStarting(this.advStartingTime) }
+
+            // Ending Time
+            this.advEndingTime.text = singleAdvertisement.advEndingTime
             this.advEndingTime.setOnClickListener { popTimePickerEnding(this.advEndingTime) }
 
+            // Date
             val loadedDate = Calendar.getInstance()
             loadedDate.set(
                 singleAdvertisement.advDate.split("/")[2].toInt(),
@@ -87,7 +95,10 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                 chosenDate = "$day/${month + 1}/$year"
             }
 
+            // Description
             this.advDescription.text = singleAdvertisement.advDescription
+
+            // Delete Button
             this.deleteButton.setOnClickListener {
                 advViewModel.removeAdvertisementByID(singleAdvertisement.id!!)
                 findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
@@ -113,11 +124,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                     dumbAdvertisement.advStartingTime = advStartingTime.text.toString()
                     dumbAdvertisement.advEndingTime = advEndingTime.text.toString()
                     dumbAdvertisement.advDuration = timeDifference
-                    // TODO
-                    // advViewModel.editSingleAdvertisement(dumbAdvertisement)
-                    Toast.makeText(
-                        context, "Advertisement edited successfully!", Toast.LENGTH_LONG
-                    ).show()
+                    advViewModel.editAdvertisement(dumbAdvertisement)
                     findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_showSingleTimeslot)
                 } else {
                     Snackbar.make(
