@@ -75,9 +75,13 @@
     <fragment
         android:id="@+id/ShowListOfServices"
         android:name="it.polito.madcourse.group06.views.ShowListOfSkills"
-        android:label="List of services offered">
+        android:label="List of offered services">
         <action
             android:id="@+id/action_showListOfSkills_to_ShowListTimeslots"
             app:destination="@id/ShowListTimeslots" />
     </fragment>
+    <fragment
+        android:id="@+id/newProfileFragment"
+        android:name="it.polito.madcourse.group06.views.profile.NewProfileFragment"
+        android:label="NewProfileFragment" />
 </navigation>
