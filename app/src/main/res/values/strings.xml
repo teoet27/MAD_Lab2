@@ -80,14 +80,10 @@
     <string name="to">To</string>
     <string name="welcome_message">Welcome to TimeBanking! Please insert your details to complete your profile.</string>
     <string name="ok">OK</string>
-    <string-array name="durations">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-    </string-array>
+    <string name="from_date">From Date</string>
+    <string name="plus">+</string>
+    <string name="from_time">From Time</string>
+    <string name="to_date">To Date</string>
+    <string name="to_time">To Time</string>
+    <string name="apply">Apply</string>
 </resources>
