@@ -67,7 +67,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
             /**
              * If there are no advertisements in the DB proper texts are shown.
              */
-            listOfAdv.filter{ it.listOfSkills.contains(arguments?.getString("selected_skill"))}.also{
+            listOfAdv.filter{ it.listOfSkills.contains(arguments?.getString("selected_skill"))||
+                    arguments?.getString("selected_skill")=="All"}.also{
                     view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = it.isEmpty()
                     view.findViewById<ImageView>(R.id.create_hint).isVisible = it.isEmpty()
 
