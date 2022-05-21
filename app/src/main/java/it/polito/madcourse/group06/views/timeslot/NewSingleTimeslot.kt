@@ -203,6 +203,10 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             isCheckable = true
             isCheckedIconVisible = true
             isFocusable = true
+            isChecked = true
+            setTextColor(ContextCompat.getColor(context, R.color.white))
+            chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.prussian_blue))
+
             setOnClickListener {
                 if (selectedSkillsList.any { x ->
                         x == skill
