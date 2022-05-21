@@ -105,12 +105,13 @@ class ServiceTools {
         return computeDateDifference(this,date).first<=0
     }
 
-    class AdvFilter(val location:String?=null,
-                    val starting_time:String?=null,
-                    val ending_time:String?=null,
-                    val duration:Double?=null,
-                    val starting_date:String?=null,
-                    val ending_date:String?=null)
+    class AdvFilter(
+        val location:String?=null,
+        val starting_time:String?=null,
+        val ending_time:String?=null,
+        val duration: Double? =null,
+        val starting_date:String?=null,
+        val ending_date:String?=null)
     /**
      * filterAdvertisement
      * @param advList list of all available advertisements
@@ -127,12 +128,12 @@ class ServiceTools {
         advFilter: AdvFilter?
     ):List<Advertisement>?{
         return if(advFilter==null) advList else advList?.filter{ adv->
-            (advFilter.location!=null && adv.advLocation==advFilter.location)||(advFilter.location==null) &&
-            (advFilter.duration!=null && adv.advDuration<=advFilter.duration)||(advFilter.duration==null) &&
-            (advFilter.starting_time!=null && adv.advStartingTime.isLaterThanTime(advFilter.starting_time))||(advFilter.starting_time==null) &&
-            (advFilter.ending_time!=null && adv.advEndingTime.isSoonerThanTime(advFilter.ending_time))||(advFilter.ending_time==null) &&
-            (advFilter.starting_date!=null && adv.advDate.isLaterThanDate(advFilter.starting_date))||(advFilter.starting_date==null) &&
-            (advFilter.ending_date!=null && adv.advDate.isSoonerThanDate(advFilter.ending_date))||(advFilter.ending_date==null)
+            (advFilter.location!=null && adv.advLocation == advFilter.location)|| (advFilter.location==null) &&
+            ((advFilter.duration!=null && adv.advDuration<=advFilter.duration)||(advFilter.duration==null)) && //TODO: decide criteria
+            ((advFilter.starting_time!=null && adv.advStartingTime.isLaterThanTime(advFilter.starting_time))||(advFilter.starting_time==null)) &&
+            ((advFilter.ending_time!=null && adv.advEndingTime.isSoonerThanTime(advFilter.ending_time))||(advFilter.ending_time==null))&&
+            ((advFilter.starting_date!=null && adv.advDate.isLaterThanDate(advFilter.starting_date))||(advFilter.starting_date==null))&&
+            ((advFilter.ending_date!=null && adv.advDate.isSoonerThanDate(advFilter.ending_date))||(advFilter.ending_date==null))
         }
     }
 
