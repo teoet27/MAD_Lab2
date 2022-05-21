@@ -38,6 +38,12 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     private val _advertisements = MutableLiveData<List<Advertisement>>()
     val listOfAdvertisements: LiveData<List<Advertisement>> = _advertisements
 
+    /**
+     * List of My Advertisements
+     */
+    private val _myAdvertisements = MutableLiveData<List<Advertisement>>()
+    val myListOfAdvertisements: LiveData<List<Advertisement>> = _myAdvertisements
+
     init {
         listenerRegistration = db.collection("Advertisement")
             .addSnapshotListener { value, error ->
