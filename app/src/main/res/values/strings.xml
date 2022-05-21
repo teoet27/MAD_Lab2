@@ -87,4 +87,11 @@
     <string name="to_time">To Time</string>
     <string name="apply">Apply</string>
     <string name="filter">Filter</string>
+    <string name="sort">Sort</string>
+    <string name="title">Title</string>
+    <string name="starting_time">Starting time</string>
+    <string name="duration">Duration</string>
+    <string name="ending_time">Ending time</string>
+    <string name="starting_date">Starting date</string>
+    <string name="ending_date">Ending date</string>
 </resources>
