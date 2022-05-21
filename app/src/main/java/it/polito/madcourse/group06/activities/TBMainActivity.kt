@@ -111,6 +111,10 @@ class TBMainActivity : AppCompatActivity() {
                     }
                     true
                 }
+                R.id.showMyListOfAdvertisement -> {
+                    navController.navigate(R.id.showMyListOfAdvertisement)
+                    true
+                }
                 R.id.newProfileMenuItem -> { //TODO: to be deleted from here
                     navController.navigate(R.id.newProfileFragment)
                     true
