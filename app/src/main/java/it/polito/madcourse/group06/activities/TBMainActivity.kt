@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -94,7 +95,7 @@ class TBMainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.ShowListOfAdvertisementsMenuItem -> {
-                    navController.navigate(R.id.ShowListTimeslots)
+                    navController.navigate(R.id.ShowListTimeslots, bundleOf("selected_skill" to "All"))
                     true
                 }
                 R.id.ShowProfileMenuItem -> {
