@@ -24,12 +24,27 @@
             android:background="@drawable/rounded_corners_total"
             android:backgroundTint="@color/prussian_blue"
             android:gravity="right"
-            android:text="Filter"
+            android:text="@string/filter"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/sort_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/rounded_corners_total"
+            android:backgroundTint="@color/prussian_blue"
+            android:gravity="right"
+            android:text="@string/sort"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/filter_button"
+            app:layout_constraintEnd_toStartOf="@+id/filter_button"
+            app:layout_constraintTop_toTopOf="@+id/filter_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/defaultTextTimeslotsList"

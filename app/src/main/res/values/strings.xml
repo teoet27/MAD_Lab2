@@ -86,4 +86,6 @@
     <string name="to_date">To Date</string>
     <string name="to_time">To Time</string>
     <string name="apply">Apply</string>
+    <string name="filter">Filter</string>
+    <string name="sort">Sort</string>
 </resources>
