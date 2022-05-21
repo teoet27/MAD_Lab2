@@ -3,11 +3,11 @@ package it.polito.madcourse.group06.activities
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -25,8 +25,9 @@ import it.polito.madcourse.group06.utilities.getBitmapFromFile
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.utilities.DrawerManagement
 
-class TBMainActivity : AppCompatActivity() {
+class TBMainActivity : AppCompatActivity(), DrawerManagement {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -55,12 +56,7 @@ class TBMainActivity : AppCompatActivity() {
         val id = intent.getStringExtra("id")
         val fullname = intent.getStringExtra("fullname")
         val email = intent.getStringExtra("email")
-
-        try {
-            userProfileViewModel.setCurrentUserProfile(id!!, fullname!!, email!!)
-        } catch (npe: NullPointerException) {
-            // TODO: if the user is already logged their data should be retrieved
-        }
+        var isAlreadyRegistered = false
 
         // inflate the view hierarchy
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -86,6 +82,23 @@ class TBMainActivity : AppCompatActivity() {
         // setup navigation drawer
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        userProfileViewModel.setCurrentUserProfile(fullname!!, email!!)
+
+        userProfileViewModel.listOfUsers.observe(this) {
+            for (user in it) {
+                if (user.email == email) {
+                    isAlreadyRegistered = true
+                    break
+                }
+            }
+            if (!isAlreadyRegistered) {
+                navController.navigate(R.id.newProfileFragment)
+            } else {
+                userProfileViewModel.fetchUserProfile(email)
+            }
+        }
+
 
         // Navigation view item click listener
         navView.setNavigationItemSelectedListener {
@@ -120,26 +133,19 @@ class TBMainActivity : AppCompatActivity() {
             }
         }
 
+
         val fullnameHeader = navView.getHeaderView(0).findViewById<TextView>(R.id.fullname_header)
         val nicknameHeader = navView.getHeaderView(0).findViewById<TextView>(R.id.nickname_header)
         val pictureHeader = navView.getHeaderView(0).findViewById<ImageView>(R.id.picture_header)
 
         userProfileViewModel.currentUser.observe(this) { user ->
-            if (user != null) {
-                fullnameHeader.text = user.fullName
-                nicknameHeader.text = "@${user.nickname}"
-                val profilePicturePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(
-                    R.string.profile_picture_filename
-                )
-
-                getBitmapFromFile(profilePicturePath)?.also {
-                    pictureHeader.setImageBitmap(it)
-                }
-            } else {
-                fullnameHeader.text = "Guido Saracco"
-                nicknameHeader.text = "@rettore"
-                pictureHeader.setImageResource(R.drawable.propic)
-
+            fullnameHeader.text = user.fullName
+            nicknameHeader.text = "@${user.nickname}"
+            val profilePicturePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(
+                R.string.profile_picture_filename
+            )
+            getBitmapFromFile(profilePicturePath)?.also {
+                pictureHeader.setImageBitmap(it)
             }
         }
     }
@@ -167,5 +173,15 @@ class TBMainActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun setDrawerLocked() {
+        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    }
+
+    override fun setDrawerUnlocked() {
+        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 }

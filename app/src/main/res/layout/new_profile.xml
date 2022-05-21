@@ -88,7 +88,7 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/edit_fullname_ID"
+                    android:id="@+id/new_fullname_ID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
@@ -123,7 +123,7 @@
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/edit_nickname_ID"
+                        android:id="@+id/new_nickname_ID"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:digits="qwertyuiopasdfghjklzxcvbnm0123456789._"
@@ -140,7 +140,7 @@
                 </LinearLayout>
 
                 <EditText
-                    android:id="@+id/edit_qualification_ID"
+                    android:id="@+id/new_qualification_ID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#FC7A08"
@@ -168,7 +168,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/edit_description_show_ID"
+                    android:id="@+id/new_description_show_ID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/describe_yourself_with_a_long_text"
@@ -203,7 +203,7 @@
                     android:textSize="16sp" />
 
                 <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/editProfileChipGroup"
+                    android:id="@+id/newProfileChipGroup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -245,7 +245,7 @@
                         app:drawableTint="@color/orange_poli" />
 
                     <EditText
-                        android:id="@+id/edit_phone_show_ID"
+                        android:id="@+id/new_phone_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -281,8 +281,8 @@
                         app:drawableLeftCompat="@drawable/ic_email_black_24dp"
                         app:drawableTint="@color/orange_poli" />
 
-                    <EditText
-                        android:id="@+id/edit_email_show_ID"
+                    <TextView
+                        android:id="@+id/new_email_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -319,7 +319,7 @@
                         app:drawableTint="@color/orange_poli" />
 
                     <EditText
-                        android:id="@+id/edit_loc_show_ID"
+                        android:id="@+id/new_loc_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

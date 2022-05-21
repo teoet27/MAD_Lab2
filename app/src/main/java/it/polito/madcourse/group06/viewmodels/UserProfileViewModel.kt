@@ -9,7 +9,6 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
-import it.polito.madcourse.group06.models.advertisement.Advertisement
 import it.polito.madcourse.group06.models.userprofile.UserProfile
 import java.lang.Exception
 
@@ -24,9 +23,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     private var _singleUserProfilePH = UserProfile(
         "", "", "", "", "", "", "", "", null
     )
-    private val _pvtUserProfile = MutableLiveData<UserProfile>().also {
-        it.value = _singleUserProfilePH
-    }
+    private val _pvtUserProfile = MutableLiveData<UserProfile>().also { it.value = _singleUserProfilePH }
     val currentUser: LiveData<UserProfile> = this._pvtUserProfile
 
     /**
@@ -75,6 +72,30 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     /**
+     * Fetch the user profile by their related email from the db
+     * @param email the email of the user
+     */
+    fun fetchUserProfile(email: String) {
+        db
+            .collection("UserProfile")
+            .whereEqualTo("email", email)
+            .get()
+            .addOnSuccessListener { query ->
+                query.forEach { docSnap ->
+                    this._singleUserProfilePH = docSnap.toUser()!!
+                    this._pvtUserProfile.value = this._singleUserProfilePH
+                }
+            }
+            .addOnFailureListener {
+                this._singleUserProfilePH = UserProfile(
+                    null, null, null, null,
+                    null, null, null, null, null
+                )
+                this._pvtUserProfile.value = this._singleUserProfilePH
+            }
+    }
+
+    /**
      * Insertion of a new [UserProfile]
      * @param userProfile a new advertisement
      */
@@ -87,7 +108,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 mapOf(
                     "id" to userID,
                     "nickname" to userProfile.nickname,
-                    "fullName" to userProfile.fullName,
+                    "fullname" to userProfile.fullName,
                     "qualification" to userProfile.qualification,
                     "description" to userProfile.description,
                     "email" to userProfile.email,
@@ -96,6 +117,9 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                     "skills" to userProfile.skills
                 )
             )
+        this._singleUserProfilePH = userProfile
+        this._singleUserProfilePH.id = userID
+        this._pvtUserProfile.value = this._singleUserProfilePH
     }
 
     /**
@@ -116,19 +140,17 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     fun editUserProfile(userProfile: UserProfile) {
         db
             .collection("UserProfile")
-            .document(userProfile.id!!)
-            .set(
-                mapOf(
-                    "id" to userProfile.id,
-                    "nickname" to userProfile.nickname,
-                    "fullName" to userProfile.fullName,
-                    "qualification" to userProfile.qualification,
-                    "description" to userProfile.description,
-                    "email" to userProfile.email,
-                    "phone_number" to userProfile.phoneNumber,
-                    "location" to userProfile.location,
-                    "skills" to userProfile.skills
-                )
+            .document(this._singleUserProfilePH.id!!)
+            .update(
+                "id", userProfile.id,
+                "nickname", userProfile.nickname,
+                "fullname", userProfile.fullName,
+                "qualification", userProfile.qualification,
+                "description", userProfile.description,
+                "email", userProfile.email,
+                "phone_number", userProfile.phoneNumber,
+                "location", userProfile.location,
+                "skills", userProfile.skills
             )
             .addOnSuccessListener {
                 Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
@@ -140,86 +162,13 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
         this._pvtUserProfile.value = this._singleUserProfilePH
     }
 
-    fun getUserProfileByID(id: Int): UserProfile? {
-        var outAdv: UserProfile? = null
-
-        db
-            .collection("UserProfile")
-            .document(id.toString())
-            .get()
-            .addOnSuccessListener { dbAdv ->
-                outAdv = dbAdv.toObject(UserProfile::class.java)
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Error in retrieving the User Profile", Toast.LENGTH_LONG).show()
-            }
-
-        return outAdv
-    }
-
-    fun getListOfUserProfiles(): List<UserProfile> {
-        val outAdv: MutableList<UserProfile> = mutableListOf()
-
-        db
-            .collection("UserProfile")
-            .addSnapshotListener { value, e ->
-                if (e != null) {
-                    throw Exception()
-                } else {
-                    for (elem in value!!) {
-                        outAdv.add(elem.toObject(UserProfile::class.java))
-                    }
-                }
-            }
-
-        return outAdv
-    }
-
-    fun getListOfUserProfilesByAccountID(accountID: Int): List<UserProfile>? {
-        val outAdv: MutableList<UserProfile> = mutableListOf()
-
-        db
-            .collection("UserProfile")
-            .whereEqualTo("accountID", accountID)
-            .addSnapshotListener { value, e ->
-                if (e != null) {
-                    throw Exception()
-                } else {
-                    for (elem in value!!) {
-                        outAdv.add(elem.toObject(UserProfile::class.java))
-                    }
-                }
-            }
-
-        return outAdv
-    }
-
-    fun setCurrentUserProfile(id: String, fullname: String, email: String) {
-        //this._singleUserProfilePH.id = id.toLong()
+    /**
+     * Set the current user profile in order to make it visible to the observer
+     */
+    fun setCurrentUserProfile(fullname: String, email: String) {
         this._singleUserProfilePH.fullName = fullname
         this._singleUserProfilePH.email = email
-        this._singleUserProfilePH.location = "placeholder location"
-        this._singleUserProfilePH.phoneNumber = "000 000 000"
         this._pvtUserProfile.value = this._singleUserProfilePH
-    }
-
-    fun getListOfSkills(viewLifecycleOwner: LifecycleOwner): MutableSet<String> {
-        val outListOfSkills = mutableSetOf<String>()
-
-        db
-            .collection("UserProfile")
-            .addSnapshotListener { listOfUsers, e ->
-                if (e != null) {
-                    throw Exception()
-                } else {
-                    for (singleUser in listOfUsers!!) {
-                        for (skill in singleUser.get("skills") as ArrayList<String>)
-                        outListOfSkills.add(skill)
-                    }
-                }
-            }
-
-        return outListOfSkills
     }
 
     /**

@@ -13,7 +13,6 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.view.*
 import android.widget.*
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -25,33 +24,31 @@ import com.google.android.material.chip.ChipDrawable
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.models.userprofile.UserProfile
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.utilities.*
-import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import java.io.File
 import java.io.IOException
 
 class NewProfileFragment : Fragment() {
-    private lateinit var editFullNameOBJ: EditText
-    private lateinit var editNicknameOBJ: EditText
-    private lateinit var editQualificationOBJ: EditText
-    private lateinit var editDescriptionOBJ: EditText
-    private lateinit var editEmailOBJ: EditText
-    private lateinit var editLocationOBJ: EditText
-    private lateinit var editPhoneOBJ: EditText
+    private lateinit var newFullNameOBJ: EditText
+    private lateinit var newNicknameOBJ: EditText
+    private lateinit var newQualificationOBJ: EditText
+    private lateinit var newDescriptionOBJ: EditText
+    private lateinit var newEmailOBJ: TextView
+    private lateinit var newLocationOBJ: EditText
+    private lateinit var newPhoneOBJ: EditText
     private lateinit var profilePictureOBJ: ImageView
     private lateinit var photoURI: Uri
     private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
     private lateinit var skillsChips: ChipGroup
-    private var userID: String = ""
     private val skillList = arrayListOf<String>()
 
     private val REQUEST_IMAGE_CAPTURE = 1
     private val PICK_IMAGE = 100
 
-    private val advertisementViewModel by activityViewModels<AdvertisementViewModel>()
     private val userProfileViewModel by activityViewModels<UserProfileViewModel>()
 
     override fun onCreateView(
@@ -59,41 +56,40 @@ class NewProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.edit_profile, container, false)
+        return inflater.inflate(R.layout.new_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (activity as TBMainActivity).setDrawerLocked()
 
         // Camera
         val camera = view.findViewById<ImageView>(R.id.edit_camera_button)
         registerForContextMenu(camera)
         camera.setOnClickListener { activity?.openContextMenu(camera) }
 
-        this.editFullNameOBJ = view.findViewById(R.id.edit_fullname_ID)
-        this.editNicknameOBJ = view.findViewById(R.id.edit_nickname_ID)
-        this.editQualificationOBJ = view.findViewById(R.id.edit_qualification_ID)
-        this.editDescriptionOBJ = view.findViewById(R.id.edit_description_show_ID)
-        this.editEmailOBJ = view.findViewById(R.id.edit_email_show_ID)
-        this.editLocationOBJ = view.findViewById(R.id.edit_loc_show_ID)
-        this.editPhoneOBJ = view.findViewById(R.id.edit_phone_show_ID)
+        this.newFullNameOBJ = view.findViewById(R.id.new_fullname_ID)
+        this.newNicknameOBJ = view.findViewById(R.id.new_nickname_ID)
+        this.newQualificationOBJ = view.findViewById(R.id.new_qualification_ID)
+        this.newDescriptionOBJ = view.findViewById(R.id.new_description_show_ID)
+        this.newEmailOBJ = view.findViewById(R.id.new_email_show_ID)
+        this.newLocationOBJ = view.findViewById(R.id.new_loc_show_ID)
+        this.newPhoneOBJ = view.findViewById(R.id.new_phone_show_ID)
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
-        this.skillsChips = view.findViewById(R.id.editProfileChipGroup)
+        this.skillsChips = view.findViewById(R.id.newProfileChipGroup)
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
-            // Save the ID
-            this.userID = userProfile.id!!
             // Fullname
-            this.editFullNameOBJ.setText(userProfile.fullName)
+            this.newFullNameOBJ.setText(userProfile.fullName)
             // Nickname
-            this.editNicknameOBJ.setText(userProfile.nickname)
+            this.newNicknameOBJ.setText(userProfile.nickname)
             // Qualification
-            this.editQualificationOBJ.setText(userProfile.qualification)
+            this.newQualificationOBJ.setText(userProfile.qualification)
             // Phone Number
-            this.editPhoneOBJ.setText(userProfile.phoneNumber)
+            this.newPhoneOBJ.setText(userProfile.phoneNumber)
             // Location
-            this.editLocationOBJ.setText(userProfile.location)
-
+            this.newLocationOBJ.setText(userProfile.location)
             // Skills
             if (!userProfile.skills.isNullOrEmpty()) {
                 userProfile.skills!!.forEach { skill ->
@@ -111,10 +107,9 @@ class NewProfileFragment : Fragment() {
             }
 
             // Email
-            this.editEmailOBJ.setText(userProfile.email)
+            this.newEmailOBJ.setText(userProfile.email)
             // Description
-            this.editDescriptionOBJ.setText(userProfile.description)
-
+            this.newDescriptionOBJ.setText(userProfile.description)
             // Profile Picture
             profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
                 .toString() + '/' + resources.getString(R.string.profile_picture_filename)
@@ -127,44 +122,6 @@ class NewProfileFragment : Fragment() {
 
         // check this option to open onCreateOptionsMenu method
         setHasOptionsMenu(true)
-
-        activity?.onBackPressedDispatcher?.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    userProfileViewModel.currentUser.observe(viewLifecycleOwner) { user ->
-                        if (editFullNameOBJ.text.toString() == "") {
-                            Snackbar.make(
-                                requireView(),
-                                "Error: you must provide your full name. Try again.",
-                                Snackbar.LENGTH_LONG
-                            ).show()
-                        } else if (editNicknameOBJ.text.toString() == "") { //TODO: check if nickname is already present in database (it must be unique)
-                            Snackbar.make(
-                                requireView(),
-                                "Error: you must provide a nickname. Try again.",
-                                Snackbar.LENGTH_LONG
-                            ).show()
-                        } else if (editLocationOBJ.text.toString() == "") {
-                            Snackbar.make(
-                                requireView(),
-                                "Error: you must provide your location. Try again.",
-                                Snackbar.LENGTH_LONG
-                            ).show()
-                        } else if (editPhoneOBJ.text.toString() == "") {
-                            Snackbar.make(
-                                requireView(),
-                                "Error: you must provide your phone number. Try again.",
-                                Snackbar.LENGTH_LONG
-                            ).show()
-                        } else {
-                            saveData()
-                            findNavController().navigate(R.id.action_editProfileFragment_to_showProfileFragment)
-                        }
-                    }
-                }
-            })
-
         // show dialog box with welcome message
         showCustomDialog()
     }
@@ -226,23 +183,45 @@ class NewProfileFragment : Fragment() {
      * saveData is a private method for saving data before fragment transaction
      */
     private fun saveData() {
-        userProfileViewModel.editUserProfile(
-            UserProfile(
-                this.userID,
-                this.editNicknameOBJ.text.toString(),
-                editFullNameOBJ.text.toString(),
-                editQualificationOBJ.text.toString(),
-                editDescriptionOBJ.text.toString(),
-                editEmailOBJ.text.toString(),
-                editPhoneOBJ.text.toString(),
-                editLocationOBJ.text.toString(),
-                this.skillList
+        if (newFullNameOBJ.text.toString() == "") {
+            Snackbar.make(
+                requireView(),
+                "Error: you must provide your full name. Try again.",
+                Snackbar.LENGTH_LONG
+            ).show()
+        } else if (newNicknameOBJ.text.toString() == "") { //TODO: check if nickname is already present in database (it must be unique)
+            Snackbar.make(
+                requireView(),
+                "Error: you must provide a nickname. Try again.",
+                Snackbar.LENGTH_LONG
+            ).show()
+        } else if (newLocationOBJ.text.toString() == "") {
+            Snackbar.make(
+                requireView(),
+                "Error: you must provide your location. Try again.",
+                Snackbar.LENGTH_LONG
+            ).show()
+        } else if (newPhoneOBJ.text.toString() == "") {
+            Snackbar.make(
+                requireView(),
+                "Error: you must provide your phone number. Try again.",
+                Snackbar.LENGTH_LONG
+            ).show()
+        } else {
+            userProfileViewModel.insertUserProfile(
+                UserProfile(
+                    null,
+                    this.newNicknameOBJ.text.toString(),
+                    newFullNameOBJ.text.toString(),
+                    newQualificationOBJ.text.toString(),
+                    newDescriptionOBJ.text.toString(),
+                    newEmailOBJ.text.toString(),
+                    newPhoneOBJ.text.toString(),
+                    newLocationOBJ.text.toString(),
+                    this.skillList
+                )
             )
-        )
-        advertisementViewModel.updateAdvAccountNameByAccountID(
-            this.userID,
-            editFullNameOBJ.text.toString()
-        )
+        }
     }
 
     /**
@@ -371,9 +350,14 @@ class NewProfileFragment : Fragment() {
         when (item.itemId) {
             R.id.complete_user_editing -> {
                 saveData()
-                findNavController().navigate(R.id.action_editProfileFragment_to_showProfileFragment)
+                findNavController().navigate(R.id.action_newProfileFragment_to_ShowListOfServices)
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroy() {
+        (activity as TBMainActivity).setDrawerUnlocked()
+        super.onDestroy()
     }
 }

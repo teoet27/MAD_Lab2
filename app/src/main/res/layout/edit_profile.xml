@@ -281,7 +281,7 @@
                         app:drawableLeftCompat="@drawable/ic_email_black_24dp"
                         app:drawableTint="@color/orange_poli" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/edit_email_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

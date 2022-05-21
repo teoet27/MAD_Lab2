@@ -85,11 +85,18 @@
         <action
             android:id="@+id/action_showListOfSkills_to_ShowListTimeslots"
             app:destination="@id/ShowListTimeslots" />
+        <action
+            android:id="@+id/action_ShowListOfServices_to_newProfileFragment"
+            app:destination="@id/newProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/newProfileFragment"
         android:name="it.polito.madcourse.group06.views.profile.NewProfileFragment"
-        android:label="NewProfileFragment" />
+        android:label="Create your profile">
+        <action
+            android:id="@+id/action_newProfileFragment_to_ShowListOfServices"
+            app:destination="@id/ShowListOfServices" />
+    </fragment>
     <fragment
         android:id="@+id/filterTimeslots"
         android:name="it.polito.madcourse.group06.views.timeslot.FilterTimeslots"

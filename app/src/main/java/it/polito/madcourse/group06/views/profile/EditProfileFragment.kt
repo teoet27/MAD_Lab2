@@ -13,6 +13,7 @@ import android.provider.MediaStore
 import android.view.*
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +25,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.userprofile.UserProfile
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
@@ -38,7 +40,7 @@ class EditProfileFragment : Fragment() {
     private lateinit var editNicknameOBJ: EditText
     private lateinit var editQualificationOBJ: EditText
     private lateinit var editDescriptionOBJ: EditText
-    private lateinit var editEmailOBJ: EditText
+    private lateinit var editEmailOBJ: TextView
     private lateinit var editLocationOBJ: EditText
     private lateinit var editPhoneOBJ: EditText
     private lateinit var profilePictureOBJ: ImageView
@@ -108,10 +110,9 @@ class EditProfileFragment : Fragment() {
             }
 
             // Email
-            this.editEmailOBJ.setText(userProfile.email)
+            this.editEmailOBJ.text = userProfile.email
             // Description
             this.editDescriptionOBJ.setText(userProfile.description)
-
             // Profile Picture
             profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
                 .toString() + '/' + resources.getString(R.string.profile_picture_filename)
@@ -165,20 +166,46 @@ class EditProfileFragment : Fragment() {
      * saveData is a private method for saving data before fragment transaction
      */
     private fun saveData() {
-        userProfileViewModel.editUserProfile(
-            UserProfile(
-                this.userID,
-                this.editNicknameOBJ.text.toString(),
-                editFullNameOBJ.text.toString(),
-                editQualificationOBJ.text.toString(),
-                editDescriptionOBJ.text.toString(),
-                editEmailOBJ.text.toString(),
-                editPhoneOBJ.text.toString(),
-                editLocationOBJ.text.toString(),
-                this.skillList
+        if (editFullNameOBJ.text.toString() == "") {
+            Snackbar.make(
+                requireView(),
+                "Error: you must provide your full name. Try again.",
+                Snackbar.LENGTH_LONG
+            ).show()
+        } else if (editNicknameOBJ.text.toString() == "") { //TODO: check if nickname is already present in database (it must be unique)
+            Snackbar.make(
+                requireView(),
+                "Error: you must provide a nickname. Try again.",
+                Snackbar.LENGTH_LONG
+            ).show()
+        } else if (editLocationOBJ.text.toString() == "") {
+            Snackbar.make(
+                requireView(),
+                "Error: you must provide your location. Try again.",
+                Snackbar.LENGTH_LONG
+            ).show()
+        } else if (editPhoneOBJ.text.toString() == "") {
+            Snackbar.make(
+                requireView(),
+                "Error: you must provide your phone number. Try again.",
+                Snackbar.LENGTH_LONG
+            ).show()
+        } else {
+            userProfileViewModel.editUserProfile(
+                UserProfile(
+                    this.userID,
+                    this.editNicknameOBJ.text.toString(),
+                    editFullNameOBJ.text.toString(),
+                    editQualificationOBJ.text.toString(),
+                    editDescriptionOBJ.text.toString(),
+                    editEmailOBJ.text.toString(),
+                    editPhoneOBJ.text.toString(),
+                    editLocationOBJ.text.toString(),
+                    this.skillList
+                )
             )
-        )
-        advertisementViewModel.updateAdvAccountNameByAccountID(this.userID, editFullNameOBJ.text.toString())
+            advertisementViewModel.updateAdvAccountNameByAccountID(this.userID, editFullNameOBJ.text.toString())
+        }
     }
 
     /**

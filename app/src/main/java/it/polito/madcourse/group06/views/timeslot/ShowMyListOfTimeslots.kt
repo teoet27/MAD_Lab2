@@ -88,11 +88,8 @@ class ShowMyListOfTimeslots : Fragment() {
             /**
              * If there are no advertisements in the DB proper texts are shown.
              */
-
-            val filteredListOfSkills = listOfAdv.filter {
-                it.listOfSkills.contains(arguments?.getString("selected_skill")) ||
-                        arguments?.getString("selected_skill") == "All"
-            }.filter { it.accountID == accountID }
+            // TODO: Adjust the AdvAdapterCard
+            val filteredListOfSkills = listOfAdv.filter { it.accountID == accountID }
 
             view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = filteredListOfSkills.isEmpty()
             view.findViewById<ImageView>(R.id.create_hint).isVisible = filteredListOfSkills.isEmpty()

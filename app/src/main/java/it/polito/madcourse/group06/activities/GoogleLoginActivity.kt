@@ -6,11 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
-import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -18,35 +15,32 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import it.polito.madcourse.group06.R
-import it.polito.madcourse.group06.utilities.GoogleLoginSavedPreferencesObject
 
 class GoogleLoginActivity : AppCompatActivity() {
 
-    private lateinit var oneTapClient: SignInClient
-    private lateinit var signInRequest: BeginSignInRequest
     private lateinit var account: GoogleSignInAccount
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
-
-    /*
-    waiting for this to be a fragment
-    private val usrViewModel: UserProfileViewModel by activityViewModels()
-     */
 
     override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = firebaseAuth.currentUser
-        updateUI(currentUser)
 
         // if you do not add this check, then you would have to login everytime you start your application on your phone.
         if (GoogleSignIn.getLastSignedInAccount(this) != null) {
-            startActivity(Intent(this, TBMainActivity::class.java))
+            /**
+             * This intent will pass to the TBMainActivity the info fetched from Google
+             */
+            val alreadyLoggedIntent = Intent(this, TBMainActivity::class.java)
+            alreadyLoggedIntent.putExtra("id", currentUser?.uid!!)
+            alreadyLoggedIntent.putExtra("fullname", currentUser?.displayName!!)
+            alreadyLoggedIntent.putExtra("email", currentUser?.email!!)
+            startActivity(alreadyLoggedIntent)
             finish()
         }
     }
@@ -57,13 +51,9 @@ class GoogleLoginActivity : AppCompatActivity() {
         FirebaseApp.initializeApp(this)
         setContentView(R.layout.activity_google_login)
 
-
-        // Define ActionBar object to change colour
-        val actionBar: ActionBar? = supportActionBar
         // change upper bar colour to orange_poli for login
         window.statusBarColor = this.resources.getColor(R.color.orange_poli)
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.orange_poli)));
-
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -114,34 +104,22 @@ class GoogleLoginActivity : AppCompatActivity() {
         firebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
-                    val user = firebaseAuth.currentUser
-                    updateUI(user)
 
-                    // start main activity
-                    val intent = Intent(this, TBMainActivity::class.java)
-                    intent.putExtra("id", this.account.id)
-                    intent.putExtra("fullname", this.account.displayName)
-                    intent.putExtra("email", this.account.email)
-                    startActivity(intent)
+                    /**
+                     * This intent will pass to the TBMainActivity the info fetched from Google
+                     */
+                    val signInIntent = Intent(this, TBMainActivity::class.java)
+                    signInIntent.putExtra("id", this.account.id)
+                    signInIntent.putExtra("fullname", this.account.displayName)
+                    signInIntent.putExtra("email", this.account.email)
+                    startActivity(signInIntent)
                     finish()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
-                    updateUI(null)
                 }
             }
-    }
-
-    private fun updateUI(user: FirebaseUser?) {
-        if (user != null) {
-            GoogleLoginSavedPreferencesObject.setEmail(this, user.email.toString())
-            GoogleLoginSavedPreferencesObject.setUsername(this, user.displayName.toString())
-        } else {
-            GoogleLoginSavedPreferencesObject.setEmail(this, "")
-            GoogleLoginSavedPreferencesObject.setUsername(this, "")
-        }
     }
 
     companion object {

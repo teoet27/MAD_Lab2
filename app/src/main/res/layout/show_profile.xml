@@ -79,7 +79,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:background="@drawable/rounded_corners">
+            android:background="@drawable/rounded_corners"
+            android:backgroundTint="#FFFFFF">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -148,6 +149,7 @@
                     android:hint="No descriprion provided."
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
+                    android:textColor="#000000"
                     android:textSize="16sp" />
 
                 <TextView
@@ -171,6 +173,7 @@
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
                     android:text="@string/default_skills_text"
+                    android:textColor="#000000"
                     android:textSize="16sp" />
 
                 <TextView
@@ -183,22 +186,21 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <com.google.android.material.chip.ChipGroup
-                    xmlns:android="http://schemas.android.com/apk/res/android"
+                <com.google.android.material.chip.ChipGroup xmlns:android="http://schemas.android.com/apk/res/android"
 
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
 
-                android:id="@+id/skill_chips_group"
+                    android:id="@+id/skill_chips_group"
 
-                android:layout_width="match_parent"
+                    android:layout_width="match_parent"
 
-                android:layout_height="wrap_content"
+                    android:layout_height="wrap_content"
 
-                android:padding="16dp"
+                    android:padding="16dp"
 
-                app:singleLine="true"
+                    app:singleLine="true"
 
-                app:singleSelection="true">
+                    app:singleSelection="true">
 
                 </com.google.android.material.chip.ChipGroup>
 
@@ -234,6 +236,7 @@
                         android:ems="2"
                         android:minEms="2"
                         android:text="@string/phone_number"
+                        android:textColor="#000000"
                         android:textSize="16sp"
                         app:drawableLeftCompat="@drawable/ic_call_black_24dp" />
 
@@ -246,6 +249,7 @@
                         android:maxWidth="30dp"
                         android:text="@string/default_empty_string"
                         android:textAlignment="textEnd"
+                        android:textColor="#000000"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -269,6 +273,7 @@
                         android:ems="2"
                         android:minEms="2"
                         android:text="@string/email_text"
+                        android:textColor="#000000"
                         android:textSize="16sp"
                         app:drawableLeftCompat="@drawable/ic_email_black_24dp" />
 
@@ -281,6 +286,7 @@
                         android:maxWidth="30dp"
                         android:text="@string/default_empty_string"
                         android:textAlignment="textEnd"
+                        android:textColor="#000000"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -304,6 +310,7 @@
                         android:ems="2"
                         android:minEms="2"
                         android:text="@string/location_text"
+                        android:textColor="#000000"
                         android:textSize="16sp"
                         app:drawableLeftCompat="@drawable/ic_location_on_black_24dp" />
 
@@ -316,6 +323,7 @@
                         android:maxWidth="30dp"
                         android:text="@string/default_empty_string"
                         android:textAlignment="textEnd"
+                        android:textColor="#000000"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
