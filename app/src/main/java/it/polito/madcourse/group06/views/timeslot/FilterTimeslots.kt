@@ -33,6 +33,8 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
     private lateinit var minDuration: Chip
     private lateinit var maxDuration: Chip
     private lateinit var applyButton: Button
+    private lateinit var wholeWord:CheckBox
+
 
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
@@ -52,6 +54,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
         this.minDuration = view.findViewById(R.id.min_duration)
 
         this.applyButton = view.findViewById(R.id.apply_button)
+        this.wholeWord=view.findViewById(R.id.whole_word)
 
 
         sharedViewModel.select(true)
@@ -80,6 +83,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
             sharedViewModel.setFilter(
                 AdvFilter(
                     location = location.text.toString(),
+                    whole_word=wholeWord.isChecked,
                     starting_time = if (fromTime.text == "+") null else fromTime.text.toString(),
                     ending_time = if (toTime.text == "+") null else toTime.text.toString(),
                     min_duration = if (minDuration.text == "+") null else minDuration.text.toString(),
