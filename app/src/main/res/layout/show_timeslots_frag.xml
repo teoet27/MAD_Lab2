@@ -9,27 +9,64 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
         android:background="#DADADA"
         android:paddingStart="16dp"
+        android:paddingTop="6dp"
         android:paddingEnd="16dp"
+        android:paddingBottom="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.chip.Chip
+        <TextView
+            android:id="@+id/sort_parameter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/rounded_corners_total"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:minEms="5"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="max duration"
+            android:textAlignment="gravity"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/sort_direction_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="V,1:1"
+            app:layout_constraintStart_toEndOf="@+id/sort_parameter"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/sort_directions" />
+
+        <TextView
             android:id="@+id/filter_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/rounded_corners_total"
             android:backgroundTint="@color/prussian_blue"
-            android:gravity="right"
-            android:text="@string/filter"
+            android:gravity="center"
+            android:minEms="4"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="Filter"
+            android:textAlignment="gravity"
             android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView

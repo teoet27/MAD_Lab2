@@ -26,8 +26,13 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var recyclerView: RecyclerView
     private lateinit var newAdvButton: Button
-    private lateinit var filterButton: Button
+    private lateinit var filterButton: TextView
+    private lateinit var sortParam: TextView
+    private lateinit var directionButton: ImageView
     private lateinit var barrier:TextView
+
+    var sortDirection:Int=1
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +52,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
         this.newAdvButton = view.findViewById(R.id.newAdvButton)
         this.filterButton = view.findViewById(R.id.filter_button)
+        this.sortParam = view.findViewById(R.id.sort_parameter)
+        this.directionButton = view.findViewById(R.id.sort_direction_button)
         this.recyclerView = view.findViewById(R.id.rvAdvFullList)
         this.barrier = view.findViewById(R.id.barrier)
 
@@ -64,6 +71,13 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             setCustomAnimations(R.anim.slide_in_up, 0).
             add(R.id.nav_host_fragment_content_main, FilterTimeslots()).
             commit()
+        }
+
+        sortParam.setOnClickListener { /*open context menu to choose parameter and sort*/ }
+
+        directionButton.setOnClickListener{
+            sortDirection=(sortDirection+1)%2 //toggle direction
+            // change sort direction
         }
 
         advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
