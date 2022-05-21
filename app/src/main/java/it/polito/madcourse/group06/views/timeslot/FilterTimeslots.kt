@@ -1,5 +1,6 @@
 package it.polito.madcourse.group06.views.timeslot
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
@@ -22,6 +23,9 @@ import java.util.*
  * create an instance of this fragment.
  */
 class FilterTimeslots : Fragment(R.layout.fragment_filter_timeslots) {
+    private lateinit var cancel :Button
+    private lateinit var reset :Button
+
     private lateinit var location :EditText
     private lateinit var fromDate: Chip
     private lateinit var fromTime: Chip
@@ -29,11 +33,24 @@ class FilterTimeslots : Fragment(R.layout.fragment_filter_timeslots) {
     private lateinit var toTime: Chip
     private lateinit var durationSpinner :Spinner
     private lateinit var applyButton: Button
-    private lateinit var cancel :Button
-    private lateinit var reset :Button
+
+    private lateinit var sortTitleChip: Chip
+    private lateinit var sortDurationChip: Chip
+    private lateinit var sortStartingTimeChip: Chip
+    private lateinit var sortStartingDateChip: Chip
+    private lateinit var sortEndingTimeChip: Chip
+    private lateinit var sortEndingDateChip: Chip
+
+    private var titleChipState=0
+    private var durationChipState=0
+    private var startingTimeChipState=0
+    private var endingTimeChipState=0
+    private var startingDateChipState=0
+    private var endingDateChipState=0
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -45,7 +62,16 @@ class FilterTimeslots : Fragment(R.layout.fragment_filter_timeslots) {
         this.toDate = view.findViewById(R.id.add_ending_date_chip)
         this.toTime = view.findViewById(R.id.ending_time)
         this.durationSpinner = view.findViewById(R.id.duration_spinner)
+
+        this.sortTitleChip =view.findViewById(R.id.sort_title_chip)
+        this.sortDurationChip =view.findViewById(R.id.sort_duration_chip)
+        this.sortStartingDateChip =view.findViewById(R.id.sort_starting_date_chip)
+        this.sortStartingTimeChip =view.findViewById(R.id.sort_starting_time_chip)
+        this.sortEndingDateChip =view.findViewById(R.id.sort_ending_date_chip)
+        this.sortEndingTimeChip =view.findViewById(R.id.sort_ending_time_chip)
+
         this.applyButton=view.findViewById(R.id.apply_button)
+
 
         sharedViewModel.select(true)
 
@@ -64,6 +90,19 @@ class FilterTimeslots : Fragment(R.layout.fragment_filter_timeslots) {
             this.fromTime.text="+"
             this.toTime.text="+"
             this.durationSpinner.setSelection(0)
+
+            this.sortTitleChip.chipIcon=resources.getDrawable(R.drawable.sort_directions,null)
+            this.sortDurationChip.chipIcon=resources.getDrawable(R.drawable.sort_directions,null)
+            this.sortStartingDateChip.chipIcon=resources.getDrawable(R.drawable.sort_directions,null)
+            this.sortStartingTimeChip.chipIcon=resources.getDrawable(R.drawable.sort_directions,null)
+            this.sortEndingDateChip.chipIcon=resources.getDrawable(R.drawable.sort_directions,null)
+            this.sortEndingTimeChip.chipIcon=resources.getDrawable(R.drawable.sort_directions,null)
+            titleChipState=0
+            durationChipState=0
+            startingTimeChipState=0
+            endingTimeChipState=0
+            startingDateChipState=0
+            endingDateChipState=0
         }
 
         this.applyButton.setOnClickListener{
@@ -79,6 +118,50 @@ class FilterTimeslots : Fragment(R.layout.fragment_filter_timeslots) {
             ))
             slideOutFragment(this)
         }
+
+        this.sortTitleChip.setOnClickListener{
+            titleChipState=(titleChipState+1)%3
+            when(titleChipState){
+                0-> this.sortTitleChip.chipIcon=resources.getDrawable(R.drawable.sort_directions,null)
+                1-> this.sortTitleChip.chipIcon=resources.getDrawable(R.drawable.sort_up,null)
+                2-> this.sortTitleChip.chipIcon=resources.getDrawable(R.drawable.sort_down,null)
+            }
+        }
+        this.sortDurationChip.setOnClickListener{
+            durationChipState=(durationChipState+1)%3
+            when(durationChipState){
+                0-> this.sortDurationChip.chipIcon=resources.getDrawable(R.drawable.sort_directions,null)
+                1-> this.sortDurationChip.chipIcon=resources.getDrawable(R.drawable.sort_up,null)
+                2-> this.sortDurationChip.chipIcon=resources.getDrawable(R.drawable.sort_down,null)
+            }}
+        this.sortStartingDateChip.setOnClickListener{
+            startingDateChipState=(startingDateChipState+1)%3
+            when(startingDateChipState){
+                0-> this.sortStartingDateChip.chipIcon=resources.getDrawable(R.drawable.sort_directions,null)
+                1-> this.sortStartingDateChip.chipIcon=resources.getDrawable(R.drawable.sort_up,null)
+                2-> this.sortStartingDateChip.chipIcon=resources.getDrawable(R.drawable.sort_down,null)
+            }}
+        this.sortStartingTimeChip.setOnClickListener{
+            startingTimeChipState=(startingTimeChipState+1)%3
+            when(startingTimeChipState){
+                0-> this.sortStartingTimeChip.chipIcon=resources.getDrawable(R.drawable.sort_directions,null)
+                1-> this.sortStartingTimeChip.chipIcon=resources.getDrawable(R.drawable.sort_up,null)
+                2-> this.sortStartingTimeChip.chipIcon=resources.getDrawable(R.drawable.sort_down,null)
+            }}
+        this.sortEndingDateChip.setOnClickListener{
+            endingDateChipState=(endingDateChipState+1)%3
+            when(endingDateChipState){
+                0-> this.sortEndingDateChip.chipIcon=resources.getDrawable(R.drawable.sort_directions,null)
+                1-> this.sortEndingDateChip.chipIcon=resources.getDrawable(R.drawable.sort_up,null)
+                2-> this.sortEndingDateChip.chipIcon=resources.getDrawable(R.drawable.sort_down,null)
+            }}
+        this.sortEndingTimeChip.setOnClickListener{
+            endingTimeChipState=(endingTimeChipState+1)%3
+            when(endingTimeChipState){
+                0-> this.sortEndingTimeChip.chipIcon=resources.getDrawable(R.drawable.sort_directions,null)
+                1-> this.sortEndingTimeChip.chipIcon=resources.getDrawable(R.drawable.sort_up,null)
+                2-> this.sortEndingTimeChip.chipIcon=resources.getDrawable(R.drawable.sort_down,null)
+            }}
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -107,7 +190,7 @@ class FilterTimeslots : Fragment(R.layout.fragment_filter_timeslots) {
         }
     }
 
-    fun slideOutFragment(frag:Fragment){
+    private fun slideOutFragment(frag:Fragment){
         view?.startAnimation(AnimationUtils.loadAnimation(requireContext(),R.anim.slide_out_down))
         sharedViewModel.select(false)
 
