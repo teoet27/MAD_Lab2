@@ -310,7 +310,7 @@
                         app:chipIconSize="12dp"
                         app:chipIconTint="@color/black"
                         app:chipStartPadding="10dp"
-                        app:chipSurfaceColor="#C1C1C1" />
+                        app:chipSurfaceColor="#D8D8D8" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/sort_duration_chip"
@@ -322,7 +322,7 @@
                         app:chipIconSize="12dp"
                         app:chipIconTint="@color/black"
                         app:chipStartPadding="10dp"
-                        app:chipSurfaceColor="#C1C1C1" />
+                        app:chipSurfaceColor="#D8D8D8" />
 
 
                     <com.google.android.material.chip.Chip
@@ -335,7 +335,7 @@
                         app:chipIconSize="12dp"
                         app:chipIconTint="@color/black"
                         app:chipStartPadding="10dp"
-                        app:chipSurfaceColor="#C1C1C1" />
+                        app:chipSurfaceColor="#D8D8D8" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/sort_ending_time_chip"
@@ -347,7 +347,7 @@
                         app:chipIconSize="12dp"
                         app:chipIconTint="@color/black"
                         app:chipStartPadding="10dp"
-                        app:chipSurfaceColor="#C1C1C1" />
+                        app:chipSurfaceColor="#D8D8D8" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/sort_starting_date_chip"
@@ -359,7 +359,7 @@
                         app:chipIconSize="12dp"
                         app:chipIconTint="@color/black"
                         app:chipStartPadding="10dp"
-                        app:chipSurfaceColor="#C1C1C1" />
+                        app:chipSurfaceColor="#D8D8D8" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/sort_ending_date_chip"
@@ -371,7 +371,7 @@
                         app:chipIconSize="12dp"
                         app:chipIconTint="@color/black"
                         app:chipStartPadding="10dp"
-                        app:chipSurfaceColor="#C1C1C1" />
+                        app:chipSurfaceColor="#D8D8D8" />
                 </com.google.android.material.chip.ChipGroup>
 
             </LinearLayout>
