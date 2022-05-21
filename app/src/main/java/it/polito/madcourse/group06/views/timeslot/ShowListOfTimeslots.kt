@@ -21,13 +21,13 @@ import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import kotlin.math.sqrt
 
-class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
+class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
     private val advertisementViewModel: AdvertisementViewModel by activityViewModels()
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var recyclerView: RecyclerView
     private lateinit var newAdvButton: Button
-    private lateinit var filterButton:Button
+    private lateinit var filterButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,34 +53,31 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
             findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
         }
 
-        sharedViewModel.selected.observe(viewLifecycleOwner){
+        sharedViewModel.selected.observe(viewLifecycleOwner) {
             enableUI(!it)
         }
-        filterButton.setOnClickListener{
-            activity?.supportFragmentManager!!.
-            beginTransaction().
-            setCustomAnimations(R.anim.slide_in_up,0).
-            add(R.id.nav_host_fragment_content_main,FilterTimeslots()).
-            commit()
+        filterButton.setOnClickListener {
+            activity?.supportFragmentManager!!.beginTransaction().setCustomAnimations(R.anim.slide_in_up, 0).add(R.id.nav_host_fragment_content_main, FilterTimeslots()).commit()
         }
 
         advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
             /**
              * If there are no advertisements in the DB proper texts are shown.
              */
-            listOfAdv.filter{ it.listOfSkills.contains(arguments?.getString("selected_skill"))||
-                    arguments?.getString("selected_skill")=="All"}.also{
-                    view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = it.isEmpty()
-                    view.findViewById<ImageView>(R.id.create_hint).isVisible = it.isEmpty()
 
-                    if (it.isNotEmpty()) {
-                        this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-                        this.recyclerView.adapter = AdvAdapterCard(it, advertisementViewModel)
-                    }
+            val filteredListOfSkills = listOfAdv.filter {
+                it.listOfSkills.contains(arguments?.getString("selected_skill")) ||
+                        arguments?.getString("selected_skill") == "All"
             }
 
-            sharedViewModel.filter.observe(viewLifecycleOwner){ filter->
-                ServiceTools().filterAdvertisementList(listOfAdv,filter)?.also{
+            view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = filteredListOfSkills.isEmpty()
+            view.findViewById<ImageView>(R.id.create_hint).isVisible = filteredListOfSkills.isEmpty()
+
+            this.recyclerView.layoutManager = LinearLayoutManager(this.context)
+            this.recyclerView.adapter = AdvAdapterCard(filteredListOfSkills, advertisementViewModel)
+
+            sharedViewModel.filter.observe(viewLifecycleOwner) { filter ->
+                ServiceTools().filterAdvertisementList(filteredListOfSkills, filter)?.also {
                     view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = it.isEmpty()
                     view.findViewById<ImageView>(R.id.create_hint).isVisible = it.isEmpty()
 
@@ -100,8 +97,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag){
     }
 
     private fun enableUI(switch: Boolean) {
-        this.filterButton.isEnabled= switch
+        this.filterButton.isEnabled = switch
         this.recyclerView.suppressLayout(!switch)
-        this.recyclerView.isClickable= switch
+        this.recyclerView.isClickable = switch
     }
 }
