@@ -99,7 +99,7 @@
                         android:textStyle="bold" />
 
                     <CheckBox
-                        android:id="@+id/checkBox"
+                        android:id="@+id/whole_word"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
