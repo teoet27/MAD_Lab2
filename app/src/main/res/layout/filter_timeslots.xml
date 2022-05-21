@@ -81,16 +81,29 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/location"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:hint="@string/location"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:hint="@string/location"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Whole word" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -152,50 +165,6 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/from_time_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginTop="8dp"
-                                android:layout_weight="4"
-                                android:gravity="center"
-                                android:text="@string/from_time"
-                                android:textColor="@color/lightGray"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <com.google.android.material.chip.Chip
-                                android:id="@+id/starting_time"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
-                                android:layout_weight="1"
-                                android:backgroundTint="@color/orange_poli"
-                                android:text="@string/plus"
-                                android:textAlignment="center"
-                                android:textColor="@color/prussian_blue" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:padding="4dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="2dp"
-                            android:layout_marginRight="2dp"
-                            android:layout_weight="3"
-                            android:background="@drawable/adv_card_bckgrnd"
-                            android:backgroundTint="@color/ic_launcher_background"
-                            android:orientation="vertical">
-
-                            <TextView
                                 android:id="@+id/to_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -223,12 +192,56 @@
 
                         </LinearLayout>
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:padding="4dp">
+
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="2dp"
                             android:layout_marginRight="2dp"
-                            android:layout_weight="3"
+                            android:layout_weight="1"
+                            android:background="@drawable/adv_card_bckgrnd"
+                            android:backgroundTint="@color/ic_launcher_background"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/from_time_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_weight="4"
+                                android:gravity="center"
+                                android:text="@string/from_time"
+                                android:textColor="@color/lightGray"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/starting_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:layout_weight="1"
+                                android:backgroundTint="@color/orange_poli"
+                                android:text="@string/plus"
+                                android:textAlignment="center"
+                                android:textColor="@color/prussian_blue" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:layout_weight="1"
                             android:background="@drawable/adv_card_bckgrnd"
                             android:backgroundTint="@color/ic_launcher_background"
                             android:orientation="vertical">
@@ -264,34 +277,101 @@
 
                 </LinearLayout>
 
+                <ImageView
+                    android:id="@+id/imageView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="#AAABAE"
+                    android:contentDescription='@string/separation_line'
+                    android:paddingTop="5dp"
+                    android:src="@drawable/rounded_corners_land" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="4dp">
 
-                    <TextView
-                        android:id="@+id/duration_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="16dp"
-                        android:paddingTop="16dp"
-                        android:paddingEnd="50dp"
-                        android:paddingBottom="0dp"
-                        android:text="Duration"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_weight="3"
+                        android:background="@drawable/adv_card_bckgrnd"
+                        android:backgroundTint="@color/ic_launcher_background"
+                        android:orientation="vertical">
 
-                    <Spinner
-                        android:id="@+id/duration_spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp" />
+                        <TextView
+                            android:id="@+id/to_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="4"
+                            android:gravity="center|center_horizontal|center_vertical"
+                            android:text="@string/min_duration"
+                            android:textAlignment="center"
+                            android:textColor="@color/lightGray"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/textView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_weight="4"
+                            android:hint="Duration"
+                            android:textColorHint="@color/lightGray" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_weight="3"
+                        android:background="@drawable/adv_card_bckgrnd"
+                        android:backgroundTint="@color/ic_launcher_background"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/to_time_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="4"
+                            android:gravity="center|center_horizontal|center_vertical"
+                            android:text="@string/max_duration"
+                            android:textAlignment="center"
+                            android:textColor="@color/lightGray"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/textView2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_weight="4"
+                            android:hint="Duration"
+                            android:textColorHint="@color/lightGray" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/imageView12"
+                    android:id="@+id/imageView16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"

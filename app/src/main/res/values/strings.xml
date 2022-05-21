@@ -94,4 +94,6 @@
     <string name="ending_time">Ending time</string>
     <string name="starting_date">Starting date</string>
     <string name="ending_date">Ending date</string>
+    <string name="min_duration">Minimum Duration</string>
+    <string name="max_duration">Maximum Duration</string>
 </resources>
