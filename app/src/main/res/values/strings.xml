@@ -40,7 +40,8 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="menu_timeslots">My timeslots</string>
+    <string name="menu_timeslots">All timeslots</string>
+    <string name="my_timeslots">My timeslots</string>
     <string name="show_profile">Show profile</string>
     <string name="edit_profile">Edit profile</string>
     <string name="fragment_title_example">Electrician for Small Houses</string>
@@ -62,7 +63,7 @@
     <string name="add_your_skills">&#8230;or add a new skill!</string>
     <string name="no_adv_into_db">There are no advertisements yet.</string>
     <string name="create_tsa_hint">Create your first\nTime Slot Advertisement</string>
-    <string name="default_web_client_id_bis">945943999004&#8211;8ogsr5hkmtuqpgqac0lu172qp8kfigf7.apps.googleusercontent.com</string>
+    <string name="default_web_client_id_bis">945943999004-8ogsr5hkmtuqpgqac0lu172qp8kfigf7.apps.googleusercontent.com</string>
     <string name="logOut">Log out</string>
     <string name="logIn">Login with Google</string>
     <string name="welcome">Welcome!</string>
