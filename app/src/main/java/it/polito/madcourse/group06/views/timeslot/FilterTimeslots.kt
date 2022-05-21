@@ -8,9 +8,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
-import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.utilities.ServiceTools
@@ -70,12 +68,14 @@ class FilterTimeslots : Fragment(R.layout.fragment_filter_timeslots) {
 
         this.applyButton.setOnClickListener{
             sharedViewModel.setFilter(AdvFilter(
-                location=location.text.toString(),
-                starting_time=if(fromDate.text=="+") null else fromDate.text.substring(11,15),
-                ending_time=if(toDate.text=="+") null else fromDate.text.substring(11,15),
-                duration=durationSpinner.selectedItem.toString().toDouble(),
-                starting_date=if(fromDate.text=="+") null else fromDate.text.substring(0,9),
-                ending_date=if(toDate.text=="+") null else toDate.text.substring(0,9),
+                location =location.text.toString(),
+                starting_time =if(fromDate.text=="+") null else fromDate.text.substring(11,15),
+                ending_time =if(toDate.text=="+") null else fromDate.text.substring(11,15),
+                duration =durationSpinner.selectedItem.toString().run{
+                    if(this=="Any") null else this.toDouble()
+                },
+                starting_date =if(fromDate.text=="+") null else fromDate.text.substring(0,9),
+                ending_date =if(toDate.text=="+") null else toDate.text.substring(0,9),
             ))
             slideOutFragment(this)
         }
