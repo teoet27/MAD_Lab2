@@ -99,5 +99,5 @@
         android:id="@+id/showMyListOfAdvertisement"
         android:name="it.polito.madcourse.group06.ShowMyListOfAdvertisement"
         android:label="show_my_list_of_advertisement"
-        tools:layout="@layout/show_my_list_of_advertisement" />
+        tools:layout="@layout/show_my_list_of_timeslots" />
 </navigation>

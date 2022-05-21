@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import it.polito.madcourse.group06.R
 
-class ShowMyListOfAdvertisement : Fragment() {
+class ShowMyListOfTimeslots : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +17,7 @@ class ShowMyListOfAdvertisement : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.show_my_list_of_advertisement, container, false)
+        return inflater.inflate(R.layout.show_my_list_of_timeslots, container, false)
     }
 
 }
