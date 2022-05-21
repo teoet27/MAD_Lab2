@@ -109,7 +109,8 @@ class ServiceTools {
         val location:String?=null,
         val starting_time:String?=null,
         val ending_time:String?=null,
-        val duration: Double? =null,
+        val min_duration: String? =null,
+        val max_duration: String? =null,
         val starting_date:String?=null,
         val ending_date:String?=null)
     /**
@@ -128,14 +129,25 @@ class ServiceTools {
         advFilter: AdvFilter?
     ):List<Advertisement>?{
         return if(advFilter==null) advList else advList?.filter{ adv->
-            (advFilter.location!=null && adv.advLocation == advFilter.location)|| (advFilter.location==null) &&
-            ((advFilter.duration!=null && adv.advDuration<=advFilter.duration)||(advFilter.duration==null)) && //TODO: decide criteria
+            (advFilter.location!=null && advFilter.location.contains(adv.advLocation,true))|| (advFilter.location==null) &&
+            ((advFilter.min_duration!=null && adv.advDuration.toString().isLaterThanTime(advFilter.min_duration))||(advFilter.starting_time==null)) &&
+            ((advFilter.max_duration!=null && adv.advDuration.toString().isSoonerThanTime(advFilter.max_duration))||(advFilter.starting_time==null)) &&
             ((advFilter.starting_time!=null && adv.advStartingTime.isLaterThanTime(advFilter.starting_time))||(advFilter.starting_time==null)) &&
             ((advFilter.ending_time!=null && adv.advEndingTime.isSoonerThanTime(advFilter.ending_time))||(advFilter.ending_time==null))&&
             ((advFilter.starting_date!=null && adv.advDate.isLaterThanDate(advFilter.starting_date))||(advFilter.starting_date==null))&&
             ((advFilter.ending_date!=null && adv.advDate.isSoonerThanDate(advFilter.ending_date))||(advFilter.ending_date==null))
         }
     }
+
+    /*fun sortAdvertisementList(
+        advList:List<Advertisement>?,
+        criterion: String?
+    ): List<Advertisement>? {
+        val sortedList = when(criterion){
+            ""-> advList
+        }
+        return sortedList
+    }*/
 }
 
 //Useful extension functions

@@ -96,4 +96,5 @@
     <string name="ending_date">Ending date</string>
     <string name="min_duration">Minimum Duration</string>
     <string name="max_duration">Maximum Duration</string>
+    <string name="whole_word">Whole word</string>
 </resources>

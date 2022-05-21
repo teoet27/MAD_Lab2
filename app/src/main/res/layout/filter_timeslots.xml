@@ -92,6 +92,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
+                        android:ellipsize="end"
                         android:hint="@string/location"
                         android:textColor="@color/black"
                         android:textSize="18sp"
@@ -102,7 +103,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Whole word" />
+                        android:text="@string/whole_word" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -133,6 +134,7 @@
                                 android:layout_gravity="left"
                                 android:layout_marginLeft="16dp"
                                 android:layout_marginTop="8dp"
+                                android:layout_marginRight="0dp"
                                 android:layout_weight="4"
                                 android:text="@string/from_date"
                                 android:textAlignment="center"
@@ -142,15 +144,17 @@
 
                             <com.google.android.material.chip.Chip
                                 android:id="@+id/add_starting_date_chip"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
+                                android:layout_gravity="bottom|center"
                                 android:layout_weight="1"
                                 android:backgroundTint="@color/orange_poli"
                                 android:gravity="center"
                                 android:text="@string/plus"
                                 android:textAlignment="center"
-                                android:textColor="@color/prussian_blue" />
+                                android:textColor="@color/prussian_blue"
+                                app:textEndPadding="15dp"
+                                app:textStartPadding="15dp" />
 
                         </LinearLayout>
 
@@ -165,7 +169,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/to_title"
+                                android:id="@+id/to_date_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="left"
@@ -181,14 +185,16 @@
 
                             <com.google.android.material.chip.Chip
                                 android:id="@+id/add_ending_date_chip"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
+                                android:layout_gravity="bottom|center"
                                 android:layout_weight="1"
                                 android:backgroundTint="@color/orange_poli"
                                 android:text="@string/plus"
                                 android:textAlignment="center"
-                                android:textColor="@color/prussian_blue" />
+                                android:textColor="@color/prussian_blue"
+                                app:textEndPadding="15dp"
+                                app:textStartPadding="15dp" />
 
                         </LinearLayout>
 
@@ -226,14 +232,16 @@
 
                             <com.google.android.material.chip.Chip
                                 android:id="@+id/starting_time"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
+                                android:layout_gravity="bottom|center"
                                 android:layout_weight="1"
                                 android:backgroundTint="@color/orange_poli"
                                 android:text="@string/plus"
                                 android:textAlignment="center"
-                                android:textColor="@color/prussian_blue" />
+                                android:textColor="@color/prussian_blue"
+                                app:textEndPadding="15dp"
+                                app:textStartPadding="15dp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -263,108 +271,102 @@
 
                             <com.google.android.material.chip.Chip
                                 android:id="@+id/ending_time"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
+                                android:layout_gravity="bottom|center"
                                 android:layout_weight="1"
                                 android:backgroundTint="@color/orange_poli"
                                 android:text="@string/plus"
                                 android:textAlignment="center"
-                                android:textColor="@color/prussian_blue" />
+                                android:textColor="@color/prussian_blue"
+                                app:textEndPadding="15dp"
+                                app:textStartPadding="15dp" />
                         </LinearLayout>
 
                     </LinearLayout>
 
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/imageView12"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:background="#AAABAE"
-                    android:contentDescription='@string/separation_line'
-                    android:paddingTop="5dp"
-                    android:src="@drawable/rounded_corners_land" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="4dp">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginRight="2dp"
-                        android:layout_weight="3"
-                        android:background="@drawable/adv_card_bckgrnd"
-                        android:backgroundTint="@color/ic_launcher_background"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        android:padding="4dp">
 
-                        <TextView
-                            android:id="@+id/to_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_weight="4"
-                            android:gravity="center|center_horizontal|center_vertical"
-                            android:text="@string/min_duration"
-                            android:textAlignment="center"
-                            android:textColor="@color/lightGray"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/adv_card_bckgrnd"
+                            android:backgroundTint="@color/ic_launcher_background"
+                            android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/textView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight="4"
-                            android:hint="Duration"
-                            android:textColorHint="@color/lightGray" />
+                            <TextView
+                                android:id="@+id/min_duration_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_weight="4"
+                                android:gravity="center"
+                                android:text="@string/min_duration"
+                                android:textColor="@color/lightGray"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
 
-                    </LinearLayout>
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/min_duration"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom|center"
+                                android:layout_weight="1"
+                                android:backgroundTint="@color/orange_poli"
+                                android:text="@string/plus"
+                                android:textAlignment="center"
+                                android:textColor="@color/prussian_blue"
+                                app:textEndPadding="15dp"
+                                app:textStartPadding="15dp" />
+                        </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginRight="2dp"
-                        android:layout_weight="3"
-                        android:background="@drawable/adv_card_bckgrnd"
-                        android:backgroundTint="@color/ic_launcher_background"
-                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/adv_card_bckgrnd"
+                            android:backgroundTint="@color/ic_launcher_background"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/to_time_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_weight="4"
-                            android:gravity="center|center_horizontal|center_vertical"
-                            android:text="@string/max_duration"
-                            android:textAlignment="center"
-                            android:textColor="@color/lightGray"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/max_duration_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_weight="4"
+                                android:gravity="center|center_horizontal|center_vertical"
+                                android:text="@string/max_duration"
+                                android:textAlignment="center"
+                                android:textColor="@color/lightGray"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
 
-                        <EditText
-                            android:id="@+id/textView2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight="4"
-                            android:hint="Duration"
-                            android:textColorHint="@color/lightGray" />
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/max_duration"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom|center"
+                                android:layout_weight="1"
+                                android:backgroundTint="@color/orange_poli"
+                                android:text="@string/plus"
+                                android:textAlignment="center"
+                                android:textColor="@color/prussian_blue"
+                                app:textEndPadding="15dp"
+                                app:textStartPadding="15dp" />
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -473,16 +475,17 @@
                         app:chipSurfaceColor="#D8D8D8" />
                 </com.google.android.material.chip.ChipGroup>
 
+                <Button
+                    android:id="@+id/apply_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/orange_poli"
+                    android:text="@string/apply"
+                    android:textSize="16sp" />
+
             </LinearLayout>
         </ScrollView>
 
-        <Button
-            android:id="@+id/apply_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/orange_poli"
-            android:text="@string/apply"
-            android:textSize="16sp" />
 
     </LinearLayout>
 

@@ -30,7 +30,8 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
     private lateinit var fromTime: Chip
     private lateinit var toDate: Chip
     private lateinit var toTime: Chip
-    private lateinit var durationSpinner: Spinner
+    private lateinit var minDuration: Chip
+    private lateinit var maxDuration: Chip
     private lateinit var applyButton: Button
 
     private lateinit var sortTitleChip: Chip
@@ -60,7 +61,8 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
         this.fromTime = view.findViewById(R.id.starting_time)
         this.toDate = view.findViewById(R.id.add_ending_date_chip)
         this.toTime = view.findViewById(R.id.ending_time)
-        this.durationSpinner = view.findViewById(R.id.duration_spinner)
+        this.maxDuration = view.findViewById(R.id.max_duration)
+        this.minDuration = view.findViewById(R.id.min_duration)
 
         this.sortTitleChip = view.findViewById(R.id.sort_title_chip)
         this.sortDurationChip = view.findViewById(R.id.sort_duration_chip)
@@ -78,6 +80,8 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
         this.fromTime.setOnClickListener { popUpStartingTimePicker() }
         this.toDate.setOnClickListener { popUpEndingDatePicker() }
         this.toTime.setOnClickListener { popUpEndingTimePicker() }
+        this.minDuration.setOnClickListener{popUpMinDurationPicker()}
+        this.maxDuration.setOnClickListener{popUpMaxDurationPicker()}
 
         this.cancel.setOnClickListener { slideOutFragment(this) }
 
@@ -88,7 +92,8 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
             this.toDate.text = "+"
             this.fromTime.text = "+"
             this.toTime.text = "+"
-            this.durationSpinner.setSelection(0)
+            this.minDuration.text="+"
+            this.maxDuration.text="+"
 
             this.sortTitleChip.chipIcon = resources.getDrawable(R.drawable.sort_directions, null)
             this.sortDurationChip.chipIcon = resources.getDrawable(R.drawable.sort_directions, null)
@@ -108,13 +113,12 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
             sharedViewModel.setFilter(
                 AdvFilter(
                     location = location.text.toString(),
-                    starting_time = if (fromDate.text == "+") null else fromDate.text.substring(11, 15),
-                    ending_time = if (toDate.text == "+") null else fromDate.text.substring(11, 15),
-                    duration = durationSpinner.selectedItem.toString().run {
-                        if (this == "Any") null else this.toDouble()
-                    },
-                    starting_date = if (fromDate.text == "+") null else fromDate.text.substring(0, 9),
-                    ending_date = if (toDate.text == "+") null else toDate.text.substring(0, 9),
+                    starting_time = if (fromTime.text == "+") null else fromTime.text.toString(),
+                    ending_time = if (toTime.text == "+") null else toTime.text.toString(),
+                    min_duration = if (minDuration.text == "+") null else minDuration.text.toString(),
+                    max_duration = if (maxDuration.text == "+") null else maxDuration.text.toString(),
+                    starting_date = if (fromDate.text == "+") null else fromDate.text.toString(),
+                    ending_date = if (toDate.text == "+") null else toDate.text.toString(),
                 )
             )
             slideOutFragment(this)
@@ -179,18 +183,6 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
                 activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
             }
         })
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.durations,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            durationSpinner.adapter = adapter
-        }
     }
 
     private fun slideOutFragment(frag: Fragment) {
@@ -288,4 +280,47 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
         datePickerDialog.setTitle("Select Starting Date")
         datePickerDialog.show()
     }
+
+    /**
+     * popUpMinDurationPicker is the callback to launch the TimePicker for inserting the minimum duration
+     */
+    private fun popUpMinDurationPicker() {
+
+        val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
+            this.minDuration.text = String.format(Locale.getDefault(), "%02d:%02d", selectedHour, selectedMinute)
+        }
+
+        val timePickerDialog = TimePickerDialog(
+            requireContext(),
+            onTimeSetListener, 0,0, true
+        )
+
+        timePickerDialog.setTitle("Select Starting Time")
+        timePickerDialog.show()
+    }
+
+    /**
+     * popUpMaxDurationPicker is the callback to launch the TimePicker for inserting the maximum duration
+     */
+    private fun popUpMaxDurationPicker() {
+        val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
+            this.maxDuration.text = String.format(Locale.getDefault(), "%02d:%02d", selectedHour, selectedMinute)
+        }
+
+        var h = 0
+        var m = 0
+        if (this.minDuration.text != "+") {
+            h = this.minDuration.text.split(":")[0].toInt()
+            m = this.minDuration.text.split(":")[1].toInt()
+        }
+
+        val timePickerDialog = TimePickerDialog(
+            requireContext(),
+            onTimeSetListener, h, m, true
+        )
+
+        timePickerDialog.setTitle("Select Ending Time")
+        timePickerDialog.show()
+    }
+
 }
