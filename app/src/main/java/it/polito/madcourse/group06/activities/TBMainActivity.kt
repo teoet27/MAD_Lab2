@@ -79,6 +79,7 @@ class TBMainActivity : AppCompatActivity() {
                 R.id.ShowListTimeslots,
                 R.id.ShowListOfServices,
                 R.id.showProfileFragment,
+                R.id.showMyListOfAdvertisement,
                 R.id.newProfileFragment
             ), drawerLayout
         )
@@ -111,12 +112,8 @@ class TBMainActivity : AppCompatActivity() {
                     }
                     true
                 }
-                R.id.showMyListOfAdvertisement -> {
+                R.id.showMyListOfAdvertisementItem -> {
                     navController.navigate(R.id.showMyListOfAdvertisement)
-                    true
-                }
-                R.id.newProfileMenuItem -> { //TODO: to be deleted from here
-                    navController.navigate(R.id.newProfileFragment)
                     true
                 }
                 else -> false

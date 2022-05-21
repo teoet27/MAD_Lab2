@@ -6,8 +6,36 @@
     android:layout_height="match_parent"
     android:background="@android:color/background_light">
 
+    <LinearLayout
+        android:id="@+id/searchContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#DADADA"
+        app:layout_constraintBottom_toTopOf="@id/filterContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:drawableLeft="@drawable/ic_search_black_24dp"
+            android:text="Search:" />
+
+        <EditText
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:hint="@string/search_hint" />
+    </LinearLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/filterContainer"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:background="#DADADA"
@@ -15,9 +43,10 @@
         android:paddingTop="6dp"
         android:paddingEnd="16dp"
         android:paddingBottom="6dp"
+        app:layout_constraintBottom_toTopOf="@id/rvAdvFullList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/searchContainer">
 
         <TextView
             android:id="@+id/sort_parameter"
@@ -67,6 +96,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -93,10 +123,11 @@
         android:id="@+id/rvAdvFullList"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toBottomOf="@id/filterContainer" />
 
     <Button
         android:id="@+id/newAdvButton"
@@ -134,8 +165,8 @@
         android:elevation="100dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/rvAdvFullList"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
+        app:layout_constraintEnd_toEndOf="@+id/filterContainer"
+        app:layout_constraintStart_toStartOf="@+id/filterContainer"
+        app:layout_constraintTop_toTopOf="@+id/filterContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

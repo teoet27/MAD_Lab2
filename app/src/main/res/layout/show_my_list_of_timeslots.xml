@@ -7,7 +7,7 @@
     android:background="@android:color/background_light">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/filterContainer"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:background="#DADADA"
@@ -96,7 +96,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/filterContainer" />
 
     <Button
         android:id="@+id/newMyAdvButton"
@@ -134,9 +134,9 @@
         android:elevation="100dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/rvMyAdvFullList"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
+        app:layout_constraintEnd_toEndOf="@+id/filterContainer"
+        app:layout_constraintStart_toStartOf="@+id/filterContainer"
+        app:layout_constraintTop_toTopOf="@+id/filterContainer" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

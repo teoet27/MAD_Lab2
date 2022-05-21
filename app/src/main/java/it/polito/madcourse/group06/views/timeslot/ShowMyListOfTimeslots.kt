@@ -41,7 +41,7 @@ class ShowMyListOfTimeslots : Fragment() {
     ): View? {
 
         return inflater.inflate(
-            R.layout.show_timeslots_frag,
+            R.layout.show_my_list_of_timeslots,
             container,
             false
         )
@@ -58,7 +58,7 @@ class ShowMyListOfTimeslots : Fragment() {
         this.barrier = view.findViewById(R.id.myAdvBarrier)
 
         this.newAdvButton.setOnClickListener {
-            findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
+            findNavController().navigate(R.id.action_showMyListOfAdvertisement_to_newTimeSlotDetailsFragment)
         }
 
         userProfileViewModel.currentUser.observe(viewLifecycleOwner) {
