@@ -12,7 +12,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.chip.Chip
 import it.polito.madcourse.group06.R
-import it.polito.madcourse.group06.utilities.ServiceTools.AdvFilter
+import it.polito.madcourse.group06.utilities.TimeslotTools.AdvFilter
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import java.util.*
 
@@ -126,7 +126,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
             Calendar.getInstance().get(Calendar.MINUTE), true
         )
 
-        timePickerDialog.setTitle("Select Starting Time")
+        timePickerDialog.setTitle("Starting Time")
         timePickerDialog.show()
     }
 
@@ -150,7 +150,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
             onTimeSetListener, h, m, true
         )
 
-        timePickerDialog.setTitle("Select Ending Time")
+        timePickerDialog.setTitle("Ending Time")
         timePickerDialog.show()
     }
 
@@ -169,7 +169,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
             Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         )
 
-        datePickerDialog.setTitle("Select Starting Date")
+        datePickerDialog.setTitle("Starting Date")
         datePickerDialog.show()
     }
 
@@ -196,7 +196,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
             onDateSetListener, y, m, d
         )
 
-        datePickerDialog.setTitle("Select Starting Date")
+        datePickerDialog.setTitle("Ending Date")
         datePickerDialog.show()
     }
 
@@ -214,7 +214,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
             onTimeSetListener, 0,0, true
         )
 
-        timePickerDialog.setTitle("Select Starting Time")
+        timePickerDialog.setTitle("Min Duration")
         timePickerDialog.show()
     }
 
@@ -238,7 +238,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
             onTimeSetListener, h, m, true
         )
 
-        timePickerDialog.setTitle("Select Ending Time")
+        timePickerDialog.setTitle("Max Duration")
         timePickerDialog.show()
     }
 
