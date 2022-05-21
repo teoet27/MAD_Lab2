@@ -12,7 +12,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.chip.Chip
 import it.polito.madcourse.group06.R
-import it.polito.madcourse.group06.utilities.ServiceTools
 import it.polito.madcourse.group06.utilities.ServiceTools.AdvFilter
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import java.util.*
@@ -22,7 +21,7 @@ import java.util.*
  * Use the [FilterTimeslots.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FilterTimeslots : Fragment(R.layout.fragment_filter_timeslots) {
+class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
     private lateinit var cancel: Button
     private lateinit var reset: Button
 

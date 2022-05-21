@@ -14,7 +14,7 @@ import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.skill.SkillAdapterCard
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 
-class ShowListOfSkills : Fragment(R.layout.fragment_service_list) {
+class ShowListOfSkills : Fragment(R.layout.service_list) {
 
     private val advViewModel: AdvertisementViewModel by activityViewModels()
     private lateinit var recyclerView: RecyclerView
@@ -26,7 +26,7 @@ class ShowListOfSkills : Fragment(R.layout.fragment_service_list) {
     ): View? {
 
         return inflater.inflate(
-            R.layout.fragment_service_list,
+            R.layout.service_list,
             container,
             false
         )
