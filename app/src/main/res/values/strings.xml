@@ -80,11 +80,11 @@
     <string name="to">To</string>
     <string name="welcome_message">Welcome to TimeBanking! Please insert your details to complete your profile.</string>
     <string name="ok">OK</string>
-    <string name="from_date">From Date</string>
+    <string name="from_date">Starting Date</string>
     <string name="plus">+</string>
-    <string name="from_time">From Time</string>
-    <string name="to_date">To Date</string>
-    <string name="to_time">To Time</string>
+    <string name="from_time">Starting Time</string>
+    <string name="to_date">Ending Date</string>
+    <string name="to_time">Ending Time</string>
     <string name="apply">Apply</string>
     <string name="filter">Filter</string>
     <string name="sort">Sort</string>

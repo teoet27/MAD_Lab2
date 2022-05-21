@@ -111,13 +111,15 @@
                             android:layout_weight="1"
                             android:background="@drawable/adv_card_bckgrnd"
                             android:backgroundTint="@color/ic_launcher_background"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/from_date_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
+                                android:layout_gravity="left"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="8dp"
                                 android:layout_weight="4"
                                 android:text="@string/from_date"
                                 android:textAlignment="center"
@@ -127,7 +129,7 @@
 
                             <com.google.android.material.chip.Chip
                                 android:id="@+id/add_starting_date_chip"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom"
                                 android:layout_weight="1"
@@ -147,13 +149,15 @@
                             android:layout_weight="1"
                             android:background="@drawable/adv_card_bckgrnd"
                             android:backgroundTint="@color/ic_launcher_background"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/from_time_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center|center_horizontal|center_vertical"
+                                android:layout_gravity="left"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="8dp"
                                 android:layout_weight="4"
                                 android:gravity="center"
                                 android:text="@string/from_time"
@@ -163,7 +167,7 @@
 
                             <com.google.android.material.chip.Chip
                                 android:id="@+id/starting_time"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom"
                                 android:layout_weight="1"
@@ -189,13 +193,15 @@
                             android:layout_weight="3"
                             android:background="@drawable/adv_card_bckgrnd"
                             android:backgroundTint="@color/ic_launcher_background"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/to_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center|center_horizontal|center_vertical"
+                                android:layout_gravity="left"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="8dp"
                                 android:layout_weight="4"
                                 android:gravity="center|center_horizontal|center_vertical"
                                 android:text="@string/to_date"
@@ -206,7 +212,7 @@
 
                             <com.google.android.material.chip.Chip
                                 android:id="@+id/add_ending_date_chip"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom"
                                 android:layout_weight="1"
@@ -225,13 +231,15 @@
                             android:layout_weight="3"
                             android:background="@drawable/adv_card_bckgrnd"
                             android:backgroundTint="@color/ic_launcher_background"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/to_time_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center|center_horizontal|center_vertical"
+                                android:layout_gravity="left"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="8dp"
                                 android:layout_weight="4"
                                 android:gravity="center|center_horizontal|center_vertical"
                                 android:text="@string/to_time"
@@ -242,7 +250,7 @@
 
                             <com.google.android.material.chip.Chip
                                 android:id="@+id/ending_time"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom"
                                 android:layout_weight="1"
@@ -281,6 +289,17 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp" />
                 </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imageView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="#AAABAE"
+                    android:contentDescription='@string/separation_line'
+                    android:paddingTop="5dp"
+                    android:src="@drawable/rounded_corners_land" />
 
                 <TextView
                     android:id="@+id/Sort"
