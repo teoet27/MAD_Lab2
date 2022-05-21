@@ -4,11 +4,8 @@
         android:id="@+id/menu_title"
         android:title="@string/title" />
     <item
-        android:id="@+id/menu_min_duration"
-        android:title="@string/min_duration_menu" />
-    <item
-        android:id="@+id/menu_max_duration"
-        android:title="@string/max_duration_menu" />
+        android:id="@+id/menu_duration"
+        android:title="@string/duration_menu" />
     <item
         android:id="@+id/menu_starting_time"
         android:title="@string/starting_time_menu" />
@@ -16,9 +13,6 @@
         android:id="@+id/menu_ending_time"
         android:title="@string/ending_time_menu" />
     <item
-        android:id="@+id/menu_starting_date"
-        android:title="@string/starting_date_menu" />
-    <item
-        android:id="@+id/menu_ending_date"
-        android:title="@string/ending_date_menu" />
+        android:id="@+id/menu_date"
+        android:title="@string/date" />
 </menu>

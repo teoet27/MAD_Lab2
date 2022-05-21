@@ -15,9 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.AdvAdapterCard
-import it.polito.madcourse.group06.utilities.ServiceTools
+import it.polito.madcourse.group06.utilities.TimeslotTools
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
+import java.sql.Time
 
 class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
@@ -56,6 +57,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.recyclerView = view.findViewById(R.id.rvAdvFullList)
         this.barrier = view.findViewById(R.id.barrier)
 
+        registerForContextMenu(sortParam)
+
         this.newAdvButton.setOnClickListener {
             findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
         }
@@ -72,10 +75,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             commit()
         }
 
-        registerForContextMenu(sortParam)
         sortParam.setOnClickListener {
             activity?.openContextMenu(sortParam)
-            //sort
         }
 
         directionButton.setOnClickListener{
@@ -100,7 +101,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             this.recyclerView.adapter = AdvAdapterCard(filteredListOfSkills, advertisementViewModel)
 
             sharedViewModel.filter.observe(viewLifecycleOwner) { filter ->
-                ServiceTools().filterAdvertisementList(filteredListOfSkills, filter)?.also {
+                TimeslotTools().filterAdvertisementList(filteredListOfSkills, filter)?.also {
                     view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = it.isEmpty()
                     view.findViewById<ImageView>(R.id.create_hint).isVisible = it.isEmpty()
 
@@ -108,6 +109,15 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                         this.recyclerView.layoutManager = LinearLayoutManager(this.context)
                         this.recyclerView.adapter = AdvAdapterCard(it, advertisementViewModel)
                     }
+                }
+            }
+
+            sharedViewModel.sortParam.observe(viewLifecycleOwner){ parameter->
+                TimeslotTools().sortAdvertisementList(listOfAdv,parameter)
+
+                sharedViewModel.sort_up.observe(viewLifecycleOwner){ up_flag->
+                    TimeslotTools().sortAdvertisementList(listOfAdv,parameter,up_flag)
+
                 }
             }
         }
@@ -154,8 +164,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         when (item.title) {
             resources.getString(R.string.title)->this.sortParam.text=resources.getString(R.string.title)
-            resources.getString(R.string.min_duration_menu)->this.sortParam.text=resources.getString(R.string.min_duration_menu)
-            resources.getString(R.string.max_duration_menu)->this.sortParam.text=resources.getString(R.string.max_duration_menu)
+            resources.getString(R.string.duration_menu)->this.sortParam.text=resources.getString(R.string.duration_menu)
             resources.getString(R.string.starting_time_menu)->this.sortParam.text=resources.getString(R.string.starting_time_menu)
             resources.getString(R.string.ending_time_menu)->this.sortParam.text=resources.getString(R.string.ending_time_menu)
             resources.getString(R.string.starting_date_menu)->this.sortParam.text=resources.getString(R.string.starting_date_menu)
