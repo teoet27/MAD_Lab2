@@ -95,4 +95,9 @@
             android:id="@+id/action_filterTimeslots_to_ShowListTimeslots"
             app:destination="@id/ShowListTimeslots" />
     </fragment>
+    <fragment
+        android:id="@+id/showMyListOfAdvertisement"
+        android:name="it.polito.madcourse.group06.ShowMyListOfAdvertisement"
+        android:label="show_my_list_of_advertisement"
+        tools:layout="@layout/show_my_list_of_advertisement" />
 </navigation>
