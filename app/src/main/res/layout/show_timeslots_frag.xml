@@ -26,12 +26,15 @@
             android:text="Search:" />
 
         <EditText
-            android:id="@+id/textView2"
+            android:id="@+id/search_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:hint="@string/search_hint" />
+            android:hint="@string/search_hint"
+            android:imeOptions="actionDone"
+            android:lines="1"
+            android:singleLine="true" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

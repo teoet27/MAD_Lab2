@@ -2,9 +2,9 @@ package it.polito.madcourse.group06.views.timeslot
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.inputmethod.EditorInfo
+import android.widget.*
+import android.widget.TextView.OnEditorActionListener
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -19,6 +19,7 @@ import it.polito.madcourse.group06.utilities.TimeslotTools
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 
+
 class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
     private val advertisementViewModel: AdvertisementViewModel by activityViewModels()
@@ -29,6 +30,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var sortParam: TextView
     private lateinit var directionButton: ImageView
     private lateinit var barrier: TextView
+    private lateinit var searchBar: EditText
+    private var search: CharSequence?=null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +55,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.directionButton = view.findViewById(R.id.sort_direction_button)
         this.recyclerView = view.findViewById(R.id.rvAdvFullList)
         this.barrier = view.findViewById(R.id.barrier)
+        this.searchBar = view.findViewById(R.id.search_bar)
 
         registerForContextMenu(sortParam)
 
@@ -77,6 +81,16 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             sharedViewModel.toggleSortDirection()
         }
 
+        searchBar.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                search = searchBar.text
+                //searchBar.setText("")
+                sharedViewModel.updateRV()
+                return@OnEditorActionListener true
+            }
+            false
+        })
+
         lateinit var sortedList: List<Advertisement>
         advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
 
@@ -95,17 +109,20 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             sortedList = TimeslotTools().sortAdvertisementList(sortedList, parameter)!!
             //sharedViewModel.updateRV()
         }
-        sharedViewModel.sortUp.observe(viewLifecycleOwner) { up_flag ->
+        sharedViewModel.sortUp.observe(viewLifecycleOwner) {
             sortedList = sortedList.reversed()
             sharedViewModel.updateRV()
         }
         sharedViewModel.updateRV.observe(viewLifecycleOwner){
+            var finalList= sortedList
+            if(search!=null)
+                finalList=finalList.filter { it.advTitle.contains(search!!,true) }
             //compose recycler view
             view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible =
-                sortedList.isEmpty()
-            view.findViewById<ImageView>(R.id.create_hint).isVisible = sortedList.isEmpty()
+                finalList.isEmpty()
+            view.findViewById<ImageView>(R.id.create_hint).isVisible = finalList.isEmpty()
             this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-            this.recyclerView.adapter = AdvAdapterCard(sortedList, advertisementViewModel)
+            this.recyclerView.adapter = AdvAdapterCard(finalList, advertisementViewModel)
         }
 
         activity?.onBackPressedDispatcher?.addCallback(
