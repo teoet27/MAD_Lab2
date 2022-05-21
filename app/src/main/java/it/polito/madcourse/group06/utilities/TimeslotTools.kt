@@ -2,7 +2,7 @@ package it.polito.madcourse.group06.utilities
 
 import it.polito.madcourse.group06.models.advertisement.Advertisement
 
-class ServiceTools {
+class TimeslotTools {
     /**
      * sortSKills
      * @param skillList
@@ -39,9 +39,7 @@ class ServiceTools {
 
         timeDifference += (endingHour - startingHour) + ((endingMinute - startingMinute) / 60.0)*/
 
-        timeDifference =
-            endingTime.split(":").fold(0.0){a,b-> (a.toDouble()+b.toDouble())*60.0} -
-            startingTime.split(":").fold(0.0){a,b-> (a.toDouble()+b.toDouble())*60.0}
+        timeDifference = timeStringToDouble(endingTime) - timeStringToDouble(startingTime)
 
         return Pair(
             String.format("%.2f", timeDifference).toDouble(),
@@ -75,22 +73,7 @@ class ServiceTools {
         if (startingDate.isNullOrEmpty() || endingDate.isNullOrEmpty()) {
             return Pair(-1.0, false)
         }
-
-        endingDate.split("/").forEachIndexed { index, s ->
-            when(index){
-                0-> dateDifference +=s.toInt() //day
-                1-> dateDifference +=31 - 3*(s.toInt()==2).toInt() - (listOf(4,6,9,11).contains(s.toInt())).toInt() //month
-                2-> dateDifference += if(s.toInt()%400==0) 366 else 365  //year
-            }
-        }
-        startingDate.split("/").forEachIndexed { index, s ->
-            when(index){
-                0-> dateDifference -=s.toInt() //day
-                1-> dateDifference -=31 - 3*(s.toInt()==2).toInt() - (listOf(4,6,9,11).contains(s.toInt())).toInt() //month
-                2-> dateDifference -= if(s.toInt()%400==0) 366 else 365  //year
-            }
-        }
-
+        dateDifference= (dateStringToInt(endingDate)-dateStringToInt(startingDate)).toDouble()
         return Pair(
             String.format("%.2f", dateDifference).toDouble(),
             String.format("%.2f", dateDifference).toDouble() >= 0
@@ -103,6 +86,22 @@ class ServiceTools {
 
     private fun String.isSoonerThanDate(date:String):Boolean{
         return computeDateDifference(this,date).first<=0
+    }
+
+    private fun dateStringToInt(date:String):Int{
+        var dateInt=0
+        date.split("/").forEachIndexed { index, s ->
+            when(index){
+                0-> dateInt +=s.toInt() //day
+                1-> dateInt +=31 - 3*(s.toInt()==2).toInt() - (listOf(4,6,9,11).contains(s.toInt())).toInt() //month
+                2-> dateInt += if(s.toInt()%400==0) 366 else 365  //year
+            }
+        }
+        return dateInt
+    }
+
+    private fun timeStringToDouble(time:String):Double{
+        return time.split(":").fold(0.0){a,b-> (a.toDouble()+b.toDouble())*60.0}
     }
 
     class AdvFilter(
@@ -130,8 +129,8 @@ class ServiceTools {
     ):List<Advertisement>?{
         return if(advFilter==null) advList else advList?.filter{ adv->
             (advFilter.location!=null && advFilter.location.contains(adv.advLocation,true))|| (advFilter.location==null) &&
-            ((advFilter.min_duration!=null && adv.advDuration.toString().isLaterThanTime(advFilter.min_duration))||(advFilter.starting_time==null)) &&
-            ((advFilter.max_duration!=null && adv.advDuration.toString().isSoonerThanTime(advFilter.max_duration))||(advFilter.starting_time==null)) &&
+            ((advFilter.min_duration!=null && adv.advDuration.toString().isLaterThanTime(advFilter.min_duration))||(advFilter.starting_time==null)) && //wrong
+            ((advFilter.max_duration!=null && adv.advDuration.toString().isSoonerThanTime(advFilter.max_duration))||(advFilter.starting_time==null)) &&//wrong
             ((advFilter.starting_time!=null && adv.advStartingTime.isLaterThanTime(advFilter.starting_time))||(advFilter.starting_time==null)) &&
             ((advFilter.ending_time!=null && adv.advEndingTime.isSoonerThanTime(advFilter.ending_time))||(advFilter.ending_time==null))&&
             ((advFilter.starting_date!=null && adv.advDate.isLaterThanDate(advFilter.starting_date))||(advFilter.starting_date==null))&&
@@ -139,15 +138,31 @@ class ServiceTools {
         }
     }
 
-    /*fun sortAdvertisementList(
+    fun sortAdvertisementList(
         advList:List<Advertisement>?,
-        criterion: String?
+        criterion: String?,
+        up_flag: Boolean = true
     ): List<Advertisement>? {
-        val sortedList = when(criterion){
-            ""-> advList
+        val sortedList = when(up_flag){
+            true->when(criterion){
+                "Title"-> advList?.sortedBy { it.advTitle.lowercase() }
+                "Duration"->advList?.sortedBy { it.advDuration }
+                "Starting time"->advList?.sortedBy { timeStringToDouble(it.advStartingTime) }
+                "Ending time"->advList?.sortedBy { timeStringToDouble(it.advEndingTime) }
+                "Date"->advList?.sortedBy { dateStringToInt(it.advDate) }
+                else -> null
+            }
+            else->when(criterion){
+                "Title"-> advList?.sortedByDescending { it.advTitle.lowercase() }
+                "Duration"->advList?.sortedByDescending { it.advDuration }
+                "Starting time"->advList?.sortedByDescending { timeStringToDouble(it.advStartingTime) }
+                "Ending time"->advList?.sortedByDescending { timeStringToDouble(it.advEndingTime) }
+                "Date"->advList?.sortedByDescending { dateStringToInt(it.advDate) }
+                else -> null
+            }
         }
         return sortedList
-    }*/
+    }
 }
 
 //Useful extension functions
