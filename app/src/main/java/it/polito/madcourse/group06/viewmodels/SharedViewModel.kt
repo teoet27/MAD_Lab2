@@ -6,24 +6,48 @@ import it.polito.madcourse.group06.utilities.TimeslotTools
 
 
 class SharedViewModel : ViewModel() {
-    val selected = MutableLiveData<Boolean>()
-    val filter = MutableLiveData<TimeslotTools.AdvFilter>()
-    val sortParam = MutableLiveData<String>()
-    val sort_up = MutableLiveData<Boolean>()
+    private var _selected = false
+    private var _sortParam = "Title"
+    private var _sortUp = false
+    private var _filter = TimeslotTools.AdvFilter()
+    private var _updateRV = false
+
+    var selected = MutableLiveData<Boolean>()
+    var sortParam = MutableLiveData<String>().also {
+        it.value = _sortParam
+    }
+    var sortUp = MutableLiveData<Boolean>().also {
+        it.value = _sortUp
+    }
+    var filter = MutableLiveData<TimeslotTools.AdvFilter>().also {
+        it.value = _filter
+    }
+    var updateRV = MutableLiveData<Boolean>().also{
+        it.value=_updateRV
+    }
+
 
     fun select(value: Boolean) {
-        selected.value = value
+        _selected = value
+        selected.value = _selected
     }
 
-    fun setFilter(advFilter: TimeslotTools.AdvFilter){
-        filter.value=advFilter
+    fun setFilter(advFilter: TimeslotTools.AdvFilter) {
+        _filter = advFilter
+        filter.value = _filter
     }
 
-    fun setSortParam(name:String){
-        sortParam.value=name
+    fun setSortParam(name: String) {
+        _sortParam = name
+        sortParam.value = _sortParam
     }
 
-    fun setSortUpDirection(value: Boolean){
-        sort_up.value=value
+    fun toggleSortDirection() {
+        _sortUp = !_sortUp
+        sortUp.value = _sortUp
+    }
+    fun updateRV(){
+        _updateRV=true
+        updateRV.value=_updateRV
     }
 }
