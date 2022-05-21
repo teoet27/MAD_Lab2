@@ -94,6 +94,7 @@
                         android:layout_marginRight="16dp"
                         android:ellipsize="end"
                         android:hint="@string/location"
+                        android:inputType="text"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />

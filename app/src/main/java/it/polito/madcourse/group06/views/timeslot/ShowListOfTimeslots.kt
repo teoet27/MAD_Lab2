@@ -1,11 +1,10 @@
 package it.polito.madcourse.group06.views.timeslot
 
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.inputmethod.EditorInfo
+import android.widget.*
+import android.widget.TextView.OnEditorActionListener
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -15,10 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.AdvAdapterCard
+import it.polito.madcourse.group06.models.advertisement.Advertisement
 import it.polito.madcourse.group06.utilities.TimeslotTools
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
-import java.sql.Time
+
 
 class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
@@ -29,10 +29,9 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var filterButton: TextView
     private lateinit var sortParam: TextView
     private lateinit var directionButton: ImageView
-    private lateinit var barrier:TextView
-
-    var sortDirection:Int=1
-
+    private lateinit var barrier: TextView
+    private lateinit var searchBar: EditText
+    private var search: CharSequence?=null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +55,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.directionButton = view.findViewById(R.id.sort_direction_button)
         this.recyclerView = view.findViewById(R.id.rvAdvFullList)
         this.barrier = view.findViewById(R.id.barrier)
+        this.searchBar = view.findViewById(R.id.search_bar)
 
         registerForContextMenu(sortParam)
 
@@ -68,72 +68,79 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             enableUI(!it)
         }
         filterButton.setOnClickListener {
-            activity?.supportFragmentManager!!.
-            beginTransaction().
-            setCustomAnimations(R.anim.slide_in_up, 0).
-            add(R.id.nav_host_fragment_content_main, FilterTimeslots()).
-            commit()
+            activity?.supportFragmentManager!!.beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_up, 0)
+                .add(R.id.nav_host_fragment_content_main, FilterTimeslots()).commit()
         }
 
         sortParam.setOnClickListener {
             activity?.openContextMenu(sortParam)
         }
 
-        directionButton.setOnClickListener{
-            sortDirection=(sortDirection+1)%2 //toggle direction
-            // change sort direction
+        directionButton.setOnClickListener {
+            sharedViewModel.toggleSortDirection()
         }
 
-        advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
-            /**
-             * If there are no advertisements in the DB proper texts are shown.
-             */
+        searchBar.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                search = searchBar.text
+                //searchBar.setText("")
+                sharedViewModel.updateRV()
+                return@OnEditorActionListener true
+            }
+            false
+        })
 
-            val filteredListOfSkills = listOfAdv.filter {
+        lateinit var sortedList: List<Advertisement>
+        advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
+
+            sortedList = listOfAdv.filter {
                 it.listOfSkills.contains(arguments?.getString("selected_skill")) ||
                         arguments?.getString("selected_skill") == "All"
             }
-
-            view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = filteredListOfSkills.isEmpty()
-            view.findViewById<ImageView>(R.id.create_hint).isVisible = filteredListOfSkills.isEmpty()
-
+            //sharedViewModel.updateRV()
+        }
+        sharedViewModel.filter.observe(viewLifecycleOwner) { filter ->
+            sortedList = TimeslotTools().filterAdvertisementList(sortedList, filter)!!
+            sharedViewModel.updateRV()
+        }
+        sharedViewModel.sortParam.observe(viewLifecycleOwner) { parameter ->
+            this.sortParam.text = parameter
+            sortedList = TimeslotTools().sortAdvertisementList(sortedList, parameter)!!
+            //sharedViewModel.updateRV()
+        }
+        sharedViewModel.sortUp.observe(viewLifecycleOwner) {
+            sortedList = sortedList.reversed()
+            sharedViewModel.updateRV()
+        }
+        sharedViewModel.updateRV.observe(viewLifecycleOwner){
+            var finalList= sortedList
+            if(search!=null)
+                finalList=finalList.filter { it.advTitle.contains(search!!,true) }
+            //compose recycler view
+            view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible =
+                finalList.isEmpty()
+            view.findViewById<ImageView>(R.id.create_hint).isVisible = finalList.isEmpty()
             this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-            this.recyclerView.adapter = AdvAdapterCard(filteredListOfSkills, advertisementViewModel)
-
-            sharedViewModel.filter.observe(viewLifecycleOwner) { filter ->
-                TimeslotTools().filterAdvertisementList(filteredListOfSkills, filter)?.also {
-                    view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = it.isEmpty()
-                    view.findViewById<ImageView>(R.id.create_hint).isVisible = it.isEmpty()
-
-                    if (it.isNotEmpty()) {
-                        this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-                        this.recyclerView.adapter = AdvAdapterCard(it, advertisementViewModel)
-                    }
-                }
-            }
-
-            sharedViewModel.sortParam.observe(viewLifecycleOwner){ parameter->
-                TimeslotTools().sortAdvertisementList(listOfAdv,parameter)
-
-                sharedViewModel.sort_up.observe(viewLifecycleOwner){ up_flag->
-                    TimeslotTools().sortAdvertisementList(listOfAdv,parameter,up_flag)
-
-                }
-            }
+            this.recyclerView.adapter = AdvAdapterCard(finalList, advertisementViewModel)
         }
 
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
-            }
-        })
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
+                }
+            })
     }
 
     private fun enableUI(switch: Boolean) {
-        when(switch){
-            true-> barrier.visibility=View.GONE
-            false->{barrier.visibility=View.VISIBLE
-                    barrier.bringToFront()}
+        when (switch) {
+            true -> barrier.visibility = View.GONE
+            false -> {
+                barrier.visibility = View.VISIBLE
+                barrier.bringToFront()
+            }
         }
     }
 
@@ -163,13 +170,18 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
      */
     override fun onContextItemSelected(item: MenuItem): Boolean {
         when (item.title) {
-            resources.getString(R.string.title)->this.sortParam.text=resources.getString(R.string.title)
-            resources.getString(R.string.duration_menu)->this.sortParam.text=resources.getString(R.string.duration_menu)
-            resources.getString(R.string.starting_time_menu)->this.sortParam.text=resources.getString(R.string.starting_time_menu)
-            resources.getString(R.string.ending_time_menu)->this.sortParam.text=resources.getString(R.string.ending_time_menu)
-            resources.getString(R.string.starting_date_menu)->this.sortParam.text=resources.getString(R.string.starting_date_menu)
-            resources.getString(R.string.ending_date_menu)->this.sortParam.text=resources.getString(R.string.ending_date_menu)
+            resources.getString(R.string.title) ->
+                sharedViewModel.setSortParam(resources.getString(R.string.title))
+            resources.getString(R.string.duration_menu) ->
+                sharedViewModel.setSortParam(resources.getString(R.string.duration_menu))
+            resources.getString(R.string.starting_time_menu) ->
+                sharedViewModel.setSortParam(resources.getString(R.string.starting_time_menu))
+            resources.getString(R.string.ending_time_menu) ->
+                sharedViewModel.setSortParam(resources.getString(R.string.ending_time_menu))
+            resources.getString(R.string.date) ->
+                sharedViewModel.setSortParam(resources.getString(R.string.date))
         }
         return true
     }
 }
+

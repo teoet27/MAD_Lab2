@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -42,7 +43,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private lateinit var accountName: String
     private var accountID: String = ""
     private lateinit var skillsChipGroup: ChipGroup
-    private lateinit var addToSkillListButton: ImageView
+    private lateinit var addNewSkillChip: Chip
     private var timeStartingHour: Int = 0
     private var timeStartingMinute: Int = 0
     private var timeEndingHour: Int = 0
@@ -64,7 +65,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         this.confirmButton = view.findViewById(R.id.confirmButton)
         this.datePicker = view.findViewById(R.id.newDatePicker)
         this.skillsChipGroup = view.findViewById(R.id.newSkillChipGroup)
-        this.addToSkillListButton = view.findViewById(R.id.AddNewSkillToListButtonID)
+        this.addNewSkillChip = view.findViewById(R.id.add_new_skill_chip)
 
         userProfileViewModel.currentUser.observe(viewLifecycleOwner) { user ->
             accountName = user.fullName!!
@@ -90,7 +91,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             this.skillsChipGroup.addChip(requireContext(), skill)
         }
 
-        this.addToSkillListButton.setOnClickListener {
+        this.addNewSkillChip.setOnClickListener {
             showNewSkillInputWindow(requireContext(), this.skillsChipGroup)
         }
 
@@ -202,6 +203,10 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             isCheckable = true
             isCheckedIconVisible = true
             isFocusable = true
+            isChecked = true
+            setTextColor(ContextCompat.getColor(context, R.color.white))
+            chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.prussian_blue))
+
             setOnClickListener {
                 if (selectedSkillsList.any { x ->
                         x == skill
@@ -223,6 +228,22 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                     chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lightGray))
                 }
 
+            }
+            addView(this)
+        }
+    }
+
+    private fun ChipGroup.moveAddChip(context: Context,oldAddChip:View,chipGroup: ChipGroup){
+        removeView(oldAddChip)
+        Chip(context).apply {
+            id = R.id.add_new_skill_chip
+            text = "+"
+            isClickable = true
+            isCheckable = false
+            isCheckedIconVisible = false
+            isFocusable = false
+            setOnClickListener {
+                showNewSkillInputWindow(requireContext(), chipGroup)
             }
             addView(this)
         }
@@ -256,6 +277,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             newSkillTitleLabel = newSkillTitle.text.toString()
             if (newSkillTitleLabel.isNotEmpty()) {
                 chipGroup.addChip(context, newSkillTitleLabel)
+                chipGroup.moveAddChip(context,view?.findViewById(R.id.add_new_skill_chip)!!,this.skillsChipGroup)
+
                 Snackbar.make(
                     requireView(), "New skill added!", Snackbar.LENGTH_LONG
                 ).show()
