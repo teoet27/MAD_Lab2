@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.AdvAdapterCard
-import it.polito.madcourse.group06.utilities.ServiceTools
+import it.polito.madcourse.group06.utilities.TimeslotTools
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
@@ -101,7 +101,7 @@ class ShowMyListOfTimeslots : Fragment() {
             this.recyclerView.adapter = AdvAdapterCard(filteredListOfSkills, advertisementViewModel)
 
             sharedViewModel.filter.observe(viewLifecycleOwner) { filter ->
-                ServiceTools().filterAdvertisementList(filteredListOfSkills, filter)?.also {
+                TimeslotTools().filterAdvertisementList(filteredListOfSkills, filter)?.also {
                     view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = it.isEmpty()
                     view.findViewById<ImageView>(R.id.create_hint).isVisible = it.isEmpty()
 
