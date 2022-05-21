@@ -1,9 +1,8 @@
 package it.polito.madcourse.group06.views.timeslot
 
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -73,7 +72,11 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             commit()
         }
 
-        sortParam.setOnClickListener { /*open context menu to choose parameter and sort*/ }
+        registerForContextMenu(sortParam)
+        sortParam.setOnClickListener {
+            activity?.openContextMenu(sortParam)
+            //sort
+        }
 
         directionButton.setOnClickListener{
             sortDirection=(sortDirection+1)%2 //toggle direction
@@ -122,5 +125,42 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             false->{barrier.visibility=View.VISIBLE
                     barrier.bringToFront()}
         }
+    }
+
+    /**
+     * This method chooses a menu to be inflated for choosing the sorting parameter
+     *
+     * @param menu  ContextMenu
+     * @param v  View
+     * @param menuInfo  ContextMenu info
+     * @return true
+     */
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        val inflater: MenuInflater = requireActivity().menuInflater
+        inflater.inflate(R.menu.sort_parameter_context_menu, menu)
+    }
+
+    /**
+     * This method reacts to menu choice
+     *
+     * @param item  Chosen menu entry
+     * @return true
+     */
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        when (item.title) {
+            resources.getString(R.string.title)->this.sortParam.text=resources.getString(R.string.title)
+            resources.getString(R.string.min_duration_menu)->this.sortParam.text=resources.getString(R.string.min_duration_menu)
+            resources.getString(R.string.max_duration_menu)->this.sortParam.text=resources.getString(R.string.max_duration_menu)
+            resources.getString(R.string.starting_time_menu)->this.sortParam.text=resources.getString(R.string.starting_time_menu)
+            resources.getString(R.string.ending_time_menu)->this.sortParam.text=resources.getString(R.string.ending_time_menu)
+            resources.getString(R.string.starting_date_menu)->this.sortParam.text=resources.getString(R.string.starting_date_menu)
+            resources.getString(R.string.ending_date_menu)->this.sortParam.text=resources.getString(R.string.ending_date_menu)
+        }
+        return true
     }
 }

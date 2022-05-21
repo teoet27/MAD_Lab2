@@ -97,4 +97,10 @@
     <string name="min_duration">Minimum Duration</string>
     <string name="max_duration">Maximum Duration</string>
     <string name="whole_word">Whole word</string>
+    <string name="min_duration_menu">Min duration</string>
+    <string name="max_duration_menu">Max duration</string>
+    <string name="starting_time_menu">Starting time</string>
+    <string name="ending_time_menu">Ending time</string>
+    <string name="starting_date_menu">Starting date</string>
+    <string name="ending_date_menu">Ending date</string>
 </resources>
