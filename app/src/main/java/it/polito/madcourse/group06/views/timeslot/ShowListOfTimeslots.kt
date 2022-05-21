@@ -19,7 +19,6 @@ import it.polito.madcourse.group06.models.advertisement.AdvAdapterCard
 import it.polito.madcourse.group06.utilities.ServiceTools
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
-import kotlin.math.sqrt
 
 class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
@@ -28,6 +27,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var recyclerView: RecyclerView
     private lateinit var newAdvButton: Button
     private lateinit var filterButton: Button
+    private lateinit var barrier:TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +39,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             R.layout.show_timeslots_frag,
             container,
             false
-        );
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,16 +48,22 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.newAdvButton = view.findViewById(R.id.newAdvButton)
         this.filterButton = view.findViewById(R.id.filter_button)
         this.recyclerView = view.findViewById(R.id.rvAdvFullList)
+        this.barrier = view.findViewById(R.id.barrier)
 
         this.newAdvButton.setOnClickListener {
             findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
         }
 
+        enableUI(true)
         sharedViewModel.selected.observe(viewLifecycleOwner) {
             enableUI(!it)
         }
         filterButton.setOnClickListener {
-            activity?.supportFragmentManager!!.beginTransaction().setCustomAnimations(R.anim.slide_in_up, 0).add(R.id.nav_host_fragment_content_main, FilterTimeslots()).commit()
+            activity?.supportFragmentManager!!.
+            beginTransaction().
+            setCustomAnimations(R.anim.slide_in_up, 0).
+            add(R.id.nav_host_fragment_content_main, FilterTimeslots()).
+            commit()
         }
 
         advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
@@ -97,8 +103,10 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     }
 
     private fun enableUI(switch: Boolean) {
-        this.filterButton.isEnabled = switch
-        this.recyclerView.suppressLayout(!switch)
-        this.recyclerView.isClickable = switch
+        when(switch){
+            true-> barrier.visibility=View.GONE
+            false->{barrier.visibility=View.VISIBLE
+                    barrier.bringToFront()}
+        }
     }
 }

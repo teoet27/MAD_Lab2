@@ -136,8 +136,7 @@ class ServiceTools {
             ((advFilter.ending_date!=null && adv.advDate.isSoonerThanDate(advFilter.ending_date))||(advFilter.ending_date==null))
         }
     }
-
-    //Useful extension functions
-    private fun Boolean.toInt() = if (this) 1 else 0
-
 }
+
+//Useful extension functions
+private fun Boolean.toInt() = if (this) 1 else 0

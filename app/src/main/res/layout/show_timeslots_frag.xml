@@ -88,4 +88,16 @@
         app:srcCompat="@drawable/arrow"
         app:tint="@color/prussian_blue" />
 
+    <TextView
+        android:id="@+id/barrier"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:elevation="100dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/rvAdvFullList"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
