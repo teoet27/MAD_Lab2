@@ -172,6 +172,17 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     /**
+     * updateSkillList is a method which allows to update the list of skills for the current user
+     * such that it can add new skills while creating an advertisement.
+     * @param updatedListOfSkills a list of new skills for the user
+     */
+    fun updateSkillList(updatedListOfSkills: ArrayList<String>) {
+        val userProfile = _singleUserProfilePH
+        userProfile.skills = updatedListOfSkills
+        this.editUserProfile(userProfile)
+    }
+
+    /**
      * Unsubscribe from the Listener Registration
      */
     override fun onCleared() {
