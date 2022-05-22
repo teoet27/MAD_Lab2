@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.*
@@ -25,6 +26,7 @@ import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
@@ -50,7 +52,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private var timeEndingMinute: Int = 0
     private var newSkillTitleLabel: String = ""
     private var skillList: MutableList<String> = mutableListOf()
-    private val selectedSkillsList: MutableList<String> = mutableListOf()
+    private val selectedSkillsList: ArrayList<String> = arrayListOf()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -122,7 +124,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         "",
                         newTitle.text.toString(),
                         newDescription.text.toString(),
-                        arrayListOf<String>(),
+                        selectedSkillsList,
                         newLocation.text.toString(),
                         chosenDate,
                         newStartingTime.text.toString(),
@@ -165,7 +167,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             "",
                             newTitle.text.toString(),
                             newDescription.text.toString(),
-                            arrayListOf<String>(),
+                            selectedSkillsList,
                             newLocation.text.toString(),
                             chosenDate,
                             newStartingTime.text.toString(),
@@ -206,17 +208,11 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             isChecked = true
             setTextColor(ContextCompat.getColor(context, R.color.white))
             chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.prussian_blue))
+            selectedSkillsList.add(skill)
 
             setOnClickListener {
-                if (selectedSkillsList.any { x ->
-                        x == skill
-                    }) {
-                    for (s in selectedSkillsList) {
-                        if (s == skill) {
-                            selectedSkillsList.remove(s)
-                            break
-                        }
-                    }
+                if (selectedSkillsList.contains(skill)) {
+                    selectedSkillsList.remove(skill)
                 } else {
                     selectedSkillsList.add(skill)
                 }
@@ -277,7 +273,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             newSkillTitleLabel = newSkillTitle.text.toString()
             if (newSkillTitleLabel.isNotEmpty()) {
                 chipGroup.addChip(context, newSkillTitleLabel)
-                chipGroup.moveAddChip(context,view?.findViewById(R.id.add_new_skill_chip)!!,this.skillsChipGroup)
+                chipGroup.moveAddChip(context,view?.findViewById(R.id.add_new_skill_chip)!!, chipGroup)
 
                 Snackbar.make(
                     requireView(), "New skill added!", Snackbar.LENGTH_LONG
