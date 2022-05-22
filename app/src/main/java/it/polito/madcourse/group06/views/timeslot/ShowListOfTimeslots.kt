@@ -1,6 +1,8 @@
 package it.polito.madcourse.group06.views.timeslot
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.*
@@ -77,9 +79,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             activity?.openContextMenu(sortParam)
         }
 
-        directionButton.setOnClickListener {
-            sharedViewModel.toggleSortDirection()
-        }
 
         searchBar.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -89,6 +88,22 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 return@OnEditorActionListener true
             }
             false
+        })
+        searchBar.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {}
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                search = searchBar.text
+                //searchBar.setText("")
+                sharedViewModel.updateRV()
+            }
         })
 
         lateinit var sortedList: List<Advertisement>
