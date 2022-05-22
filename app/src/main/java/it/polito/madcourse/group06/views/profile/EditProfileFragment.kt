@@ -48,6 +48,8 @@ class EditProfileFragment : Fragment() {
     private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
     private lateinit var skillsChips: ChipGroup
+    private lateinit var skillText: TextView
+    private lateinit var newSkillButton: ImageView
     private var userID: String = ""
     private val skillList = arrayListOf<String>()
 
@@ -82,6 +84,8 @@ class EditProfileFragment : Fragment() {
         this.editPhoneOBJ = view.findViewById(R.id.edit_phone_show_ID)
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
         this.skillsChips = view.findViewById(R.id.editProfileChipGroup)
+        this.skillText = view.findViewById(R.id.skillsListTextID)
+        this.newSkillButton = view.findViewById(R.id.addNewSkillButtonInEditViewID)
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
             // Save the ID
@@ -96,6 +100,11 @@ class EditProfileFragment : Fragment() {
             this.editPhoneOBJ.setText(userProfile.phoneNumber)
             // Location
             this.editLocationOBJ.setText(userProfile.location)
+
+            // Button for adding a new skill
+            this.newSkillButton.setOnClickListener {
+
+            }
 
             // Skills
             if (!userProfile.skills.isNullOrEmpty()) {

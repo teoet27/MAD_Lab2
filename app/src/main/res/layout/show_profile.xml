@@ -196,7 +196,6 @@
                     android:paddingLeft="24dp"
 
                     android:paddingRight="24dp"
-                    app:singleLine="true"
                     app:singleSelection="true">
 
                 </com.google.android.material.chip.ChipGroup>
@@ -227,11 +226,8 @@
                         android:id="@+id/phone_static_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
-                        android:ems="2"
-                        android:minEms="2"
                         android:text="@string/phone_number"
                         android:textColor="#000000"
                         android:textSize="16sp"
@@ -239,7 +235,7 @@
 
                     <TextView
                         android:id="@+id/phone_show_ID"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="N/A"
@@ -264,11 +260,8 @@
                         android:id="@+id/email_static_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
-                        android:ems="2"
-                        android:minEms="2"
                         android:text="@string/email_text"
                         android:textColor="#000000"
                         android:textSize="16sp"
@@ -276,7 +269,7 @@
 
                     <TextView
                         android:id="@+id/email_show_ID"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="N/A"
@@ -301,11 +294,8 @@
                         android:id="@+id/loc_static_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/prussian_blue"
-                        android:ems="2"
-                        android:minEms="2"
                         android:text="@string/location_text"
                         android:textColor="#000000"
                         android:textSize="16sp"
@@ -313,7 +303,7 @@
 
                     <TextView
                         android:id="@+id/loc_show_ID"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="N/A"
