@@ -36,23 +36,24 @@ class ShowListOfSkills : Fragment(R.layout.service_list) {
         super.onViewCreated(view, savedInstanceState)
 
         advViewModel.listOfAdvertisements.observe(this.viewLifecycleOwner) { listOfAds ->
-            /**
-             * If there are no services in the DB proper texts are shown.
-             */
-            val listOfSkills = (listOfAds.map { it.listOfSkills }.flatten() as MutableList<String>)
+            val listOfSkills = listOfAds.map { it.listOfSkills }
+            val setOfSkills = mutableSetOf<String>()
+            for (skills in listOfSkills) {
+                for (s in skills) {
+                    setOfSkills.add(s)
+                }
+            }
             view.findViewById<TextView>(R.id.defaultTextServicesList).isVisible = listOfSkills.isNullOrEmpty()
 
-            //temporary
-            listOfSkills.apply {
+            setOfSkills.apply {
                 add("All")
-                sortWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it })
+                sortedWith { a, b -> a.compareTo(b, ignoreCase = true) }
             }
             if (!listOfSkills.isNullOrEmpty()) {
-                listOfSkills.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it })
-
+                // setOfSkills.sortedWith { a, b -> a.compareTo(b, ignoreCase = true) }
                 this.recyclerView = view.findViewById(R.id.rvServicesFullList)
                 this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-                this.recyclerView.adapter = SkillAdapterCard(listOfSkills)
+                this.recyclerView.adapter = SkillAdapterCard(setOfSkills.toList())
             }
         }
     }
