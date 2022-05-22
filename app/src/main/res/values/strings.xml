@@ -24,7 +24,7 @@
     <string name="floating_menu_load_picture">Select an image</string>
     <string name="floating_menu_shot_picture">Take a photo</string>
     <string name="noskills">No skills.</string>
-    <string name="edit_skills_text">Insert here your skills separated by a comma:</string>
+    <string name="edit_skills_text">Insert here your skills: click on the + button to add a new skill.</string>
     <string name="atSymbol">\@</string>
     <string name="insert_here_your_nickname">Insert here your nickname:</string>
     <string name="insert_here_your_full_name">Insert here your full name:</string>

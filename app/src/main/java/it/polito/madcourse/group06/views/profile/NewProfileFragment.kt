@@ -44,6 +44,7 @@ class NewProfileFragment : Fragment() {
     private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
     private lateinit var skillsChips: ChipGroup
+    private lateinit var addSkillButton: ImageView
     private val skillList = arrayListOf<String>()
 
     private val REQUEST_IMAGE_CAPTURE = 1
@@ -78,6 +79,7 @@ class NewProfileFragment : Fragment() {
         this.newPhoneOBJ = view.findViewById(R.id.new_phone_show_ID)
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
         this.skillsChips = view.findViewById(R.id.newProfileChipGroup)
+        this.addSkillButton = view.findViewById(R.id.addNewSkillButtonID)
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
             // Fullname
@@ -90,8 +92,12 @@ class NewProfileFragment : Fragment() {
             this.newPhoneOBJ.setText(userProfile.phoneNumber)
             // Location
             this.newLocationOBJ.setText(userProfile.location)
+            // Add New Skill Button
+            this.addSkillButton.setOnClickListener {
+
+            }
             // Skills
-            if (!userProfile.skills.isNullOrEmpty()) {
+            /*if (!userProfile.skills.isNullOrEmpty()) {
                 userProfile.skills!!.forEach { skill ->
                     this.skillsChips.addChipForEdit(requireContext(), skill)
                     this.skillsChips.setOnCheckedChangeListener { chipGroup, checkedId ->
@@ -104,7 +110,7 @@ class NewProfileFragment : Fragment() {
                     }
                 }
                 this.skillList.addAll(userProfile.skills!!)
-            }
+            }*/
 
             // Email
             this.newEmailOBJ.setText(userProfile.email)
