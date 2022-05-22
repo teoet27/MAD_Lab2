@@ -1,16 +1,21 @@
 package it.polito.madcourse.group06.views.timeslot
 
+import android.app.AlertDialog
 import android.app.TimePickerDialog
+import android.content.Context
+import android.content.DialogInterface
+import android.content.res.ColorStateList
 import android.os.Bundle
+import android.text.InputType
+import android.view.Gravity
 import android.view.View
-import android.widget.DatePicker
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
@@ -19,6 +24,8 @@ import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.math.sin
 
 class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
 
@@ -39,10 +46,13 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     private lateinit var datePicker: DatePicker
     private lateinit var chosenDate: String
     private lateinit var skillsChips: ChipGroup
+    private lateinit var newSkillChip: Chip
     private var timeStartingHour: Int = 0
     private var timeStartingMinute: Int = 0
     private var timeEndingHour: Int = 0
     private var timeEndingMinute: Int = 0
+    private var selectedSkillsList: ArrayList<String> = arrayListOf()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,7 +64,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
         this.advEndingTime = view.findViewById(R.id.editEndingTime)
         this.deleteButton = view.findViewById(R.id.deleteButton)
         this.datePicker = view.findViewById(R.id.editDatePicker)
-        this.skillsChips = view.findViewById(R.id.edit_skill_chips_group)
+        this.skillsChips = view.findViewById(R.id.editTimeslotSkillChipGroup)
+        this.newSkillChip = view.findViewById(R.id.editTimeslotAddSkillChip)
 
         /*// Retrieve the account name of the current user
         usrViewModel.currentUser.observe(viewLifecycleOwner) { user ->
@@ -65,6 +76,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
             // A dumb advertisement which will be filled with the newest information
             dumbAdvertisement.id = singleAdvertisement.id
             dumbAdvertisement.advAccount = singleAdvertisement.advAccount
+            selectedSkillsList = singleAdvertisement.listOfSkills
 
             // Title
             this.advTitle.text = singleAdvertisement.advTitle
@@ -103,6 +115,27 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                 advViewModel.removeAdvertisementByID(singleAdvertisement.id!!)
                 findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
             }
+
+            // Button for adding a new skill
+            this.newSkillChip.setOnClickListener {
+                showNewSkillInputWindow(requireContext(), this.skillsChips)
+            }
+
+            // Skills
+
+            usrViewModel.currentUser.observe(viewLifecycleOwner){user->
+                if (!user.skills.isNullOrEmpty()) {
+                    this.skillsChips.removeAllViews()
+                    user.skills?.forEach { skill ->
+                        this.skillsChips.addChipWithCheck(requireContext(), skill, selectedSkillsList.contains(skill))
+                        this.skillsChips.setOnCheckedChangeListener { chipGroup, checkedId ->
+                            val selectedService = chipGroup.findViewById<Chip>(checkedId)?.text
+                            Toast.makeText(chipGroup.context, selectedService ?: "No Choice", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                    this.skillsChips.addPlusChip(requireContext(),this.skillsChips)
+                }
+            }
         }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
@@ -133,6 +166,121 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                 }
             }
         })
+    }
+
+    /**
+     * Dinamically create a chip within a chip group
+     *
+     * @param context       parent view context
+     * @param label         chip name
+     */
+    private fun ChipGroup.addChipWithCheck(context: Context, skill: String,isAlreadySelected: Boolean = false) {
+        Chip(context).apply {
+            id = View.generateViewId()
+            text = skill
+            isClickable = true
+            isCheckable = true
+            isCheckedIconVisible = true
+            isFocusable = true
+            isChecked = isAlreadySelected
+
+            if (isAlreadySelected) {
+                selectedSkillsList.add(skill)
+                setTextColor(ContextCompat.getColor(context, R.color.white))
+                chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.prussian_blue))
+            } else {
+                setTextColor(ContextCompat.getColor(context, R.color.black))
+                chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lightGray))
+            }
+
+            setOnClickListener {
+                if (selectedSkillsList.contains(skill)) {
+                    selectedSkillsList.remove(skill)
+                } else {
+                    selectedSkillsList.add(skill)
+                    val adv=advViewModel.advertisement.value!!
+                    adv.listOfSkills.add(skill)
+                    advViewModel.editAdvertisement(adv)
+                }
+                if (isChecked) {
+                    setTextColor(ContextCompat.getColor(context, R.color.white))
+                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.prussian_blue))
+                } else {
+                    setTextColor(ContextCompat.getColor(context, R.color.black))
+                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lightGray))
+                }
+
+            }
+            addView(this)
+        }
+    }
+
+    private fun ChipGroup.addPlusChip(context: Context, chipGroup:ChipGroup) {
+        Chip(context).apply {
+            id = R.id.editProfileAddNewSkillChip
+            text = "+"
+            isClickable = true
+            isCheckable = false
+            isCheckedIconVisible = false
+            isFocusable = false
+            setOnClickListener {
+                showNewSkillInputWindow(requireContext(), chipGroup)
+            }
+            addView(this)
+        }
+    }
+
+    /**
+     * showNewSkillInputWindow
+     *
+     * @param context current context
+     * @param chipGroup the related chip group in which the new skill will be added
+     */
+    private fun showNewSkillInputWindow(context: Context, chipGroup: ChipGroup) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this.context)
+        val newSkillTitle = EditText(this.context)
+        val linearLayout = LinearLayout(this.context)
+
+        builder.setTitle("Insert here your new skill")
+        newSkillTitle.hint = "What is your new skill?"
+        newSkillTitle.inputType = InputType.TYPE_CLASS_TEXT
+        newSkillTitle.gravity = Gravity.LEFT
+        linearLayout.orientation = LinearLayout.VERTICAL
+        linearLayout.setPadding(64, 0, 64, 0)
+        linearLayout.addView(newSkillTitle)
+        builder.setView(linearLayout)
+
+        /**
+         * setPositiveButton
+         */
+        builder.setPositiveButton("Create", DialogInterface.OnClickListener { dialog, which ->
+            val newSkillTitleLabel = newSkillTitle.text.toString()
+            if (newSkillTitleLabel.isNotEmpty()) {
+                this.skillsChips.removeView(view?.findViewById(R.id.editProfileAddNewSkillChip))
+                chipGroup.addChipWithCheck(context, newSkillTitleLabel, true)
+                this.skillsChips.addPlusChip(context,this.skillsChips)
+
+                val user = usrViewModel.currentUser.value!!
+                user.skills?.add(newSkillTitleLabel)
+                usrViewModel.editUserProfile(user)
+
+                Snackbar.make(
+                    requireView(), "New skill added!", Snackbar.LENGTH_LONG
+                ).show()
+            } else {
+                Snackbar.make(
+                    requireView(), "You must provide a name for the new skill.", Snackbar.LENGTH_LONG
+                ).show()
+            }
+        })
+
+        /**
+         * setNegativeButton
+         */
+        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->
+            dialog.cancel()
+        })
+        builder.show()
     }
 
     /**
