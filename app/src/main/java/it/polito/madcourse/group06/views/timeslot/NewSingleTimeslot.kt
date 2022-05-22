@@ -51,7 +51,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private var timeEndingHour: Int = 0
     private var timeEndingMinute: Int = 0
     private var newSkillTitleLabel: String = ""
-    private var skillList: MutableList<String> = mutableListOf()
+    private lateinit var skillList: ArrayList<String>
     private val selectedSkillsList: ArrayList<String> = arrayListOf()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,6 +72,11 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         userProfileViewModel.currentUser.observe(viewLifecycleOwner) { user ->
             accountName = user.fullName!!
             accountID = user.id!!
+            skillList = user.skills!!
+            for (skill in skillList) {
+                this.skillsChipGroup.addChip(requireContext(), skill)
+                this.skillsChipGroup.moveAddChip(requireContext(), view.findViewById(R.id.add_new_skill_chip)!!, this.skillsChipGroup)
+            }
         }
 
         this.newStartingTime.setOnClickListener { popTimePickerStarting(this.newStartingTime) }
@@ -82,15 +87,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         datePicker.init(
             today.get(Calendar.YEAR), today.get(Calendar.MONTH),
             today.get(Calendar.DAY_OF_MONTH)
-        ) { view, year, month, day ->
+        ) { _, year, month, day ->
             chosenDate = "$day/${month + 1}/$year"
-        }
-
-        /**
-         * TODO: https://www.youtube.com/watch?v=pU0mvwIMAe0
-         */
-        for (skill in skillList) {
-            this.skillsChipGroup.addChip(requireContext(), skill)
         }
 
         this.addNewSkillChip.setOnClickListener {
@@ -134,6 +132,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         accountID
                     )
                 )
+                userProfileViewModel.updateSkillList(skillList)
                 Toast.makeText(
                     context, "Advertisement created successfully!", Toast.LENGTH_LONG
                 ).show()
@@ -177,6 +176,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             accountID
                         )
                     )
+                    userProfileViewModel.updateSkillList(skillList)
                     Toast.makeText(
                         context, "Advertisement created successfully!", Toast.LENGTH_LONG
                     ).show()
@@ -197,7 +197,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
      * @param
      * @param
      */
-    private fun ChipGroup.addChip(context: Context, skill: String) {
+    private fun ChipGroup.addChip(context: Context, skill: String, isAlreadySelected: Boolean = false) {
         Chip(context).apply {
             id = View.generateViewId()
             text = skill
@@ -205,10 +205,16 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             isCheckable = true
             isCheckedIconVisible = true
             isFocusable = true
-            isChecked = true
-            setTextColor(ContextCompat.getColor(context, R.color.white))
-            chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.prussian_blue))
-            selectedSkillsList.add(skill)
+            isChecked = isAlreadySelected
+
+            if (isAlreadySelected) {
+                selectedSkillsList.add(skill)
+                setTextColor(ContextCompat.getColor(context, R.color.white))
+                chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.prussian_blue))
+            } else {
+                setTextColor(ContextCompat.getColor(context, R.color.black))
+                chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lightGray))
+            }
 
             setOnClickListener {
                 if (selectedSkillsList.contains(skill)) {
@@ -229,7 +235,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         }
     }
 
-    private fun ChipGroup.moveAddChip(context: Context,oldAddChip:View,chipGroup: ChipGroup){
+    private fun ChipGroup.moveAddChip(context: Context, oldAddChip: View, chipGroup: ChipGroup) {
         removeView(oldAddChip)
         Chip(context).apply {
             id = R.id.add_new_skill_chip
@@ -272,8 +278,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         builder.setPositiveButton("Create", DialogInterface.OnClickListener { dialog, which ->
             newSkillTitleLabel = newSkillTitle.text.toString()
             if (newSkillTitleLabel.isNotEmpty()) {
-                chipGroup.addChip(context, newSkillTitleLabel)
-                chipGroup.moveAddChip(context,view?.findViewById(R.id.add_new_skill_chip)!!, chipGroup)
+                chipGroup.addChip(context, newSkillTitleLabel, isAlreadySelected = true)
+                chipGroup.moveAddChip(context, view?.findViewById(R.id.add_new_skill_chip)!!, chipGroup)
 
                 Snackbar.make(
                     requireView(), "New skill added!", Snackbar.LENGTH_LONG
