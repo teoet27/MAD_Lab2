@@ -79,16 +79,10 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             activity?.openContextMenu(sortParam)
         }
 
+        directionButton.setOnClickListener {
+            sharedViewModel.toggleSortDirection()
+        }
 
-        /*searchBar.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                search = searchBar.text
-                //searchBar.setText("")
-                sharedViewModel.updateRV()
-                return@OnEditorActionListener true
-            }
-            false
-        })*/
         searchBar.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
             override fun beforeTextChanged(
