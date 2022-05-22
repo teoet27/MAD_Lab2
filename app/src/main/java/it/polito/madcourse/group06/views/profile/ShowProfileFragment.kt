@@ -1,6 +1,7 @@
 package it.polito.madcourse.group06.views.profile
 
 import android.content.Context
+import android.opengl.Visibility
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -9,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -80,8 +82,12 @@ class ShowProfileFragment : Fragment() {
 
             // Skills
             if (userProfile.skills.isNullOrEmpty()) {
+                this.skillsChips.isVisible = false
+                this.skillsOBJ.isVisible = true
                 this.skillsOBJ.text = getString(R.string.noskills)
             } else {
+                this.skillsOBJ.isVisible = false
+                this.skillsChips.isVisible = true
                 userProfile.skills!!.forEach { sk ->
                     this.skillsChips.addChip(requireContext(), sk)
                     this.skillsChips.setOnCheckedChangeListener { chipGroup, checkedId ->
