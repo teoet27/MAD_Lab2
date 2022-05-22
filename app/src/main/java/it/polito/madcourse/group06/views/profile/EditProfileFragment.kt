@@ -25,6 +25,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.userprofile.UserProfile
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
@@ -109,7 +110,7 @@ class EditProfileFragment : Fragment() {
             if (!userProfile.skills.isNullOrEmpty()) {
                 this.skillsChips.removeAllViews()
                 userProfile.skills!!.forEach { skill ->
-                    this.skillsChips.addChipForEdit(requireContext(), skill)
+                    this.skillsChips.addChipForEdit(requireContext(), skill,this.skillsChips)
                     this.skillsChips.setOnCheckedChangeListener { chipGroup, checkedId ->
                         val selectedService = chipGroup.findViewById<Chip>(checkedId)?.text
                         Toast.makeText(chipGroup.context, selectedService ?: "No Choice", Toast.LENGTH_LONG).show()
@@ -150,7 +151,7 @@ class EditProfileFragment : Fragment() {
      * @param context       parent view context
      * @param label         chip name
      */
-    private fun ChipGroup.addChipForEdit(context: Context, label: String) {
+    private fun ChipGroup.addChipForEdit(context: Context, label: String,chipGroup: ChipGroup) {
         Chip(context).apply {
             id = View.generateViewId()
             text = label
@@ -159,6 +160,12 @@ class EditProfileFragment : Fragment() {
             isCheckable = false
             isCheckedIconVisible = false
             isFocusable = true
+
+            isCloseIconVisible=true
+            setOnCloseIconClickListener{
+                skillList.remove(text)
+                chipGroup.removeView(it)
+            }
             setOnClickListener {
                 if (isChecked) {
                     setTextColor(ContextCompat.getColor(context, R.color.white))
@@ -213,8 +220,8 @@ class EditProfileFragment : Fragment() {
         builder.setPositiveButton("Create", DialogInterface.OnClickListener { dialog, which ->
             val newSkillTitleLabel = newSkillTitle.text.toString()
             if (newSkillTitleLabel.isNotEmpty()) {
-                this.skillsChips.removeView(view?.findViewById(R.id.editProfileAddNewSkillChip))
-                chipGroup.addChipForEdit(context, newSkillTitleLabel)
+                this.skillsChips.removeAllViews()
+                chipGroup.addChipForEdit(context, newSkillTitleLabel,this.skillsChips)
                 this.skillsChips.addPlusChip(context,this.skillsChips)
 
                 skillList.add(newSkillTitleLabel)
