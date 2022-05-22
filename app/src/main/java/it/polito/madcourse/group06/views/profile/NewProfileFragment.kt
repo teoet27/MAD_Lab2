@@ -1,8 +1,10 @@
 package it.polito.madcourse.group06.views.profile
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
@@ -11,6 +13,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.InputType
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -45,6 +48,7 @@ class NewProfileFragment : Fragment() {
     private lateinit var profilePicturePath: String
     private lateinit var skillsChips: ChipGroup
     private lateinit var addSkillButton: ImageView
+    private lateinit var newSkillTitleLabel: String
     private val skillList = arrayListOf<String>()
 
     private val REQUEST_IMAGE_CAPTURE = 1
@@ -94,7 +98,7 @@ class NewProfileFragment : Fragment() {
             this.newLocationOBJ.setText(userProfile.location)
             // Add New Skill Button
             this.addSkillButton.setOnClickListener {
-
+                showNewSkillInputWindow(requireContext(), this.skillsChips)
             }
             // Skills
             /*if (!userProfile.skills.isNullOrEmpty()) {
@@ -130,6 +134,107 @@ class NewProfileFragment : Fragment() {
         setHasOptionsMenu(true)
         // show dialog box with welcome message
         showCustomDialog()
+    }
+
+
+    /**
+     * TODO
+     * addChip
+     * @param
+     * @param
+     */
+    private fun ChipGroup.addChip(context: Context, skill: String) {
+        Chip(context).apply {
+            id = View.generateViewId()
+            text = skill
+            isClickable = true
+            isCheckable = true
+            isCheckedIconVisible = true
+            isFocusable = true
+            isChecked = true
+            setTextColor(ContextCompat.getColor(context, R.color.white))
+            chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.prussian_blue))
+
+            setOnClickListener {
+                if (skillList.any { x ->
+                        x == skill
+                    }) {
+                    for (s in skillList) {
+                        if (s == skill) {
+                            skillList.remove(s)
+                            break
+                        }
+                    }
+                } else {
+                    skillList.add(skill)
+                }
+                if (isChecked) {
+                    setTextColor(ContextCompat.getColor(context, R.color.white))
+                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.prussian_blue))
+                } else {
+                    setTextColor(ContextCompat.getColor(context, R.color.black))
+                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lightGray))
+                }
+
+            }
+            addView(this)
+        }
+    }
+
+    private fun ChipGroup.moveAddChip(context: Context,oldAddChip:View,chipGroup: ChipGroup){
+        removeView(oldAddChip)
+        Chip(context).apply {
+            id = R.id.add_new_skill_chip
+            text = "+"
+            isClickable = true
+            isCheckable = false
+            isCheckedIconVisible = false
+            isFocusable = false
+            setOnClickListener {
+                showNewSkillInputWindow(requireContext(), chipGroup)
+            }
+            addView(this)
+        }
+    }
+
+    /**
+     * showNewSkillInputWindow
+     *
+     * @param context current context
+     * @param chipGroup the related chip group in which the new skill will be added
+     */
+    private fun showNewSkillInputWindow(context: Context, chipGroup: ChipGroup) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this.context)
+        val newSkillTitle = EditText(this.context)
+        val linearLayout = LinearLayout(this.context)
+
+        builder.setTitle("Insert here your new skill")
+        newSkillTitle.hint = "What is your new skill?"
+        newSkillTitle.inputType = InputType.TYPE_CLASS_TEXT
+        newSkillTitle.gravity = Gravity.LEFT
+        linearLayout.orientation = LinearLayout.VERTICAL
+        linearLayout.setPadding(64, 0, 64, 0)
+        linearLayout.addView(newSkillTitle)
+        builder.setView(linearLayout)
+
+        /**
+         * setPositiveButton
+         */
+        builder.setPositiveButton("Create", DialogInterface.OnClickListener { dialog, which ->
+            newSkillTitleLabel = newSkillTitle.text.toString()
+            if (newSkillTitleLabel.isNotEmpty()) {
+                chipGroup.addChip(context, newSkillTitleLabel)
+                chipGroup.moveAddChip(context, view?.findViewById(R.id.add_new_skill_chip)!!, chipGroup)
+
+                Snackbar.make(
+                    requireView(), "New skill added!", Snackbar.LENGTH_LONG
+                ).show()
+            } else {
+                Snackbar.make(
+                    requireView(), "You must provide a name for the new skill.", Snackbar.LENGTH_LONG
+                ).show()
+            }
+        })
     }
 
     private fun showCustomDialog() {
