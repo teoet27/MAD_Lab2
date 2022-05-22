@@ -198,18 +198,6 @@
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/addNewSkillButtonInEditViewID"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginRight="24dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/adv_card_bckgrnd"
-                        android:backgroundTint="@color/orange_poli"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        app:srcCompat="@drawable/ic_add_black_24dp" />
                 </LinearLayout>
 
                 <TextView
@@ -235,9 +223,14 @@
                     android:id="@+id/editProfileChipGroup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingLeft="24dp"
-                    android:paddingRight="24dp">
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp">
 
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/editProfileAddNewSkillChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+" />
                 </com.google.android.material.chip.ChipGroup>
 
                 <TextView

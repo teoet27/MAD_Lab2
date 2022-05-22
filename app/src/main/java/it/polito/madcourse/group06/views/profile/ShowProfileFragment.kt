@@ -88,6 +88,7 @@ class ShowProfileFragment : Fragment() {
             } else {
                 this.skillsOBJ.isVisible = false
                 this.skillsChips.isVisible = true
+                this.skillsChips.removeAllViews()
                 userProfile.skills!!.forEach { sk ->
                     this.skillsChips.addChip(requireContext(), sk)
                     this.skillsChips.setOnCheckedChangeListener { chipGroup, checkedId ->

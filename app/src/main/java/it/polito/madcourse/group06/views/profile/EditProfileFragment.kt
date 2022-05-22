@@ -1,7 +1,9 @@
 package it.polito.madcourse.group06.views.profile
 
+import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
@@ -10,11 +12,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.InputType
 import android.view.*
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -23,7 +23,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipDrawable
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
@@ -49,7 +48,7 @@ class EditProfileFragment : Fragment() {
     private lateinit var profilePicturePath: String
     private lateinit var skillsChips: ChipGroup
     private lateinit var skillText: TextView
-    private lateinit var newSkillButton: ImageView
+    private lateinit var newSkillChip: Chip
     private var userID: String = ""
     private val skillList = arrayListOf<String>()
 
@@ -85,7 +84,7 @@ class EditProfileFragment : Fragment() {
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
         this.skillsChips = view.findViewById(R.id.editProfileChipGroup)
         this.skillText = view.findViewById(R.id.skillsListTextID)
-        this.newSkillButton = view.findViewById(R.id.addNewSkillButtonInEditViewID)
+        this.newSkillChip = view.findViewById(R.id.editProfileAddNewSkillChip)
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
             // Save the ID
@@ -102,12 +101,13 @@ class EditProfileFragment : Fragment() {
             this.editLocationOBJ.setText(userProfile.location)
 
             // Button for adding a new skill
-            this.newSkillButton.setOnClickListener {
-
+            this.newSkillChip.setOnClickListener {
+                showNewSkillInputWindow(requireContext(), this.skillsChips)
             }
 
             // Skills
             if (!userProfile.skills.isNullOrEmpty()) {
+                this.skillsChips.removeAllViews()
                 userProfile.skills!!.forEach { skill ->
                     this.skillsChips.addChipForEdit(requireContext(), skill)
                     this.skillsChips.setOnCheckedChangeListener { chipGroup, checkedId ->
@@ -115,6 +115,7 @@ class EditProfileFragment : Fragment() {
                         Toast.makeText(chipGroup.context, selectedService ?: "No Choice", Toast.LENGTH_LONG).show()
                     }
                 }
+                this.skillsChips.addPlusChip(requireContext(),this.skillsChips)
                 this.skillList.addAll(userProfile.skills!!)
             }
 
@@ -170,6 +171,73 @@ class EditProfileFragment : Fragment() {
             addView(this)
         }
     }
+
+    private fun ChipGroup.addPlusChip(context: Context,chipGroup:ChipGroup) {
+        Chip(context).apply {
+            id = R.id.editProfileAddNewSkillChip
+            text = "+"
+            isClickable = true
+            isCheckable = false
+            isCheckedIconVisible = false
+            isFocusable = false
+            setOnClickListener {
+                showNewSkillInputWindow(requireContext(), chipGroup)
+            }
+            addView(this)
+        }
+    }
+
+    /**
+     * showNewSkillInputWindow
+     *
+     * @param context current context
+     * @param chipGroup the related chip group in which the new skill will be added
+     */
+    private fun showNewSkillInputWindow(context: Context, chipGroup: ChipGroup) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this.context)
+        val newSkillTitle = EditText(this.context)
+        val linearLayout = LinearLayout(this.context)
+
+        builder.setTitle("Insert here your new skill")
+        newSkillTitle.hint = "What is your new skill?"
+        newSkillTitle.inputType = InputType.TYPE_CLASS_TEXT
+        newSkillTitle.gravity = Gravity.LEFT
+        linearLayout.orientation = LinearLayout.VERTICAL
+        linearLayout.setPadding(64, 0, 64, 0)
+        linearLayout.addView(newSkillTitle)
+        builder.setView(linearLayout)
+
+        /**
+         * setPositiveButton
+         */
+        builder.setPositiveButton("Create", DialogInterface.OnClickListener { dialog, which ->
+            val newSkillTitleLabel = newSkillTitle.text.toString()
+            if (newSkillTitleLabel.isNotEmpty()) {
+                this.skillsChips.removeView(view?.findViewById(R.id.editProfileAddNewSkillChip))
+                chipGroup.addChipForEdit(context, newSkillTitleLabel)
+                this.skillsChips.addPlusChip(context,this.skillsChips)
+
+                skillList.add(newSkillTitleLabel)
+                Snackbar.make(
+                    requireView(), "New skill added!", Snackbar.LENGTH_LONG
+                ).show()
+            } else {
+                Snackbar.make(
+                    requireView(), "You must provide a name for the new skill.", Snackbar.LENGTH_LONG
+                ).show()
+            }
+        })
+
+        /**
+         * setNegativeButton
+         */
+        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->
+            dialog.cancel()
+        })
+        builder.show()
+    }
+
+
 
     /**
      * saveData is a private method for saving data before fragment transaction
