@@ -280,7 +280,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             if (newSkillTitleLabel.isNotEmpty()) {
                 chipGroup.addChip(context, newSkillTitleLabel, isAlreadySelected = true)
                 chipGroup.moveAddChip(context, view?.findViewById(R.id.add_new_skill_chip)!!, chipGroup)
-
+                skillList.add(newSkillTitleLabel)
                 Snackbar.make(
                     requireView(), "New skill added!", Snackbar.LENGTH_LONG
                 ).show()
