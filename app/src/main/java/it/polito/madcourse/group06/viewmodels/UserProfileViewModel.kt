@@ -1,6 +1,8 @@
 package it.polito.madcourse.group06.viewmodels
 
 import android.app.Application
+import android.graphics.Bitmap
+import android.net.Uri
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleOwner
@@ -9,6 +11,8 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import it.polito.madcourse.group06.models.userprofile.UserProfile
 import java.lang.Exception
 
@@ -180,6 +184,15 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
         val userProfile = _singleUserProfilePH
         userProfile.skills = updatedListOfSkills
         this.editUserProfile(userProfile)
+    }
+
+    /**
+     * Method to upload the new profile picture to the Firebase Storage
+     */
+    fun uploadProfilePicture(propic: Bitmap?, dataUri: Uri){
+        val imgDB: StorageReference = FirebaseStorage.getInstance().getReference("uploads")
+        val fileRef: StorageReference = imgDB.child(System.currentTimeMillis().toString() + ".jpg")
+        fileRef.putFile(dataUri)
     }
 
     /**
