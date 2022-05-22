@@ -80,7 +80,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         }
 
 
-        searchBar.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
+        /*searchBar.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 search = searchBar.text
                 //searchBar.setText("")
@@ -88,7 +88,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 return@OnEditorActionListener true
             }
             false
-        })
+        })*/
         searchBar.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
             override fun beforeTextChanged(
