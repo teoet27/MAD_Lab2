@@ -144,7 +144,7 @@ class EditProfileFragment : Fragment() {
         Chip(context).apply {
             id = View.generateViewId()
             text = label
-            setChipDrawable(ContextCompat.getDrawable(context, R.drawable.ic_close_black_24dp) as ChipDrawable)
+            // setChipDrawable(ContextCompat.getDrawable(context, R.drawable.ic_close_black_24dp) as ChipDrawable)
             isClickable = true
             isCheckable = false
             isCheckedIconVisible = false
