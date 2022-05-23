@@ -372,15 +372,12 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
         timeDifference += (endingHour - startingHour) + ((endingMinute - startingMinute) / 60.0)
 
-        /*val durationString: String = DecimalFormat("#.##").format(timeDifference)
-        val durationDouble: String = durationString*/
-        //val df = DecimalFormat("#.##").format(timeDifference)
+        val durationString: String = DecimalFormat("#.##").format(timeDifference)
+        val durationDouble: Double = durationString.toDouble()
 
         return Pair(
-            /*String.format("%.2f", timeDifference).toDouble(),
-            String.format("%.2f", timeDifference).toDouble() >= 0*/
-            DecimalFormat("#.##").format(timeDifference).toDouble(),
-            DecimalFormat("#.##").format(timeDifference).toDouble() >= 0
+            durationDouble,
+            durationDouble >= 0
         )
     }
 
