@@ -28,6 +28,7 @@ fun emptyUserProfile() = UserProfile(
     null
 )
 
+
 /**
  * This utility method changes an array list into a string with a specific format
  *
