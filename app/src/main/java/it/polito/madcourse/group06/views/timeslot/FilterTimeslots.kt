@@ -40,7 +40,6 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
