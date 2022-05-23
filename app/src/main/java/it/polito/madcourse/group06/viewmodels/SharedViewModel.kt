@@ -52,16 +52,24 @@ class SharedViewModel : ViewModel() {
         _sortParam = name
         sortParam.value = _sortParam
     }
+    fun getSortParam():String {
+        return sortParam.value!!
+    }
 
-    fun toggleSortDirection() {
-        _sortUp = !_sortUp
+    fun updateSort(){
         sortUp.value = _sortUp
+    }
+    fun toggleSortDirection() {
         _lastSortUp=_sortUp
         lastSortUp.value = _lastSortUp
+        _sortUp = !_sortUp
+        sortUp.value = _sortUp
     }
-    fun getLastSortDirection():Boolean{
-        return lastSortUp.value!!
+    fun setSortUp(){
+        _sortUp = true
+        sortUp.value = _sortUp
     }
+
     fun updateRV(){
         _updateRV=true
         updateRV.value=_updateRV

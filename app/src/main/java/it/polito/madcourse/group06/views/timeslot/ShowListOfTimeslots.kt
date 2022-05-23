@@ -120,18 +120,17 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         }
         sharedViewModel.sortParam.observe(viewLifecycleOwner) { parameter ->
             this.sortParam.text = parameter
-            sortedList = TimeslotTools().sortAdvertisementList(sortedList, parameter)!!
-            //sharedViewModel.updateRV()
+            sharedViewModel.updateSort()
         }
+
         sharedViewModel.sortUp.observe(viewLifecycleOwner) { sort_up ->
 
-            if(sharedViewModel.getLastSortDirection()!=sort_up || sort_up==false)
-                sortedList = sortedList.reversed()
-
+            sortedList = TimeslotTools().sortAdvertisementList(sortedList, sharedViewModel.getSortParam(),sort_up)!!
             this.directionButton.setImageResource(R.drawable.sort_directions)
 
             sharedViewModel.updateRV()
         }
+
         sharedViewModel.updateRV.observe(viewLifecycleOwner) {
             var finalList = sortedList
             if (search != null)
