@@ -110,18 +110,18 @@ class EditProfileFragment : Fragment() {
                 showNewSkillInputWindow(requireContext(), this.skillsChips)
             }
 
-            this.skillList= userProfile.skills!!
+            this.skillList = userProfile.skills!!
             // Skills
             if (!userProfile.skills.isNullOrEmpty()) {
                 this.skillsChips.removeAllViews()
                 userProfile.skills!!.forEach { skill ->
-                    this.skillsChips.addChipForEdit(requireContext(), skill,this.skillsChips)
-                    this.skillsChips.setOnCheckedChangeListener { chipGroup, checkedId ->
+                    this.skillsChips.addChipForEdit(requireContext(), skill, this.skillsChips)
+                    /*this.skillsChips.setOnCheckedChangeListener { chipGroup, checkedId ->
                         val selectedService = chipGroup.findViewById<Chip>(checkedId)?.text
                         Toast.makeText(chipGroup.context, selectedService ?: "No Choice", Toast.LENGTH_LONG).show()
-                    }
+                    }*/
                 }
-                this.skillsChips.addPlusChip(requireContext(),this.skillsChips)
+                this.skillsChips.addPlusChip(requireContext(), this.skillsChips)
             }
 
             // Email
@@ -154,18 +154,16 @@ class EditProfileFragment : Fragment() {
      * @param context       parent view context
      * @param label         chip name
      */
-    private fun ChipGroup.addChipForEdit(context: Context, label: String,chipGroup: ChipGroup) {
+    private fun ChipGroup.addChipForEdit(context: Context, label: String, chipGroup: ChipGroup) {
         Chip(context).apply {
             id = View.generateViewId()
             text = label
-            // setChipDrawable(ContextCompat.getDrawable(context, R.drawable.ic_close_black_24dp) as ChipDrawable)
             isClickable = true
             isCheckable = false
             isCheckedIconVisible = false
             isFocusable = true
-
-            isCloseIconVisible=true
-            setOnCloseIconClickListener{
+            isCloseIconVisible = true
+            setOnCloseIconClickListener {
                 skillList.remove(text)
                 chipGroup.removeView(it)
             }
@@ -182,7 +180,7 @@ class EditProfileFragment : Fragment() {
         }
     }
 
-    private fun ChipGroup.addPlusChip(context: Context,chipGroup:ChipGroup) {
+    private fun ChipGroup.addPlusChip(context: Context, chipGroup: ChipGroup) {
         Chip(context).apply {
             id = R.id.editProfileAddNewSkillChip
             text = "+"
@@ -224,11 +222,11 @@ class EditProfileFragment : Fragment() {
             val newSkillTitleLabel = newSkillTitle.text.toString()
             if (newSkillTitleLabel.isNotEmpty()) {
                 this.skillsChips.removeAllViews()
-                for(skill in skillList) {
+                for (skill in skillList) {
                     chipGroup.addChipForEdit(context, skill, this.skillsChips)
                 }
                 chipGroup.addChipForEdit(context, newSkillTitleLabel, this.skillsChips)
-                this.skillsChips.addPlusChip(context,this.skillsChips)
+                this.skillsChips.addPlusChip(context, this.skillsChips)
 
                 skillList.add(newSkillTitleLabel)
                 Snackbar.make(
@@ -249,7 +247,6 @@ class EditProfileFragment : Fragment() {
         })
         builder.show()
     }
-
 
 
     /**
@@ -286,7 +283,7 @@ class EditProfileFragment : Fragment() {
                 "Error: the nickname you chose is not available.",
                 Snackbar.LENGTH_LONG
             ).show()
-        }  else {
+        } else {
             userProfileViewModel.editUserProfile(
                 UserProfile(
                     this.userID,
