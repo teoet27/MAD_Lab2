@@ -75,7 +75,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
         }
 
-        enableUI(true)
+        sharedViewModel.deselect()
         sharedViewModel.selected.observe(viewLifecycleOwner) {
             enableUI(!it)
         }

@@ -42,6 +42,10 @@ class SharedViewModel : ViewModel() {
         _selected = value
         selected.value = _selected
     }
+    fun deselect() {
+        _selected = false
+        selected.value = _selected
+    }
 
     fun setFilter(advFilter: TimeslotTools.AdvFilter) {
         _filter = advFilter
