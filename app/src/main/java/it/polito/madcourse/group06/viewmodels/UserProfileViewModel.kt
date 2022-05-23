@@ -4,6 +4,7 @@ import android.app.Application
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
@@ -244,8 +245,10 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * @param imgPath the path where the image is located into the Firebase Storage
      */
     fun retrieveProfilePicture(imageView: ImageView, imgPath: String) {
-        val profilePathReference = this.storage.getReferenceFromUrl("gs://timebankingmadg06.appspot.com").child("images/${imgPath}.jpg")
-        val localFile = File.createTempFile(imgPath, "png")
+        Log.e("imagepath:", imgPath)
+        var suffix = if(imgPath == "staticuser") "png" else "jpg"
+        val profilePathReference = this.storage.getReferenceFromUrl("gs://timebankingmadg06.appspot.com").child("images/${imgPath}.${suffix}")
+        val localFile = File.createTempFile(imgPath, ".${suffix}")
         profilePathReference.getFile(localFile)
             .addOnSuccessListener {
                 val bitmapProfilePicture = BitmapFactory.decodeFile(localFile.absolutePath)
@@ -256,7 +259,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
 
     fun retrieveStaticProfilePicture(imageView: ImageView) {
         val profilePathReference = this.storage.getReferenceFromUrl("gs://timebankingmadg06.appspot.com").child("images/staticuser.png")
-        val localFile = File.createTempFile("staticuser", "png")
+        val localFile = File.createTempFile("staticuser", ".png")
         profilePathReference.getFile(localFile)
             .addOnSuccessListener {
                 val bitmapProfilePicture = BitmapFactory.decodeFile(localFile.absolutePath)

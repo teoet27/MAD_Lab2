@@ -25,7 +25,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.ktx.userProfileChangeRequest
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.userprofile.UserProfile
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
@@ -33,6 +32,7 @@ import it.polito.madcourse.group06.utilities.*
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import java.io.File
 import java.io.IOException
+import java.util.*
 
 
 class EditProfileFragment : Fragment() {
@@ -347,14 +347,22 @@ class EditProfileFragment : Fragment() {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == AppCompatActivity.RESULT_OK) {
             rotatedImage = handleSamplingAndRotationBitmap(requireContext(), this.photoURI)!!
-            // saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
-            imgProfilePicturePath = this.userProfileViewModel.uploadProfilePicture(rotatedImage, userID)
+            if(imgProfilePicturePath == "staticuser") {
+                this.imgProfilePicturePath = UUID.randomUUID().toString()
+                this.userProfileViewModel.uploadProfilePicture(rotatedImage, imgProfilePicturePath)
+            } else {
+                this.userProfileViewModel.uploadProfilePicture(rotatedImage, imgProfilePicturePath)
+            }
             view?.findViewById<ImageView>(R.id.profilePictureID)?.setImageBitmap(rotatedImage)
         } else if (requestCode == PICK_IMAGE && resultCode == AppCompatActivity.RESULT_OK) {
             this.photoURI = data?.data!!
             rotatedImage = handleSamplingAndRotationBitmap(requireContext(), this.photoURI)!!
-            // saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
-            imgProfilePicturePath = this.userProfileViewModel.uploadProfilePicture(rotatedImage, userID)
+            if(imgProfilePicturePath == "staticuser") {
+                this.imgProfilePicturePath = UUID.randomUUID().toString()
+                this.userProfileViewModel.uploadProfilePicture(rotatedImage, imgProfilePicturePath)
+            } else {
+                this.userProfileViewModel.uploadProfilePicture(rotatedImage, imgProfilePicturePath)
+            }
             view?.findViewById<ImageView>(R.id.profilePictureID)?.setImageBitmap(rotatedImage)
         }
     }
@@ -404,8 +412,14 @@ class EditProfileFragment : Fragment() {
         when (item.title) {
             resources.getString(R.string.floating_menu_shot_picture) -> dispatchTakePictureIntent()
             resources.getString(R.string.floating_menu_load_picture) -> dispatchLoadPictureIntent()
+            resources.getString(R.string.remove_your_picture) -> removeProfilePicture()
         }
         return true
+    }
+
+    private fun removeProfilePicture() {
+        this.imgProfilePicturePath = "staticuser"
+        userProfileViewModel.retrieveStaticProfilePicture(profilePictureOBJ)
     }
 
     /**

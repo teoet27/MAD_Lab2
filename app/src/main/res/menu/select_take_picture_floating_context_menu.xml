@@ -6,4 +6,7 @@
     <item
         android:id="@+id/shot_picture"
         android:title="@string/floating_menu_shot_picture" />
+    <item
+        android:id="@+id/remove_pic"
+        android:title="@string/remove_your_picture" />
 </menu>

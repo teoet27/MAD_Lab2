@@ -33,9 +33,6 @@ class ShowProfileFragment : Fragment() {
     private lateinit var profilePictureOBJ: ImageView
     private lateinit var skillsChips: ChipGroup
 
-    private lateinit var profilePictureDirectoryPath: String
-    private lateinit var profilePicturePath: String
-
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
 
     override fun onCreateView(

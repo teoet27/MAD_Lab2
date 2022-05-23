@@ -73,7 +73,6 @@ class NewProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         // Camera
         val camera = view.findViewById<ImageView>(R.id.edit_camera_button)
         registerForContextMenu(camera)
@@ -89,7 +88,7 @@ class NewProfileFragment : Fragment() {
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
         this.skillsChips = view.findViewById(R.id.newProfileChipGroup)
         this.newSkillChip = view.findViewById(R.id.newProfileAddNewSkillChip)
-        this.imgProfilePicturePath = "images/staticuser.png"
+        this.imgProfilePicturePath = "staticuser"
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
             // Fullname
@@ -124,7 +123,7 @@ class NewProfileFragment : Fragment() {
 
             // Profile Picture
             profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(R.string.profile_picture_filename)
-            this.imgProfilePicturePath = UUID.randomUUID().toString()
+
             if (userProfile.imgPath.isNullOrEmpty()) {
                 userProfileViewModel.retrieveStaticProfilePicture(profilePictureOBJ)
             } else {
@@ -430,13 +429,13 @@ class NewProfileFragment : Fragment() {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == AppCompatActivity.RESULT_OK) {
             rotatedImage = handleSamplingAndRotationBitmap(requireContext(), this.photoURI)!!
-            // saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
+            this.imgProfilePicturePath = UUID.randomUUID().toString()
             this.userProfileViewModel.uploadProfilePicture(rotatedImage, imgProfilePicturePath)
             view?.findViewById<ImageView>(R.id.profilePictureID)?.setImageBitmap(rotatedImage)
         } else if (requestCode == PICK_IMAGE && resultCode == AppCompatActivity.RESULT_OK) {
             this.photoURI = data?.data!!
             rotatedImage = handleSamplingAndRotationBitmap(requireContext(), this.photoURI)!!
-            // saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
+            this.imgProfilePicturePath = UUID.randomUUID().toString()
             this.userProfileViewModel.uploadProfilePicture(rotatedImage, imgProfilePicturePath)
             view?.findViewById<ImageView>(R.id.profilePictureID)?.setImageBitmap(rotatedImage)
         }

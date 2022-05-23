@@ -107,4 +107,5 @@
     <string name="ending_date_menu">Ending date</string>
     <string name="duration_menu">Duration</string>
     <string name="search_hint">Gardening, Car repairing...</string>
+    <string name="remove_your_picture">Remove your picture</string>
 </resources>
