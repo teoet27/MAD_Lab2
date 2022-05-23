@@ -33,7 +33,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var directionButton: ImageView
     private lateinit var barrier: TextView
     private lateinit var searchBar: EditText
-    private var search: CharSequence?=null
+    private var search: CharSequence? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -88,7 +88,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             override fun beforeTextChanged(
                 s: CharSequence, start: Int,
                 count: Int, after: Int
-            ) {}
+            ) {
+            }
 
             override fun onTextChanged(
                 s: CharSequence, start: Int,
@@ -100,13 +101,17 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             }
         })
 
+
+        arguments?.getString("selected_skill")?.let{sharedViewModel.selectSkill(it)}
         lateinit var sortedList: List<Advertisement>
         advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
 
-            sortedList = listOfAdv.filter {
-                it.listOfSkills.contains(arguments?.getString("selected_skill")) ||
-                        arguments?.getString("selected_skill") == "All"
+            sharedViewModel.selected_skill.observe(viewLifecycleOwner) { selected_skill ->
+                sortedList = listOfAdv.filter {
+                    it.listOfSkills.contains(selected_skill)||selected_skill=="All"
+                }
             }
+
             //sharedViewModel.updateRV()
         }
         sharedViewModel.filter.observe(viewLifecycleOwner) { filter ->
@@ -118,19 +123,19 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             sortedList = TimeslotTools().sortAdvertisementList(sortedList, parameter)!!
             //sharedViewModel.updateRV()
         }
-        sharedViewModel.sortUp.observe(viewLifecycleOwner) { sort_up->
-            if(sort_up){
+        sharedViewModel.sortUp.observe(viewLifecycleOwner) { sort_up ->
+            if (sort_up) {
                 this.directionButton.setImageResource(R.drawable.sort_up)
-            }else{
+            } else {
                 this.directionButton.setImageResource(R.drawable.sort_down)
             }
             sortedList = sortedList.reversed()
             sharedViewModel.updateRV()
         }
-        sharedViewModel.updateRV.observe(viewLifecycleOwner){
-            var finalList= sortedList
-            if(search!=null)
-                finalList=finalList.filter { it.advTitle.contains(search!!,true) }
+        sharedViewModel.updateRV.observe(viewLifecycleOwner) {
+            var finalList = sortedList
+            if (search != null)
+                finalList = finalList.filter { it.advTitle.contains(search!!, true) }
             //compose recycler view
             view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible =
                 finalList.isEmpty()

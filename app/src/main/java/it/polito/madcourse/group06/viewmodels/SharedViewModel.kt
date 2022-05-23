@@ -6,12 +6,16 @@ import it.polito.madcourse.group06.utilities.TimeslotTools
 
 
 class SharedViewModel : ViewModel() {
+    private var _selected_skill=""
     private var _selected = false
     private var _sortParam = "Title"
     private var _sortUp = false
     private var _filter = TimeslotTools.AdvFilter()
     private var _updateRV = false
 
+    var selected_skill=MutableLiveData<String>().also{
+        it.value = _selected_skill
+    }
     var selected = MutableLiveData<Boolean>()
     var sortParam = MutableLiveData<String>().also {
         it.value = _sortParam
@@ -26,7 +30,10 @@ class SharedViewModel : ViewModel() {
         it.value=_updateRV
     }
 
-
+    fun selectSkill(skill:String){
+        _selected_skill=skill
+        selected_skill.value=_selected_skill
+    }
     fun select(value: Boolean) {
         _selected = value
         selected.value = _selected
