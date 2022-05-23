@@ -81,11 +81,11 @@ class TimeslotTools {
     }
 
     private fun String.isLaterThanDate(date:String):Boolean{
-        return computeDateDifference(this,date).first>=0
+        return computeDateDifference(date,this).first>=0
     }
 
     private fun String.isSoonerThanDate(date:String):Boolean{
-        return computeDateDifference(this,date).first<=0
+        return computeDateDifference(date,this).first<=0
     }
 
     private fun dateStringToInt(date:String):Int{
@@ -93,8 +93,8 @@ class TimeslotTools {
         date.split("/").forEachIndexed { index, s ->
             when(index){
                 0-> dateInt +=s.toInt() //day
-                1-> dateInt +=31 - 3*(s.toInt()==2).toInt() - (listOf(4,6,9,11).contains(s.toInt())).toInt() //month
-                2-> dateInt += if(s.toInt()%400==0) 366 else 365  //year
+                1-> dateInt +=(31 - 3*(s.toInt()==2).toInt() - (listOf(4,6,9,11).contains(s.toInt())).toInt())*s.toInt() //month
+                2-> dateInt += (if(s.toInt()%400==0) 366 else 365 )*s.toInt() //year
             }
         }
         return dateInt
@@ -128,14 +128,24 @@ class TimeslotTools {
         advList:List<Advertisement>?,
         advFilter: AdvFilter?
     ):List<Advertisement>?{
+        //begin debug section
+        advList?.filter { adv ->
+            if ((advFilter?.starting_date != null && adv.advDate.isLaterThanDate(advFilter.starting_date)) || (advFilter?.starting_date == null))
+                println("ok")
+            true
+        }
+        //end debug section
         return if(advFilter==null) advList else advList?.filter{ adv->
             ((advFilter.location!=null && !advFilter.whole_word && advFilter.location.lowercase().contains(adv.advLocation.lowercase(),true))||
             (advFilter.location!=null && !advFilter.whole_word && adv.advLocation.lowercase().contains(advFilter.location.lowercase(),true))||
             (advFilter.location!=null && advFilter.whole_word && advFilter.location.lowercase()==adv.advLocation.lowercase())||(advFilter.location==null)) &&
+
             ((advFilter.min_duration!=null && adv.advDuration.toString().isLaterThanTime(advFilter.min_duration))||(advFilter.starting_time==null)) && //wrong
             ((advFilter.max_duration!=null && adv.advDuration.toString().isSoonerThanTime(advFilter.max_duration))||(advFilter.starting_time==null)) &&//wrong
+
             ((advFilter.starting_time!=null && adv.advStartingTime.isLaterThanTime(advFilter.starting_time))||(advFilter.starting_time==null)) &&
             ((advFilter.ending_time!=null && adv.advEndingTime.isSoonerThanTime(advFilter.ending_time))||(advFilter.ending_time==null))&&
+
             ((advFilter.starting_date!=null && adv.advDate.isLaterThanDate(advFilter.starting_date))||(advFilter.starting_date==null))&&
             ((advFilter.ending_date!=null && adv.advDate.isSoonerThanDate(advFilter.ending_date))||(advFilter.ending_date==null))
         }
