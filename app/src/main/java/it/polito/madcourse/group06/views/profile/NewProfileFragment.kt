@@ -160,7 +160,7 @@ class NewProfileFragment : Fragment() {
                 mGoogleSignInClient.signOut().addOnCompleteListener {
                     val goBackToGoogleLogin = Intent(view.context, GoogleLoginActivity::class.java)
                     startActivity(goBackToGoogleLogin)
-                    (activity as TBMainActivity).finish()
+                    activity?.finish()
                 }
             }
         })
