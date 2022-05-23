@@ -77,8 +77,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
         activity?.supportFragmentManager?.findFragmentByTag("filter_window")?.also {frag->
             activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
+            sharedViewModel.select(false)
         }
-        sharedViewModel.deselect()
         sharedViewModel.selected.observe(viewLifecycleOwner) {
             enableUI(!it)
         }
