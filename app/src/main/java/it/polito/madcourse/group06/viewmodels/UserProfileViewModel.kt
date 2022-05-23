@@ -103,6 +103,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * Look for nicknames in the database to check if one is already present
      * (to be used in the new user profile fragment)
      * @param nickname the email of the user
+     * @return whether it already exists or not
      */
     fun lookForNickname(nickname: String): Boolean {
         var searchResult: Boolean = false
