@@ -70,7 +70,7 @@
     <string name="welcome">Welcome!</string>
     <string name="logInToContinue">Login to continue.</string>
     <string name="menu_services">All services</string>
-    <string name="no_services_into_db">No available services</string>
+    <string name="no_services_into_db">There are no specific services, try "All"...</string>
     <string name="cancel">Cancel</string>
     <string name="advanced_search">Advanced Search</string>
     <string name="reset_filters">Reset filters</string>

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -22,10 +23,11 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import it.polito.madcourse.group06.databinding.ActivityMainBinding
 import it.polito.madcourse.group06.utilities.getBitmapFromFile
-import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
+import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.utilities.DrawerManagement
+import it.polito.madcourse.group06.utilities.TimeslotTools
 
 class TBMainActivity : AppCompatActivity(), DrawerManagement {
 
@@ -33,7 +35,7 @@ class TBMainActivity : AppCompatActivity(), DrawerManagement {
     private lateinit var binding: ActivityMainBinding
 
     private val userProfileViewModel: UserProfileViewModel by viewModels<UserProfileViewModel>()
-    private val advertisementViewModel: AdvertisementViewModel by viewModels<AdvertisementViewModel>()
+    private val sharedViewModel: SharedViewModel by viewModels()
 
     // declare the GoogleSignInClient
     lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -107,6 +109,7 @@ class TBMainActivity : AppCompatActivity(), DrawerManagement {
                     true
                 }
                 R.id.ShowListOfAdvertisementsMenuItem -> {
+                    sharedViewModel.setFilter(TimeslotTools.AdvFilter())
                     navController.navigate(R.id.ShowListTimeslots, bundleOf("selected_skill" to "All"))
                     true
                 }

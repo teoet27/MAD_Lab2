@@ -1,7 +1,6 @@
 package it.polito.madcourse.group06.views.profile
 
 import android.content.Context
-import android.opengl.Visibility
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -92,8 +91,8 @@ class ShowProfileFragment : Fragment() {
                 userProfile.skills!!.forEach { sk ->
                     this.skillsChips.addChip(requireContext(), sk)
                     this.skillsChips.setOnCheckedChangeListener { chipGroup, checkedId ->
-                        val selected_service = chipGroup.findViewById<Chip>(checkedId)?.text
-                        Toast.makeText(chipGroup.context, selected_service ?: "No Choice", Toast.LENGTH_LONG).show()
+                        val selectedService = chipGroup.findViewById<Chip>(checkedId)?.text
+                        Toast.makeText(chipGroup.context, selectedService ?: "No Choice", Toast.LENGTH_LONG).show()
                     }
                 }
             }
