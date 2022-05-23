@@ -1,15 +1,20 @@
 package it.polito.madcourse.group06.views.timeslot
 
+import android.content.Context
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
@@ -28,6 +33,8 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
     private lateinit var advDuration: TextView
     private lateinit var advDescription: TextView
     private lateinit var editButton: ImageView
+    private lateinit var skillsChips: ChipGroup
+    private lateinit var noSkillsProvidedLabel: TextView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,6 +48,8 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
         this.advDuration = view.findViewById(R.id.advDuration)
         this.advDescription = view.findViewById(R.id.advDescription)
         this.editButton = view.findViewById(R.id.moreButtonID)
+        this.skillsChips = view.findViewById(R.id.showTimeslotSkills)
+        this.noSkillsProvidedLabel = view.findViewById(R.id.noSkillsProvidedLabel)
 
         advViewModel.advertisement.observe(viewLifecycleOwner) { singleAdvertisement ->
             userProfileViewModel.currentUser.observe(viewLifecycleOwner) { user ->
@@ -54,6 +63,17 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
             this.advStartingTime.text = "Starting time: ${singleAdvertisement.advStartingTime}"
             this.advEndingTime.text = "Ending time: ${singleAdvertisement.advEndingTime}"
             this.advDuration.text = "${singleAdvertisement.advDuration} hours"
+            if(singleAdvertisement.listOfSkills.size == 0)
+            {
+                this.noSkillsProvidedLabel.isVisible = true
+                this.skillsChips.isVisible = false
+            } else {
+                this.noSkillsProvidedLabel.isVisible = false
+                this.skillsChips.isVisible = true
+                for (skill in singleAdvertisement.listOfSkills) {
+                    this.skillsChips.addChip(requireContext(), skill)
+                }
+            }
             if (singleAdvertisement.advDescription.isEmpty()) {
                 this.advDescription.text = "No description provided"
             } else {
@@ -71,6 +91,26 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
             }
         })
 
+    }
+
+    /**
+     * Dinamically create a chip within a chip group
+     *
+     * @param context       parent view context
+     * @param label         chip name
+     */
+    private fun ChipGroup.addChip(context: Context, label: String) {
+        Chip(context).apply {
+            id = View.generateViewId()
+            text = label
+            isClickable = true
+            isCheckable = false
+            isCheckedIconVisible = false
+            isFocusable = true
+            setTextColor(ContextCompat.getColor(context, R.color.white))
+            chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.prussian_blue))
+            addView(this)
+        }
     }
 
 }
