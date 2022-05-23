@@ -221,7 +221,10 @@ class EditProfileFragment : Fragment() {
             val newSkillTitleLabel = newSkillTitle.text.toString()
             if (newSkillTitleLabel.isNotEmpty()) {
                 this.skillsChips.removeAllViews()
-                chipGroup.addChipForEdit(context, newSkillTitleLabel,this.skillsChips)
+                for(skill in skillList) {
+                    chipGroup.addChipForEdit(context, skill, this.skillsChips)
+                }
+                chipGroup.addChipForEdit(context, newSkillTitleLabel, this.skillsChips)
                 this.skillsChips.addPlusChip(context,this.skillsChips)
 
                 skillList.add(newSkillTitleLabel)
