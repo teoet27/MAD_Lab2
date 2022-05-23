@@ -24,6 +24,7 @@ fun emptyUserProfile() = UserProfile(
     "",
     "",
     "",
+    null,
     null
 )
 
