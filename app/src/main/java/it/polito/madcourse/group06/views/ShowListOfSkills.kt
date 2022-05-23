@@ -13,11 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.skill.SkillAdapterCard
+import it.polito.madcourse.group06.utilities.TimeslotTools
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
+import it.polito.madcourse.group06.viewmodels.SharedViewModel
 
 class ShowListOfSkills : Fragment(R.layout.service_list) {
 
     private val advViewModel: AdvertisementViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var recyclerView: RecyclerView
     private lateinit var sortButton: Button
 
@@ -38,6 +41,7 @@ class ShowListOfSkills : Fragment(R.layout.service_list) {
         super.onViewCreated(view, savedInstanceState)
         sortButton = view.findViewById(R.id.skill_list_sort_button)
 
+        sharedViewModel.setFilter(TimeslotTools.AdvFilter())
         advViewModel.listOfAdvertisements.observe(this.viewLifecycleOwner) { listOfAds ->
             var listOfSkills =
                 listOfAds
