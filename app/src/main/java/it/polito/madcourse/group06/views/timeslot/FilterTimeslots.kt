@@ -12,6 +12,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.chip.Chip
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.utilities.TimeslotTools
 import it.polito.madcourse.group06.utilities.TimeslotTools.AdvFilter
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import java.util.*
@@ -56,7 +57,6 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
         this.applyButton = view.findViewById(R.id.apply_button)
         this.wholeWord=view.findViewById(R.id.whole_word)
 
-
         sharedViewModel.select(true)
 
         this.fromDate.setOnClickListener { popUpStartingDatePicker() }
@@ -92,7 +92,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
                     ending_date = if (toDate.text == "+") null else toDate.text.toString(),
                 )
             )
-            slideOutFragment(this)
+            slideOutFragment(this,true)
         }
 
 
@@ -102,15 +102,17 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
                 view.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_down))
 
                 sharedViewModel.select(false)
-
                 activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
             }
         })
     }
 
-    private fun slideOutFragment(frag: Fragment) {
+    private fun slideOutFragment(frag: Fragment,filterSet:Boolean=false) {
         view?.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_down))
         sharedViewModel.select(false)
+
+        if (!filterSet)
+            sharedViewModel.setFilter(AdvFilter())
 
         activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
     }

@@ -125,10 +125,11 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
         arguments?.getString("selected_skill")?.let { sharedViewModel.selectSkill(it) }
         lateinit var sortedList: List<Advertisement>
+        lateinit var fullListForGivenSkill: List<Advertisement>
         advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
 
             sharedViewModel.selected_skill.observe(viewLifecycleOwner) { selected_skill ->
-                sortedList = listOfAdv.filter {
+                fullListForGivenSkill = listOfAdv.filter {
                     it.listOfSkills.contains(selected_skill) || selected_skill == "All"
                 }
             }
@@ -136,7 +137,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             //sharedViewModel.updateRV()
         }
         sharedViewModel.filter.observe(viewLifecycleOwner) { filter ->
-            sortedList = TimeslotTools().filterAdvertisementList(sortedList, filter)!!
+            sortedList = TimeslotTools().filterAdvertisementList(fullListForGivenSkill, filter)!!
             sharedViewModel.updateRV()
         }
         sharedViewModel.sortParam.observe(viewLifecycleOwner) { parameter ->

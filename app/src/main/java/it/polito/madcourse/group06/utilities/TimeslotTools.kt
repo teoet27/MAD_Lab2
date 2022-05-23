@@ -129,8 +129,9 @@ class TimeslotTools {
         advFilter: AdvFilter?
     ):List<Advertisement>?{
         return if(advFilter==null) advList else advList?.filter{ adv->
-            ((advFilter.location!=null && advFilter.whole_word && advFilter.location.contains(adv.advLocation,true))||
-            (advFilter.location!=null && !advFilter.whole_word && advFilter.location==adv.advLocation)||(advFilter.location==null)) &&
+            ((advFilter.location!=null && !advFilter.whole_word && advFilter.location.lowercase().contains(adv.advLocation.lowercase(),true))||
+            (advFilter.location!=null && !advFilter.whole_word && adv.advLocation.lowercase().contains(advFilter.location.lowercase(),true))||
+            (advFilter.location!=null && advFilter.whole_word && advFilter.location.lowercase()==adv.advLocation.lowercase())||(advFilter.location==null)) &&
             ((advFilter.min_duration!=null && adv.advDuration.toString().isLaterThanTime(advFilter.min_duration))||(advFilter.starting_time==null)) && //wrong
             ((advFilter.max_duration!=null && adv.advDuration.toString().isSoonerThanTime(advFilter.max_duration))||(advFilter.starting_time==null)) &&//wrong
             ((advFilter.starting_time!=null && adv.advStartingTime.isLaterThanTime(advFilter.starting_time))||(advFilter.starting_time==null)) &&
