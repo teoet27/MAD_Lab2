@@ -163,6 +163,52 @@
                 android:textSize="20sp" />
 
             <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="#AAABAE"
+                android:contentDescription='@string/separation_line'
+                android:paddingTop="5dp"
+                android:src="@drawable/rounded_corners_land" />
+
+            <TextView
+                android:id="@+id/skillTitleForShowAdv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:drawablePadding="5dp"
+                android:text="Related skills:"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:drawableTint="#454749" />
+
+            <TextView
+                android:id="@+id/noSkillsProvidedLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="4dp"
+                android:drawablePadding="5dp"
+                android:text="No skills provided"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:drawableTint="#454749" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/showTimeslotSkills"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"/>
+
+            <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -192,7 +238,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="16dp"
-                android:text="I offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available.\nI offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available.\nI offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available.\nI offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available.\nI offer you assistance for any problems related to the electrical plant of your house. I only work in zones near to me (no further away than 50 miles). \nGood reviews available."
+                android:text="xxx"
                 android:textColor="#000000"
                 android:textSize="20sp" />
 
