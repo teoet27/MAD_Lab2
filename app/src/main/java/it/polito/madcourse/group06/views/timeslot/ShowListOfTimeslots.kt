@@ -124,14 +124,12 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             //sharedViewModel.updateRV()
         }
         sharedViewModel.sortUp.observe(viewLifecycleOwner) { sort_up ->
+
             if(sharedViewModel.getLastSortDirection()!=sort_up || sort_up==false)
                 sortedList = sortedList.reversed()
 
-            if (sort_up) {
-                this.directionButton.setImageResource(R.drawable.sort_up)
-            } else {
-                this.directionButton.setImageResource(R.drawable.sort_down)
-            }
+            this.directionButton.setImageResource(R.drawable.sort_directions)
+
             sharedViewModel.updateRV()
         }
         sharedViewModel.updateRV.observe(viewLifecycleOwner) {
