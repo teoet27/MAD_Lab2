@@ -486,8 +486,16 @@ class NewProfileFragment : Fragment() {
         when (item.title) {
             resources.getString(R.string.floating_menu_shot_picture) -> dispatchTakePictureIntent()
             resources.getString(R.string.floating_menu_load_picture) -> dispatchLoadPictureIntent()
+            resources.getString(R.string.remove_your_picture) -> removeProfilePicture()
         }
         return true
+    }
+
+    private fun removeProfilePicture() {
+        if(this.imgProfilePicturePath != "staticuser") {
+            this.imgProfilePicturePath = "staticuser"
+            userProfileViewModel.retrieveStaticProfilePicture(profilePictureOBJ)
+        }
     }
 
     /**
