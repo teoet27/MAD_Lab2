@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/ShowListOfServices">
+    app:startDestination="@id/newProfileFragment">
 
     <fragment
         android:id="@+id/ShowListTimeslots"
@@ -82,9 +82,6 @@
         <action
             android:id="@+id/action_showListOfSkills_to_ShowListTimeslots"
             app:destination="@id/ShowListTimeslots" />
-        <action
-            android:id="@+id/action_ShowListOfServices_to_newProfileFragment"
-            app:destination="@id/newProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/newProfileFragment"

@@ -51,13 +51,11 @@ class NewProfileFragment : Fragment() {
     private lateinit var newPhoneOBJ: EditText
     private lateinit var profilePictureOBJ: ImageView
     private lateinit var photoURI: Uri
-    private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
     private lateinit var skillsChips: ChipGroup
-    private lateinit var addSkillButton: ImageView
+    private lateinit var newSkillChip: Chip
     private lateinit var newSkillTitleLabel: String
     private lateinit var imgProfilePicturePath: String
-    private lateinit var userID: String
     private val skillList = arrayListOf<String>()
 
     private val REQUEST_IMAGE_CAPTURE = 1
@@ -78,7 +76,6 @@ class NewProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as TBMainActivity).setDrawerLocked()
 
         // Camera
         val camera = view.findViewById<ImageView>(R.id.edit_camera_button)
@@ -94,7 +91,7 @@ class NewProfileFragment : Fragment() {
         this.newPhoneOBJ = view.findViewById(R.id.new_phone_show_ID)
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
         this.skillsChips = view.findViewById(R.id.newProfileChipGroup)
-        this.addSkillButton = view.findViewById(R.id.addNewSkillButtonID)
+        this.newSkillChip = view.findViewById(R.id.newProfileAddNewSkillChip)
         this.imgProfilePicturePath = "images/staticuser.png"
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
@@ -108,25 +105,20 @@ class NewProfileFragment : Fragment() {
             this.newPhoneOBJ.setText(userProfile.phoneNumber)
             // Location
             this.newLocationOBJ.setText(userProfile.location)
-            // Add New Skill Button
-            this.addSkillButton.setOnClickListener {
+
+            // Button for adding a new skill
+            this.newSkillChip.setOnClickListener {
                 showNewSkillInputWindow(requireContext(), this.skillsChips)
             }
+
             // Skills
-            /*if (!userProfile.skills.isNullOrEmpty()) {
-                userProfile.skills!!.forEach { skill ->
-                    this.skillsChips.addChipForEdit(requireContext(), skill)
-                    this.skillsChips.setOnCheckedChangeListener { chipGroup, checkedId ->
-                        val selected_service = chipGroup.findViewById<Chip>(checkedId)?.text
-                        Toast.makeText(
-                            chipGroup.context,
-                            selected_service ?: "No Choice",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
+            if (!skillList.isNullOrEmpty()) {
+                this.skillsChips.removeAllViews()
+                skillList.forEach { skill ->
+                    this.skillsChips.addChipForEdit(requireContext(), skill, this.skillsChips)
                 }
-                this.skillList.addAll(userProfile.skills!!)
-            }*/
+                this.skillsChips.addPlusChip(requireContext(), this.skillsChips)
+            }
 
             // Email
             this.newEmailOBJ.setText(userProfile.email)
@@ -227,6 +219,21 @@ class NewProfileFragment : Fragment() {
         }
     }
 
+    private fun ChipGroup.addPlusChip(context: Context, chipGroup: ChipGroup) {
+        Chip(context).apply {
+            id = R.id.newProfileAddNewSkillChip
+            text = "+"
+            isClickable = true
+            isCheckable = false
+            isCheckedIconVisible = false
+            isFocusable = false
+            setOnClickListener {
+                showNewSkillInputWindow(requireContext(), chipGroup)
+            }
+            addView(this)
+        }
+    }
+
     /**
      * showNewSkillInputWindow
      *
@@ -251,11 +258,16 @@ class NewProfileFragment : Fragment() {
          * setPositiveButton
          */
         builder.setPositiveButton("Create", DialogInterface.OnClickListener { dialog, which ->
-            newSkillTitleLabel = newSkillTitle.text.toString()
+            val newSkillTitleLabel = newSkillTitle.text.toString()
             if (newSkillTitleLabel.isNotEmpty()) {
-                chipGroup.addChip(context, newSkillTitleLabel)
-                chipGroup.moveAddChip(context, view?.findViewById(R.id.add_new_skill_chip)!!, chipGroup)
+                this.skillsChips.removeAllViews()
+                for (skill in skillList) {
+                    chipGroup.addChipForEdit(context, skill, this.skillsChips)
+                }
+                chipGroup.addChipForEdit(context, newSkillTitleLabel, this.skillsChips)
+                this.skillsChips.addPlusChip(context, this.skillsChips)
 
+                skillList.add(newSkillTitleLabel)
                 Snackbar.make(
                     requireView(), "New skill added!", Snackbar.LENGTH_LONG
                 ).show()
@@ -265,6 +277,14 @@ class NewProfileFragment : Fragment() {
                 ).show()
             }
         })
+
+        /**
+         * setNegativeButton
+         */
+        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->
+            dialog.cancel()
+        })
+        builder.show()
     }
 
     private fun showCustomDialog() {
@@ -287,29 +307,23 @@ class NewProfileFragment : Fragment() {
      * @param context       parent view context
      * @param label         chip name
      */
-    private fun ChipGroup.addChipForEdit(context: Context, label: String) {
+    private fun ChipGroup.addChipForEdit(context: Context, label: String, chipGroup: ChipGroup) {
         Chip(context).apply {
             id = View.generateViewId()
             text = label
-            setChipDrawable(
-                ContextCompat.getDrawable(
-                    context,
-                    R.drawable.ic_close_black_24dp
-                ) as ChipDrawable
-            )
             isClickable = true
             isCheckable = false
             isCheckedIconVisible = false
             isFocusable = true
+            isCloseIconVisible = true
+            setOnCloseIconClickListener {
+                skillList.remove(text)
+                chipGroup.removeView(it)
+            }
             setOnClickListener {
                 if (isChecked) {
                     setTextColor(ContextCompat.getColor(context, R.color.white))
-                    chipBackgroundColor = ColorStateList.valueOf(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.red_deleting
-                        )
-                    )
+                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.red_deleting))
                 } else {
                     setTextColor(ContextCompat.getColor(context, R.color.black))
                     chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lightGray))
@@ -515,7 +529,6 @@ class NewProfileFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        (activity as TBMainActivity).setDrawerUnlocked()
         super.onDestroy()
     }
 }
