@@ -126,7 +126,10 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         sharedViewModel.sortUp.observe(viewLifecycleOwner) { sort_up ->
 
             sortedList = TimeslotTools().sortAdvertisementList(sortedList, sharedViewModel.getSortParam(),sort_up)!!
-            this.directionButton.setImageResource(R.drawable.sort_directions)
+            if(sort_up)
+                this.directionButton.setImageResource(R.drawable.sort_up)
+            else
+                this.directionButton.setImageResource(R.drawable.sort_down)
 
             sharedViewModel.updateRV()
         }

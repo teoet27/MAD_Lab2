@@ -148,18 +148,18 @@ class TimeslotTools {
         val sortedList = when(up_flag){
             true->when(criterion){
                 "Title"-> advList?.sortedBy { it.advTitle.lowercase() }
-                "Duration"->advList?.sortedBy { it.advDuration }
-                "Starting time"->advList?.sortedBy { timeStringToDouble(it.advStartingTime) }
-                "Ending time"->advList?.sortedBy { timeStringToDouble(it.advEndingTime) }
-                "Date"->advList?.sortedBy { dateStringToInt(it.advDate) }
-                else -> null
-            }
-            else->when(criterion){
-                "Title"-> advList?.sortedByDescending { it.advTitle.lowercase() }
                 "Duration"->advList?.sortedByDescending { it.advDuration }
                 "Starting time"->advList?.sortedByDescending { timeStringToDouble(it.advStartingTime) }
                 "Ending time"->advList?.sortedByDescending { timeStringToDouble(it.advEndingTime) }
                 "Date"->advList?.sortedByDescending { dateStringToInt(it.advDate) }
+                else -> null
+            }
+            else->when(criterion){
+                "Title"-> advList?.sortedByDescending { it.advTitle.lowercase() }
+                "Duration"->advList?.sortedBy { it.advDuration }
+                "Starting time"->advList?.sortedBy { timeStringToDouble(it.advStartingTime) }
+                "Ending time"->advList?.sortedBy { timeStringToDouble(it.advEndingTime) }
+                "Date"->advList?.sortedBy { dateStringToInt(it.advDate) }
                 else -> null
             }
         }
