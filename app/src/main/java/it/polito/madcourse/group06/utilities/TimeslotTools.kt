@@ -144,8 +144,8 @@ class TimeslotTools {
             (advFilter.location!=null && !advFilter.whole_word && adv.advLocation.lowercase().contains(advFilter.location.lowercase(),true))||
             (advFilter.location!=null && advFilter.whole_word && advFilter.location.lowercase()==adv.advLocation.lowercase())||(advFilter.location==null)) &&
 
-            ((advFilter.min_duration!=null && adv.advDuration>=timeStringToDoubleHour(advFilter.min_duration))||(advFilter.min_duration==null)) && //wrong
-            ((advFilter.max_duration!=null && adv.advDuration<=timeStringToDoubleHour(advFilter.max_duration))||(advFilter.max_duration==null)) &&//wrong
+            ((advFilter.min_duration!=null && adv.advDuration>=timeStringToDoubleHour(advFilter.min_duration))||(advFilter.min_duration==null)) &&
+            ((advFilter.max_duration!=null && adv.advDuration<=timeStringToDoubleHour(advFilter.max_duration))||(advFilter.max_duration==null)) &&
 
             ((advFilter.starting_time!=null && adv.advStartingTime.isLaterThanTime(advFilter.starting_time))||(advFilter.starting_time==null)) &&
             ((advFilter.ending_time!=null && adv.advEndingTime.isSoonerThanTime(advFilter.ending_time))||(advFilter.ending_time==null))&&
