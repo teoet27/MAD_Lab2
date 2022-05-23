@@ -38,6 +38,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var myTimeslotsButton: TextView
     private lateinit var currentAccountID: String
     private var isMyAdv = false
+    private var isUp = false
     private var search: CharSequence? = null
 
     override fun onCreateView(
@@ -75,7 +76,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
         }
 
-        activity?.supportFragmentManager?.findFragmentByTag("filter_window")?.also {frag->
+        activity?.supportFragmentManager?.findFragmentByTag("filter_window")?.also { frag ->
             activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
             sharedViewModel.select(false)
         }
@@ -85,7 +86,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         filterButton.setOnClickListener {
             activity?.supportFragmentManager!!.beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_up, 0)
-                .add(R.id.nav_host_fragment_content_main, FilterTimeslots(),"filter_window").commit()
+                .add(R.id.nav_host_fragment_content_main, FilterTimeslots(), "filter_window").commit()
         }
 
         sortParam.setOnClickListener {
@@ -94,17 +95,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
         directionButton.setOnClickListener {
             sharedViewModel.toggleSortDirection()
-        }
-
-        this.myTimeslotsButton.setOnClickListener {
-            isMyAdv = !isMyAdv
-            if (isMyAdv) {
-                this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.orange_poli)
-                this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.black))
-            } else {
-                this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.darkGray)
-                this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.lightGray))
-            }
         }
 
         searchBar.addTextChangedListener(object : TextWatcher {
@@ -148,7 +138,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             sharedViewModel.updateSort()
         }
 
-        sharedViewModel.sortUp.observe(viewLifecycleOwner) { sort_up ->
+        /*sharedViewModel.sortUp.observe(viewLifecycleOwner) { sort_up ->
 
             sortedList = TimeslotTools().sortAdvertisementList(sortedList, sharedViewModel.getSortParam(), sort_up)!!
             if (sort_up)
@@ -157,7 +147,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 this.directionButton.setImageResource(R.drawable.sort_down)
 
             sharedViewModel.updateRV()
-        }
+        }*/
 
         sharedViewModel.updateRV.observe(viewLifecycleOwner) {
             var finalList = sortedList
@@ -171,11 +161,33 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             if (search != null) {
                 finalList = finalList.filter { it.advTitle.contains(search!!, true) }
             }
+
             //compose recycler view
             view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = finalList.isEmpty()
             view.findViewById<ImageView>(R.id.create_hint).isVisible = finalList.isEmpty()
             this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-            this.recyclerView.adapter = AdvAdapterCard(finalList, advertisementViewModel)
+            val advAdapterCard = AdvAdapterCard(finalList, advertisementViewModel)
+
+            this.myTimeslotsButton.setOnClickListener {
+                isMyAdv = !isMyAdv
+                if (isMyAdv) {
+                    this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.orange_poli)
+                    this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.black))
+                } else {
+                    this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.darkGray)
+                    this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.lightGray))
+                }
+                advAdapterCard.switchMode(isMyAdv, currentAccountID)
+            }
+
+            this.directionButton.setOnClickListener {
+                isUp = !isUp
+                if(isUp) this.directionButton.setImageResource(R.drawable.sort_up)
+                else this.directionButton.setImageResource(R.drawable.sort_down)
+                advAdapterCard.switchSort(isUp)
+            }
+
+            this.recyclerView.adapter = advAdapterCard
         }
 
         activity?.onBackPressedDispatcher?.addCallback(
