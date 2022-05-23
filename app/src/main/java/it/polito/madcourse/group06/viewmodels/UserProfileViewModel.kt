@@ -222,14 +222,14 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * Method to upload the new profile picture to the Firebase Storage
      * @param profilePictureBitmap the Bitmap object containing the profile picture
      */
-    fun uploadProfilePicture(profilePictureBitmap: Bitmap?, userID: String): String{
+    fun uploadProfilePicture(profilePictureBitmap: Bitmap?, imgFilename: String): String{
         val byteArrayOutputStream: ByteArrayOutputStream = ByteArrayOutputStream()
         profilePictureBitmap?.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
         val byteArray = byteArrayOutputStream.toByteArray()
 
-        val profilePath = "images/${userID}.jpg"
+        val profilePath = "images/${imgFilename}.jpg"
         val profilePathReference = this.storage.getReference(profilePath)
-        val profilePathMetadata: StorageMetadata = StorageMetadata.Builder().setCustomMetadata("accountID", userID).build()
+        val profilePathMetadata: StorageMetadata = StorageMetadata.Builder().setCustomMetadata("accountID", imgFilename).build()
 
         /**
          * uploadTask can be used to keep track of the upload through a progress bar or something similar
@@ -244,8 +244,8 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * @param imgPath the path where the image is located into the Firebase Storage
      */
     fun retrieveProfilePicture(imageView: ImageView, imgPath: String) {
-        val profilePathReference = this.storage.getReferenceFromUrl("gs://timebankingmadg06.appspot.com").child(imgPath)
-        val localFile = File.createTempFile(_singleUserProfilePH.id!!, "png")
+        val profilePathReference = this.storage.getReferenceFromUrl("gs://timebankingmadg06.appspot.com").child("images/${imgPath}.jpg")
+        val localFile = File.createTempFile(imgPath, "png")
         profilePathReference.getFile(localFile)
             .addOnSuccessListener {
                 val bitmapProfilePicture = BitmapFactory.decodeFile(localFile.absolutePath)
