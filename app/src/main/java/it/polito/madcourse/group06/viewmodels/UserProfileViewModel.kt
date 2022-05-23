@@ -222,14 +222,14 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * Method to upload the new profile picture to the Firebase Storage
      * @param profilePictureBitmap the Bitmap object containing the profile picture
      */
-    fun uploadProfilePicture(profilePictureBitmap: Bitmap?): String{
+    fun uploadProfilePicture(profilePictureBitmap: Bitmap?, userID: String): String{
         val byteArrayOutputStream: ByteArrayOutputStream = ByteArrayOutputStream()
         profilePictureBitmap?.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
         val byteArray = byteArrayOutputStream.toByteArray()
 
-        val profilePath = "images/${this._singleUserProfilePH.id}.jpg"
+        val profilePath = "images/${userID}.jpg"
         val profilePathReference = this.storage.getReference(profilePath)
-        val profilePathMetadata: StorageMetadata = StorageMetadata.Builder().setCustomMetadata("accountID", this._singleUserProfilePH.id).build()
+        val profilePathMetadata: StorageMetadata = StorageMetadata.Builder().setCustomMetadata("accountID", userID).build()
 
         /**
          * uploadTask can be used to keep track of the upload through a progress bar or something similar

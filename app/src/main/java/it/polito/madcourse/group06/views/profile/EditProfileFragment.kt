@@ -350,13 +350,13 @@ class EditProfileFragment : Fragment() {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == AppCompatActivity.RESULT_OK) {
             rotatedImage = handleSamplingAndRotationBitmap(requireContext(), this.photoURI)!!
             // saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
-            imgProfilePicturePath = this.userProfileViewModel.uploadProfilePicture(rotatedImage)
+            imgProfilePicturePath = this.userProfileViewModel.uploadProfilePicture(rotatedImage, userID)
             view?.findViewById<ImageView>(R.id.profilePictureID)?.setImageBitmap(rotatedImage)
         } else if (requestCode == PICK_IMAGE && resultCode == AppCompatActivity.RESULT_OK) {
             this.photoURI = data?.data!!
             rotatedImage = handleSamplingAndRotationBitmap(requireContext(), this.photoURI)!!
             // saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
-            imgProfilePicturePath = this.userProfileViewModel.uploadProfilePicture(rotatedImage)
+            imgProfilePicturePath = this.userProfileViewModel.uploadProfilePicture(rotatedImage, userID)
             view?.findViewById<ImageView>(R.id.profilePictureID)?.setImageBitmap(rotatedImage)
         }
     }

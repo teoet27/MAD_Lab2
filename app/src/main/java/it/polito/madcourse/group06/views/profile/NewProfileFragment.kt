@@ -56,6 +56,7 @@ class NewProfileFragment : Fragment() {
     private lateinit var addSkillButton: ImageView
     private lateinit var newSkillTitleLabel: String
     private lateinit var imgProfilePicturePath: String
+    private lateinit var userID: String
     private val skillList = arrayListOf<String>()
 
     private val REQUEST_IMAGE_CAPTURE = 1
@@ -96,6 +97,8 @@ class NewProfileFragment : Fragment() {
         this.imgProfilePicturePath = "static_user_profile_PH.jpg"
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
+            // User ID
+            this.userID = userProfile.id!!
             // Fullname
             this.newFullNameOBJ.setText(userProfile.fullName)
             // Nickname
@@ -417,13 +420,13 @@ class NewProfileFragment : Fragment() {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == AppCompatActivity.RESULT_OK) {
             rotatedImage = handleSamplingAndRotationBitmap(requireContext(), this.photoURI)!!
             // saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
-            imgProfilePicturePath = this.userProfileViewModel.uploadProfilePicture(rotatedImage)
+            imgProfilePicturePath = this.userProfileViewModel.uploadProfilePicture(rotatedImage, userID)
             view?.findViewById<ImageView>(R.id.profilePictureID)?.setImageBitmap(rotatedImage)
         } else if (requestCode == PICK_IMAGE && resultCode == AppCompatActivity.RESULT_OK) {
             this.photoURI = data?.data!!
             rotatedImage = handleSamplingAndRotationBitmap(requireContext(), this.photoURI)!!
             // saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
-            imgProfilePicturePath = this.userProfileViewModel.uploadProfilePicture(rotatedImage)
+            imgProfilePicturePath = this.userProfileViewModel.uploadProfilePicture(rotatedImage, userID)
             view?.findViewById<ImageView>(R.id.profilePictureID)?.setImageBitmap(rotatedImage)
         }
     }
