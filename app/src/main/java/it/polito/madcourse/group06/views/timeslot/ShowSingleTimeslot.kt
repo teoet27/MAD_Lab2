@@ -5,16 +5,19 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
+import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 
 class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
 
     private val advViewModel: AdvertisementViewModel by activityViewModels()
+    private val userProfileViewModel: UserProfileViewModel by activityViewModels()
 
     private lateinit var advTitle: TextView
     private lateinit var advAccount: TextView
@@ -40,6 +43,10 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
         this.editButton = view.findViewById(R.id.moreButtonID)
 
         advViewModel.advertisement.observe(viewLifecycleOwner) { singleAdvertisement ->
+            userProfileViewModel.currentUser.observe(viewLifecycleOwner) { user ->
+                this.editButton.isVisible = singleAdvertisement.accountID == user.id
+            }
+
             this.advTitle.text = singleAdvertisement.advTitle
             this.advAccount.text = singleAdvertisement.advAccount
             this.advLocation.text = singleAdvertisement.advLocation
