@@ -364,6 +364,12 @@ class NewProfileFragment : Fragment() {
                 "Error: you must provide your location. Try again.",
                 Snackbar.LENGTH_LONG
             ).show()
+        } else if (this.skillList.isEmpty()) {
+            Snackbar.make(
+                requireView(),
+                "Error: provide at least a skill.",
+                Snackbar.LENGTH_LONG
+            ).show()
         } else {
             userProfileViewModel.insertUserProfile(
                 UserProfile(
