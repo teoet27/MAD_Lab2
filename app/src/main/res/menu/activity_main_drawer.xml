@@ -17,10 +17,6 @@
     <group android:id="@+id/drawer_middle"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/showMyListOfAdvertisementItem"
-            android:icon="@drawable/ic_contact_mail_black_24dp"
-            android:title="@string/my_timeslots" />
-        <item
             android:id="@+id/ShowProfileMenuItem"
             android:icon="@drawable/ic_account_circle_black_24dp"
             android:title="@string/show_profile" />

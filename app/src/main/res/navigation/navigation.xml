@@ -52,9 +52,6 @@
         <action
             android:id="@+id/action_newTimeSlotDetailsFragment_to_ShowListTimeslots"
             app:destination="@id/ShowListTimeslots" />
-        <action
-            android:id="@+id/action_newTimeSlotDetailsFragment_to_showMyListOfAdvertisement"
-            app:destination="@id/showMyListOfAdvertisement" />
     </fragment>
     <fragment
         android:id="@+id/showSingleTimeslot"
@@ -104,14 +101,5 @@
         <action
             android:id="@+id/action_filterTimeslots_to_ShowListTimeslots"
             app:destination="@id/ShowListTimeslots" />
-    </fragment>
-    <fragment
-        android:id="@+id/showMyListOfAdvertisement"
-        android:name="it.polito.madcourse.group06.views.timeslot.ShowMyListOfTimeslots"
-        android:label="My Timeslots"
-        tools:layout="@layout/show_my_list_of_timeslots" >
-        <action
-            android:id="@+id/action_showMyListOfAdvertisement_to_newTimeSlotDetailsFragment"
-            app:destination="@id/newTimeSlotDetailsFragment" />
     </fragment>
 </navigation>
