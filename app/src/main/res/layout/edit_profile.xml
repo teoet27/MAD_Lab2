@@ -151,6 +151,7 @@
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/prussian_blue"
+                    android:textColorHint="#37474F"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
