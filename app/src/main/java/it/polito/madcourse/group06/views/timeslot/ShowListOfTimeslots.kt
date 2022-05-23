@@ -75,6 +75,9 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
         }
 
+        activity?.supportFragmentManager?.findFragmentByTag("filter_window")?.also {frag->
+            activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
+        }
         sharedViewModel.deselect()
         sharedViewModel.selected.observe(viewLifecycleOwner) {
             enableUI(!it)
@@ -82,7 +85,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         filterButton.setOnClickListener {
             activity?.supportFragmentManager!!.beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_up, 0)
-                .add(R.id.nav_host_fragment_content_main, FilterTimeslots()).commit()
+                .add(R.id.nav_host_fragment_content_main, FilterTimeslots(),"filter_window").commit()
         }
 
         sortParam.setOnClickListener {
@@ -134,7 +137,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 }
             }
 
-            //sharedViewModel.updateRV()
+            sharedViewModel.updateRV()
         }
         sharedViewModel.filter.observe(viewLifecycleOwner) { filter ->
             sortedList = TimeslotTools().filterAdvertisementList(fullListForGivenSkill, filter)!!
