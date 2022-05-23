@@ -17,17 +17,22 @@ import android.text.InputType
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.activities.GoogleLoginActivity
 import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.models.userprofile.UserProfile
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
@@ -58,6 +63,8 @@ class NewProfileFragment : Fragment() {
     private val PICK_IMAGE = 100
 
     private val userProfileViewModel by activityViewModels<UserProfileViewModel>()
+
+    lateinit var mGoogleSignInClient: GoogleSignInClient
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -140,6 +147,22 @@ class NewProfileFragment : Fragment() {
         setHasOptionsMenu(true)
         // show dialog box with welcome message
         showCustomDialog()
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // go back to login activity (do logout first)
+                val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id_bis))
+                    .requestEmail()
+                    .build()
+                mGoogleSignInClient = GoogleSignIn.getClient(view.context, gso)
+                mGoogleSignInClient.signOut().addOnCompleteListener {
+                    val goBackToGoogleLogin = Intent(view.context, GoogleLoginActivity::class.java)
+                    startActivity(goBackToGoogleLogin)
+                    (activity as TBMainActivity).finish()
+                }
+            }
+        })
     }
 
 
