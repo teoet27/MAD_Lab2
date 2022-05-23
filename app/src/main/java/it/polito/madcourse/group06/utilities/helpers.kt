@@ -74,7 +74,6 @@ fun getBitmapFromFile(path: String): Bitmap? {
     return BitmapFactory.decodeFile(path)
 }
 
-
 /**
  * This method creates an image file and throws an exception if the file could not be created
  *
