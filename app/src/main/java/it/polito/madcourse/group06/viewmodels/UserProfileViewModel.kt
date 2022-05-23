@@ -245,7 +245,6 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * @param imgPath the path where the image is located into the Firebase Storage
      */
     fun retrieveProfilePicture(imageView: ImageView, imgPath: String) {
-        Log.e("imagepath:", imgPath)
         var suffix = if(imgPath == "staticuser") "png" else "jpg"
         val profilePathReference = this.storage.getReferenceFromUrl("gs://timebankingmadg06.appspot.com").child("images/${imgPath}.${suffix}")
         val localFile = File.createTempFile(imgPath, ".${suffix}")
