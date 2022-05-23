@@ -39,6 +39,7 @@ import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.utilities.*
 import java.io.File
 import java.io.IOException
+import java.util.*
 
 class NewProfileFragment : Fragment() {
     private lateinit var newFullNameOBJ: EditText
@@ -94,11 +95,8 @@ class NewProfileFragment : Fragment() {
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
         this.skillsChips = view.findViewById(R.id.newProfileChipGroup)
         this.addSkillButton = view.findViewById(R.id.addNewSkillButtonID)
-        this.imgProfilePicturePath = "static_user_profile_PH.jpg"
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
-            // User ID
-            this.userID = userProfile.id!!
             // Fullname
             this.newFullNameOBJ.setText(userProfile.fullName)
             // Nickname
@@ -135,6 +133,7 @@ class NewProfileFragment : Fragment() {
             this.newDescriptionOBJ.setText(userProfile.description)
 
             // Profile Picture
+            this.imgProfilePicturePath = UUID.randomUUID().toString()
             if (userProfile.imgPath.isNullOrEmpty()) {
                 userProfileViewModel.retrieveStaticProfilePicture(profilePictureOBJ)
             } else {
@@ -311,8 +310,7 @@ class NewProfileFragment : Fragment() {
                     )
                 } else {
                     setTextColor(ContextCompat.getColor(context, R.color.black))
-                    chipBackgroundColor =
-                        ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lightGray))
+                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lightGray))
                 }
             }
             addView(this)
@@ -366,7 +364,7 @@ class NewProfileFragment : Fragment() {
                     newPhoneOBJ.text.toString(),
                     newLocationOBJ.text.toString(),
                     this.skillList,
-                    imgProfilePicturePath
+                    this.imgProfilePicturePath
                 )
             )
             userIsOkay = true
@@ -420,13 +418,13 @@ class NewProfileFragment : Fragment() {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == AppCompatActivity.RESULT_OK) {
             rotatedImage = handleSamplingAndRotationBitmap(requireContext(), this.photoURI)!!
             // saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
-            imgProfilePicturePath = this.userProfileViewModel.uploadProfilePicture(rotatedImage, userID)
+            this.userProfileViewModel.uploadProfilePicture(rotatedImage, imgProfilePicturePath)
             view?.findViewById<ImageView>(R.id.profilePictureID)?.setImageBitmap(rotatedImage)
         } else if (requestCode == PICK_IMAGE && resultCode == AppCompatActivity.RESULT_OK) {
             this.photoURI = data?.data!!
             rotatedImage = handleSamplingAndRotationBitmap(requireContext(), this.photoURI)!!
             // saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
-            imgProfilePicturePath = this.userProfileViewModel.uploadProfilePicture(rotatedImage, userID)
+            this.userProfileViewModel.uploadProfilePicture(rotatedImage, imgProfilePicturePath)
             view?.findViewById<ImageView>(R.id.profilePictureID)?.setImageBitmap(rotatedImage)
         }
     }

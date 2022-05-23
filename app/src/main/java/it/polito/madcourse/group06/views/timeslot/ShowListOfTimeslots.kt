@@ -161,7 +161,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             finalList.apply {
                 filter {
                     if (isMyAdv) {
-                        Log.e("DEBUG", "${it.accountID.toString()} - ${currentAccountID}")
                         it.accountID == currentAccountID
                     } else true
                 }
