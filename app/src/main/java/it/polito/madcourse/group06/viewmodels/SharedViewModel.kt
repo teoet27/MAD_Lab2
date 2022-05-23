@@ -10,6 +10,7 @@ class SharedViewModel : ViewModel() {
     private var _selected = false
     private var _sortParam = "Title"
     private var _sortUp = false
+    private var _lastSortUp = false
     private var _filter = TimeslotTools.AdvFilter()
     private var _updateRV = false
 
@@ -22,6 +23,9 @@ class SharedViewModel : ViewModel() {
     }
     var sortUp = MutableLiveData<Boolean>().also {
         it.value = _sortUp
+    }
+    var lastSortUp = MutableLiveData<Boolean>().also {
+        it.value = _lastSortUp
     }
     var filter = MutableLiveData<TimeslotTools.AdvFilter>().also {
         it.value = _filter
@@ -52,6 +56,11 @@ class SharedViewModel : ViewModel() {
     fun toggleSortDirection() {
         _sortUp = !_sortUp
         sortUp.value = _sortUp
+        _lastSortUp=_sortUp
+        lastSortUp.value = _lastSortUp
+    }
+    fun getLastSortDirection():Boolean{
+        return lastSortUp.value!!
     }
     fun updateRV(){
         _updateRV=true
