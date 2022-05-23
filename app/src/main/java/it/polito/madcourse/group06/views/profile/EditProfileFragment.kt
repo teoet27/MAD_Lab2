@@ -50,6 +50,7 @@ class EditProfileFragment : Fragment() {
     private lateinit var skillsChips: ChipGroup
     private lateinit var skillText: TextView
     private lateinit var newSkillChip: Chip
+    private lateinit var imgProfilePicturePath: String
     private var userID: String = ""
     private var skillList = arrayListOf<String>()
 
@@ -101,6 +102,9 @@ class EditProfileFragment : Fragment() {
             // Location
             this.editLocationOBJ.setText(userProfile.location)
 
+            // Image path
+            this.imgProfilePicturePath = userProfile.imgPath!!
+
             // Button for adding a new skill
             this.newSkillChip.setOnClickListener {
                 showNewSkillInputWindow(requireContext(), this.skillsChips)
@@ -125,13 +129,11 @@ class EditProfileFragment : Fragment() {
             // Description
             this.editDescriptionOBJ.setText(userProfile.description)
             // Profile Picture
-            profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                .toString() + '/' + resources.getString(R.string.profile_picture_filename)
-            profilePictureDirectoryPath =
-                view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
-            getBitmapFromFile(profilePicturePath)?.also {
-                this.profilePictureOBJ.setImageBitmap(it)
-            } ?: this.profilePictureOBJ.setImageResource(R.drawable.propic)
+            if (userProfile.imgPath.isNullOrEmpty()) {
+                userProfileViewModel.retrieveStaticProfilePicture(profilePictureOBJ)
+            } else {
+                userProfileViewModel.retrieveProfilePicture(profilePictureOBJ, userProfile.imgPath!!)
+            }
         }
 
         // check this option to open onCreateOptionsMenu method
@@ -294,7 +296,8 @@ class EditProfileFragment : Fragment() {
                     editEmailOBJ.text.toString(),
                     editPhoneOBJ.text.toString(),
                     editLocationOBJ.text.toString(),
-                    this.skillList
+                    this.skillList,
+                    imgProfilePicturePath
                 )
             )
             advertisementViewModel.updateAdvAccountNameByAccountID(this.userID, editFullNameOBJ.text.toString())
@@ -322,7 +325,7 @@ class EditProfileFragment : Fragment() {
                 photoFile?.also {
                     photoURI = FileProvider.getUriForFile(
                         requireContext(),
-                        "it.polito.MAD.group06.android.fileprovider",
+                        "it.polito.madcourse.group06.android.fileprovider",
                         it
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
@@ -346,12 +349,14 @@ class EditProfileFragment : Fragment() {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == AppCompatActivity.RESULT_OK) {
             rotatedImage = handleSamplingAndRotationBitmap(requireContext(), this.photoURI)!!
-            saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
+            // saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
+            imgProfilePicturePath = this.userProfileViewModel.uploadProfilePicture(rotatedImage)
             view?.findViewById<ImageView>(R.id.profilePictureID)?.setImageBitmap(rotatedImage)
         } else if (requestCode == PICK_IMAGE && resultCode == AppCompatActivity.RESULT_OK) {
             this.photoURI = data?.data!!
             rotatedImage = handleSamplingAndRotationBitmap(requireContext(), this.photoURI)!!
-            saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
+            // saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
+            imgProfilePicturePath = this.userProfileViewModel.uploadProfilePicture(rotatedImage)
             view?.findViewById<ImageView>(R.id.profilePictureID)?.setImageBitmap(rotatedImage)
         }
     }

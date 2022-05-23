@@ -2,22 +2,30 @@ package it.polito.madcourse.group06.viewmodels
 
 import android.app.Application
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.StorageMetadata
+import com.google.firebase.storage.UploadTask
 import it.polito.madcourse.group06.models.userprofile.UserProfile
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.File
 import java.lang.Exception
+import java.util.*
+import kotlin.collections.ArrayList
 
 class UserProfileViewModel(application: Application) : AndroidViewModel(application) {
     private val db = FirebaseFirestore.getInstance()
+    private val storage: FirebaseStorage = FirebaseStorage.getInstance()
     private var listenerRegistration: ListenerRegistration
     private val context = application
 
@@ -25,7 +33,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * Single [UserProfile]
      */
     private var _singleUserProfilePH = UserProfile(
-        "", "", "", "", "", "", "", "", null
+        "", "", "", "", "", "", "", "", null, null
     )
     private val _pvtUserProfile = MutableLiveData<UserProfile>().also { it.value = _singleUserProfilePH }
     val currentUser: LiveData<UserProfile> = this._pvtUserProfile
@@ -65,9 +73,10 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             val phoneNumber = this.get("phone_number") as String
             val location = this.get("location") as String
             val skills = this.get("skills") as ArrayList<String>
+            val imgPath = this.get("img_path") as String
             UserProfile(
                 id, nickname, fullname, qualification,
-                description, email, phoneNumber, location, skills
+                description, email, phoneNumber, location, skills, imgPath
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -93,7 +102,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             .addOnFailureListener {
                 this._singleUserProfilePH = UserProfile(
                     null, null, null, null,
-                    null, null, null, null, null
+                    null, null, null, null, null, null
                 )
                 this._pvtUserProfile.value = this._singleUserProfilePH
             }
@@ -139,7 +148,8 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                     "email" to userProfile.email,
                     "phone_number" to userProfile.phoneNumber,
                     "location" to userProfile.location,
-                    "skills" to userProfile.skills
+                    "skills" to userProfile.skills,
+                    "img_path" to userProfile.imgPath
                 )
             )
         this._singleUserProfilePH = userProfile
@@ -175,7 +185,8 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 "email", userProfile.email,
                 "phone_number", userProfile.phoneNumber,
                 "location", userProfile.location,
-                "skills", userProfile.skills
+                "skills", userProfile.skills,
+                "img_path", userProfile.imgPath
             )
             .addOnSuccessListener {
                 Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
@@ -209,11 +220,49 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
 
     /**
      * Method to upload the new profile picture to the Firebase Storage
+     * @param profilePictureBitmap the Bitmap object containing the profile picture
      */
-    fun uploadProfilePicture(propic: Bitmap?, dataUri: Uri){
-        val imgDB: StorageReference = FirebaseStorage.getInstance().getReference("uploads")
-        val fileRef: StorageReference = imgDB.child(System.currentTimeMillis().toString() + ".jpg")
-        fileRef.putFile(dataUri)
+    fun uploadProfilePicture(profilePictureBitmap: Bitmap?): String{
+        val byteArrayOutputStream: ByteArrayOutputStream = ByteArrayOutputStream()
+        profilePictureBitmap?.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+
+        val profilePath = "images/${this._singleUserProfilePH.id}.jpg"
+        val profilePathReference = this.storage.getReference(profilePath)
+        val profilePathMetadata: StorageMetadata = StorageMetadata.Builder().setCustomMetadata("accountID", this._singleUserProfilePH.id).build()
+
+        /**
+         * uploadTask can be used to keep track of the upload through a progress bar or something similar
+         */
+        val uploadTask: UploadTask = profilePathReference.putBytes(byteArray, profilePathMetadata)
+        return profilePath
+    }
+
+    /**
+     * The method to retrieve the profile picture from the storage. If the image does not exist, the placeholder is fetched.
+     * @param imageView the image view to be set with the profile picture
+     * @param imgPath the path where the image is located into the Firebase Storage
+     */
+    fun retrieveProfilePicture(imageView: ImageView, imgPath: String) {
+        val profilePathReference = this.storage.getReferenceFromUrl("gs://timebankingmadg06.appspot.com").child(imgPath)
+        val localFile = File.createTempFile(_singleUserProfilePH.id!!, "png")
+        profilePathReference.getFile(localFile)
+            .addOnSuccessListener {
+                val bitmapProfilePicture = BitmapFactory.decodeFile(localFile.absolutePath)
+                imageView.setImageBitmap(bitmapProfilePicture)
+            }
+            .addOnFailureListener { error -> error.printStackTrace() }
+    }
+
+    fun retrieveStaticProfilePicture(imageView: ImageView) {
+        val profilePathReference = this.storage.getReferenceFromUrl("gs://timebankingmadg06.appspot.com").child("images/staticuser.png")
+        val localFile = File.createTempFile("staticuser", "png")
+        profilePathReference.getFile(localFile)
+            .addOnSuccessListener {
+                val bitmapProfilePicture = BitmapFactory.decodeFile(localFile.absolutePath)
+                imageView.setImageBitmap(bitmapProfilePicture)
+            }
+            .addOnFailureListener { error -> error.printStackTrace() }
     }
 
     /**

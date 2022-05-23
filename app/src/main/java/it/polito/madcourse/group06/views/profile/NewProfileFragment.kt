@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.InputType
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -49,6 +50,7 @@ class NewProfileFragment : Fragment() {
     private lateinit var skillsChips: ChipGroup
     private lateinit var addSkillButton: ImageView
     private lateinit var newSkillTitleLabel: String
+    private lateinit var imgProfilePicturePath: String
     private val skillList = arrayListOf<String>()
 
     private val REQUEST_IMAGE_CAPTURE = 1
@@ -84,6 +86,7 @@ class NewProfileFragment : Fragment() {
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
         this.skillsChips = view.findViewById(R.id.newProfileChipGroup)
         this.addSkillButton = view.findViewById(R.id.addNewSkillButtonID)
+        this.imgProfilePicturePath = "static_user_profile_PH.jpg"
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
             // Fullname
@@ -120,14 +123,14 @@ class NewProfileFragment : Fragment() {
             this.newEmailOBJ.setText(userProfile.email)
             // Description
             this.newDescriptionOBJ.setText(userProfile.description)
+
             // Profile Picture
-            profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                .toString() + '/' + resources.getString(R.string.profile_picture_filename)
-            profilePictureDirectoryPath =
-                view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
-            getBitmapFromFile(profilePicturePath)?.also {
-                this.profilePictureOBJ.setImageBitmap(it)
-            } ?: this.profilePictureOBJ.setImageResource(R.drawable.propic)
+            if (userProfile.imgPath.isNullOrEmpty()) {
+                userProfileViewModel.retrieveStaticProfilePicture(profilePictureOBJ)
+            } else {
+                userProfileViewModel.retrieveProfilePicture(profilePictureOBJ, userProfile.imgPath!!)
+            }
+
         }
 
         // check this option to open onCreateOptionsMenu method
@@ -181,7 +184,7 @@ class NewProfileFragment : Fragment() {
         }
     }
 
-    private fun ChipGroup.moveAddChip(context: Context,oldAddChip:View,chipGroup: ChipGroup){
+    private fun ChipGroup.moveAddChip(context: Context, oldAddChip: View, chipGroup: ChipGroup) {
         removeView(oldAddChip)
         Chip(context).apply {
             id = R.id.add_new_skill_chip
@@ -336,7 +339,8 @@ class NewProfileFragment : Fragment() {
                     newEmailOBJ.text.toString(),
                     newPhoneOBJ.text.toString(),
                     newLocationOBJ.text.toString(),
-                    this.skillList
+                    this.skillList,
+                    imgProfilePicturePath
                 )
             )
             userIsOkay = true
@@ -365,7 +369,7 @@ class NewProfileFragment : Fragment() {
                 photoFile?.also {
                     photoURI = FileProvider.getUriForFile(
                         requireContext(),
-                        "it.polito.MAD.group06.android.fileprovider",
+                        "it.polito.madcourse.group06.android.fileprovider",
                         it
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
@@ -389,12 +393,14 @@ class NewProfileFragment : Fragment() {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == AppCompatActivity.RESULT_OK) {
             rotatedImage = handleSamplingAndRotationBitmap(requireContext(), this.photoURI)!!
-            saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
+            // saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
+            imgProfilePicturePath = this.userProfileViewModel.uploadProfilePicture(rotatedImage)
             view?.findViewById<ImageView>(R.id.profilePictureID)?.setImageBitmap(rotatedImage)
         } else if (requestCode == PICK_IMAGE && resultCode == AppCompatActivity.RESULT_OK) {
             this.photoURI = data?.data!!
             rotatedImage = handleSamplingAndRotationBitmap(requireContext(), this.photoURI)!!
-            saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
+            // saveProfilePicture(rotatedImage, profilePictureDirectoryPath)
+            imgProfilePicturePath = this.userProfileViewModel.uploadProfilePicture(rotatedImage)
             view?.findViewById<ImageView>(R.id.profilePictureID)?.setImageBitmap(rotatedImage)
         }
     }
