@@ -51,7 +51,7 @@ class EditProfileFragment : Fragment() {
     private lateinit var skillText: TextView
     private lateinit var newSkillChip: Chip
     private var userID: String = ""
-    private val skillList = arrayListOf<String>()
+    private var skillList = arrayListOf<String>()
 
     private val REQUEST_IMAGE_CAPTURE = 1
     private val PICK_IMAGE = 100
@@ -106,6 +106,7 @@ class EditProfileFragment : Fragment() {
                 showNewSkillInputWindow(requireContext(), this.skillsChips)
             }
 
+            this.skillList= userProfile.skills!!
             // Skills
             if (!userProfile.skills.isNullOrEmpty()) {
                 this.skillsChips.removeAllViews()
@@ -117,7 +118,6 @@ class EditProfileFragment : Fragment() {
                     }
                 }
                 this.skillsChips.addPlusChip(requireContext(),this.skillsChips)
-                this.skillList.addAll(userProfile.skills!!)
             }
 
             // Email
