@@ -274,7 +274,13 @@ class EditProfileFragment : Fragment() {
                 "Error: you must provide your phone number. Try again.",
                 Snackbar.LENGTH_LONG
             ).show()
-        } else {
+        } else if (userProfileViewModel.lookForNickname(editNicknameOBJ.text.toString())) {
+            Snackbar.make(
+                requireView(),
+                "Error: the nickname you chose is not available.",
+                Snackbar.LENGTH_LONG
+            ).show()
+        }  else {
             userProfileViewModel.editUserProfile(
                 UserProfile(
                     this.userID,

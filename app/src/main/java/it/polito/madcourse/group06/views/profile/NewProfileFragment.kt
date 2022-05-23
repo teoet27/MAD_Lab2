@@ -310,7 +310,7 @@ class NewProfileFragment : Fragment() {
         } else if (userProfileViewModel.lookForNickname(newNicknameOBJ.text.toString())) {
             Snackbar.make(
                 requireView(),
-                "Error: the nickname you chose is already present in our database. Please, choose a new one.",
+                "Error: the nickname you chose is not available.",
                 Snackbar.LENGTH_LONG
             ).show()
         } else if (newPhoneOBJ.text.toString() == "") {
