@@ -307,13 +307,12 @@ class NewProfileFragment : Fragment() {
                 "Error: you must provide a nickname. Try again.",
                 Snackbar.LENGTH_LONG
             ).show()
-            if (userProfileViewModel.lookForNickname(newNicknameOBJ.text.toString())) {
-                Snackbar.make(
-                    requireView(),
-                    "Error: the nickname you chose is already present in our database. Please, choose a new one.",
-                    Snackbar.LENGTH_LONG
-                ).show()
-            }
+        } else if (userProfileViewModel.lookForNickname(newNicknameOBJ.text.toString())) {
+            Snackbar.make(
+                requireView(),
+                "Error: the nickname you chose is already present in our database. Please, choose a new one.",
+                Snackbar.LENGTH_LONG
+            ).show()
         } else if (newPhoneOBJ.text.toString() == "") {
             Snackbar.make(
                 requireView(),
