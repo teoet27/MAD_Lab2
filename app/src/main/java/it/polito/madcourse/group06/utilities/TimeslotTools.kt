@@ -39,7 +39,7 @@ class TimeslotTools {
 
         timeDifference += (endingHour - startingHour) + ((endingMinute - startingMinute) / 60.0)*/
 
-        timeDifference = timeStringToDouble(endingTime) - timeStringToDouble(startingTime)
+        timeDifference = timeStringToDoubleSec(endingTime) - timeStringToDoubleSec(startingTime)
 
         return Pair(
             String.format("%.2f", timeDifference).toDouble(),
@@ -48,11 +48,11 @@ class TimeslotTools {
     }
 
     private fun String.isLaterThanTime(time:String):Boolean{
-        return computeTimeDifference(this,time).first>=0
+        return computeTimeDifference(time,this).first>=0
     }
 
     private fun String.isSoonerThanTime(time:String):Boolean{
-        return computeTimeDifference(this,time).first<=0
+        return computeTimeDifference(time,this).first<=0
     }
 
 
@@ -100,8 +100,12 @@ class TimeslotTools {
         return dateInt
     }
 
-    private fun timeStringToDouble(time:String):Double{
+    private fun timeStringToDoubleSec(time:String):Double{
         return time.split(":").fold(0.0){a,b-> (a.toDouble()+b.toDouble())*60.0}
+    }
+
+    private fun timeStringToDoubleHour(time:String):Double{
+        return time.split(":").foldRight(0.0){a,b-> (a.toDouble()+b.toDouble())/60.0}*60
     }
 
     class AdvFilter(
@@ -140,8 +144,8 @@ class TimeslotTools {
             (advFilter.location!=null && !advFilter.whole_word && adv.advLocation.lowercase().contains(advFilter.location.lowercase(),true))||
             (advFilter.location!=null && advFilter.whole_word && advFilter.location.lowercase()==adv.advLocation.lowercase())||(advFilter.location==null)) &&
 
-            ((advFilter.min_duration!=null && adv.advDuration.toString().isLaterThanTime(advFilter.min_duration))||(advFilter.starting_time==null)) && //wrong
-            ((advFilter.max_duration!=null && adv.advDuration.toString().isSoonerThanTime(advFilter.max_duration))||(advFilter.starting_time==null)) &&//wrong
+            ((advFilter.min_duration!=null && adv.advDuration>=timeStringToDoubleHour(advFilter.min_duration))||(advFilter.min_duration==null)) && //wrong
+            ((advFilter.max_duration!=null && adv.advDuration<=timeStringToDoubleHour(advFilter.max_duration))||(advFilter.max_duration==null)) &&//wrong
 
             ((advFilter.starting_time!=null && adv.advStartingTime.isLaterThanTime(advFilter.starting_time))||(advFilter.starting_time==null)) &&
             ((advFilter.ending_time!=null && adv.advEndingTime.isSoonerThanTime(advFilter.ending_time))||(advFilter.ending_time==null))&&
@@ -160,16 +164,16 @@ class TimeslotTools {
             true->when(criterion){
                 "Title"-> advList?.sortedBy { it.advTitle.lowercase() }
                 "Duration"->advList?.sortedByDescending { it.advDuration }
-                "Starting time"->advList?.sortedByDescending { timeStringToDouble(it.advStartingTime) }
-                "Ending time"->advList?.sortedByDescending { timeStringToDouble(it.advEndingTime) }
+                "Starting time"->advList?.sortedByDescending { timeStringToDoubleSec(it.advStartingTime) }
+                "Ending time"->advList?.sortedByDescending { timeStringToDoubleSec(it.advEndingTime) }
                 "Date"->advList?.sortedByDescending { dateStringToInt(it.advDate) }
                 else -> null
             }
             else->when(criterion){
                 "Title"-> advList?.sortedByDescending { it.advTitle.lowercase() }
                 "Duration"->advList?.sortedBy { it.advDuration }
-                "Starting time"->advList?.sortedBy { timeStringToDouble(it.advStartingTime) }
-                "Ending time"->advList?.sortedBy { timeStringToDouble(it.advEndingTime) }
+                "Starting time"->advList?.sortedBy { timeStringToDoubleSec(it.advStartingTime) }
+                "Ending time"->advList?.sortedBy { timeStringToDoubleSec(it.advEndingTime) }
                 "Date"->advList?.sortedBy { dateStringToInt(it.advDate) }
                 else -> null
             }
