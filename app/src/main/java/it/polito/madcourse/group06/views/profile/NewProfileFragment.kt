@@ -293,29 +293,37 @@ class NewProfileFragment : Fragment() {
     /**
      * saveData is a private method for saving data before fragment transaction
      */
-    private fun saveData() {
+    private fun saveData(): Boolean {
+        var userIsOkay: Boolean = false
         if (newFullNameOBJ.text.toString() == "") {
             Snackbar.make(
                 requireView(),
                 "Error: you must provide your full name. Try again.",
                 Snackbar.LENGTH_LONG
             ).show()
-        } else if (newNicknameOBJ.text.toString() == "") { //TODO: check if nickname is already present in database (it must be unique)
+        } else if (newNicknameOBJ.text.toString() == "") {
             Snackbar.make(
                 requireView(),
                 "Error: you must provide a nickname. Try again.",
+                Snackbar.LENGTH_LONG
+            ).show()
+            if (userProfileViewModel.lookForNickname(newNicknameOBJ.text.toString())) {
+                Snackbar.make(
+                    requireView(),
+                    "Error: the nickname you chose is already present in our database. Please, choose a new one.",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        } else if (newPhoneOBJ.text.toString() == "") {
+            Snackbar.make(
+                requireView(),
+                "Error: you must provide your phone number. Try again.",
                 Snackbar.LENGTH_LONG
             ).show()
         } else if (newLocationOBJ.text.toString() == "") {
             Snackbar.make(
                 requireView(),
                 "Error: you must provide your location. Try again.",
-                Snackbar.LENGTH_LONG
-            ).show()
-        } else if (newPhoneOBJ.text.toString() == "") {
-            Snackbar.make(
-                requireView(),
-                "Error: you must provide your phone number. Try again.",
                 Snackbar.LENGTH_LONG
             ).show()
         } else {
@@ -332,7 +340,9 @@ class NewProfileFragment : Fragment() {
                     this.skillList
                 )
             )
+            userIsOkay = true
         }
+        return userIsOkay
     }
 
     /**
@@ -460,8 +470,14 @@ class NewProfileFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.complete_user_editing -> {
-                saveData()
-                findNavController().navigate(R.id.action_newProfileFragment_to_ShowListOfServices)
+                if (saveData()) {
+                    Snackbar.make(
+                        requireView(),
+                        "Your profile was updated successfully. Explore our app to discover offered services.",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                    findNavController().navigate(R.id.action_newProfileFragment_to_ShowListOfServices)
+                }
             }
         }
         return super.onOptionsItemSelected(item)
