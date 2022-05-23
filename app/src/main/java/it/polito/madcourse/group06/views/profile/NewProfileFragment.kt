@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.InputType
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -85,6 +86,7 @@ class NewProfileFragment : Fragment() {
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
         this.skillsChips = view.findViewById(R.id.newProfileChipGroup)
         this.addSkillButton = view.findViewById(R.id.addNewSkillButtonID)
+        this.imgProfilePicturePath = "static_user_profile_PH.jpg"
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
             // Fullname
@@ -121,14 +123,14 @@ class NewProfileFragment : Fragment() {
             this.newEmailOBJ.setText(userProfile.email)
             // Description
             this.newDescriptionOBJ.setText(userProfile.description)
+
             // Profile Picture
-            profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                .toString() + '/' + resources.getString(R.string.profile_picture_filename)
-            profilePictureDirectoryPath =
-                view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
-            getBitmapFromFile(profilePicturePath)?.also {
-                this.profilePictureOBJ.setImageBitmap(it)
-            } ?: this.profilePictureOBJ.setImageResource(R.drawable.propic)
+            if (userProfile.imgPath.isNullOrEmpty()) {
+                userProfileViewModel.retrieveStaticProfilePicture(profilePictureOBJ)
+            } else {
+                userProfileViewModel.retrieveProfilePicture(profilePictureOBJ, userProfile.imgPath!!)
+            }
+
         }
 
         // check this option to open onCreateOptionsMenu method

@@ -104,11 +104,11 @@ class ShowProfileFragment : Fragment() {
             this.descriptionOBJ.text = userProfile.description
 
             // Profile Picture
-            profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(R.string.profile_picture_filename)
-            profilePictureDirectoryPath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
-            getBitmapFromFile(profilePicturePath)?.also {
-                this.profilePictureOBJ.setImageBitmap(it)
-            } ?: this.profilePictureOBJ.setImageResource(R.drawable.propic)
+            if (userProfile.imgPath.isNullOrEmpty()) {
+                userProfileViewModel.retrieveStaticProfilePicture(profilePictureOBJ)
+            } else {
+                userProfileViewModel.retrieveProfilePicture(profilePictureOBJ, userProfile.imgPath!!)
+            }
         }
 
         // Check this option to open onCreateOptionsMenu method

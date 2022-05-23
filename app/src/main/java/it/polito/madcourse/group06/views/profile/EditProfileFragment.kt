@@ -102,6 +102,9 @@ class EditProfileFragment : Fragment() {
             // Location
             this.editLocationOBJ.setText(userProfile.location)
 
+            // Image path
+            this.imgProfilePicturePath = userProfile.imgPath!!
+
             // Button for adding a new skill
             this.newSkillChip.setOnClickListener {
                 showNewSkillInputWindow(requireContext(), this.skillsChips)
@@ -126,13 +129,11 @@ class EditProfileFragment : Fragment() {
             // Description
             this.editDescriptionOBJ.setText(userProfile.description)
             // Profile Picture
-            profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                .toString() + '/' + resources.getString(R.string.profile_picture_filename)
-            profilePictureDirectoryPath =
-                view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
-            getBitmapFromFile(profilePicturePath)?.also {
-                this.profilePictureOBJ.setImageBitmap(it)
-            } ?: this.profilePictureOBJ.setImageResource(R.drawable.propic)
+            if (userProfile.imgPath.isNullOrEmpty()) {
+                userProfileViewModel.retrieveStaticProfilePicture(profilePictureOBJ)
+            } else {
+                userProfileViewModel.retrieveProfilePicture(profilePictureOBJ, userProfile.imgPath!!)
+            }
         }
 
         // check this option to open onCreateOptionsMenu method

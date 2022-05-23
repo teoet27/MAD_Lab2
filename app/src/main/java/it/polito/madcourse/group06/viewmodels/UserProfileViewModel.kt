@@ -2,7 +2,9 @@ package it.polito.madcourse.group06.viewmodels
 
 import android.app.Application
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -14,7 +16,9 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
 import com.google.firebase.storage.UploadTask
 import it.polito.madcourse.group06.models.userprofile.UserProfile
+import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
@@ -181,7 +185,8 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 "email", userProfile.email,
                 "phone_number", userProfile.phoneNumber,
                 "location", userProfile.location,
-                "skills", userProfile.skills
+                "skills", userProfile.skills,
+                "img_path", userProfile.imgPath
             )
             .addOnSuccessListener {
                 Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
@@ -219,14 +224,45 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      */
     fun uploadProfilePicture(profilePictureBitmap: Bitmap?): String{
         val byteArrayOutputStream: ByteArrayOutputStream = ByteArrayOutputStream()
-        profilePictureBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        profilePictureBitmap?.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
         val byteArray = byteArrayOutputStream.toByteArray()
 
-        val profilePath = "profilepictures/${UUID.randomUUID()}.jpeg"
+        val profilePath = "images/${this._singleUserProfilePH.id}.jpg"
         val profilePathReference = this.storage.getReference(profilePath)
         val profilePathMetadata: StorageMetadata = StorageMetadata.Builder().setCustomMetadata("accountID", this._singleUserProfilePH.id).build()
+
+        /**
+         * uploadTask can be used to keep track of the upload through a progress bar or something similar
+         */
         val uploadTask: UploadTask = profilePathReference.putBytes(byteArray, profilePathMetadata)
         return profilePath
+    }
+
+    /**
+     * The method to retrieve the profile picture from the storage. If the image does not exist, the placeholder is fetched.
+     * @param imageView the image view to be set with the profile picture
+     * @param imgPath the path where the image is located into the Firebase Storage
+     */
+    fun retrieveProfilePicture(imageView: ImageView, imgPath: String) {
+        val profilePathReference = this.storage.getReferenceFromUrl("gs://timebankingmadg06.appspot.com").child(imgPath)
+        val localFile = File.createTempFile(_singleUserProfilePH.id!!, "png")
+        profilePathReference.getFile(localFile)
+            .addOnSuccessListener {
+                val bitmapProfilePicture = BitmapFactory.decodeFile(localFile.absolutePath)
+                imageView.setImageBitmap(bitmapProfilePicture)
+            }
+            .addOnFailureListener { error -> error.printStackTrace() }
+    }
+
+    fun retrieveStaticProfilePicture(imageView: ImageView) {
+        val profilePathReference = this.storage.getReferenceFromUrl("gs://timebankingmadg06.appspot.com").child("images/staticuser.png")
+        val localFile = File.createTempFile("staticuser", "png")
+        profilePathReference.getFile(localFile)
+            .addOnSuccessListener {
+                val bitmapProfilePicture = BitmapFactory.decodeFile(localFile.absolutePath)
+                imageView.setImageBitmap(bitmapProfilePicture)
+            }
+            .addOnFailureListener { error -> error.printStackTrace() }
     }
 
     /**

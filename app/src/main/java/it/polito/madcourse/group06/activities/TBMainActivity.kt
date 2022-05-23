@@ -135,11 +135,11 @@ class TBMainActivity : AppCompatActivity(), DrawerManagement {
         userProfileViewModel.currentUser.observe(this) { user ->
             fullnameHeader.text = user.fullName
             nicknameHeader.text = "@${user.nickname}"
-            val profilePicturePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(
-                R.string.profile_picture_filename
-            )
-            getBitmapFromFile(profilePicturePath)?.also {
-                pictureHeader.setImageBitmap(it)
+            // Profile Picture
+            if (user.imgPath.isNullOrEmpty()) {
+                userProfileViewModel.retrieveStaticProfilePicture(pictureHeader)
+            } else {
+                userProfileViewModel.retrieveProfilePicture(pictureHeader, user.imgPath!!)
             }
         }
     }
