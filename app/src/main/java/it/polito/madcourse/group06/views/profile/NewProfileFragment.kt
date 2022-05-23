@@ -95,6 +95,7 @@ class NewProfileFragment : Fragment() {
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
         this.skillsChips = view.findViewById(R.id.newProfileChipGroup)
         this.addSkillButton = view.findViewById(R.id.addNewSkillButtonID)
+        this.imgProfilePicturePath = "images/staticuser.png"
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
             // Fullname
@@ -133,6 +134,7 @@ class NewProfileFragment : Fragment() {
             this.newDescriptionOBJ.setText(userProfile.description)
 
             // Profile Picture
+            profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(R.string.profile_picture_filename)
             this.imgProfilePicturePath = UUID.randomUUID().toString()
             if (userProfile.imgPath.isNullOrEmpty()) {
                 userProfileViewModel.retrieveStaticProfilePicture(profilePictureOBJ)

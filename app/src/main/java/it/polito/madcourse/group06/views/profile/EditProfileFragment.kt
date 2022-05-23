@@ -129,6 +129,7 @@ class EditProfileFragment : Fragment() {
             // Description
             this.editDescriptionOBJ.setText(userProfile.description)
             // Profile Picture
+            profilePicturePath = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + '/' + resources.getString(R.string.profile_picture_filename)
             if (userProfile.imgPath.isNullOrEmpty()) {
                 userProfileViewModel.retrieveStaticProfilePicture(profilePictureOBJ)
             } else {
