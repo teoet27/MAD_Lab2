@@ -15,6 +15,10 @@ class AdvAdapterCard(
     private val advViewModel: AdvertisementViewModel
 ) : RecyclerView.Adapter<AdvViewHolderCard>() {
 
+    private var isMyAdv: Boolean = false
+    private var isSortedUp = false
+    private var showedData = adsList
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdvViewHolderCard {
         val vg = LayoutInflater
             .from(parent.context)
@@ -26,9 +30,9 @@ class AdvAdapterCard(
      * Bind operations.
      */
     override fun onBindViewHolder(holder: AdvViewHolderCard, position: Int) {
-        holder.bind(adsList[position])
+        holder.bind(showedData[position])
         holder.itemView.setOnClickListener { view ->
-            advViewModel.setSingleAdvertisement((adsList[adsList.indexOf(adsList[position])]))
+            advViewModel.setSingleAdvertisement((showedData[showedData.indexOf(showedData[position])]))
             Navigation.findNavController(view)
                 .navigate(R.id.action_ShowListTimeslots_to_showSingleTimeslot)
         }
@@ -38,6 +42,32 @@ class AdvAdapterCard(
      * Simply returns the size of the list of advertisement provided to the adapter.
      */
     override fun getItemCount(): Int {
-        return adsList.size
+        return showedData.size
     }
+
+    /**
+     * A method to provide a switch mode between the "All" visualization and the "My adv" one.
+     * @param mode true: show only my adv, false: show all the adv
+     * @param userID if true, show only this user's adv
+     */
+    fun switchMode(mode: Boolean, userID: String) {
+        isMyAdv = mode
+        if (isMyAdv) {
+            showedData = showedData.filter { it.accountID == userID }
+        } else {
+            showedData = adsList
+        }
+        notifyDataSetChanged()
+    }
+
+    fun switchSort(mode: Boolean) {
+        isSortedUp = mode
+        if(isSortedUp) {
+            showedData = showedData.sortedBy { it.advTitle }
+        } else {
+            showedData = showedData.sortedByDescending { it.advTitle }
+        }
+        notifyDataSetChanged()
+    }
+
 }
