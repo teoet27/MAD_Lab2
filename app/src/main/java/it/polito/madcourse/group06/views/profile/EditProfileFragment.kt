@@ -418,8 +418,10 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun removeProfilePicture() {
-        this.imgProfilePicturePath = "staticuser"
-        userProfileViewModel.retrieveStaticProfilePicture(profilePictureOBJ)
+        if (this.imgProfilePicturePath != "staticuser") {
+            this.imgProfilePicturePath = "staticuser"
+            userProfileViewModel.retrieveStaticProfilePicture(profilePictureOBJ)
+        }
     }
 
     /**
