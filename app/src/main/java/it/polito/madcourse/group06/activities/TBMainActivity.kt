@@ -33,8 +33,6 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
     private val userProfileViewModel: UserProfileViewModel by viewModels()
     private val sharedViewModel: SharedViewModel by viewModels()
 
-    private val isRegistered: MutableLiveData<Boolean> = MutableLiveData()
-
     // declare the GoogleSignInClient
     lateinit var mGoogleSignInClient: GoogleSignInClient
 
@@ -45,7 +43,6 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        isRegistered.value = false
 
         // configure the GoogleSignInOptions with the same server client ID used for logging in
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -53,8 +50,6 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
             .requestEmail()
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-
-        val id = intent.getStringExtra("id")
         val fullname = intent.getStringExtra("fullname")
         val email = intent.getStringExtra("email")
 
