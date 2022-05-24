@@ -32,12 +32,6 @@ class TimeslotTools {
         if (startingTime.isNullOrEmpty() || endingTime.isNullOrEmpty()) {
             return Pair(-1.0, false)
         }
-        /*val startingHour = startingTime.split(":")[0].toInt()
-        val startingMinute = startingTime.split(":")[1].toInt()
-        val endingHour = endingTime.split(":")[0].toInt()
-        val endingMinute = endingTime.split(":")[1].toInt()
-
-        timeDifference += (endingHour - startingHour) + ((endingMinute - startingMinute) / 60.0)*/
 
         timeDifference = timeStringToDoubleSec(endingTime) - timeStringToDoubleSec(startingTime)
 
