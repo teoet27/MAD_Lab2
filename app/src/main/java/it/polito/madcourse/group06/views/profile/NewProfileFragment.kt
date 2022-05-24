@@ -73,6 +73,19 @@ class NewProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        userProfileViewModel.currentUser.observe(viewLifecycleOwner) { user ->
+            userProfileViewModel.listOfUsers.observe(viewLifecycleOwner) {
+                for (u in it) {
+                    if (user.email == u.email) {
+                        userProfileViewModel.fetchUserProfile(user.email!!)
+                        findNavController().navigate(R.id.action_newProfileFragment_to_ShowListOfServices)
+                        break
+                    }
+                }
+            }
+        }
+
         activityTB = requireActivity() as TBMainActivity
         activityTB.supportActionBar?.setDisplayHomeAsUpEnabled(false)
         activityTB.drawerLock()
@@ -137,8 +150,6 @@ class NewProfileFragment : Fragment() {
 
         // check this option to open onCreateOptionsMenu method
         setHasOptionsMenu(true)
-        // show dialog box with welcome message
-        showCustomDialog()
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -223,20 +234,6 @@ class NewProfileFragment : Fragment() {
             dialog.cancel()
         })
         builder.show()
-    }
-
-    private fun showCustomDialog() {
-        val dialog = Dialog(requireActivity())
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.welcome_box)
-
-        val yesBtn = dialog.findViewById<Button>(R.id.yesBtn)
-        yesBtn.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.show()
     }
 
     /**

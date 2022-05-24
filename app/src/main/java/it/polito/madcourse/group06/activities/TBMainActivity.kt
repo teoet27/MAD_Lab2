@@ -2,16 +2,15 @@ package it.polito.madcourse.group06.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -34,7 +33,7 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
     private val userProfileViewModel: UserProfileViewModel by viewModels()
     private val sharedViewModel: SharedViewModel by viewModels()
 
-    private lateinit var actionBar: ActionBar
+    private val isRegistered: MutableLiveData<Boolean> = MutableLiveData()
 
     // declare the GoogleSignInClient
     lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -46,6 +45,8 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        isRegistered.value = false
+
         // configure the GoogleSignInOptions with the same server client ID used for logging in
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id_bis))
@@ -56,7 +57,6 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
         val id = intent.getStringExtra("id")
         val fullname = intent.getStringExtra("fullname")
         val email = intent.getStringExtra("email")
-        var isAlreadyRegistered = false
 
         // inflate the view hierarchy
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -83,21 +83,7 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
         navView.setupWithNavController(navController)
 
         userProfileViewModel.setCurrentUserProfile(fullname!!, email!!)
-
-        userProfileViewModel.listOfUsers.observe(this) {
-            for (user in it) {
-                if (user.email == email) {
-                    isAlreadyRegistered = true
-                    break
-                }
-            }
-        }
-
-        if (!isAlreadyRegistered) {
-            navController.navigate(R.id.newProfileFragment)
-        } else {
-            userProfileViewModel.fetchUserProfile(email)
-        }
+        navController.navigate(R.id.newProfileFragment)
 
         // Navigation view item click listener
         navView.setNavigationItemSelectedListener {
