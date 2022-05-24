@@ -1,6 +1,5 @@
 package it.polito.madcourse.group06.views.profile
 
-import android.app.ActionBar
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ActivityNotFoundException
@@ -158,67 +157,6 @@ class NewProfileFragment : Fragment() {
         })
     }
 
-
-    /**
-     * TODO
-     * addChip
-     * @param
-     * @param
-     */
-    private fun ChipGroup.addChip(context: Context, skill: String) {
-        Chip(context).apply {
-            id = View.generateViewId()
-            text = skill
-            isClickable = true
-            isCheckable = true
-            isCheckedIconVisible = true
-            isFocusable = true
-            isChecked = true
-            setTextColor(ContextCompat.getColor(context, R.color.white))
-            chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.prussian_blue))
-
-            setOnClickListener {
-                if (skillList.any { x ->
-                        x == skill
-                    }) {
-                    for (s in skillList) {
-                        if (s == skill) {
-                            skillList.remove(s)
-                            break
-                        }
-                    }
-                } else {
-                    skillList.add(skill)
-                }
-                if (isChecked) {
-                    setTextColor(ContextCompat.getColor(context, R.color.white))
-                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.prussian_blue))
-                } else {
-                    setTextColor(ContextCompat.getColor(context, R.color.black))
-                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lightGray))
-                }
-
-            }
-            addView(this)
-        }
-    }
-
-    private fun ChipGroup.moveAddChip(context: Context, oldAddChip: View, chipGroup: ChipGroup) {
-        removeView(oldAddChip)
-        Chip(context).apply {
-            id = R.id.add_new_skill_chip
-            text = "+"
-            isClickable = true
-            isCheckable = false
-            isCheckedIconVisible = false
-            isFocusable = false
-            setOnClickListener {
-                showNewSkillInputWindow(requireContext(), chipGroup)
-            }
-            addView(this)
-        }
-    }
-
     private fun ChipGroup.addPlusChip(context: Context, chipGroup: ChipGroup) {
         Chip(context).apply {
             id = R.id.newProfileAddNewSkillChip
@@ -248,7 +186,7 @@ class NewProfileFragment : Fragment() {
         builder.setTitle("Insert here your new skill")
         newSkillTitle.hint = "What is your new skill?"
         newSkillTitle.inputType = InputType.TYPE_CLASS_TEXT
-        newSkillTitle.gravity = Gravity.LEFT
+        newSkillTitle.gravity = Gravity.START
         linearLayout.orientation = LinearLayout.VERTICAL
         linearLayout.setPadding(64, 0, 64, 0)
         linearLayout.addView(newSkillTitle)
@@ -337,7 +275,7 @@ class NewProfileFragment : Fragment() {
      * saveData is a private method for saving data before fragment transaction
      */
     private fun saveData(): Boolean {
-        var userIsOkay: Boolean = false
+        var userIsOkay = false
         var isNicknameAvailable = true
 
         this.userProfileViewModel.listOfUsers.observe(viewLifecycleOwner) { listOfUsers ->
