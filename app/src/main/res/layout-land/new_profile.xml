@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/orange_poli"
+        android:padding="16dp"
+        android:text="@string/welcome_message_new_profile"
+        android:textAlignment="center"
+        android:textColor="@color/prussian_blue"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -87,7 +102,7 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/edit_fullname_ID"
+                    android:id="@+id/new_fullname_ID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
@@ -122,7 +137,7 @@
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/edit_nickname_ID"
+                        android:id="@+id/new_nickname_ID"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:digits="qwertyuiopasdfghjklzxcvbnm0123456789._"
@@ -139,7 +154,7 @@
                 </LinearLayout>
 
                 <EditText
-                    android:id="@+id/edit_qualification_ID"
+                    android:id="@+id/new_qualification_ID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#FC7A08"
@@ -150,7 +165,6 @@
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/prussian_blue"
-                    android:textColorHint="#37474F"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -168,7 +182,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/edit_description_show_ID"
+                    android:id="@+id/new_description_show_ID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/describe_yourself_with_a_long_text"
@@ -184,11 +198,11 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/skillsID2"
+                        android:id="@+id/skillsID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_weight="1"
+                        android:layout_weight="3"
                         android:paddingLeft="16dp"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
@@ -206,28 +220,19 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
-                    android:text="@string/edit_skills_text_edit_view"
+                    android:text="@string/edit_skills_text"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/skillsListTextID"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="40dp"
-                    android:paddingRight="40dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
                 <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/editProfileChipGroup"
+                    android:id="@+id/newProfileChipGroup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp">
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp">
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/editProfileAddNewSkillChip"
+                        android:id="@+id/newProfileAddNewSkillChip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="+" />
@@ -269,7 +274,7 @@
                         app:drawableTint="@color/orange_poli" />
 
                     <EditText
-                        android:id="@+id/edit_phone_show_ID"
+                        android:id="@+id/new_phone_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -306,7 +311,7 @@
                         app:drawableTint="@color/orange_poli" />
 
                     <TextView
-                        android:id="@+id/edit_email_show_ID"
+                        android:id="@+id/new_email_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -343,7 +348,7 @@
                         app:drawableTint="@color/orange_poli" />
 
                     <EditText
-                        android:id="@+id/edit_loc_show_ID"
+                        android:id="@+id/new_loc_show_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -360,4 +365,4 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

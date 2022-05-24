@@ -75,6 +75,7 @@ class NewProfileFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        activityTB = requireActivity() as TBMainActivity
         return inflater.inflate(R.layout.new_profile, container, false)
     }
 
@@ -96,7 +97,6 @@ class NewProfileFragment : Fragment() {
             }
         }
 
-        activityTB = requireActivity() as TBMainActivity
         activityTB.supportActionBar?.setDisplayHomeAsUpEnabled(false)
         activityTB.drawerLock()
         // Camera
@@ -352,6 +352,8 @@ class NewProfileFragment : Fragment() {
                 )
             )
             userIsOkay = true
+
+            activityTB.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
         return userIsOkay
     }
@@ -507,7 +509,6 @@ class NewProfileFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        activityTB.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         super.onDestroy()
     }
 }
