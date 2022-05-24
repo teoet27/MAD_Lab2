@@ -67,11 +67,6 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
         this.skillsChips = view.findViewById(R.id.editTimeslotSkillChipGroup)
         this.newSkillChip = view.findViewById(R.id.editTimeslotAddSkillChip)
 
-        /*// Retrieve the account name of the current user
-        usrViewModel.currentUser.observe(viewLifecycleOwner) { user ->
-            accountName = if (user?.fullName == null) "Guido Saracco" else user.fullName!!
-        }*/
-
         advViewModel.advertisement.observe(viewLifecycleOwner) { singleAdvertisement ->
             // A dumb advertisement which will be filled with the newest information
             dumbAdvertisement.id = singleAdvertisement.id
