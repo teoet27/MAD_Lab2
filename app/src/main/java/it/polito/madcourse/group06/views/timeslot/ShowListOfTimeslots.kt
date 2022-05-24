@@ -69,42 +69,40 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.searchBar = view.findViewById(R.id.search_bar)
         this.myTimeslotsButton = view.findViewById(R.id.myTimeslotsButtonID)
 
+        // Get current user
         userProfileViewModel.currentUser.observe(viewLifecycleOwner) {
             this.currentAccountID = it.id!!
         }
-
-        arguments?.getString("selected_skill")?.let { selectedSkill = it }
-
-        registerForContextMenu(sortParam)
 
         this.newAdvButton.setOnClickListener {
             findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
         }
 
-        sharedViewModel.selected.observe(viewLifecycleOwner) {
-            enableUI(!it)
+        // Get and set current selected skill
+        arguments?.getString("selected_skill")?.let { selectedSkill = it }
+
+        // Context menu for choosing sort parameter
+        registerForContextMenu(sortParam)
+        sortParam.setOnClickListener {
+            activity?.openContextMenu(sortParam)
         }
 
+        // Open filter fragment
         filterButton.setOnClickListener {
             activity?.supportFragmentManager!!.beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_up, 0)
                 .add(R.id.nav_host_fragment_content_main, FilterTimeslots(), "filter_window").commit()
         }
-
-        sortParam.setOnClickListener {
-            activity?.openContextMenu(sortParam)
+        // If filter fragment is open, disable RV UI
+        sharedViewModel.selected.observe(viewLifecycleOwner) {
+            enableUI(!it)
         }
 
-        searchBar.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable) {}
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                search = searchBar.text
-            }
-        })
-
+        // Initialize Adapter card for recycler view
         var advAdapterCard = AdvAdapterCard(fullListForGivenSkill, advertisementViewModel)
 
+        // Modify adapter card when events occur:
+        // - MyTimeslots
         this.myTimeslotsButton.setOnClickListener {
             isMyAdv = !isMyAdv
             if (isMyAdv) {
@@ -116,7 +114,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             }
             advAdapterCard.switchMode(isMyAdv, currentAccountID)
         }
-
+        // - Change sort direction
         this.directionButton.setOnClickListener {
             isUp = !isUp
             if (isUp) this.directionButton.setImageResource(R.drawable.sort_up)
@@ -124,24 +122,22 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             advAdapterCard.switchSort(isUp, param)
         }
 
+        // - Search bar research
+        searchBar.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                advAdapterCard.searchByName(searchBar.text.toString())
+            }
+        })
+
         advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
             fullListForGivenSkill = listOfAdv.filter { it.listOfSkills.contains(selectedSkill) || selectedSkill == "All" }
 
+            // Close filter window in case it was left open
             activity?.supportFragmentManager?.findFragmentByTag("filter_window")?.also { frag ->
                 activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
                 sharedViewModel.select(false)
-            }
-
-            fullListForGivenSkill.apply {
-                filter {
-                    if (isMyAdv) {
-                        it.accountID == currentAccountID
-                    } else true
-                }
-            }
-
-            if (search != null) {
-                fullListForGivenSkill = fullListForGivenSkill.filter { it.advTitle.contains(search!!, true) }
             }
 
             //compose recycler view
@@ -150,8 +146,9 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             this.recyclerView.layoutManager = LinearLayoutManager(this.context)
             advAdapterCard = AdvAdapterCard(fullListForGivenSkill, advertisementViewModel)
 
+            // - Filter
             sharedViewModel.filter.observe(viewLifecycleOwner) {
-                advAdapterCard.filterAdvertisementList(fullListForGivenSkill, it)
+                advAdapterCard.filterAdvertisementList(it)
             }
 
             // Adapter setting
@@ -210,6 +207,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             resources.getString(R.string.ending_time_menu) -> param = 3
             resources.getString(R.string.date) -> param = 4
         }
+        this.sortParam.text=item.title
         return true
     }
 }
