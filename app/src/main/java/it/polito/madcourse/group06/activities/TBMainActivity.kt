@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
@@ -22,15 +23,18 @@ import it.polito.madcourse.group06.databinding.ActivityMainBinding
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.utilities.DrawerInterface
 import it.polito.madcourse.group06.utilities.TimeslotTools
 
-class TBMainActivity : AppCompatActivity() {
+class TBMainActivity : AppCompatActivity(), DrawerInterface {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
     private val userProfileViewModel: UserProfileViewModel by viewModels<UserProfileViewModel>()
     private val sharedViewModel: SharedViewModel by viewModels()
+
+    private lateinit var actionBar: ActionBar
 
     // declare the GoogleSignInClient
     lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -42,7 +46,6 @@ class TBMainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         // configure the GoogleSignInOptions with the same server client ID used for logging in
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id_bis))
@@ -71,7 +74,8 @@ class TBMainActivity : AppCompatActivity() {
             setOf(
                 R.id.ShowListTimeslots,
                 R.id.ShowListOfServices,
-                R.id.showProfileFragment
+                R.id.showProfileFragment,
+                R.id.newProfileFragment
             ), drawerLayout
         )
         // setup navigation drawer
@@ -159,6 +163,16 @@ class TBMainActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun drawerLock() {
+        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    }
+
+    override fun drawerUnlock() {
+        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
 }

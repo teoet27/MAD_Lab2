@@ -322,7 +322,7 @@ class EditProfileActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.complete_user_editing -> {
+            R.id.complete_user_registration -> {
                 val intent = Intent()
                 val b = Bundle()
 

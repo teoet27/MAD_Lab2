@@ -444,7 +444,7 @@ class EditProfileFragment : Fragment() {
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.complete_user_editing -> {
+            R.id.complete_user_registration -> {
                 saveData()
                 findNavController().navigate(R.id.action_editProfileFragment_to_showProfileFragment)
             }

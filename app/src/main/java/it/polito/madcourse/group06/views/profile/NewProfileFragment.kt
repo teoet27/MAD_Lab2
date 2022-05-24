@@ -1,5 +1,6 @@
 package it.polito.madcourse.group06.views.profile
 
+import android.app.ActionBar
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ActivityNotFoundException
@@ -22,6 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -31,6 +33,7 @@ import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.GoogleLoginActivity
+import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.models.userprofile.UserProfile
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.utilities.*
@@ -53,6 +56,8 @@ class NewProfileFragment : Fragment() {
     private lateinit var newSkillChip: Chip
     private lateinit var newSkillTitleLabel: String
     private lateinit var imgProfilePicturePath: String
+    private lateinit var activityTB: TBMainActivity
+    private lateinit var actionBar: ActionBar
     private val skillList = arrayListOf<String>()
 
     private val REQUEST_IMAGE_CAPTURE = 1
@@ -72,7 +77,9 @@ class NewProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activityTB = requireActivity() as TBMainActivity
 
+        activityTB.drawerLock()
         // Camera
         val camera = view.findViewById<ImageView>(R.id.edit_camera_button)
         registerForContextMenu(camera)
@@ -524,7 +531,7 @@ class NewProfileFragment : Fragment() {
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.complete_user_editing -> {
+            R.id.complete_user_registration -> {
                 if (saveData()) {
                     Snackbar.make(
                         requireView(),
@@ -539,6 +546,7 @@ class NewProfileFragment : Fragment() {
     }
 
     override fun onDestroy() {
+        activityTB.drawerUnlock()
         super.onDestroy()
     }
 }
