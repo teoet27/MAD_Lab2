@@ -91,13 +91,13 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
                     break
                 }
             }
-            if (!isAlreadyRegistered) {
-                navController.navigate(R.id.newProfileFragment)
-            } else {
-                userProfileViewModel.fetchUserProfile(email)
-            }
         }
 
+        if (!isAlreadyRegistered) {
+            navController.navigate(R.id.newProfileFragment)
+        } else {
+            userProfileViewModel.fetchUserProfile(email)
+        }
 
         // Navigation view item click listener
         navView.setNavigationItemSelectedListener {
