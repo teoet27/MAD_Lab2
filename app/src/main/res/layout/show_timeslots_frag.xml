@@ -189,7 +189,7 @@
         android:id="@+id/barrier"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#BF333533"
+        android:background="#4D001C30"
         android:clickable="true"
         android:elevation="100dp"
         android:visibility="gone"
