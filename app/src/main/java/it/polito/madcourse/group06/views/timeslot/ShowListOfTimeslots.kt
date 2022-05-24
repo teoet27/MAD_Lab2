@@ -37,12 +37,12 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var myTimeslotsButton: TextView
     private lateinit var currentAccountID: String
     private var selectedSkill: String = "All"
-    private val advFilter: TimeslotTools.AdvFilter = TimeslotTools.AdvFilter()
+    private var advFilter: TimeslotTools.AdvFilter = TimeslotTools.AdvFilter()
     private var fullListForGivenSkill: List<Advertisement> = listOf()
     private var param: Int = 0
     private var isMyAdv = false
     private var isUp = false
-    private var search: CharSequence? = null
+    private var search: String? = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -91,7 +91,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         filterButton.setOnClickListener {
             activity?.supportFragmentManager!!.beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_up, 0)
-                .add(R.id.nav_host_fragment_content_main, FilterTimeslots(), "filter_window").commit()
+                .add(R.id.nav_host_fragment_content_main, FilterTimeslots(), "filter_window")
+                .commit()
         }
         // If filter fragment is open, disable RV UI
         sharedViewModel.selected.observe(viewLifecycleOwner) {
@@ -106,20 +107,46 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.myTimeslotsButton.setOnClickListener {
             isMyAdv = !isMyAdv
             if (isMyAdv) {
-                this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.orange_poli)
-                this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.black))
+                this.myTimeslotsButton.backgroundTintList =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.orange_poli)
+                this.myTimeslotsButton.setTextColor(
+                    AppCompatResources.getColorStateList(
+                        requireContext(),
+                        R.color.black
+                    )
+                )
             } else {
-                this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.darkGray)
-                this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.lightGray))
+                this.myTimeslotsButton.backgroundTintList =
+                    AppCompatResources.getColorStateList(requireContext(), R.color.darkGray)
+                this.myTimeslotsButton.setTextColor(
+                    AppCompatResources.getColorStateList(
+                        requireContext(),
+                        R.color.lightGray
+                    )
+                )
             }
-            advAdapterCard.switchMode(isMyAdv, currentAccountID)
+            advAdapterCard.updateDataSet(
+                advFilter = advFilter,
+                sortUp = isUp,
+                sortParam = param,
+                myAds = isMyAdv,
+                userID = currentAccountID,
+                search = search
+            )
         }
         // - Change sort direction
         this.directionButton.setOnClickListener {
             isUp = !isUp
             if (isUp) this.directionButton.setImageResource(R.drawable.sort_up)
             else this.directionButton.setImageResource(R.drawable.sort_down)
-            advAdapterCard.switchSort(isUp, param)
+            advAdapterCard.updateDataSet(
+                advFilter = advFilter,
+                sortUp = isUp,
+                sortParam = param,
+                myAds = isMyAdv,
+                userID = currentAccountID,
+                search = search
+            )
         }
 
         // - Search bar research
@@ -127,12 +154,21 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             override fun afterTextChanged(s: Editable) {}
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                advAdapterCard.searchByName(searchBar.text.toString())
+                search = searchBar.text.toString()
+                advAdapterCard.updateDataSet(
+                    advFilter = advFilter,
+                    sortUp = isUp,
+                    sortParam = param,
+                    myAds = isMyAdv,
+                    userID = currentAccountID,
+                    search = search
+                )
             }
         })
 
         advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
-            fullListForGivenSkill = listOfAdv.filter { it.listOfSkills.contains(selectedSkill) || selectedSkill == "All" }
+            fullListForGivenSkill =
+                listOfAdv.filter { it.listOfSkills.contains(selectedSkill) || selectedSkill == "All" }
 
             // Close filter window in case it was left open
             activity?.supportFragmentManager?.findFragmentByTag("filter_window")?.also { frag ->
@@ -141,14 +177,24 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             }
 
             //compose recycler view
-            view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = fullListForGivenSkill.isEmpty()
-            view.findViewById<ImageView>(R.id.create_hint).isVisible = fullListForGivenSkill.isEmpty()
+            view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible =
+                fullListForGivenSkill.isEmpty()
+            view.findViewById<ImageView>(R.id.create_hint).isVisible =
+                fullListForGivenSkill.isEmpty()
             this.recyclerView.layoutManager = LinearLayoutManager(this.context)
             advAdapterCard = AdvAdapterCard(fullListForGivenSkill, advertisementViewModel)
 
             // - Filter
             sharedViewModel.filter.observe(viewLifecycleOwner) {
-                advAdapterCard.filterAdvertisementList(it)
+                advFilter = it
+                advAdapterCard.updateDataSet(
+                    advFilter = advFilter,
+                    sortUp = isUp,
+                    sortParam = param,
+                    myAds = isMyAdv,
+                    userID = currentAccountID,
+                    search = search
+                )
             }
 
             // Adapter setting
@@ -207,7 +253,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             resources.getString(R.string.ending_time_menu) -> param = 3
             resources.getString(R.string.date) -> param = 4
         }
-        this.sortParam.text=item.title
+        this.sortParam.text = item.title
         return true
     }
 }

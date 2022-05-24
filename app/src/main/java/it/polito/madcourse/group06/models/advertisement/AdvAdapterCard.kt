@@ -16,12 +16,7 @@ class AdvAdapterCard(
     private val advViewModel: AdvertisementViewModel
 ) : RecyclerView.Adapter<AdvViewHolderCard>() {
 
-    private var isMyAdv: Boolean = false
-    private var isSortedUp = false
-    private var param: Int = 0
     private var showedData = adsList
-    private var beforeSearchData=listOf<Advertisement>()
-    private var beforeFilteringData=listOf<Advertisement>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdvViewHolderCard {
         val vg = LayoutInflater
@@ -54,80 +49,77 @@ class AdvAdapterCard(
      * @param mode true: show only my adv, false: show all the adv
      * @param userID if true, show only this user's adv
      */
-    fun switchMode(mode: Boolean, userID: String) {
-        isMyAdv = mode
-        if (isMyAdv) {
-            showedData = showedData.filter { it.accountID == userID }
-        } else {
-            showedData = adsList
-        }
-        notifyDataSetChanged()
-    }
 
-    fun switchSort(mode: Boolean, param: Int) {
-        this.isSortedUp = mode
-        this.param = param
-
-        when (mode) {
-            true -> when (param) {
-                0 -> showedData = showedData.sortedBy { it.advTitle.lowercase() }
-                1 -> showedData = showedData.sortedByDescending { it.advDuration }
-                2 -> showedData = showedData.sortedByDescending { timeStringToDoubleSec(it.advStartingTime) }
-                3 -> showedData = showedData.sortedByDescending { timeStringToDoubleSec(it.advEndingTime) }
-                4 -> showedData = showedData.sortedByDescending { dateStringToInt(it.advDate) }
-            }
-            else -> when (param) {
-                0 -> showedData = showedData.sortedByDescending { it.advTitle.lowercase() }
-                1 -> showedData = showedData.sortedBy { it.advDuration }
-                2 -> showedData = showedData.sortedBy { timeStringToDoubleSec(it.advStartingTime) }
-                3 -> showedData = showedData.sortedBy { timeStringToDoubleSec(it.advEndingTime) }
-                4 -> showedData = showedData.sortedBy { dateStringToInt(it.advDate) }
-            }
-        }
-        notifyDataSetChanged()
-    }
-
-    //method for search
-    fun searchByName(name:String){
-        if(beforeSearchData.isNullOrEmpty())
-            beforeSearchData=showedData
-        showedData=beforeSearchData.filter{it.advTitle.contains(name,true)}
-        notifyDataSetChanged()
-    }
-
-
-    //method for filtering
-    fun filterAdvertisementList(
-        advFilter: TimeslotTools.AdvFilter?
+    fun updateDataSet(
+        advFilter: TimeslotTools.AdvFilter? = null,
+        sortParam: Int? = null,
+        sortUp: Boolean? = null,
+        myAds: Boolean? = null,
+        userID: String? = null,
+        search: String? = null
     ) {
-        if(beforeFilteringData.isNullOrEmpty())
-            beforeFilteringData=showedData
+        //Filtering phase
+        showedData =
+            if (advFilter == null) adsList else adsList.filter { adv ->
+                ((advFilter.location != null && !advFilter.whole_word && advFilter.location.lowercase()
+                    .contains(adv.advLocation.lowercase(), true)) ||
+                        (advFilter.location != null && !advFilter.whole_word && adv.advLocation.lowercase()
+                            .contains(advFilter.location.lowercase(), true)) ||
+                        (advFilter.location != null && advFilter.whole_word && advFilter.location.lowercase() == adv.advLocation.lowercase()) || (advFilter.location == null)) &&
 
-        showedData= if (advFilter == null) beforeFilteringData else beforeFilteringData.filter { adv ->
-            ((advFilter.location != null && !advFilter.whole_word && advFilter.location.lowercase()
-                .contains(adv.advLocation.lowercase(), true)) ||
-                    (advFilter.location != null && !advFilter.whole_word && adv.advLocation.lowercase()
-                        .contains(advFilter.location.lowercase(), true)) ||
-                    (advFilter.location != null && advFilter.whole_word && advFilter.location.lowercase() == adv.advLocation.lowercase()) || (advFilter.location == null)) &&
+                        ((advFilter.min_duration != null && adv.advDuration >= timeStringToDoubleHour(
+                            advFilter.min_duration
+                        )) || (advFilter.min_duration == null)) &&
+                        ((advFilter.max_duration != null && adv.advDuration <= timeStringToDoubleHour(
+                            advFilter.max_duration
+                        )) || (advFilter.max_duration == null)) &&
 
-                    ((advFilter.min_duration != null && adv.advDuration >= timeStringToDoubleHour(
-                        advFilter.min_duration
-                    )) || (advFilter.min_duration == null)) &&
-                    ((advFilter.max_duration != null && adv.advDuration <= timeStringToDoubleHour(
-                        advFilter.max_duration
-                    )) || (advFilter.max_duration == null)) &&
+                        ((advFilter.starting_time != null && adv.advStartingTime.isLaterThanTime(
+                            advFilter.starting_time
+                        )) || (advFilter.starting_time == null)) &&
+                        ((advFilter.ending_time != null && adv.advEndingTime.isSoonerThanTime(
+                            advFilter.ending_time
+                        )) || (advFilter.ending_time == null)) &&
 
-                    ((advFilter.starting_time != null && adv.advStartingTime.isLaterThanTime(
-                        advFilter.starting_time
-                    )) || (advFilter.starting_time == null)) &&
-                    ((advFilter.ending_time != null && adv.advEndingTime.isSoonerThanTime(advFilter.ending_time)) || (advFilter.ending_time == null)) &&
+                        ((advFilter.starting_date != null && adv.advDate.isLaterThanDate(advFilter.starting_date)) || (advFilter.starting_date == null)) &&
+                        ((advFilter.ending_date != null && adv.advDate.isSoonerThanDate(advFilter.ending_date)) || (advFilter.ending_date == null))
+            }
 
-                    ((advFilter.starting_date != null && adv.advDate.isLaterThanDate(advFilter.starting_date)) || (advFilter.starting_date == null)) &&
-                    ((advFilter.ending_date != null && adv.advDate.isSoonerThanDate(advFilter.ending_date)) || (advFilter.ending_date == null))
+        // Sorting phase
+        if(sortUp!=null) {
+            when (sortUp) {
+                true -> when (sortParam) {
+                    0 -> showedData = showedData.sortedBy { it.advTitle.lowercase() }
+                    1 -> showedData = showedData.sortedByDescending { it.advDuration }
+                    2 -> showedData =
+                        showedData.sortedByDescending { timeStringToDoubleSec(it.advStartingTime) }
+                    3 -> showedData =
+                        showedData.sortedByDescending { timeStringToDoubleSec(it.advEndingTime) }
+                    4 -> showedData = showedData.sortedByDescending { dateStringToInt(it.advDate) }
+                }
+                else -> when (sortParam) {
+                    0 -> showedData = showedData.sortedByDescending { it.advTitle.lowercase() }
+                    1 -> showedData = showedData.sortedBy { it.advDuration }
+                    2 -> showedData =
+                        showedData.sortedBy { timeStringToDoubleSec(it.advStartingTime) }
+                    3 -> showedData =
+                        showedData.sortedBy { timeStringToDoubleSec(it.advEndingTime) }
+                    4 -> showedData = showedData.sortedBy { dateStringToInt(it.advDate) }
+                }
+            }
         }
+
+        // My timeslot filtering
+        if (myAds==true) {
+            showedData = showedData.filter { it.accountID == userID }
+        }
+
+        // Search
+        if(search!=null)
+            showedData = showedData.filter { it.advTitle.contains(search.toString(), true) }
+
         notifyDataSetChanged()
     }
-
 
     private fun dateStringToInt(date: String): Int {
         var dateInt = 0
