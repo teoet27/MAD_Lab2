@@ -81,6 +81,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
         this.reset.setOnClickListener {
             //reset filters
             this.location.text = null
+            this.wholeWord.isChecked=false
             this.fromDate.text = "+"
             this.toDate.text = "+"
             this.fromTime.text = "+"
