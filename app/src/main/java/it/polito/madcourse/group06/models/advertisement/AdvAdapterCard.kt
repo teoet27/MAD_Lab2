@@ -75,8 +75,39 @@ class AdvAdapterCard(
         notifyDataSetChanged()
     }
 
-    fun filterList(advFilter: TimeslotTools.AdvFilter) {
+    /**
+     * filterAdvertisement
+     * @param advList list of all available advertisements
+     * @param location to be matched to Adv related attribute
+     * @param starting_time to be matched to Adv related attribute
+     * @param ending_time to be matched to Adv related attribute
+     * @param duration to be matched to Adv related attribute
+     * @param starting_date to be matched to Adv related attribute
+     * @param ending_date to be matched to Adv related attribute
+     * @return the list of Advertisements matching the constraints
+     */
+    fun filterAdvertisementList(advList: List<Advertisement>?, advFilter: TimeslotTools.AdvFilter?): List<Advertisement>? {
+        //begin debug section
+        advList?.filter { adv ->
+            if ((advFilter?.starting_date != null && adv.advDate.isLaterThanDate(advFilter.starting_date)) || (advFilter?.starting_date == null))
+                println("ok")
+            true
+        }
+        //end debug section
+        return if (advFilter == null) advList else advList?.filter { adv ->
+            ((advFilter.location != null && !advFilter.whole_word && advFilter.location.lowercase().contains(adv.advLocation.lowercase(), true)) ||
+                    (advFilter.location != null && !advFilter.whole_word && adv.advLocation.lowercase().contains(advFilter.location.lowercase(), true)) ||
+                    (advFilter.location != null && advFilter.whole_word && advFilter.location.lowercase() == adv.advLocation.lowercase()) || (advFilter.location == null)) &&
 
+                    ((advFilter.min_duration != null && adv.advDuration >= timeStringToDoubleHour(advFilter.min_duration)) || (advFilter.min_duration == null)) &&
+                    ((advFilter.max_duration != null && adv.advDuration <= timeStringToDoubleHour(advFilter.max_duration)) || (advFilter.max_duration == null)) &&
+
+                    ((advFilter.starting_time != null && adv.advStartingTime.isLaterThanTime(advFilter.starting_time)) || (advFilter.starting_time == null)) &&
+                    ((advFilter.ending_time != null && adv.advEndingTime.isSoonerThanTime(advFilter.ending_time)) || (advFilter.ending_time == null)) &&
+
+                    ((advFilter.starting_date != null && adv.advDate.isLaterThanDate(advFilter.starting_date)) || (advFilter.starting_date == null)) &&
+                    ((advFilter.ending_date != null && adv.advDate.isSoonerThanDate(advFilter.ending_date)) || (advFilter.ending_date == null))
+        }
     }
 
     fun sortAdvertisementList(advList: List<Advertisement>?, criterion: Int?, up_flag: Boolean = true): List<Advertisement>? {
@@ -116,6 +147,52 @@ class AdvAdapterCard(
 
     private fun timeStringToDoubleSec(time: String): Double {
         return time.split(":").fold(0.0) { a, b -> (a.toDouble() + b.toDouble()) * 60.0 }
+    }
+
+    private fun String.isLaterThanTime(time: String): Boolean {
+        return computeTimeDifference(time, this).first >= 0
+    }
+
+    private fun String.isSoonerThanTime(time: String): Boolean {
+        return computeTimeDifference(time, this).first <= 0
+    }
+
+    private fun String.isLaterThanDate(date: String): Boolean {
+        return computeDateDifference(date, this).first >= 0
+    }
+
+    private fun String.isSoonerThanDate(date: String): Boolean {
+        return computeDateDifference(date, this).first <= 0
+    }
+
+    private fun timeStringToDoubleHour(time: String): Double {
+        return time.split(":").foldRight(0.0) { a, b -> (a.toDouble() + b.toDouble()) / 60.0 } * 60
+    }
+
+    private fun computeDateDifference(startingDate: String, endingDate: String): Pair<Double, Boolean> {
+        var dateDifference: Double = 0.0
+        if (startingDate.isNullOrEmpty() || endingDate.isNullOrEmpty()) {
+            return Pair(-1.0, false)
+        }
+        dateDifference = (dateStringToInt(endingDate) - dateStringToInt(startingDate)).toDouble()
+        return Pair(
+            String.format("%.2f", dateDifference).toDouble(),
+            String.format("%.2f", dateDifference).toDouble() >= 0
+        )
+    }
+
+    private fun computeTimeDifference(startingTime: String, endingTime: String): Pair<Double, Boolean> {
+        var timeDifference: Double = 0.0
+        if (startingTime.isNullOrEmpty() || endingTime.isNullOrEmpty()) {
+            return Pair(-1.0, false)
+        }
+
+        timeDifference = timeStringToDoubleSec(endingTime) - timeStringToDoubleSec(startingTime)
+
+        return Pair(
+            String.format("%.2f", timeDifference).toDouble(),
+            String.format("%.2f", timeDifference).toDouble() >= 0
+        )
     }
 
     private fun Boolean.toInt() = if (this) 1 else 0

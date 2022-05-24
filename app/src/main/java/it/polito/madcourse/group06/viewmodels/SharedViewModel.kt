@@ -6,7 +6,7 @@ import it.polito.madcourse.group06.utilities.TimeslotTools
 
 
 class SharedViewModel : ViewModel() {
-    private var _selected_skill=""
+    private var _selected_skill = ""
     private var _selected = false
     private var _sortParam = "Title"
     private var _sortUp = false
@@ -14,7 +14,7 @@ class SharedViewModel : ViewModel() {
     private var _filter = TimeslotTools.AdvFilter()
     private var _updateRV = false
 
-    var selected_skill=MutableLiveData<String>().also{
+    var selected_skill = MutableLiveData<String>().also {
         it.value = _selected_skill
     }
     var selected = MutableLiveData<Boolean>()
@@ -30,14 +30,15 @@ class SharedViewModel : ViewModel() {
     var filter = MutableLiveData<TimeslotTools.AdvFilter>().also {
         it.value = _filter
     }
-    var updateRV = MutableLiveData<Boolean>().also{
-        it.value=_updateRV
+    var updateRV = MutableLiveData<Boolean>().also {
+        it.value = _updateRV
     }
 
-    fun selectSkill(skill:String){
-        _selected_skill=skill
-        selected_skill.value=_selected_skill
+    fun selectSkill(skill: String) {
+        _selected_skill = skill
+        selected_skill.value = _selected_skill
     }
+
     fun select(value: Boolean) {
         _selected = value
         selected.value = _selected
@@ -52,26 +53,29 @@ class SharedViewModel : ViewModel() {
         _sortParam = name
         sortParam.value = _sortParam
     }
-    fun getSortParam():String {
+
+    fun getSortParam(): String {
         return sortParam.value!!
     }
 
-    fun updateSort(){
+    fun updateSort() {
         sortUp.value = _sortUp
     }
+
     fun toggleSortDirection() {
-        _lastSortUp=_sortUp
+        _lastSortUp = _sortUp
         lastSortUp.value = _lastSortUp
         _sortUp = !_sortUp
         sortUp.value = _sortUp
     }
-    fun setSortUp(){
+
+    fun setSortUp() {
         _sortUp = true
         sortUp.value = _sortUp
     }
 
-    fun updateRV(){
-        _updateRV=true
-        updateRV.value=_updateRV
+    fun updateRV() {
+        _updateRV = true
+        updateRV.value = _updateRV
     }
 }

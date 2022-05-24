@@ -37,6 +37,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var myTimeslotsButton: TextView
     private lateinit var currentAccountID: String
     private val advFilter: TimeslotTools.AdvFilter = TimeslotTools.AdvFilter()
+    private var fullListForGivenSkill: List<Advertisement> = listOf()
     private var param: Int = 0
     private var isMyAdv = false
     private var isUp = false
@@ -81,9 +82,11 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
             sharedViewModel.select(false)
         }
+
         sharedViewModel.selected.observe(viewLifecycleOwner) {
             enableUI(!it)
         }
+
         filterButton.setOnClickListener {
             activity?.supportFragmentManager!!.beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_up, 0)
@@ -94,53 +97,25 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             activity?.openContextMenu(sortParam)
         }
 
-        directionButton.setOnClickListener {
-            sharedViewModel.toggleSortDirection()
-        }
-
         searchBar.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
-            override fun beforeTextChanged(
-                s: CharSequence, start: Int,
-                count: Int, after: Int
-            ) {
-            }
-
-            override fun onTextChanged(
-                s: CharSequence, start: Int,
-                before: Int, count: Int
-            ) {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 search = searchBar.text
-                //searchBar.setText("")
-                sharedViewModel.updateRV()
             }
         })
 
-
         arguments?.getString("selected_skill")?.let { sharedViewModel.selectSkill(it) }
-        lateinit var sortedList: List<Advertisement>
-        lateinit var fullListForGivenSkill: List<Advertisement>
-        advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
 
+        advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
             sharedViewModel.selected_skill.observe(viewLifecycleOwner) { selected_skill ->
                 fullListForGivenSkill = listOfAdv.filter {
                     it.listOfSkills.contains(selected_skill) || selected_skill == "All"
                 }
             }
-
-            sharedViewModel.updateRV()
-        }
-        sharedViewModel.filter.observe(viewLifecycleOwner) { filter ->
-            sortedList = TimeslotTools().filterAdvertisementList(fullListForGivenSkill, filter)!!
-            sharedViewModel.updateRV()
-        }
-        sharedViewModel.sortParam.observe(viewLifecycleOwner) { parameter ->
-            this.sortParam.text = parameter
-            sharedViewModel.updateSort()
         }
 
-        var finalList = sortedList
-        finalList.apply {
+        fullListForGivenSkill.apply {
             filter {
                 if (isMyAdv) {
                     it.accountID == currentAccountID
@@ -148,14 +123,14 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             }
         }
         if (search != null) {
-            finalList = finalList.filter { it.advTitle.contains(search!!, true) }
+            fullListForGivenSkill = fullListForGivenSkill.filter { it.advTitle.contains(search!!, true) }
         }
 
         //compose recycler view
-        view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = finalList.isEmpty()
-        view.findViewById<ImageView>(R.id.create_hint).isVisible = finalList.isEmpty()
+        view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = fullListForGivenSkill.isEmpty()
+        view.findViewById<ImageView>(R.id.create_hint).isVisible = fullListForGivenSkill.isEmpty()
         this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-        val advAdapterCard = AdvAdapterCard(finalList, advertisementViewModel)
+        val advAdapterCard = AdvAdapterCard(fullListForGivenSkill, advertisementViewModel)
 
         this.myTimeslotsButton.setOnClickListener {
             isMyAdv = !isMyAdv
@@ -185,7 +160,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         }
 
         sharedViewModel.filter.observe(viewLifecycleOwner) {
-            advAdapterCard.filterList(it)
+            advAdapterCard.filterAdvertisementList(fullListForGivenSkill, it)
         }
 
         // Adapter setting
