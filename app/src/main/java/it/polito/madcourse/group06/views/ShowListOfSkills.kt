@@ -60,12 +60,12 @@ class ShowListOfSkills : Fragment(R.layout.service_list) {
 
             sortButton.setOnClickListener {
                 listOfSkills = listOfSkills.asReversed()
-                val finalList=listOfSkills.toMutableList()
-                finalList.add(0,"All")
+                val finalList = listOfSkills.toMutableList()
+                finalList.add(0, "All")
                 this.recyclerView.adapter = SkillAdapterCard(finalList)
             }
-            val finalList=listOfSkills.toMutableList()
-            finalList.add(0,"All")
+            val finalList = listOfSkills.toMutableList()
+            finalList.add(0, "All")
             this.recyclerView.adapter = SkillAdapterCard(finalList)
         }
     }
