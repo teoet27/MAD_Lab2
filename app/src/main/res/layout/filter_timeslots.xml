@@ -104,7 +104,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/whole_word" />
+                        android:text="@string/whole_word"
+                        android:textColorHighlight="@color/prussian_blue"
+                        android:textColorLink="@color/prussian_blue" />
                 </LinearLayout>
 
                 <LinearLayout
