@@ -34,9 +34,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
     private lateinit var minDuration: Chip
     private lateinit var maxDuration: Chip
     private lateinit var applyButton: Button
-    private lateinit var wholeWord:CheckBox
-
-
+    private lateinit var wholeWord: CheckBox
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
@@ -54,17 +52,17 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
         this.minDuration = view.findViewById(R.id.min_duration)
 
         this.applyButton = view.findViewById(R.id.apply_button)
-        this.wholeWord=view.findViewById(R.id.whole_word)
+        this.wholeWord = view.findViewById(R.id.whole_word)
 
-        sharedViewModel.filter.observe(viewLifecycleOwner){
-            this.location.setText(it.location?:"")
-            this.wholeWord.isChecked=it.whole_word
-            this.fromTime.setText( if (it.starting_time.isNullOrEmpty()) "+" else it.starting_time)
-            this.toTime.setText( if (it.ending_time.isNullOrEmpty()) "+" else it.ending_time)
+        sharedViewModel.filter.observe(viewLifecycleOwner) {
+            this.location.setText(it.location ?: "")
+            this.wholeWord.isChecked = it.whole_word
+            this.fromTime.setText(if (it.starting_time.isNullOrEmpty()) "+" else it.starting_time)
+            this.toTime.setText(if (it.ending_time.isNullOrEmpty()) "+" else it.ending_time)
             this.minDuration.setText(if (it.min_duration.isNullOrEmpty()) "+" else it.min_duration)
-            this.maxDuration.setText( if (it.max_duration.isNullOrEmpty()) "+" else it.max_duration)
-            this.fromDate.setText( if (it.starting_date.isNullOrEmpty()) "+" else it.starting_date)
-            this.toDate.setText( if (it.ending_date.isNullOrEmpty()) "+" else it.ending_date)
+            this.maxDuration.setText(if (it.max_duration.isNullOrEmpty()) "+" else it.max_duration)
+            this.fromDate.setText(if (it.starting_date.isNullOrEmpty()) "+" else it.starting_date)
+            this.toDate.setText(if (it.ending_date.isNullOrEmpty()) "+" else it.ending_date)
         }
 
         sharedViewModel.select(true)
@@ -73,28 +71,32 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
         this.fromTime.setOnClickListener { popUpStartingTimePicker() }
         this.toDate.setOnClickListener { popUpEndingDatePicker() }
         this.toTime.setOnClickListener { popUpEndingTimePicker() }
-        this.minDuration.setOnClickListener{popUpMinDurationPicker()}
-        this.maxDuration.setOnClickListener{popUpMaxDurationPicker()}
+        this.minDuration.setOnClickListener { popUpMinDurationPicker() }
+        this.maxDuration.setOnClickListener { popUpMaxDurationPicker() }
 
         this.cancel.setOnClickListener { slideOutFragment(this) }
 
+        this.wholeWord.setOnClickListener {
+            if (location.text.isEmpty())
+                this.wholeWord.isChecked = false
+        }
+
         this.reset.setOnClickListener {
-            //reset filters
             this.location.text = null
-            this.wholeWord.isChecked=false
+            this.wholeWord.isChecked = false
             this.fromDate.text = "+"
             this.toDate.text = "+"
             this.fromTime.text = "+"
             this.toTime.text = "+"
-            this.minDuration.text="+"
-            this.maxDuration.text="+"
+            this.minDuration.text = "+"
+            this.maxDuration.text = "+"
         }
 
         this.applyButton.setOnClickListener {
             sharedViewModel.setFilter(
                 AdvFilter(
                     location = location.text.toString(),
-                    whole_word=wholeWord.isChecked,
+                    whole_word = wholeWord.isChecked && this.location.text.toString().isNotEmpty(),
                     starting_time = if (fromTime.text == "+") null else fromTime.text.toString(),
                     ending_time = if (toTime.text == "+") null else toTime.text.toString(),
                     min_duration = if (minDuration.text == "+") null else minDuration.text.toString(),
@@ -103,7 +105,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
                     ending_date = if (toDate.text == "+") null else toDate.text.toString(),
                 )
             )
-            slideOutFragment(this,true)
+            slideOutFragment(this, true)
         }
 
 
@@ -118,7 +120,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
         })
     }
 
-    private fun slideOutFragment(frag: Fragment,filterSet:Boolean=false) {
+    private fun slideOutFragment(frag: Fragment, filterSet: Boolean = false) {
         view?.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_down))
         sharedViewModel.select(false)
 
@@ -228,7 +230,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
 
         val timePickerDialog = TimePickerDialog(
             requireContext(),
-            onTimeSetListener, 0,0, true
+            onTimeSetListener, 0, 0, true
         )
 
         timePickerDialog.setTitle("Min Duration")
