@@ -552,6 +552,7 @@ class NewProfileFragment : Fragment() {
                         "Your profile was updated successfully. Explore our app to discover offered services.",
                         Snackbar.LENGTH_LONG
                     ).show()
+                    activityTB.drawerUnlock()
                     findNavController().navigate(R.id.action_newProfileFragment_to_ShowListOfServices)
                 }
             }
@@ -560,7 +561,6 @@ class NewProfileFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        activityTB.drawerUnlock()
         activityTB.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         super.onDestroy()
     }
