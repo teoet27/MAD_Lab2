@@ -101,7 +101,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                 singleAdvertisement.advDate.split("/")[1].toInt() - 1,
                 singleAdvertisement.advDate.split("/")[0].toInt()
             )
-            chosenDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+            chosenDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(singleAdvertisement.advDate))
             datePicker.init(
                 loadedDate.get(Calendar.YEAR), loadedDate.get(Calendar.MONTH),
                 loadedDate.get(Calendar.DAY_OF_MONTH)
