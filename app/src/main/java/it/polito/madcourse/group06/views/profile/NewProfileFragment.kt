@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -54,6 +55,7 @@ class NewProfileFragment : Fragment() {
     private lateinit var newSkillChip: Chip
     private lateinit var imgProfilePicturePath: String
     private lateinit var activityTB: TBMainActivity
+    private lateinit var email: String
     private val skillList = arrayListOf<String>()
 
     private val REQUEST_IMAGE_CAPTURE = 1
@@ -63,11 +65,16 @@ class NewProfileFragment : Fragment() {
 
     lateinit var mGoogleSignInClient: GoogleSignInClient
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private var _isRegistered: Boolean = false
+    private fun userRegistered() {
+        if (!_isRegistered) {
+            userProfileViewModel.fetchUserProfile(email)
+            findNavController().navigate(R.id.action_newProfileFragment_to_ShowListOfServices)
+        }
+        _isRegistered = true
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.new_profile, container, false)
     }
 
@@ -75,13 +82,16 @@ class NewProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         userProfileViewModel.currentUser.observe(viewLifecycleOwner) { user ->
+            email = user.email!!
             userProfileViewModel.listOfUsers.observe(viewLifecycleOwner) {
                 for (u in it) {
                     if (user.email == u.email) {
-                        userProfileViewModel.fetchUserProfile(user.email!!)
-                        findNavController().navigate(R.id.action_newProfileFragment_to_ShowListOfServices)
+                        userRegistered()
                         break
                     }
+                }
+                if (!_isRegistered) {
+                    _isRegistered = true
                 }
             }
         }
@@ -487,6 +497,7 @@ class NewProfileFragment : Fragment() {
                         "Your profile was updated successfully. Explore our app to discover offered services.",
                         Snackbar.LENGTH_LONG
                     ).show()
+                    userProfileViewModel.fetchUserProfile(email)
                     activityTB.drawerUnlock()
                     findNavController().navigate(R.id.action_newProfileFragment_to_ShowListOfServices)
                 }
