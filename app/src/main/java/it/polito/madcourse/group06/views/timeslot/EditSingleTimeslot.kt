@@ -128,10 +128,6 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                     this.skillsChips.removeAllViews()
                     user.skills?.forEach { skill ->
                         this.skillsChips.addChipWithCheck(requireContext(), skill, selectedSkillsList.contains(skill))
-                        this.skillsChips.setOnCheckedChangeListener { chipGroup, checkedId ->
-                            val selectedService = chipGroup.findViewById<Chip>(checkedId)?.text
-                            Toast.makeText(chipGroup.context, selectedService ?: "No Choice", Toast.LENGTH_LONG).show()
-                        }
                     }
                     this.skillsChips.addPlusChip(requireContext(),this.skillsChips)
                 }
@@ -157,6 +153,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                     dumbAdvertisement.advStartingTime = advStartingTime.text.toString()
                     dumbAdvertisement.advEndingTime = advEndingTime.text.toString()
                     dumbAdvertisement.advDuration = timeDifference
+                    dumbAdvertisement.listOfSkills=selectedSkillsList
                     advViewModel.editAdvertisement(dumbAdvertisement)
                     findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_showSingleTimeslot)
                 } else {
@@ -185,7 +182,6 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
             isChecked = isAlreadySelected
 
             if (isAlreadySelected) {
-                selectedSkillsList.add(skill)
                 setTextColor(ContextCompat.getColor(context, R.color.white))
                 chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.prussian_blue))
             } else {
@@ -198,9 +194,6 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                     selectedSkillsList.remove(skill)
                 } else {
                     selectedSkillsList.add(skill)
-                    val adv=advViewModel.advertisement.value!!
-                    adv.listOfSkills.add(skill)
-                    advViewModel.editAdvertisement(adv)
                 }
                 if (isChecked) {
                     setTextColor(ContextCompat.getColor(context, R.color.white))
