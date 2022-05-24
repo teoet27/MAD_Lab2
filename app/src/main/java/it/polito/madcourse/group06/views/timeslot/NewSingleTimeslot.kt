@@ -22,10 +22,10 @@ import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.Advertisement
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
-import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.roundToInt
 
 class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
@@ -107,7 +107,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                 var isPossible = true
                 val tmpList = it.filter { it.accountID == accountID }
                 for (adv in tmpList) {
-                    if(adv.advDate != chosenDate) {
+                    if (adv.advDate != chosenDate) {
                         continue
                     }
                     val newSTH = newStartingTime.text.toString().convertStringToArrayOfTime()[0]
@@ -187,7 +187,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                     var isPossible = true
                     val tmpList = it.filter { it.accountID == accountID }
                     for (adv in tmpList) {
-                        if(adv.advDate != chosenDate) {
+                        if (adv.advDate != chosenDate) {
                             continue
                         }
                         val newSTH = newStartingTime.text.toString().convertStringToArrayOfTime()[0]
@@ -448,12 +448,9 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
         timeDifference += (endingHour - startingHour) + ((endingMinute - startingMinute) / 60.0)
 
-        val durationString: String = DecimalFormat("#.##").format(timeDifference)
-        val durationDouble: Double = durationString.toDouble()
-
         return Pair(
-            durationDouble,
-            durationDouble >= 0
+            (timeDifference * 100.0).roundToInt() / 100.0,
+            timeDifference >= 0
         )
     }
 
