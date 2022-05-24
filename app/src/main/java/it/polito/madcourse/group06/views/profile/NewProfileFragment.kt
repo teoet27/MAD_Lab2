@@ -78,7 +78,7 @@ class NewProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activityTB = requireActivity() as TBMainActivity
-
+        activityTB.supportActionBar?.setDisplayHomeAsUpEnabled(false)
         activityTB.drawerLock()
         // Camera
         val camera = view.findViewById<ImageView>(R.id.edit_camera_button)
@@ -547,6 +547,7 @@ class NewProfileFragment : Fragment() {
 
     override fun onDestroy() {
         activityTB.drawerUnlock()
+        activityTB.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         super.onDestroy()
     }
 }
