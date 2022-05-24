@@ -23,7 +23,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -54,10 +53,8 @@ class NewProfileFragment : Fragment() {
     private lateinit var profilePicturePath: String
     private lateinit var skillsChips: ChipGroup
     private lateinit var newSkillChip: Chip
-    private lateinit var newSkillTitleLabel: String
     private lateinit var imgProfilePicturePath: String
     private lateinit var activityTB: TBMainActivity
-    private lateinit var actionBar: ActionBar
     private val skillList = arrayListOf<String>()
 
     private val REQUEST_IMAGE_CAPTURE = 1

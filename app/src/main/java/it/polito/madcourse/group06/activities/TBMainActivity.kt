@@ -31,7 +31,7 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    private val userProfileViewModel: UserProfileViewModel by viewModels<UserProfileViewModel>()
+    private val userProfileViewModel: UserProfileViewModel by viewModels()
     private val sharedViewModel: SharedViewModel by viewModels()
 
     private lateinit var actionBar: ActionBar
