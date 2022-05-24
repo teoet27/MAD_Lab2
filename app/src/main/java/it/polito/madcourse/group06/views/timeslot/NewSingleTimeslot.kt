@@ -7,13 +7,11 @@ import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
-import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -24,7 +22,6 @@ import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.Advertisement
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
-import java.lang.Math.random
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -106,88 +103,161 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
         this.confirmButton.setOnClickListener {
             val (timeDifference, isTimeDifferenceOk) = computeTimeDifference(newStartingTime.text.toString(), newEndingTime.text.toString())
-            if (areAllFieldsEmpty()) {
-                Snackbar.make(
-                    requireView(), "All fields are empty: fill them to create a new Advertisement.", Snackbar.LENGTH_LONG
-                ).show()
-            } else if (!isTimeDifferenceOk && timeDifference < 0) {
-                Snackbar.make(
-                    requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_LONG
-                ).show()
-            } else if (!isTimeDifferenceOk) {
-                Snackbar.make(
-                    requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_LONG
-                ).show()
-            } else if (isAdvValid()) {
-                advertisementViewModel.insertAdvertisement(
-                    Advertisement(
-                        "",
-                        newTitle.text.toString(),
-                        newDescription.text.toString(),
-                        selectedSkillsList,
-                        newLocation.text.toString(),
-                        chosenDate,
-                        newStartingTime.text.toString(),
-                        newEndingTime.text.toString(),
-                        timeDifference,
-                        accountName,
-                        accountID
-                    )
-                )
-                userProfileViewModel.updateSkillList(skillList)
-                Toast.makeText(
-                    context, "Advertisement created successfully!", Toast.LENGTH_LONG
-                ).show()
-                findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
-            } else {
-                Snackbar.make(
-                    requireView(), "Error: you need to provide at least a title, a starting and ending time, a location and a date. Try again.", Snackbar.LENGTH_LONG
-                ).show()
+            advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) {
+                var isPossible = true
+                val tmpList = it.filter { it.accountID == accountID }
+                for (adv in tmpList) {
+                    if(adv.advDate != chosenDate) {
+                        continue
+                    }
+                    val newSTH = newStartingTime.text.toString().convertStringToArrayOfTime()[0]
+                    val newSTM = newStartingTime.text.toString().convertStringToArrayOfTime()[1]
+                    val staticSTH = adv.advStartingTime.convertStringToArrayOfTime()[0]
+                    val staticSTM = adv.advStartingTime.convertStringToArrayOfTime()[1]
+                    val newETH = newEndingTime.text.toString().convertStringToArrayOfTime()[0]
+                    val newETM = newEndingTime.text.toString().convertStringToArrayOfTime()[1]
+                    val staticETH = adv.advEndingTime.convertStringToArrayOfTime()[0]
+                    val staticETM = adv.advEndingTime.convertStringToArrayOfTime()[1]
+
+                    if (newETH * 60 + newETM >= staticSTH * 60 + staticSTM && newSTH * 60 + newSTM <= staticSTH * 60 + staticSTM) {
+                        isPossible = false
+                        Snackbar.make(
+                            requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_LONG
+                        ).show()
+                    } else if (newSTH * 60 + newSTM >= staticSTH * 60 + staticSTM && newETH * 60 + newETM <= staticETH * 60 + staticETM) {
+                        isPossible = false
+                        Snackbar.make(
+                            requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_LONG
+                        ).show()
+                    } else if (newSTH * 60 + newSTM <= staticETH * 60 + staticETM && newETH * 60 + newETM >= staticETH * 60 + staticETM) {
+                        isPossible = false
+                        Snackbar.make(
+                            requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+
+                }
+                if (isPossible) {
+                    if (areAllFieldsEmpty()) {
+                        Snackbar.make(
+                            requireView(), "All fields are empty: fill them to create a new Advertisement.", Snackbar.LENGTH_LONG
+                        ).show()
+                    } else if (!isTimeDifferenceOk && timeDifference < 0) {
+                        Snackbar.make(
+                            requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_LONG
+                        ).show()
+                    } else if (!isTimeDifferenceOk) {
+                        Snackbar.make(
+                            requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_LONG
+                        ).show()
+                    } else if (isAdvValid()) {
+                        advertisementViewModel.insertAdvertisement(
+                            Advertisement(
+                                "",
+                                newTitle.text.toString(),
+                                newDescription.text.toString(),
+                                selectedSkillsList,
+                                newLocation.text.toString(),
+                                chosenDate,
+                                newStartingTime.text.toString(),
+                                newEndingTime.text.toString(),
+                                timeDifference,
+                                accountName,
+                                accountID
+                            )
+                        )
+                        userProfileViewModel.updateSkillList(skillList)
+                        Toast.makeText(
+                            context, "Advertisement created successfully!", Toast.LENGTH_LONG
+                        ).show()
+                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
+                    } else {
+                        Snackbar.make(
+                            requireView(), "Error: you need to provide at least a title, a starting and ending time, a location and a date. Try again.", Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+                }
             }
         }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val (timeDifference, isTimeDifferenceOk) = computeTimeDifference(newStartingTime.text.toString(), newEndingTime.text.toString())
-                if (areAllFieldsEmpty()) {
-                    Snackbar.make(
-                        requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
-                    ).show()
-                    findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
-                } else if (!isTimeDifferenceOk && timeDifference < 0) {
-                    Snackbar.make(
-                        requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_LONG
-                    ).show()
-                } else if (!isTimeDifferenceOk) {
-                    Snackbar.make(
-                        requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_LONG
-                    ).show()
-                } else if (isAdvValid()) {
-                    advertisementViewModel.insertAdvertisement(
-                        Advertisement(
-                            "",
-                            newTitle.text.toString(),
-                            newDescription.text.toString(),
-                            selectedSkillsList,
-                            newLocation.text.toString(),
-                            chosenDate,
-                            newStartingTime.text.toString(),
-                            newEndingTime.text.toString(),
-                            timeDifference,
-                            accountName,
-                            accountID
-                        )
-                    )
-                    userProfileViewModel.updateSkillList(skillList)
-                    Toast.makeText(
-                        context, "Advertisement created successfully!", Toast.LENGTH_LONG
-                    ).show()
-                    findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
-                } else {
-                    Snackbar.make(
-                        requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
-                    ).show()
-                    findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
+                advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) {
+                    var isPossible = true
+                    val tmpList = it.filter { it.accountID == accountID }
+                    for (adv in tmpList) {
+                        if(adv.advDate != chosenDate) {
+                            continue
+                        }
+                        val newSTH = newStartingTime.text.toString().convertStringToArrayOfTime()[0]
+                        val newSTM = newStartingTime.text.toString().convertStringToArrayOfTime()[1]
+                        val staticSTH = adv.advStartingTime.convertStringToArrayOfTime()[0]
+                        val staticSTM = adv.advStartingTime.convertStringToArrayOfTime()[1]
+                        val newETH = newEndingTime.text.toString().convertStringToArrayOfTime()[0]
+                        val newETM = newEndingTime.text.toString().convertStringToArrayOfTime()[1]
+                        val staticETH = adv.advEndingTime.convertStringToArrayOfTime()[0]
+                        val staticETM = adv.advEndingTime.convertStringToArrayOfTime()[1]
+
+                        if (newETH * 60 + newETM >= staticSTH * 60 + staticSTM && newSTH * 60 + newSTM <= staticSTH * 60 + staticSTM) {
+                            isPossible = false
+                            Snackbar.make(
+                                requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_LONG
+                            ).show()
+                        } else if (newSTH * 60 + newSTM >= staticSTH * 60 + staticSTM && newETH * 60 + newETM <= staticETH * 60 + staticETM) {
+                            isPossible = false
+                            Snackbar.make(
+                                requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_LONG
+                            ).show()
+                        } else if (newSTH * 60 + newSTM <= staticETH * 60 + staticETM && newETH * 60 + newETM >= staticETH * 60 + staticETM) {
+                            isPossible = false
+                            Snackbar.make(
+                                requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                    if (isPossible) {
+                        if (areAllFieldsEmpty()) {
+                            Snackbar.make(
+                                requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
+                            ).show()
+                            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
+                        } else if (!isTimeDifferenceOk && timeDifference < 0) {
+                            Snackbar.make(
+                                requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_LONG
+                            ).show()
+                        } else if (!isTimeDifferenceOk) {
+                            Snackbar.make(
+                                requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_LONG
+                            ).show()
+                        } else if (isAdvValid()) {
+                            advertisementViewModel.insertAdvertisement(
+                                Advertisement(
+                                    "",
+                                    newTitle.text.toString(),
+                                    newDescription.text.toString(),
+                                    selectedSkillsList,
+                                    newLocation.text.toString(),
+                                    chosenDate,
+                                    newStartingTime.text.toString(),
+                                    newEndingTime.text.toString(),
+                                    timeDifference,
+                                    accountName,
+                                    accountID
+                                )
+                            )
+                            userProfileViewModel.updateSkillList(skillList)
+                            Toast.makeText(
+                                context, "Advertisement created successfully!", Toast.LENGTH_LONG
+                            ).show()
+                            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
+                        } else {
+                            Snackbar.make(
+                                requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
+                            ).show()
+                            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
+                        }
+                    }
                 }
             }
         })
@@ -253,6 +323,12 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         }
     }
 
+    private fun String.convertStringToArrayOfTime(): Array<Int> {
+        val out = Array<Int>(2) { i -> i }
+        out[0] = this.split(":")[0].toInt()
+        out[1] = this.split(":")[1].toInt()
+        return out
+    }
 
     /**
      * showNewSkillInputWindow
