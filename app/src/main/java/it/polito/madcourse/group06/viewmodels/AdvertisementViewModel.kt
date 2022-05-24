@@ -175,59 +175,6 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             }
     }
 
-    fun getAdvertisementByID(id: Int): Advertisement? {
-        var outAdv: Advertisement? = null
-        db
-            .collection("Advertisement")
-            .document(id.toString())
-            .get()
-            .addOnSuccessListener { dbAdv ->
-                outAdv = dbAdv.toObject(Advertisement::class.java)
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Error in get", Toast.LENGTH_SHORT).show()
-            }
-
-        return outAdv
-    }
-
-    fun getListOfAdvertisements(): List<Advertisement> {
-        val outAdv: MutableList<Advertisement> = mutableListOf()
-
-        db
-            .collection("Advertisement")
-            .addSnapshotListener { value, e ->
-                if (e != null) {
-                    throw Exception()
-                } else {
-                    for (elem in value!!) {
-                        outAdv.add(elem.toObject(Advertisement::class.java))
-                    }
-                }
-            }
-
-        return outAdv
-    }
-
-    fun getListOfAdvertisementsByAccountID(accountID: Int): List<Advertisement>? {
-        val outAdv: MutableList<Advertisement> = mutableListOf()
-
-        db
-            .collection("Advertisement")
-            .whereEqualTo("accountID", accountID)
-            .addSnapshotListener { value, e ->
-                if (e != null) {
-                    throw Exception()
-                } else {
-                    for (elem in value!!) {
-                        outAdv.add(elem.toObject(Advertisement::class.java))
-                    }
-                }
-            }
-
-        return outAdv
-    }
-
     /**
      * Update the name of the account which created the [Advertisement] with a new one
      * @param accountID the ID of the account
