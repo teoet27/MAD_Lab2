@@ -103,6 +103,27 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             }
         })
 
+        var advAdapterCard = AdvAdapterCard(fullListForGivenSkill, advertisementViewModel)
+
+        this.myTimeslotsButton.setOnClickListener {
+            isMyAdv = !isMyAdv
+            if (isMyAdv) {
+                this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.orange_poli)
+                this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.black))
+            } else {
+                this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.darkGray)
+                this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.lightGray))
+            }
+            advAdapterCard.switchMode(isMyAdv, currentAccountID)
+        }
+
+        this.directionButton.setOnClickListener {
+            isUp = !isUp
+            if (isUp) this.directionButton.setImageResource(R.drawable.sort_up)
+            else this.directionButton.setImageResource(R.drawable.sort_down)
+            advAdapterCard.switchSort(isUp, param)
+        }
+
         advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
             fullListForGivenSkill = listOfAdv.filter { it.listOfSkills.contains(selectedSkill) || selectedSkill == "All" }
 
@@ -127,26 +148,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = fullListForGivenSkill.isEmpty()
             view.findViewById<ImageView>(R.id.create_hint).isVisible = fullListForGivenSkill.isEmpty()
             this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-            val advAdapterCard = AdvAdapterCard(fullListForGivenSkill, advertisementViewModel)
-
-            this.myTimeslotsButton.setOnClickListener {
-                isMyAdv = !isMyAdv
-                if (isMyAdv) {
-                    this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.orange_poli)
-                    this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.black))
-                } else {
-                    this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.darkGray)
-                    this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.lightGray))
-                }
-                advAdapterCard.switchMode(isMyAdv, currentAccountID)
-            }
-
-            this.directionButton.setOnClickListener {
-                isUp = !isUp
-                if (isUp) this.directionButton.setImageResource(R.drawable.sort_up)
-                else this.directionButton.setImageResource(R.drawable.sort_down)
-                advAdapterCard.switchSort(isUp, param)
-            }
+            advAdapterCard = AdvAdapterCard(fullListForGivenSkill, advertisementViewModel)
 
             sharedViewModel.filter.observe(viewLifecycleOwner) {
                 advAdapterCard.filterAdvertisementList(fullListForGivenSkill, it)
