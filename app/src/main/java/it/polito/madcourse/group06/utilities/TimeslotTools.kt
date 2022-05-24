@@ -1,6 +1,7 @@
 package it.polito.madcourse.group06.utilities
 
 import it.polito.madcourse.group06.models.advertisement.Advertisement
+import kotlin.math.roundToInt
 
 class TimeslotTools {
     /**
@@ -36,7 +37,7 @@ class TimeslotTools {
         timeDifference = timeStringToDoubleSec(endingTime) - timeStringToDoubleSec(startingTime)
 
         return Pair(
-            String.format("%.2f", timeDifference).toDouble(),
+            (timeDifference * 100.0).roundToInt() / 100.0,
             String.format("%.2f", timeDifference).toDouble() >= 0
         )
     }
