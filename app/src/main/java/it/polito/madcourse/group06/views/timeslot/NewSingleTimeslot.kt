@@ -135,7 +135,6 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_LONG
                         ).show()
                     }
-
                 }
                 if (isPossible) {
                     if (areAllFieldsEmpty()) {

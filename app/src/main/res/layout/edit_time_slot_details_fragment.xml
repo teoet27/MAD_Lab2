@@ -214,6 +214,30 @@
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/discardButtonID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/red_deleting"
+                    android:text="Discard" />
+
+                <Button
+                    android:id="@+id/confirmButtonID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_weight="2"
+                    android:backgroundTint="#018703"
+                    android:text="Confirm your changes" />
+            </LinearLayout>
+
 
         </LinearLayout>
     </ScrollView>
