@@ -213,6 +213,9 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                     var isPossible = true
                     val tmpList = listOfTimeslots.filter { it.accountID == accountID }
                     for (adv in tmpList) {
+                        if(adv.id == dumbAdvertisement.id){
+                            continue
+                        }
                         if (adv.advDate != chosenDate) {
                             continue
                         }
