@@ -2,7 +2,6 @@ package it.polito.madcourse.group06.views.profile
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
@@ -17,7 +16,6 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
-import it.polito.madcourse.group06.utilities.getBitmapFromFile
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 
 
