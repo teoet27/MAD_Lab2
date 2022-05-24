@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.utilities.TimeslotTools
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
+import kotlin.math.roundToInt
 
 /**
  * [AdvAdapterCard] extending the Adapter of the [RecyclerView] and implements the required methods.
@@ -189,7 +190,7 @@ class AdvAdapterCard(
         timeDifference = timeStringToDoubleSec(endingTime) - timeStringToDoubleSec(startingTime)
 
         return Pair(
-            String.format("%.2f", timeDifference).toDouble(),
+            (timeDifference * 100.0).roundToInt() / 100.0,
             String.format("%.2f", timeDifference).toDouble() >= 0
         )
     }
