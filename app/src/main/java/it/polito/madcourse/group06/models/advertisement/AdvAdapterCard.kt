@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.utilities.TimeslotTools
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 
 /**
@@ -17,6 +18,7 @@ class AdvAdapterCard(
 
     private var isMyAdv: Boolean = false
     private var isSortedUp = false
+    private var param: Int = 0
     private var showedData = adsList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdvViewHolderCard {
@@ -60,14 +62,62 @@ class AdvAdapterCard(
         notifyDataSetChanged()
     }
 
-    fun switchSort(mode: Boolean) {
+    fun switchSort(mode: Boolean, param: Int) {
         isSortedUp = mode
-        if(isSortedUp) {
+        this.param = param
+        sortAdvertisementList(showedData, param, isSortedUp)
+
+        if (isSortedUp) {
             showedData = showedData.sortedBy { it.advTitle }
         } else {
             showedData = showedData.sortedByDescending { it.advTitle }
         }
         notifyDataSetChanged()
     }
+
+    fun filterList(advFilter: TimeslotTools.AdvFilter) {
+
+    }
+
+    fun sortAdvertisementList(advList: List<Advertisement>?, criterion: Int?, up_flag: Boolean = true): List<Advertisement>? {
+        val sortedList = when (up_flag) {
+            true -> when (criterion) {
+                0 -> advList?.apply { sortedBy { it.advTitle.lowercase() } }
+                1 -> advList?.apply { sortedByDescending { it.advDuration } }
+                2 -> advList?.apply { sortedByDescending { timeStringToDoubleSec(it.advStartingTime) } }
+                3 -> advList?.apply { sortedByDescending { timeStringToDoubleSec(it.advEndingTime) } }
+                4 -> advList?.apply { sortedByDescending { dateStringToInt(it.advDate) } }
+                else -> null
+            }
+            else -> when (criterion) {
+                0 -> advList?.apply { sortedByDescending { it.advTitle.lowercase() } }
+                1 -> advList?.apply { sortedBy { it.advDuration } }
+                2 -> advList?.apply { sortedBy { timeStringToDoubleSec(it.advStartingTime) } }
+                3 -> advList?.apply { sortedBy { timeStringToDoubleSec(it.advEndingTime) } }
+                4 -> advList?.apply { sortedBy { dateStringToInt(it.advDate) } }
+                else -> null
+            }
+        }
+        notifyDataSetChanged()
+        return sortedList
+    }
+
+    private fun dateStringToInt(date: String): Int {
+        var dateInt = 0
+        date.split("/").forEachIndexed { index, s ->
+            when (index) {
+                0 -> dateInt += s.toInt() //day
+                1 -> dateInt += (31 - 3 * (s.toInt() == 2).toInt() - (listOf(4, 6, 9, 11).contains(s.toInt())).toInt()) * s.toInt() //month
+                2 -> dateInt += (if (s.toInt() % 400 == 0) 366 else 365) * s.toInt() //year
+            }
+        }
+        return dateInt
+    }
+
+    private fun timeStringToDoubleSec(time: String): Double {
+        return time.split(":").fold(0.0) { a, b -> (a.toDouble() + b.toDouble()) * 60.0 }
+    }
+
+    private fun Boolean.toInt() = if (this) 1 else 0
 
 }

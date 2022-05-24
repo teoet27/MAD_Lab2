@@ -3,7 +3,6 @@ package it.polito.madcourse.group06.views.timeslot
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
@@ -37,6 +36,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var searchBar: EditText
     private lateinit var myTimeslotsButton: TextView
     private lateinit var currentAccountID: String
+    private val advFilter: TimeslotTools.AdvFilter = TimeslotTools.AdvFilter()
+    private var param: Int = 0
     private var isMyAdv = false
     private var isUp = false
     private var search: CharSequence? = null
@@ -138,58 +139,60 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             sharedViewModel.updateSort()
         }
 
-        /*sharedViewModel.sortUp.observe(viewLifecycleOwner) { sort_up ->
-
-            sortedList = TimeslotTools().sortAdvertisementList(sortedList, sharedViewModel.getSortParam(), sort_up)!!
-            if (sort_up)
-                this.directionButton.setImageResource(R.drawable.sort_up)
-            else
-                this.directionButton.setImageResource(R.drawable.sort_down)
-
-            sharedViewModel.updateRV()
-        }*/
-
-        sharedViewModel.updateRV.observe(viewLifecycleOwner) {
-            var finalList = sortedList
-            finalList.apply {
-                filter {
-                    if (isMyAdv) {
-                        it.accountID == currentAccountID
-                    } else true
-                }
-            }
-            if (search != null) {
-                finalList = finalList.filter { it.advTitle.contains(search!!, true) }
-            }
-
-            //compose recycler view
-            view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = finalList.isEmpty()
-            view.findViewById<ImageView>(R.id.create_hint).isVisible = finalList.isEmpty()
-            this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-            val advAdapterCard = AdvAdapterCard(finalList, advertisementViewModel)
-
-            this.myTimeslotsButton.setOnClickListener {
-                isMyAdv = !isMyAdv
+        var finalList = sortedList
+        finalList.apply {
+            filter {
                 if (isMyAdv) {
-                    this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.orange_poli)
-                    this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.black))
-                } else {
-                    this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.darkGray)
-                    this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.lightGray))
-                }
-                advAdapterCard.switchMode(isMyAdv, currentAccountID)
+                    it.accountID == currentAccountID
+                } else true
             }
-
-            this.directionButton.setOnClickListener {
-                isUp = !isUp
-                if(isUp) this.directionButton.setImageResource(R.drawable.sort_up)
-                else this.directionButton.setImageResource(R.drawable.sort_down)
-                advAdapterCard.switchSort(isUp)
-            }
-
-            this.recyclerView.adapter = advAdapterCard
+        }
+        if (search != null) {
+            finalList = finalList.filter { it.advTitle.contains(search!!, true) }
         }
 
+        //compose recycler view
+        view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = finalList.isEmpty()
+        view.findViewById<ImageView>(R.id.create_hint).isVisible = finalList.isEmpty()
+        this.recyclerView.layoutManager = LinearLayoutManager(this.context)
+        val advAdapterCard = AdvAdapterCard(finalList, advertisementViewModel)
+
+        this.myTimeslotsButton.setOnClickListener {
+            isMyAdv = !isMyAdv
+            if (isMyAdv) {
+                this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.orange_poli)
+                this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.black))
+            } else {
+                this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.darkGray)
+                this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.lightGray))
+            }
+            advAdapterCard.switchMode(isMyAdv, currentAccountID)
+        }
+
+        this.directionButton.setOnClickListener {
+            isUp = !isUp
+            if (isUp) this.directionButton.setImageResource(R.drawable.sort_up)
+            else this.directionButton.setImageResource(R.drawable.sort_down)
+            sharedViewModel.sortParam.observe(viewLifecycleOwner) {
+                if (it == "Title") param = 0
+                else if (it == "Duration") param = 1
+                else if (it == "Starting time") param = 2
+                else if (it == "Ending time") param = 3
+                else if (it == "Date") param = 4
+                advAdapterCard.switchSort(isUp, param)
+            }
+
+        }
+
+        sharedViewModel.filter.observe(viewLifecycleOwner) {
+            advAdapterCard.filterList(it)
+        }
+
+        // Adapter setting
+        this.recyclerView.adapter = advAdapterCard
+
+
+        // On back pressed
         activity?.onBackPressedDispatcher?.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
