@@ -95,14 +95,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             activity?.openContextMenu(sortParam)
         }
 
-        searchBar.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable) {}
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                search = searchBar.text
-            }
-        })
-
         var advAdapterCard = AdvAdapterCard(fullListForGivenSkill, advertisementViewModel)
 
         this.myTimeslotsButton.setOnClickListener {
@@ -124,6 +116,15 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             advAdapterCard.switchSort(isUp, param)
         }
 
+        searchBar.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                advAdapterCard.beforeSearchByName()
+            }
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                advAdapterCard.searchByName(searchBar.text.toString())
+            }
+        })
         advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
             fullListForGivenSkill = listOfAdv.filter { it.listOfSkills.contains(selectedSkill) || selectedSkill == "All" }
 
@@ -138,10 +139,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                         it.accountID == currentAccountID
                     } else true
                 }
-            }
-
-            if (search != null) {
-                fullListForGivenSkill = fullListForGivenSkill.filter { it.advTitle.contains(search!!, true) }
             }
 
             //compose recycler view
@@ -210,6 +207,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             resources.getString(R.string.ending_time_menu) -> param = 3
             resources.getString(R.string.date) -> param = 4
         }
+        this.sortParam.text=item.title
         return true
     }
 }

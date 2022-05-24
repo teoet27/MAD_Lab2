@@ -20,6 +20,7 @@ class AdvAdapterCard(
     private var isSortedUp = false
     private var param: Int = 0
     private var showedData = adsList
+    private var oldShowedData=listOf<Advertisement>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdvViewHolderCard {
         val vg = LayoutInflater
@@ -63,17 +64,38 @@ class AdvAdapterCard(
     }
 
     fun switchSort(mode: Boolean, param: Int) {
-        isSortedUp = mode
+        this.isSortedUp = mode
         this.param = param
-        sortAdvertisementList(showedData, param, isSortedUp)
 
-        if (isSortedUp) {
-            showedData = showedData.sortedBy { it.advTitle }
-        } else {
-            showedData = showedData.sortedByDescending { it.advTitle }
+        when (mode) {
+            true -> when (param) {
+                0 -> showedData = showedData.sortedBy { it.advTitle.lowercase() }
+                1 -> showedData = showedData.sortedByDescending { it.advDuration }
+                2 -> showedData = showedData.sortedByDescending { timeStringToDoubleSec(it.advStartingTime) }
+                3 -> showedData = showedData.sortedByDescending { timeStringToDoubleSec(it.advEndingTime) }
+                4 -> showedData = showedData.sortedByDescending { dateStringToInt(it.advDate) }
+            }
+            else -> when (param) {
+                0 -> showedData = showedData.sortedByDescending { it.advTitle.lowercase() }
+                1 -> showedData = showedData.sortedBy { it.advDuration }
+                2 -> showedData = showedData.sortedBy { timeStringToDoubleSec(it.advStartingTime) }
+                3 -> showedData = showedData.sortedBy { timeStringToDoubleSec(it.advEndingTime) }
+                4 -> showedData = showedData.sortedBy { dateStringToInt(it.advDate) }
+            }
         }
         notifyDataSetChanged()
     }
+
+    //methods for search
+    fun beforeSearchByName(){
+        if(oldShowedData.isNullOrEmpty())
+            oldShowedData=showedData
+    }
+    fun searchByName(name:String){
+        showedData=oldShowedData.filter{it.advTitle.contains(name,true)}
+        notifyDataSetChanged()
+    }
+
 
     /**
      * filterAdvertisement
@@ -86,7 +108,10 @@ class AdvAdapterCard(
      * @param ending_date to be matched to Adv related attribute
      * @return the list of Advertisements matching the constraints
      */
-    fun filterAdvertisementList(advList: List<Advertisement>?, advFilter: TimeslotTools.AdvFilter?): List<Advertisement>? {
+    fun filterAdvertisementList(
+        advList: List<Advertisement>?,
+        advFilter: TimeslotTools.AdvFilter?
+    ): List<Advertisement>? {
         //begin debug section
         advList?.filter { adv ->
             if ((advFilter?.starting_date != null && adv.advDate.isLaterThanDate(advFilter.starting_date)) || (advFilter?.starting_date == null))
@@ -95,14 +120,22 @@ class AdvAdapterCard(
         }
         //end debug section
         return if (advFilter == null) advList else advList?.filter { adv ->
-            ((advFilter.location != null && !advFilter.whole_word && advFilter.location.lowercase().contains(adv.advLocation.lowercase(), true)) ||
-                    (advFilter.location != null && !advFilter.whole_word && adv.advLocation.lowercase().contains(advFilter.location.lowercase(), true)) ||
+            ((advFilter.location != null && !advFilter.whole_word && advFilter.location.lowercase()
+                .contains(adv.advLocation.lowercase(), true)) ||
+                    (advFilter.location != null && !advFilter.whole_word && adv.advLocation.lowercase()
+                        .contains(advFilter.location.lowercase(), true)) ||
                     (advFilter.location != null && advFilter.whole_word && advFilter.location.lowercase() == adv.advLocation.lowercase()) || (advFilter.location == null)) &&
 
-                    ((advFilter.min_duration != null && adv.advDuration >= timeStringToDoubleHour(advFilter.min_duration)) || (advFilter.min_duration == null)) &&
-                    ((advFilter.max_duration != null && adv.advDuration <= timeStringToDoubleHour(advFilter.max_duration)) || (advFilter.max_duration == null)) &&
+                    ((advFilter.min_duration != null && adv.advDuration >= timeStringToDoubleHour(
+                        advFilter.min_duration
+                    )) || (advFilter.min_duration == null)) &&
+                    ((advFilter.max_duration != null && adv.advDuration <= timeStringToDoubleHour(
+                        advFilter.max_duration
+                    )) || (advFilter.max_duration == null)) &&
 
-                    ((advFilter.starting_time != null && adv.advStartingTime.isLaterThanTime(advFilter.starting_time)) || (advFilter.starting_time == null)) &&
+                    ((advFilter.starting_time != null && adv.advStartingTime.isLaterThanTime(
+                        advFilter.starting_time
+                    )) || (advFilter.starting_time == null)) &&
                     ((advFilter.ending_time != null && adv.advEndingTime.isSoonerThanTime(advFilter.ending_time)) || (advFilter.ending_time == null)) &&
 
                     ((advFilter.starting_date != null && adv.advDate.isLaterThanDate(advFilter.starting_date)) || (advFilter.starting_date == null)) &&
@@ -110,7 +143,11 @@ class AdvAdapterCard(
         }
     }
 
-    fun sortAdvertisementList(advList: List<Advertisement>?, criterion: Int?, up_flag: Boolean = true): List<Advertisement>? {
+    fun sortAdvertisementList(
+        advList: List<Advertisement>?,
+        criterion: Int?,
+        up_flag: Boolean = true
+    ): List<Advertisement>? {
         val sortedList = when (up_flag) {
             true -> when (criterion) {
                 0 -> advList?.apply { sortedBy { it.advTitle.lowercase() } }
@@ -138,7 +175,12 @@ class AdvAdapterCard(
         date.split("/").forEachIndexed { index, s ->
             when (index) {
                 0 -> dateInt += s.toInt() //day
-                1 -> dateInt += (31 - 3 * (s.toInt() == 2).toInt() - (listOf(4, 6, 9, 11).contains(s.toInt())).toInt()) * s.toInt() //month
+                1 -> dateInt += (31 - 3 * (s.toInt() == 2).toInt() - (listOf(
+                    4,
+                    6,
+                    9,
+                    11
+                ).contains(s.toInt())).toInt()) * s.toInt() //month
                 2 -> dateInt += (if (s.toInt() % 400 == 0) 366 else 365) * s.toInt() //year
             }
         }
@@ -169,7 +211,10 @@ class AdvAdapterCard(
         return time.split(":").foldRight(0.0) { a, b -> (a.toDouble() + b.toDouble()) / 60.0 } * 60
     }
 
-    private fun computeDateDifference(startingDate: String, endingDate: String): Pair<Double, Boolean> {
+    private fun computeDateDifference(
+        startingDate: String,
+        endingDate: String
+    ): Pair<Double, Boolean> {
         var dateDifference: Double = 0.0
         if (startingDate.isNullOrEmpty() || endingDate.isNullOrEmpty()) {
             return Pair(-1.0, false)
@@ -181,7 +226,10 @@ class AdvAdapterCard(
         )
     }
 
-    private fun computeTimeDifference(startingTime: String, endingTime: String): Pair<Double, Boolean> {
+    private fun computeTimeDifference(
+        startingTime: String,
+        endingTime: String
+    ): Pair<Double, Boolean> {
         var timeDifference: Double = 0.0
         if (startingTime.isNullOrEmpty() || endingTime.isNullOrEmpty()) {
             return Pair(-1.0, false)
