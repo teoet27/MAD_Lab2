@@ -23,6 +23,7 @@ import it.polito.madcourse.group06.models.advertisement.Advertisement
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
@@ -105,6 +106,20 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             val (timeDifference, isTimeDifferenceOk) = computeTimeDifference(newStartingTime.text.toString(), newEndingTime.text.toString())
             advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) {
                 var isPossible = true
+                var isDateAndTimeCorrect = true
+                val sdfDate = SimpleDateFormat("dd/MM/yyyy")
+                val sdfTime = SimpleDateFormat("hh:mm")
+                val currentDate = sdfDate.format(Date())
+                var currentTime = sdfTime.format(Date())
+                val (_, isCurrentTimeDifference) = computeTimeDifference(currentTime, newStartingTime.text.toString())
+                val (_, isCurrentDateDifference) = computeDateDifference(currentDate, chosenDate)
+
+                if (!isCurrentDateDifference) {
+                    isDateAndTimeCorrect = false
+                } else if (!isCurrentTimeDifference) {
+                    isDateAndTimeCorrect = false
+                }
+
                 val tmpList = it.filter { it.accountID == accountID }
                 for (adv in tmpList) {
                     if (adv.advDate != chosenDate) {
@@ -136,11 +151,16 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         ).show()
                     }
                 }
-                if (isPossible) {
+                if (!isDateAndTimeCorrect) {
+                    Snackbar.make(
+                        requireView(), "Error: you cannot create a timeslot which lives back in the time.", Snackbar.LENGTH_LONG
+                    ).show()
+                } else if (isPossible) {
                     if (areAllFieldsEmpty()) {
                         Snackbar.make(
-                            requireView(), "All fields are empty: fill them to create a new Advertisement.", Snackbar.LENGTH_LONG
+                            requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
                         ).show()
+                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
                     } else if (!isTimeDifferenceOk && timeDifference < 0) {
                         Snackbar.make(
                             requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_LONG
@@ -172,8 +192,9 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
                     } else {
                         Snackbar.make(
-                            requireView(), "Error: you need to provide at least a title, a starting and ending time, a location and a date. Try again.", Snackbar.LENGTH_LONG
+                            requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
                         ).show()
+                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
                     }
                 }
             }
@@ -184,6 +205,20 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                 val (timeDifference, isTimeDifferenceOk) = computeTimeDifference(newStartingTime.text.toString(), newEndingTime.text.toString())
                 advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) {
                     var isPossible = true
+                    var isDateAndTimeCorrect = true
+                    val sdfDate = SimpleDateFormat("dd/MM/yyyy")
+                    val sdfTime = SimpleDateFormat("hh:mm")
+                    val currentDate = sdfDate.format(Date())
+                    var currentTime = sdfTime.format(Date())
+                    val (_, isCurrentTimeDifference) = computeTimeDifference(currentTime, newStartingTime.text.toString())
+                    val (_, isCurrentDateDifference) = computeDateDifference(currentDate, chosenDate)
+
+                    if (!isCurrentDateDifference) {
+                        isDateAndTimeCorrect = false
+                    } else if (!isCurrentTimeDifference) {
+                        isDateAndTimeCorrect = false
+                    }
+
                     val tmpList = it.filter { it.accountID == accountID }
                     for (adv in tmpList) {
                         if (adv.advDate != chosenDate) {
@@ -215,7 +250,11 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             ).show()
                         }
                     }
-                    if (isPossible) {
+                    if (!isDateAndTimeCorrect) {
+                        Snackbar.make(
+                            requireView(), "Error: you cannot create a timeslot which lives back in the time.", Snackbar.LENGTH_LONG
+                        ).show()
+                    } else if (isPossible) {
                         if (areAllFieldsEmpty()) {
                             Snackbar.make(
                                 requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
@@ -304,6 +343,33 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             }
             addView(this)
         }
+    }
+
+    private fun computeDateDifference(
+        startingDate: String,
+        endingDate: String
+    ): Pair<Double, Boolean> {
+        var dateDifference: Double = 0.0
+        if (startingDate.isNullOrEmpty() || endingDate.isNullOrEmpty()) {
+            return Pair(-1.0, false)
+        }
+        dateDifference = (dateStringToInt(endingDate) - dateStringToInt(startingDate)).toDouble()
+        return Pair(
+            (dateDifference * 100.0).roundToInt() / 100.0,
+            (dateDifference * 100.0).roundToInt() / 100.0 >= 0
+        )
+    }
+
+    private fun dateStringToInt(date: String): Int {
+        var dateInt = 0
+        date.split("/").forEachIndexed { index, s ->
+            when (index) {
+                0 -> dateInt += s.toInt() //day
+                1 -> dateInt += (31 - 3 * (s.toInt() == 2).toInt() - (listOf(4, 6, 9, 11).contains(s.toInt())).toInt()) * s.toInt() //month
+                2 -> dateInt += (if (s.toInt() % 400 == 0) 366 else 365) * s.toInt() //year
+            }
+        }
+        return dateInt
     }
 
     private fun ChipGroup.moveAddChip(context: Context, oldAddChip: View, chipGroup: ChipGroup) {
@@ -449,7 +515,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
         return Pair(
             (timeDifference * 100.0).roundToInt() / 100.0,
-            timeDifference >= 0
+            (timeDifference * 100.0).roundToInt() / 100.0 >= 0
         )
     }
 
@@ -464,4 +530,6 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                 this.newEndingTime.text.toString().isNullOrEmpty() &&
                 this.newDescription.text.toString().isNullOrEmpty()
     }
+    private fun Boolean.toInt() = if (this) 1 else 0
 }
+
