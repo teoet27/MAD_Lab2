@@ -38,7 +38,7 @@ class TimeslotTools {
 
         return Pair(
             (timeDifference * 100.0).roundToInt() / 100.0,
-            String.format("%.2f", timeDifference).toDouble() >= 0
+            (timeDifference * 100.0).roundToInt() / 100.0 >= 0
         )
     }
 
@@ -70,8 +70,8 @@ class TimeslotTools {
         }
         dateDifference= (dateStringToInt(endingDate)-dateStringToInt(startingDate)).toDouble()
         return Pair(
-            String.format("%.2f", dateDifference).toDouble(),
-            String.format("%.2f", dateDifference).toDouble() >= 0
+            (dateDifference * 100.0).roundToInt() / 100.0,
+            (dateDifference * 100.0).roundToInt() / 100.0 >= 0
         )
     }
 
