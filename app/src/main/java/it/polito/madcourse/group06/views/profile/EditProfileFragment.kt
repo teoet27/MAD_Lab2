@@ -142,8 +142,8 @@ class EditProfileFragment : Fragment() {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                saveData()
-                findNavController().navigate(R.id.action_editProfileFragment_to_showProfileFragment)
+                if (saveData())
+                    findNavController().navigate(R.id.action_editProfileFragment_to_showProfileFragment)
             }
         })
     }
@@ -252,37 +252,59 @@ class EditProfileFragment : Fragment() {
     /**
      * saveData is a private method for saving data before fragment transaction
      */
-    private fun saveData() {
+    private fun saveData(): Boolean {
+        var isNicknameAvailable = true
+
+        this.userProfileViewModel.listOfUsers.observe(viewLifecycleOwner) { listOfUsers ->
+            for (u in listOfUsers) {
+                if (u.nickname?.compareTo(editNicknameOBJ.text.toString(), true) == 0) {
+                    isNicknameAvailable = false
+                    break
+                }
+            }
+        }
         if (editFullNameOBJ.text.toString() == "") {
             Snackbar.make(
                 requireView(),
                 "Error: you must provide your full name. Try again.",
                 Snackbar.LENGTH_LONG
             ).show()
-        } else if (editNicknameOBJ.text.toString() == "") { //TODO: check if nickname is already present in database (it must be unique)
+            return false
+        } else if (!isNicknameAvailable) {
+            Snackbar.make(
+                requireView(),
+                "Error: this nickname is not available. Choose another one.",
+                Snackbar.LENGTH_LONG
+            ).show()
+            return false
+        } else if (editNicknameOBJ.text.toString() == "") {
             Snackbar.make(
                 requireView(),
                 "Error: you must provide a nickname. Try again.",
                 Snackbar.LENGTH_LONG
             ).show()
+            return false
         } else if (editLocationOBJ.text.toString() == "") {
             Snackbar.make(
                 requireView(),
                 "Error: you must provide your location. Try again.",
                 Snackbar.LENGTH_LONG
             ).show()
+            return false
         } else if (editPhoneOBJ.text.toString() == "") {
             Snackbar.make(
                 requireView(),
                 "Error: you must provide your phone number. Try again.",
                 Snackbar.LENGTH_LONG
             ).show()
+            return false
         } else if (userProfileViewModel.lookForNickname(editNicknameOBJ.text.toString())) {
             Snackbar.make(
                 requireView(),
                 "Error: the nickname you chose is not available.",
                 Snackbar.LENGTH_LONG
             ).show()
+            return false
         } else {
             userProfileViewModel.editUserProfile(
                 UserProfile(
@@ -299,6 +321,7 @@ class EditProfileFragment : Fragment() {
                 )
             )
             advertisementViewModel.updateAdvAccountNameByAccountID(this.userID, editFullNameOBJ.text.toString())
+            return true
         }
     }
 
@@ -347,7 +370,7 @@ class EditProfileFragment : Fragment() {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == AppCompatActivity.RESULT_OK) {
             rotatedImage = handleSamplingAndRotationBitmap(requireContext(), this.photoURI)!!
-            if(imgProfilePicturePath == "staticuser") {
+            if (imgProfilePicturePath == "staticuser") {
                 this.imgProfilePicturePath = UUID.randomUUID().toString()
                 this.userProfileViewModel.uploadProfilePicture(rotatedImage, imgProfilePicturePath)
             } else {
@@ -357,7 +380,7 @@ class EditProfileFragment : Fragment() {
         } else if (requestCode == PICK_IMAGE && resultCode == AppCompatActivity.RESULT_OK) {
             this.photoURI = data?.data!!
             rotatedImage = handleSamplingAndRotationBitmap(requireContext(), this.photoURI)!!
-            if(imgProfilePicturePath == "staticuser") {
+            if (imgProfilePicturePath == "staticuser") {
                 this.imgProfilePicturePath = UUID.randomUUID().toString()
                 this.userProfileViewModel.uploadProfilePicture(rotatedImage, imgProfilePicturePath)
             } else {
@@ -445,8 +468,8 @@ class EditProfileFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.complete_user_registration -> {
-                saveData()
-                findNavController().navigate(R.id.action_editProfileFragment_to_showProfileFragment)
+                if (saveData())
+                    findNavController().navigate(R.id.action_editProfileFragment_to_showProfileFragment)
             }
         }
         return super.onOptionsItemSelected(item)

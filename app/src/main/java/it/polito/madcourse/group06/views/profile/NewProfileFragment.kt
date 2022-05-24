@@ -338,6 +338,17 @@ class NewProfileFragment : Fragment() {
      */
     private fun saveData(): Boolean {
         var userIsOkay: Boolean = false
+        var isNicknameAvailable = true
+
+        this.userProfileViewModel.listOfUsers.observe(viewLifecycleOwner) { listOfUsers ->
+            for (u in listOfUsers) {
+                if (u.nickname?.compareTo(newNicknameOBJ.text.toString(), true) == 0) {
+                    isNicknameAvailable = false
+                    break
+                }
+            }
+        }
+
         if (newFullNameOBJ.text.toString() == "") {
             Snackbar.make(
                 requireView(),
@@ -348,6 +359,12 @@ class NewProfileFragment : Fragment() {
             Snackbar.make(
                 requireView(),
                 "Error: you must provide a nickname. Try again.",
+                Snackbar.LENGTH_LONG
+            ).show()
+        } else if (!isNicknameAvailable) {
+            Snackbar.make(
+                requireView(),
+                "Error: this nickname is not available. Choose another one.",
                 Snackbar.LENGTH_LONG
             ).show()
         } else if (userProfileViewModel.lookForNickname(newNicknameOBJ.text.toString())) {
@@ -502,7 +519,7 @@ class NewProfileFragment : Fragment() {
     }
 
     private fun removeProfilePicture() {
-        if(this.imgProfilePicturePath != "staticuser") {
+        if (this.imgProfilePicturePath != "staticuser") {
             this.imgProfilePicturePath = "staticuser"
             userProfileViewModel.retrieveStaticProfilePicture(profilePictureOBJ)
         }
