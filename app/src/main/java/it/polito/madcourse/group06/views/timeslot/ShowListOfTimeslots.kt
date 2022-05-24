@@ -36,6 +36,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var searchBar: EditText
     private lateinit var myTimeslotsButton: TextView
     private lateinit var currentAccountID: String
+    private var selectedSkill: String = "All"
     private val advFilter: TimeslotTools.AdvFilter = TimeslotTools.AdvFilter()
     private var fullListForGivenSkill: List<Advertisement> = listOf()
     private var param: Int = 0
@@ -72,15 +73,12 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             this.currentAccountID = it.id!!
         }
 
+        arguments?.getString("selected_skill")?.let { selectedSkill = it }
+
         registerForContextMenu(sortParam)
 
         this.newAdvButton.setOnClickListener {
             findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
-        }
-
-        activity?.supportFragmentManager?.findFragmentByTag("filter_window")?.also { frag ->
-            activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
-            sharedViewModel.select(false)
         }
 
         sharedViewModel.selected.observe(viewLifecycleOwner) {
@@ -105,67 +103,58 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             }
         })
 
-        arguments?.getString("selected_skill")?.let { sharedViewModel.selectSkill(it) }
-
         advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
-            sharedViewModel.selected_skill.observe(viewLifecycleOwner) { selected_skill ->
-                fullListForGivenSkill = listOfAdv.filter {
-                    it.listOfSkills.contains(selected_skill) || selected_skill == "All"
+            fullListForGivenSkill = listOfAdv.filter { it.listOfSkills.contains(selectedSkill) || selectedSkill == "All" }
+
+            activity?.supportFragmentManager?.findFragmentByTag("filter_window")?.also { frag ->
+                activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
+                sharedViewModel.select(false)
+            }
+
+            fullListForGivenSkill.apply {
+                filter {
+                    if (isMyAdv) {
+                        it.accountID == currentAccountID
+                    } else true
                 }
             }
-        }
 
-        fullListForGivenSkill.apply {
-            filter {
+            if (search != null) {
+                fullListForGivenSkill = fullListForGivenSkill.filter { it.advTitle.contains(search!!, true) }
+            }
+
+            //compose recycler view
+            view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = fullListForGivenSkill.isEmpty()
+            view.findViewById<ImageView>(R.id.create_hint).isVisible = fullListForGivenSkill.isEmpty()
+            this.recyclerView.layoutManager = LinearLayoutManager(this.context)
+            val advAdapterCard = AdvAdapterCard(fullListForGivenSkill, advertisementViewModel)
+
+            this.myTimeslotsButton.setOnClickListener {
+                isMyAdv = !isMyAdv
                 if (isMyAdv) {
-                    it.accountID == currentAccountID
-                } else true
+                    this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.orange_poli)
+                    this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.black))
+                } else {
+                    this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.darkGray)
+                    this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.lightGray))
+                }
+                advAdapterCard.switchMode(isMyAdv, currentAccountID)
             }
-        }
-        if (search != null) {
-            fullListForGivenSkill = fullListForGivenSkill.filter { it.advTitle.contains(search!!, true) }
-        }
 
-        //compose recycler view
-        view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible = fullListForGivenSkill.isEmpty()
-        view.findViewById<ImageView>(R.id.create_hint).isVisible = fullListForGivenSkill.isEmpty()
-        this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-        val advAdapterCard = AdvAdapterCard(fullListForGivenSkill, advertisementViewModel)
-
-        this.myTimeslotsButton.setOnClickListener {
-            isMyAdv = !isMyAdv
-            if (isMyAdv) {
-                this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.orange_poli)
-                this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.black))
-            } else {
-                this.myTimeslotsButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(), R.color.darkGray)
-                this.myTimeslotsButton.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.lightGray))
-            }
-            advAdapterCard.switchMode(isMyAdv, currentAccountID)
-        }
-
-        this.directionButton.setOnClickListener {
-            isUp = !isUp
-            if (isUp) this.directionButton.setImageResource(R.drawable.sort_up)
-            else this.directionButton.setImageResource(R.drawable.sort_down)
-            sharedViewModel.sortParam.observe(viewLifecycleOwner) {
-                if (it == "Title") param = 0
-                else if (it == "Duration") param = 1
-                else if (it == "Starting time") param = 2
-                else if (it == "Ending time") param = 3
-                else if (it == "Date") param = 4
+            this.directionButton.setOnClickListener {
+                isUp = !isUp
+                if (isUp) this.directionButton.setImageResource(R.drawable.sort_up)
+                else this.directionButton.setImageResource(R.drawable.sort_down)
                 advAdapterCard.switchSort(isUp, param)
             }
 
+            sharedViewModel.filter.observe(viewLifecycleOwner) {
+                advAdapterCard.filterAdvertisementList(fullListForGivenSkill, it)
+            }
+
+            // Adapter setting
+            this.recyclerView.adapter = advAdapterCard
         }
-
-        sharedViewModel.filter.observe(viewLifecycleOwner) {
-            advAdapterCard.filterAdvertisementList(fullListForGivenSkill, it)
-        }
-
-        // Adapter setting
-        this.recyclerView.adapter = advAdapterCard
-
 
         // On back pressed
         activity?.onBackPressedDispatcher?.addCallback(
@@ -213,16 +202,11 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
      */
     override fun onContextItemSelected(item: MenuItem): Boolean {
         when (item.title) {
-            resources.getString(R.string.title) ->
-                sharedViewModel.setSortParam(resources.getString(R.string.title))
-            resources.getString(R.string.duration_menu) ->
-                sharedViewModel.setSortParam(resources.getString(R.string.duration_menu))
-            resources.getString(R.string.starting_time_menu) ->
-                sharedViewModel.setSortParam(resources.getString(R.string.starting_time_menu))
-            resources.getString(R.string.ending_time_menu) ->
-                sharedViewModel.setSortParam(resources.getString(R.string.ending_time_menu))
-            resources.getString(R.string.date) ->
-                sharedViewModel.setSortParam(resources.getString(R.string.date))
+            resources.getString(R.string.title) -> param = 0
+            resources.getString(R.string.duration_menu) -> param = 1
+            resources.getString(R.string.starting_time_menu) -> param = 2
+            resources.getString(R.string.ending_time_menu) -> param = 3
+            resources.getString(R.string.date) -> param = 4
         }
         return true
     }
