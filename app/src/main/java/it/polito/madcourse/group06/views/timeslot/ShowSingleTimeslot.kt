@@ -70,6 +70,8 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
             } else {
                 this.noSkillsProvidedLabel.isVisible = false
                 this.skillsChips.isVisible = true
+
+                this.skillsChips.removeAllViews()
                 for (skill in singleAdvertisement.listOfSkills) {
                     this.skillsChips.addChip(requireContext(), skill)
                 }
