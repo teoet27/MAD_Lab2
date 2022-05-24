@@ -20,7 +20,8 @@ class AdvAdapterCard(
     private var isSortedUp = false
     private var param: Int = 0
     private var showedData = adsList
-    private var oldShowedData=listOf<Advertisement>()
+    private var beforeSearchData=listOf<Advertisement>()
+    private var beforeFilteringData=listOf<Advertisement>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdvViewHolderCard {
         val vg = LayoutInflater
@@ -86,40 +87,23 @@ class AdvAdapterCard(
         notifyDataSetChanged()
     }
 
-    //methods for search
-    fun beforeSearchByName(){
-        if(oldShowedData.isNullOrEmpty())
-            oldShowedData=showedData
-    }
+    //method for search
     fun searchByName(name:String){
-        showedData=oldShowedData.filter{it.advTitle.contains(name,true)}
+        if(beforeSearchData.isNullOrEmpty())
+            beforeSearchData=showedData
+        showedData=beforeSearchData.filter{it.advTitle.contains(name,true)}
         notifyDataSetChanged()
     }
 
 
-    /**
-     * filterAdvertisement
-     * @param advList list of all available advertisements
-     * @param location to be matched to Adv related attribute
-     * @param starting_time to be matched to Adv related attribute
-     * @param ending_time to be matched to Adv related attribute
-     * @param duration to be matched to Adv related attribute
-     * @param starting_date to be matched to Adv related attribute
-     * @param ending_date to be matched to Adv related attribute
-     * @return the list of Advertisements matching the constraints
-     */
+    //method for filtering
     fun filterAdvertisementList(
-        advList: List<Advertisement>?,
         advFilter: TimeslotTools.AdvFilter?
-    ): List<Advertisement>? {
-        //begin debug section
-        advList?.filter { adv ->
-            if ((advFilter?.starting_date != null && adv.advDate.isLaterThanDate(advFilter.starting_date)) || (advFilter?.starting_date == null))
-                println("ok")
-            true
-        }
-        //end debug section
-        return if (advFilter == null) advList else advList?.filter { adv ->
+    ) {
+        if(beforeFilteringData.isNullOrEmpty())
+            beforeFilteringData=showedData
+
+        showedData= if (advFilter == null) beforeFilteringData else beforeFilteringData.filter { adv ->
             ((advFilter.location != null && !advFilter.whole_word && advFilter.location.lowercase()
                 .contains(adv.advLocation.lowercase(), true)) ||
                     (advFilter.location != null && !advFilter.whole_word && adv.advLocation.lowercase()
@@ -141,34 +125,9 @@ class AdvAdapterCard(
                     ((advFilter.starting_date != null && adv.advDate.isLaterThanDate(advFilter.starting_date)) || (advFilter.starting_date == null)) &&
                     ((advFilter.ending_date != null && adv.advDate.isSoonerThanDate(advFilter.ending_date)) || (advFilter.ending_date == null))
         }
+        notifyDataSetChanged()
     }
 
-    fun sortAdvertisementList(
-        advList: List<Advertisement>?,
-        criterion: Int?,
-        up_flag: Boolean = true
-    ): List<Advertisement>? {
-        val sortedList = when (up_flag) {
-            true -> when (criterion) {
-                0 -> advList?.apply { sortedBy { it.advTitle.lowercase() } }
-                1 -> advList?.apply { sortedByDescending { it.advDuration } }
-                2 -> advList?.apply { sortedByDescending { timeStringToDoubleSec(it.advStartingTime) } }
-                3 -> advList?.apply { sortedByDescending { timeStringToDoubleSec(it.advEndingTime) } }
-                4 -> advList?.apply { sortedByDescending { dateStringToInt(it.advDate) } }
-                else -> null
-            }
-            else -> when (criterion) {
-                0 -> advList?.apply { sortedByDescending { it.advTitle.lowercase() } }
-                1 -> advList?.apply { sortedBy { it.advDuration } }
-                2 -> advList?.apply { sortedBy { timeStringToDoubleSec(it.advStartingTime) } }
-                3 -> advList?.apply { sortedBy { timeStringToDoubleSec(it.advEndingTime) } }
-                4 -> advList?.apply { sortedBy { dateStringToInt(it.advDate) } }
-                else -> null
-            }
-        }
-        notifyDataSetChanged()
-        return sortedList
-    }
 
     private fun dateStringToInt(date: String): Int {
         var dateInt = 0

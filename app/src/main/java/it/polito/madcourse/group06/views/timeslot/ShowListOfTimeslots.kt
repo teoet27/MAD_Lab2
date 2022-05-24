@@ -125,9 +125,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         // - Search bar research
         searchBar.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                advAdapterCard.beforeSearchByName()
-            }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 advAdapterCard.searchByName(searchBar.text.toString())
             }
@@ -150,7 +148,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
             // - Filter
             sharedViewModel.filter.observe(viewLifecycleOwner) {
-                advAdapterCard.filterAdvertisementList(fullListForGivenSkill, it)
+                advAdapterCard.filterAdvertisementList(it)
             }
 
             // Adapter setting
