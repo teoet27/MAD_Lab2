@@ -195,7 +195,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             dumbAdvertisement.advDuration = timeDifference
                             dumbAdvertisement.listOfSkills = selectedSkillsList
                             advertisementViewModel.editAdvertisement(dumbAdvertisement)
-                            findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_showSingleTimeslot)
+                            findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
+
                         } else {
                             Snackbar.make(
                                 requireView(), "Error: you need to provide at least a title, a starting and ending time, a skill, a location and a date. Try again.", Snackbar.LENGTH_LONG
@@ -264,7 +265,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             dumbAdvertisement.advDuration = timeDifference
                             dumbAdvertisement.listOfSkills = selectedSkillsList
                             advertisementViewModel.editAdvertisement(dumbAdvertisement)
-                            findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_showSingleTimeslot)
+
+                            findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
                         } else {
                             Snackbar.make(
                                 requireView(), "Error: you need to provide at least a title, a starting and ending time, a skill, a location and a date. Try again.", Snackbar.LENGTH_LONG
