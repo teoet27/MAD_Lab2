@@ -257,6 +257,8 @@ class EditProfileFragment : Fragment() {
 
         this.userProfileViewModel.listOfUsers.observe(viewLifecycleOwner) { listOfUsers ->
             for (u in listOfUsers) {
+                if (userID == u.id)
+                    continue
                 if (u.nickname?.compareTo(editNicknameOBJ.text.toString(), true) == 0) {
                     isNicknameAvailable = false
                     break
