@@ -141,7 +141,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
 
         val timePickerDialog = TimePickerDialog(
             requireContext(),
-            onTimeSetListener, Calendar.getInstance().get(Calendar.HOUR),
+            onTimeSetListener, Calendar.getInstance().get(Calendar.HOUR)+12*Calendar.getInstance().get(Calendar.AM_PM),
             Calendar.getInstance().get(Calendar.MINUTE), true
         )
 
@@ -157,16 +157,18 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
             this.toTime.text = String.format(Locale.getDefault(), "%02d:%02d", selectedHour, selectedMinute)
         }
 
+        var pm = Calendar.getInstance().get(Calendar.AM_PM)
         var h = Calendar.getInstance().get(Calendar.HOUR)
         var m = Calendar.getInstance().get(Calendar.MINUTE)
         if (this.fromTime.text != "+") {
             h = this.fromTime.text.split(":")[0].toInt()
             m = this.fromTime.text.split(":")[1].toInt()
+            pm=0
         }
 
         val timePickerDialog = TimePickerDialog(
             requireContext(),
-            onTimeSetListener, h, m, true
+            onTimeSetListener, h+12*pm, m, true
         )
 
         timePickerDialog.setTitle("Ending Time")
