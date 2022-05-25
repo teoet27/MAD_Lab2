@@ -1,6 +1,5 @@
 package it.polito.madcourse.group06.views.timeslot
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
@@ -12,8 +11,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.chip.Chip
 import it.polito.madcourse.group06.R
-import it.polito.madcourse.group06.utilities.TimeslotTools
-import it.polito.madcourse.group06.utilities.TimeslotTools.AdvFilter
+import it.polito.madcourse.group06.utilities.SearchState
+import it.polito.madcourse.group06.utilities.AdvFilter
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import java.util.*
 
@@ -54,15 +53,16 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
         this.applyButton = view.findViewById(R.id.apply_button)
         this.wholeWord = view.findViewById(R.id.whole_word)
 
-        sharedViewModel.filter.observe(viewLifecycleOwner) {
-            this.location.setText(it.location ?: "")
-            this.wholeWord.isChecked = it.whole_word
-            this.fromTime.setText(if (it.starting_time.isNullOrEmpty()) "+" else it.starting_time)
-            this.toTime.setText(if (it.ending_time.isNullOrEmpty()) "+" else it.ending_time)
-            this.minDuration.setText(if (it.min_duration.isNullOrEmpty()) "+" else it.min_duration)
-            this.maxDuration.setText(if (it.max_duration.isNullOrEmpty()) "+" else it.max_duration)
-            this.fromDate.setText(if (it.starting_date.isNullOrEmpty()) "+" else it.starting_date)
-            this.toDate.setText(if (it.ending_date.isNullOrEmpty()) "+" else it.ending_date)
+        sharedViewModel.searchState.observe(viewLifecycleOwner) {
+
+            this.location.setText(it.filter?.location ?: "")
+            this.wholeWord.isChecked = it.filter?.whole_word ?: false
+            this.fromTime.setText(if (it.filter?.starting_time.isNullOrEmpty()) "+" else it.filter?.starting_time)
+            this.toTime.setText(if (it.filter?.ending_time.isNullOrEmpty()) "+" else it.filter?.ending_time)
+            this.minDuration.setText(if (it.filter?.min_duration.isNullOrEmpty()) "+" else it.filter?.min_duration)
+            this.maxDuration.setText(if (it.filter?.max_duration.isNullOrEmpty()) "+" else it.filter?.max_duration)
+            this.fromDate.setText(if (it.filter?.starting_date.isNullOrEmpty()) "+" else it.filter?.starting_date)
+            this.toDate.setText(if (it.filter?.ending_date.isNullOrEmpty()) "+" else it.filter?.ending_date)
         }
 
         sharedViewModel.select(true)
@@ -93,7 +93,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
         }
 
         this.applyButton.setOnClickListener {
-            sharedViewModel.setFilter(
+            sharedViewModel.updateSearchState(SearchState(filter=
                 AdvFilter(
                     location = location.text.toString(),
                     whole_word = wholeWord.isChecked && this.location.text.toString().isNotEmpty(),
@@ -104,7 +104,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
                     starting_date = if (fromDate.text == "+") null else fromDate.text.toString(),
                     ending_date = if (toDate.text == "+") null else toDate.text.toString(),
                 )
-            )
+            ))
             slideOutFragment(this, true)
         }
 
@@ -125,7 +125,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
         sharedViewModel.select(false)
 
         if (!filterSet)
-            sharedViewModel.setFilter(AdvFilter())
+            sharedViewModel.updateSearchState(SearchState())
 
         activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
     }

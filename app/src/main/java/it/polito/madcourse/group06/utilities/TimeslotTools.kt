@@ -102,80 +102,25 @@ class TimeslotTools {
     private fun timeStringToDoubleHour(time:String):Double{
         return time.split(":").foldRight(0.0){a,b-> (a.toDouble()+b.toDouble())/60.0}*60
     }
-
-    class AdvFilter(
-        val location:String?=null,
-        val whole_word:Boolean=false,
-        val starting_time:String?=null,
-        val ending_time:String?=null,
-        val min_duration: String? =null,
-        val max_duration: String? =null,
-        val starting_date:String?=null,
-        val ending_date:String?=null)
-    /**
-     * filterAdvertisement
-     * @param advList list of all available advertisements
-     * @param location to be matched to Adv related attribute
-     * @param starting_time to be matched to Adv related attribute
-     * @param ending_time to be matched to Adv related attribute
-     * @param duration to be matched to Adv related attribute
-     * @param starting_date to be matched to Adv related attribute
-     * @param ending_date to be matched to Adv related attribute
-     * @return the list of Advertisements matching the constraints
-     */
-    fun filterAdvertisementList(
-        advList:List<Advertisement>?,
-        advFilter: AdvFilter?
-    ):List<Advertisement>?{
-        //begin debug section
-        advList?.filter { adv ->
-            if ((advFilter?.starting_date != null && adv.advDate.isLaterThanDate(advFilter.starting_date)) || (advFilter?.starting_date == null))
-                println("ok")
-            true
-        }
-        //end debug section
-        return if(advFilter==null) advList else advList?.filter{ adv->
-            ((advFilter.location!=null && !advFilter.whole_word && advFilter.location.lowercase().contains(adv.advLocation.lowercase(),true))||
-            (advFilter.location!=null && !advFilter.whole_word && adv.advLocation.lowercase().contains(advFilter.location.lowercase(),true))||
-            (advFilter.location!=null && advFilter.whole_word && advFilter.location.lowercase()==adv.advLocation.lowercase())||(advFilter.location==null)) &&
-
-            ((advFilter.min_duration!=null && adv.advDuration>=timeStringToDoubleHour(advFilter.min_duration))||(advFilter.min_duration==null)) &&
-            ((advFilter.max_duration!=null && adv.advDuration<=timeStringToDoubleHour(advFilter.max_duration))||(advFilter.max_duration==null)) &&
-
-            ((advFilter.starting_time!=null && adv.advStartingTime.isLaterThanTime(advFilter.starting_time))||(advFilter.starting_time==null)) &&
-            ((advFilter.ending_time!=null && adv.advEndingTime.isSoonerThanTime(advFilter.ending_time))||(advFilter.ending_time==null))&&
-
-            ((advFilter.starting_date!=null && adv.advDate.isLaterThanDate(advFilter.starting_date))||(advFilter.starting_date==null))&&
-            ((advFilter.ending_date!=null && adv.advDate.isSoonerThanDate(advFilter.ending_date))||(advFilter.ending_date==null))
-        }
-    }
-
-    fun sortAdvertisementList(
-        advList:List<Advertisement>?,
-        criterion: String?,
-        up_flag: Boolean = true
-    ): List<Advertisement>? {
-        val sortedList = when(up_flag){
-            true->when(criterion){
-                "Title"-> advList?.sortedBy { it.advTitle.lowercase() }
-                "Duration"->advList?.sortedByDescending { it.advDuration }
-                "Starting time"->advList?.sortedByDescending { timeStringToDoubleSec(it.advStartingTime) }
-                "Ending time"->advList?.sortedByDescending { timeStringToDoubleSec(it.advEndingTime) }
-                "Date"->advList?.sortedByDescending { dateStringToInt(it.advDate) }
-                else -> null
-            }
-            else->when(criterion){
-                "Title"-> advList?.sortedByDescending { it.advTitle.lowercase() }
-                "Duration"->advList?.sortedBy { it.advDuration }
-                "Starting time"->advList?.sortedBy { timeStringToDoubleSec(it.advStartingTime) }
-                "Ending time"->advList?.sortedBy { timeStringToDoubleSec(it.advEndingTime) }
-                "Date"->advList?.sortedBy { dateStringToInt(it.advDate) }
-                else -> null
-            }
-        }
-        return sortedList
-    }
 }
+
+class AdvFilter(
+    val location:String?=null,
+    val whole_word:Boolean=false,
+    val starting_time:String?=null,
+    val ending_time:String?=null,
+    val min_duration: String? =null,
+    val max_duration: String? =null,
+    val starting_date:String?=null,
+    val ending_date:String?=null)
+
+class SearchState(
+    var searchedWord:String?=null,
+    var sortParameter:Int?=null,
+    var sortUpFlag:Boolean?=null,
+    var myAdsFlag:Boolean?=null,
+    var filter:AdvFilter?=null
+)
 
 //Useful extension functions
 private fun Boolean.toInt() = if (this) 1 else 0

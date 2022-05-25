@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
-import it.polito.madcourse.group06.utilities.TimeslotTools
+import it.polito.madcourse.group06.utilities.AdvFilter
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import kotlin.math.roundToInt
 
@@ -52,7 +52,7 @@ class AdvAdapterCard(
      */
 
     fun updateDataSet(
-        advFilter: TimeslotTools.AdvFilter? = null,
+        advFilter: AdvFilter? = null,
         sortParam: Int? = null,
         sortUp: Boolean? = null,
         myAds: Boolean? = null,

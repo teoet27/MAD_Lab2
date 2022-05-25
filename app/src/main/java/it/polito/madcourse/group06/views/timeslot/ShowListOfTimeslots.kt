@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.AdvAdapterCard
 import it.polito.madcourse.group06.models.advertisement.Advertisement
-import it.polito.madcourse.group06.utilities.TimeslotTools
+import it.polito.madcourse.group06.utilities.SearchState
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
@@ -37,12 +37,9 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var myTimeslotsButton: TextView
     private lateinit var currentAccountID: String
     private var selectedSkill: String = "All"
-    private var advFilter: TimeslotTools.AdvFilter = TimeslotTools.AdvFilter()
     private var fullListForGivenSkill: List<Advertisement> = listOf()
-    private var param: Int = 0
     private var isMyAdv = false
     private var isUp = false
-    private var search: String? = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -100,69 +97,25 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         }
 
         // Initialize Adapter card for recycler view
-        var advAdapterCard = AdvAdapterCard(fullListForGivenSkill, advertisementViewModel)
+        var advAdapterCard: AdvAdapterCard
 
         // Modify adapter card when events occur:
         // - MyTimeslots
         this.myTimeslotsButton.setOnClickListener {
-            isMyAdv = !isMyAdv
-            if (isMyAdv) {
-                this.myTimeslotsButton.backgroundTintList =
-                    AppCompatResources.getColorStateList(requireContext(), R.color.orange_poli)
-                this.myTimeslotsButton.setTextColor(
-                    AppCompatResources.getColorStateList(
-                        requireContext(),
-                        R.color.black
-                    )
-                )
-            } else {
-                this.myTimeslotsButton.backgroundTintList =
-                    AppCompatResources.getColorStateList(requireContext(), R.color.darkGray)
-                this.myTimeslotsButton.setTextColor(
-                    AppCompatResources.getColorStateList(
-                        requireContext(),
-                        R.color.lightGray
-                    )
-                )
-            }
-            advAdapterCard.updateDataSet(
-                advFilter = advFilter,
-                sortUp = isUp,
-                sortParam = param,
-                myAds = isMyAdv,
-                userID = currentAccountID,
-                search = search
-            )
+            sharedViewModel.updateSearchState(SearchState(myAdsFlag = !isMyAdv))
         }
         // - Change sort direction
         this.directionButton.setOnClickListener {
-            isUp = !isUp
-            if (isUp) this.directionButton.setImageResource(R.drawable.sort_up)
-            else this.directionButton.setImageResource(R.drawable.sort_down)
-            advAdapterCard.updateDataSet(
-                advFilter = advFilter,
-                sortUp = isUp,
-                sortParam = param,
-                myAds = isMyAdv,
-                userID = currentAccountID,
-                search = search
-            )
+            sharedViewModel.updateSearchState(SearchState(sortUpFlag = !isUp))
         }
 
         // - Search bar research
+        searchBar.setText(sharedViewModel.searchState.value?.searchedWord)
         searchBar.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                search = searchBar.text.toString()
-                advAdapterCard.updateDataSet(
-                    advFilter = advFilter,
-                    sortUp = isUp,
-                    sortParam = param,
-                    myAds = isMyAdv,
-                    userID = currentAccountID,
-                    search = search
-                )
+                sharedViewModel.updateSearchState(SearchState(searchedWord = searchBar.text.toString()))
             }
         })
 
@@ -185,15 +138,41 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             advAdapterCard = AdvAdapterCard(fullListForGivenSkill, advertisementViewModel)
 
             // - Filter
-            sharedViewModel.filter.observe(viewLifecycleOwner) {
-                advFilter = it
+            sharedViewModel.searchState.observe(viewLifecycleOwner) {
+
+                //update view
+                this.sortParam.text = paramToString(it.sortParameter)
+                this.isUp=it.sortUpFlag?:true
+                this.isMyAdv=it.myAdsFlag?:false
+                if (isMyAdv) {
+                    this.myTimeslotsButton.backgroundTintList =
+                        AppCompatResources.getColorStateList(requireContext(), R.color.orange_poli)
+                    this.myTimeslotsButton.setTextColor(
+                        AppCompatResources.getColorStateList(
+                            requireContext(),
+                            R.color.black
+                        )
+                    )
+                } else {
+                    this.myTimeslotsButton.backgroundTintList =
+                        AppCompatResources.getColorStateList(requireContext(), R.color.darkGray)
+                    this.myTimeslotsButton.setTextColor(
+                        AppCompatResources.getColorStateList(
+                            requireContext(),
+                            R.color.lightGray
+                        )
+                    )
+                }
+
+
+                //update recyclerview
                 advAdapterCard.updateDataSet(
-                    advFilter = advFilter,
-                    sortUp = isUp,
-                    sortParam = param,
-                    myAds = isMyAdv,
+                    advFilter = it.filter,
+                    sortUp = it.sortUpFlag,
+                    sortParam = it.sortParameter,
+                    myAds = it.myAdsFlag,
                     userID = currentAccountID,
-                    search = search
+                    search = it.searchedWord
                 )
             }
 
@@ -247,14 +226,23 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
      */
     override fun onContextItemSelected(item: MenuItem): Boolean {
         when (item.title) {
-            resources.getString(R.string.title) -> param = 0
-            resources.getString(R.string.duration_menu) -> param = 1
-            resources.getString(R.string.starting_time_menu) -> param = 2
-            resources.getString(R.string.ending_time_menu) -> param = 3
-            resources.getString(R.string.date) -> param = 4
+            resources.getString(R.string.title) -> sharedViewModel.updateSearchState(SearchState(sortParameter = 0))
+            resources.getString(R.string.duration_menu) -> sharedViewModel.updateSearchState(SearchState(sortParameter = 1))
+            resources.getString(R.string.starting_time_menu) -> sharedViewModel.updateSearchState(SearchState(sortParameter = 2))
+            resources.getString(R.string.ending_time_menu) -> sharedViewModel.updateSearchState(SearchState(sortParameter = 3))
+            resources.getString(R.string.date) -> sharedViewModel.updateSearchState(SearchState(sortParameter = 4))
         }
-        this.sortParam.text = item.title
         return true
+    }
+
+    private fun paramToString(idx:Int?):String{
+        return when(idx){
+            1->"Duration"
+            2->"Starting time"
+            3->"Ending time"
+            4->"Date"
+            else->"Title"
+        }
     }
 }
 

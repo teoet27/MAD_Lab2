@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -23,7 +22,6 @@ import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.utilities.DrawerInterface
-import it.polito.madcourse.group06.utilities.TimeslotTools
 
 class TBMainActivity : AppCompatActivity(), DrawerInterface {
 
@@ -89,8 +87,11 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
                     true
                 }
                 R.id.ShowListOfAdvertisementsMenuItem -> {
-                    sharedViewModel.setFilter(TimeslotTools.AdvFilter())
-                    navController.navigate(R.id.ShowListTimeslots, bundleOf("selected_skill" to "All"))
+                    sharedViewModel.resetSearchState()
+                    navController.navigate(
+                        R.id.ShowListTimeslots,
+                        bundleOf("selected_skill" to "All")
+                    )
                     true
                 }
                 R.id.ShowProfileMenuItem -> {
