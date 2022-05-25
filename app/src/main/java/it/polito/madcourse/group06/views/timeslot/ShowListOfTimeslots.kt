@@ -7,6 +7,7 @@ import android.view.*
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.AdvAdapterCard
 import it.polito.madcourse.group06.models.advertisement.Advertisement
+import it.polito.madcourse.group06.utilities.AdvFilter
 import it.polito.madcourse.group06.utilities.SearchState
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
@@ -33,6 +35,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var sortParam: TextView
     private lateinit var directionButton: ImageView
     private lateinit var barrier: TextView
+    private lateinit var filterNotificationDot: TextView
     private lateinit var searchBar: EditText
     private lateinit var myTimeslotsButton: TextView
     private lateinit var currentAccountID: String
@@ -63,6 +66,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.directionButton = view.findViewById(R.id.sort_direction_button)
         this.recyclerView = view.findViewById(R.id.rvAdvFullList)
         this.barrier = view.findViewById(R.id.barrier)
+        this.filterNotificationDot = view.findViewById(R.id.filter_notification)
         this.searchBar = view.findViewById(R.id.search_bar)
         this.myTimeslotsButton = view.findViewById(R.id.myTimeslotsButtonID)
 
@@ -163,6 +167,11 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                         )
                     )
                 }
+
+                if(it.filter?.isEmpty() != false)
+                    filterNotificationDot.visibility=View.GONE
+                else
+                    filterNotificationDot.visibility=View.VISIBLE
 
 
                 //update recyclerview

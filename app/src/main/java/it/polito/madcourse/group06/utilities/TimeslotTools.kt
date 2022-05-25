@@ -28,7 +28,10 @@ class TimeslotTools {
      * String.isLaterThanTime returns true if the time difference is positive w.r.t. the parameter
      * String.isSoonerThanTime returns true if the time difference is negative w.r.t. the parameter
      */
-    private fun computeTimeDifference(startingTime: String, endingTime: String): Pair<Double, Boolean> {
+    private fun computeTimeDifference(
+        startingTime: String,
+        endingTime: String
+    ): Pair<Double, Boolean> {
         var timeDifference: Double = 0.0
         if (startingTime.isNullOrEmpty() || endingTime.isNullOrEmpty()) {
             return Pair(-1.0, false)
@@ -42,12 +45,12 @@ class TimeslotTools {
         )
     }
 
-    private fun String.isLaterThanTime(time:String):Boolean{
-        return computeTimeDifference(time,this).first>=0
+    private fun String.isLaterThanTime(time: String): Boolean {
+        return computeTimeDifference(time, this).first >= 0
     }
 
-    private fun String.isSoonerThanTime(time:String):Boolean{
-        return computeTimeDifference(time,this).first<=0
+    private fun String.isSoonerThanTime(time: String): Boolean {
+        return computeTimeDifference(time, this).first <= 0
     }
 
 
@@ -63,63 +66,79 @@ class TimeslotTools {
      * String.isLaterThanDate returns true if the date difference is positive w.r.t. the parameter
      * String.isSoonerThanDate returns true if the date difference is negative w.r.t. the parameter
      */
-    private fun computeDateDifference(startingDate: String, endingDate: String): Pair<Double, Boolean> {
+    private fun computeDateDifference(
+        startingDate: String,
+        endingDate: String
+    ): Pair<Double, Boolean> {
         var dateDifference: Double = 0.0
         if (startingDate.isNullOrEmpty() || endingDate.isNullOrEmpty()) {
             return Pair(-1.0, false)
         }
-        dateDifference= (dateStringToInt(endingDate)-dateStringToInt(startingDate)).toDouble()
+        dateDifference = (dateStringToInt(endingDate) - dateStringToInt(startingDate)).toDouble()
         return Pair(
             (dateDifference * 100.0).roundToInt() / 100.0,
             (dateDifference * 100.0).roundToInt() / 100.0 >= 0
         )
     }
 
-    private fun String.isLaterThanDate(date:String):Boolean{
-        return computeDateDifference(date,this).first>=0
+    private fun String.isLaterThanDate(date: String): Boolean {
+        return computeDateDifference(date, this).first >= 0
     }
 
-    private fun String.isSoonerThanDate(date:String):Boolean{
-        return computeDateDifference(date,this).first<=0
+    private fun String.isSoonerThanDate(date: String): Boolean {
+        return computeDateDifference(date, this).first <= 0
     }
 
-    private fun dateStringToInt(date:String):Int{
-        var dateInt=0
+    private fun dateStringToInt(date: String): Int {
+        var dateInt = 0
         date.split("/").forEachIndexed { index, s ->
-            when(index){
-                0-> dateInt +=s.toInt() //day
-                1-> dateInt +=(31 - 3*(s.toInt()==2).toInt() - (listOf(4,6,9,11).contains(s.toInt())).toInt())*s.toInt() //month
-                2-> dateInt += (if(s.toInt()%400==0) 366 else 365 )*s.toInt() //year
+            when (index) {
+                0 -> dateInt += s.toInt() //day
+                1 -> dateInt += (31 - 3 * (s.toInt() == 2).toInt() - (listOf(
+                    4,
+                    6,
+                    9,
+                    11
+                ).contains(s.toInt())).toInt()) * s.toInt() //month
+                2 -> dateInt += (if (s.toInt() % 400 == 0) 366 else 365) * s.toInt() //year
             }
         }
         return dateInt
     }
 
-    private fun timeStringToDoubleSec(time:String):Double{
-        return time.split(":").fold(0.0){a,b-> (a.toDouble()+b.toDouble())*60.0}
+    private fun timeStringToDoubleSec(time: String): Double {
+        return time.split(":").fold(0.0) { a, b -> (a.toDouble() + b.toDouble()) * 60.0 }
     }
 
-    private fun timeStringToDoubleHour(time:String):Double{
-        return time.split(":").foldRight(0.0){a,b-> (a.toDouble()+b.toDouble())/60.0}*60
+    private fun timeStringToDoubleHour(time: String): Double {
+        return time.split(":").foldRight(0.0) { a, b -> (a.toDouble() + b.toDouble()) / 60.0 } * 60
     }
 }
 
 class AdvFilter(
-    val location:String?=null,
-    val whole_word:Boolean=false,
-    val starting_time:String?=null,
-    val ending_time:String?=null,
-    val min_duration: String? =null,
-    val max_duration: String? =null,
-    val starting_date:String?=null,
-    val ending_date:String?=null)
+    val location: String? = null,
+    val whole_word: Boolean = false,
+    val starting_time: String? = null,
+    val ending_time: String? = null,
+    val min_duration: String? = null,
+    val max_duration: String? = null,
+    val starting_date: String? = null,
+    val ending_date: String? = null
+) {
+
+    fun isEmpty(): Boolean {
+        return location.isNullOrEmpty() && !whole_word && starting_time.isNullOrEmpty() &&
+                ending_time.isNullOrEmpty() && min_duration.isNullOrEmpty() &&
+                max_duration.isNullOrEmpty() && starting_date.isNullOrEmpty() && ending_date.isNullOrEmpty()
+    }
+}
 
 class SearchState(
-    var searchedWord:String?=null,
-    var sortParameter:Int?=null,
-    var sortUpFlag:Boolean?=null,
-    var myAdsFlag:Boolean?=null,
-    var filter:AdvFilter?=null
+    var searchedWord: String? = null,
+    var sortParameter: Int? = null,
+    var sortUpFlag: Boolean? = null,
+    var myAdsFlag: Boolean? = null,
+    var filter: AdvFilter? = null
 )
 
 //Useful extension functions

@@ -111,6 +111,7 @@
             android:id="@+id/filter_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginEnd="4dp"
             android:background="@drawable/rounded_corners_total"
             android:backgroundTint="@color/prussian_blue"
             android:gravity="center"
@@ -124,7 +125,22 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/filter_notification"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginEnd="3dp"
+            android:background="@drawable/ic_svg_circle"
+            android:backgroundTint="@color/orange_poli"
+            android:textColor="@color/orange_poli"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/filter_button"
+            app:layout_constraintEnd_toEndOf="@+id/filter_button"
+            app:layout_constraintTop_toTopOf="@+id/filter_button"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
