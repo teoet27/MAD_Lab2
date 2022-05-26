@@ -135,7 +135,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
             }
 
             this.discardButton.setOnClickListener {
-                findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_showSingleTimeslot)
+                findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
             }
 
             this.confirmButton.setOnClickListener {
