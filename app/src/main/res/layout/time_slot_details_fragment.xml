@@ -3,259 +3,249 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".views.timeslot.ShowSingleTimeslot">
 
-    <ScrollView
+    <ImageView
+        android:id="@+id/moreButtonID"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="30dp"
+        android:layout_weight="0"
+        android:background="@drawable/rounded_corners_total"
+        android:backgroundTint="@color/orange_poli"
+        android:contentDescription='@string/more_button_for_opening_the_edit_menu'
+        android:elevation="5dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_baseline_chat_24"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout6"
+        app:tint="@color/white" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/prussian_blue"
+        android:orientation="vertical"
+        android:paddingTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:background="#DADADA"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/show_details_adv_top"
-                android:backgroundTint="@color/prussian_blue"
-                android:paddingTop="16dp"
-                android:paddingBottom="8dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="8"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/advTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="fill_vertical"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_weight="8"
-                        android:fontFamily="sans-serif-black"
-                        android:text="Electrician Assistance for Small Houses"
-                        android:textColor="@color/white"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/moreButtonID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="2dp"
-                    android:layout_weight="0"
-                    android:background="@drawable/rounded_corners_total"
-                    android:backgroundTint="@color/orange_poli"
-                    android:contentDescription='@string/more_button_for_opening_the_edit_menu'
-                    android:padding="2dp"
-                    android:src="@drawable/ic_edit_black_24dp"
-                    app:tint="@color/white" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/orange_poli"
-                android:contentDescription='@string/separation_line'
-                android:paddingTop="2dp"
-                android:src="@drawable/rounded_corners_land" />
-
             <TextView
-                android:id="@+id/advAccount"
+                android:id="@+id/advTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:drawablePadding="5dp"
-                android:text="Mario Rossi"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:drawableStartCompat="@drawable/ic_account_circle_black_24dp"
-                app:drawableTint="#454749" />
-
-            <TextView
-                android:id="@+id/advLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:drawablePadding="5dp"
-                android:text="Corso Sebastopoli 220, Torino (Italy)"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                app:drawableStartCompat="@drawable/ic_location_on_black_24dp"
-                app:drawableTint="#454749" />
-
-            <TextView
-                android:id="@+id/advDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:drawablePadding="5dp"
-                android:text="14/02/2022"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                app:drawableStartCompat="@drawable/ic_event_black_24dp"
-                app:drawableTint="#454749" />
-
-            <TextView
-                android:id="@+id/advStartingTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:drawablePadding="5dp"
-                android:text="14/02/2022"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                app:drawableStartCompat="@drawable/ic_watch_later_black_24dp"
-                app:drawableTint="#454749" />
-
-            <TextView
-                android:id="@+id/advEndingTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:drawablePadding="5dp"
-                android:text="14/02/2022"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                app:drawableStartCompat="@drawable/ic_watch_later_black_24dp"
-                app:drawableTint="#454749" />
-
-            <TextView
-                android:id="@+id/advDuration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:drawablePadding="5dp"
-                android:text="5 hours"
-                android:textColor="#000000"
-                app:drawableStartCompat="@drawable/ic_timer_black_24dp"
-                app:drawableTint="#454749"
-                android:textSize="20sp" />
-
-            <ImageView
-                android:id="@+id/imageView12"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:background="#AAABAE"
-                android:contentDescription='@string/separation_line'
-                android:paddingTop="5dp"
-                android:src="@drawable/rounded_corners_land" />
-
-            <TextView
-                android:id="@+id/skillTitleForShowAdv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:drawablePadding="5dp"
-                android:text="Related skills:"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:drawableTint="#454749" />
-
-            <TextView
-                android:id="@+id/noSkillsProvidedLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="4dp"
-                android:drawablePadding="5dp"
-                android:text="No skills provided"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:drawableTint="#454749" />
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/showTimeslotSkills"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"/>
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:background="#AAABAE"
-                android:contentDescription='@string/separation_line'
-                android:paddingTop="5dp"
-                android:src="@drawable/rounded_corners_land" />
-
-            <TextView
-                android:id="@+id/ads_descriptionTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:text="@string/description_of_the_job_offered"
-                android:textColor="#000000"
-                android:textSize="20sp"
+                android:layout_marginEnd="80dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Electrician Assistance for Small Houses"
+                android:textColor="@color/white"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/advDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="16dp"
-                android:text="xxx"
-                android:textColor="#000000"
-                android:textSize="20sp" />
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/scrollView3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#DADADA">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_corners_down"
-                android:backgroundTint="@color/prussian_blue"
-                android:orientation="vertical"
-                android:paddingTop="16dp"
-                android:paddingBottom="8dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/orange_poli"
+                    android:contentDescription='@string/separation_line'
+                    android:src="@drawable/rounded_corners_land" />
+
+                <TextView
+                    android:id="@+id/advAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:drawablePadding="5dp"
+                    android:text="Mario Rossi"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:drawableStartCompat="@drawable/ic_account_circle_black_24dp"
+                    app:drawableTint="#454749" />
+
+                <TextView
+                    android:id="@+id/advLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:drawablePadding="5dp"
+                    android:text="Corso Sebastopoli 220, Torino (Italy)"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    app:drawableStartCompat="@drawable/ic_location_on_black_24dp"
+                    app:drawableTint="#454749" />
+
+                <TextView
+                    android:id="@+id/advDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:drawablePadding="5dp"
+                    android:text="14/02/2022"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    app:drawableStartCompat="@drawable/ic_event_black_24dp"
+                    app:drawableTint="#454749" />
+
+                <TextView
+                    android:id="@+id/advStartingTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:drawablePadding="5dp"
+                    android:text="14/02/2022"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    app:drawableStartCompat="@drawable/ic_watch_later_black_24dp"
+                    app:drawableTint="#454749" />
+
+                <TextView
+                    android:id="@+id/advEndingTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:drawablePadding="5dp"
+                    android:text="14/02/2022"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    app:drawableStartCompat="@drawable/ic_watch_later_black_24dp"
+                    app:drawableTint="#454749" />
+
+                <TextView
+                    android:id="@+id/advDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:drawablePadding="5dp"
+                    android:text="5 hours"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    app:drawableStartCompat="@drawable/ic_timer_black_24dp"
+                    app:drawableTint="#454749" />
+
+                <ImageView
+                    android:id="@+id/imageView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="#AAABAE"
+                    android:contentDescription='@string/separation_line'
+                    android:paddingTop="5dp"
+                    android:src="@drawable/rounded_corners_land" />
+
+                <TextView
+                    android:id="@+id/skillTitleForShowAdv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:drawablePadding="5dp"
+                    android:text="Related skills:"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:drawableTint="#454749" />
+
+                <TextView
+                    android:id="@+id/noSkillsProvidedLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="4dp"
+                    android:drawablePadding="5dp"
+                    android:text="No skills provided"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    app:drawableTint="#454749" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/showTimeslotSkills"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="#AAABAE"
+                    android:contentDescription='@string/separation_line'
+                    android:paddingTop="5dp"
+                    android:src="@drawable/rounded_corners_land" />
+
+                <TextView
+                    android:id="@+id/ads_descriptionTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:text="@string/description_of_the_job_offered"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/advDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="16dp"
+                    android:text="xxx"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
 
             </LinearLayout>
+        </ScrollView>
 
-        </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
