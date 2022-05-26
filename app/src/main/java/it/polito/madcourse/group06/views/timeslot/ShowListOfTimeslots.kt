@@ -39,7 +39,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var directionButton: ImageView
     private lateinit var barrier: TextView
     private lateinit var filterNotificationDot: TextView
-    private lateinit var searchBar: EditText
     private lateinit var myTimeslotsButton: TextView
     private lateinit var currentAccountID: String
     private lateinit var bottomNavView: BottomNavigationView
@@ -54,6 +53,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         savedInstanceState: Bundle?
     ): View? {
 
+        setHasOptionsMenu(true)
         return inflater.inflate(
             R.layout.show_timeslots_frag,
             container,
@@ -71,12 +71,15 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.recyclerView = view.findViewById(R.id.rvAdvFullList)
         this.barrier = view.findViewById(R.id.barrier)
         this.filterNotificationDot = view.findViewById(R.id.filter_notification)
-        this.searchBar = view.findViewById(R.id.search_bar)
         this.myTimeslotsButton = view.findViewById(R.id.myTimeslotsButtonID)
         this.bottomNavView=view.findViewById(R.id.bottomNavigationView)
 
+        // set up bottom nav bar
         bottomNavView.background = null
         bottomNavView.menu.getItem(2).isEnabled = false
+
+        // top set up search bar
+
 
         // Get current user
         userProfileViewModel.currentUser.observe(viewLifecycleOwner) {
@@ -120,16 +123,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.directionButton.setOnClickListener {
             sharedViewModel.updateSearchState(SearchState(sortUpFlag = !isUp))
         }
-
-        // - Search bar research
-        searchBar.setText(sharedViewModel.searchState.value?.searchedWord)
-        searchBar.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable) {}
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                sharedViewModel.updateSearchState(SearchState(searchedWord = searchBar.text.toString()))
-            }
-        })
 
         advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
             fullListForGivenSkill =
@@ -218,6 +211,30 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+
+        activity?.menuInflater?.inflate(R.menu.search_menu,menu)
+
+        val menuItem=menu.findItem(R.id.action_search)
+        val searchView=menuItem.actionView as SearchView
+        searchView.queryHint=resources.getString(R.string.search_hint)
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                sharedViewModel.updateSearchState(SearchState(searchedWord = newText))
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+        })
+
+        return super.onCreateOptionsMenu(menu, inflater)
+
+    }
     /**
      * This method chooses a menu to be inflated for choosing the sorting parameter
      *
