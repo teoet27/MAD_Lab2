@@ -14,6 +14,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.AdvAdapterCard
 import it.polito.madcourse.group06.models.advertisement.Advertisement
@@ -30,7 +33,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var recyclerView: RecyclerView
-    private lateinit var newAdvButton: Button
+    private lateinit var newAdvButton: FloatingActionButton
     private lateinit var filterButton: TextView
     private lateinit var sortParam: TextView
     private lateinit var directionButton: ImageView
@@ -39,6 +42,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var searchBar: EditText
     private lateinit var myTimeslotsButton: TextView
     private lateinit var currentAccountID: String
+    private lateinit var bottomNavView: BottomNavigationView
     private var selectedSkill: String = "All"
     private var fullListForGivenSkill: List<Advertisement> = listOf()
     private var isMyAdv = false
@@ -69,6 +73,10 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.filterNotificationDot = view.findViewById(R.id.filter_notification)
         this.searchBar = view.findViewById(R.id.search_bar)
         this.myTimeslotsButton = view.findViewById(R.id.myTimeslotsButtonID)
+        this.bottomNavView=view.findViewById(R.id.bottomNavigationView)
+
+        bottomNavView.background = null
+        bottomNavView.menu.getItem(2).isEnabled = false
 
         // Get current user
         userProfileViewModel.currentUser.observe(viewLifecycleOwner) {
