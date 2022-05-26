@@ -147,6 +147,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 //update view
                 this.sortParam.text = paramToString(it.sortParameter)
                 this.isUp=it.sortUpFlag?:true
+                this.directionButton.setImageResource(if(this.isUp) R.drawable.sort_up else R.drawable.sort_down)
                 this.isMyAdv=it.myAdsFlag?:false
                 if (isMyAdv) {
                     this.myTimeslotsButton.backgroundTintList =
