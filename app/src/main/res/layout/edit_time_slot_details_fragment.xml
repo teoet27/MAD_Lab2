@@ -20,6 +20,7 @@
             android:background="@drawable/rounded_corners_total"
             android:backgroundTint="#DADADA"
             android:orientation="vertical"
+            android:paddingBottom="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -220,7 +221,7 @@
     <LinearLayout
         android:id="@+id/linearLayout7"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -229,8 +230,9 @@
         <Button
             android:id="@+id/discardButtonID"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="2dp"
             android:layout_weight="1"
             android:backgroundTint="@color/red_deleting"
             android:text="Discard" />
@@ -238,8 +240,9 @@
         <Button
             android:id="@+id/confirmButtonID"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="4dp"
             android:layout_weight="2"
             android:backgroundTint="#018703"
             android:text="Confirm your changes" />

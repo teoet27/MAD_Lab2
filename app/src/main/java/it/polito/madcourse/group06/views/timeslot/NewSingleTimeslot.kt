@@ -39,8 +39,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private lateinit var newStartingTime: TextView
     private lateinit var newEndingTime: TextView
     private lateinit var newDescription: EditText
-    private lateinit var closeButton: ImageView
-    private lateinit var confirmButton: ImageView
+    private lateinit var closeButton: Button
+    private lateinit var confirmButton: Button
     private lateinit var datePicker: DatePicker
     private lateinit var accountName: String
     private var accountID: String = ""
