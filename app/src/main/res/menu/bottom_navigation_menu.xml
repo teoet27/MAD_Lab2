@@ -17,6 +17,6 @@
         android:title="Saved"/>
     <item
         android:id="@+id/my_time_slots_tab"
-        android:icon="@drawable/savetime"
+        android:icon="@drawable/my_ads"
         android:title="Mine"/>
 </menu>
