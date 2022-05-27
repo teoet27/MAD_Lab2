@@ -138,6 +138,8 @@ class SearchState(
     var sortParameter: Int? = null,
     var sortUpFlag: Boolean? = null,
     var myAdsFlag: Boolean? = null,
+    var activeAdsFlag:Boolean?=null,
+    var savedAdsFlag:Boolean?=null,
     var filter: AdvFilter? = null
 )
 

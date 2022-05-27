@@ -24,6 +24,8 @@ class SharedViewModel : ViewModel() {
                           sortParameter: Int? = null,
                           sortUpFlag: Boolean? = null,
                           myAdsFlag: Boolean? = null,
+                          activeAdsFlag:Boolean?=null,
+                          savedAdsFlag:Boolean?=null,
                           filter: AdvFilter? = null) {
         if (searchedWord != null)
             _searchState.searchedWord = searchedWord
@@ -33,13 +35,17 @@ class SharedViewModel : ViewModel() {
             _searchState.sortUpFlag = sortUpFlag
         if (myAdsFlag != null)
             _searchState.myAdsFlag = myAdsFlag
+        if (activeAdsFlag != null)
+            _searchState.activeAdsFlag = activeAdsFlag
+        if (savedAdsFlag != null)
+            _searchState.savedAdsFlag = savedAdsFlag
         if (filter != null)
             _searchState.filter = filter
         searchState.value = _searchState
     }
 
     fun resetSearchState() {
-        _searchState = SearchState(null, 0, true, false, AdvFilter())
+        _searchState = SearchState(null, 0, true, false,false,false, AdvFilter())
         searchState.value = _searchState
     }
 

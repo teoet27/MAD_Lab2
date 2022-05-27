@@ -75,11 +75,10 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         bottomNavView.menu.getItem(2).isEnabled = false
         bottomNavView.setOnItemSelectedListener {
             when(it.title){
-                "Services"->{sharedViewModel.updateSearchState(myAdsFlag = false);true}
-                /*"Active"->
-                "Saved"->*/
+                "Active"->{sharedViewModel.updateSearchState(activeAdsFlag = true);true}
+                "Saved"->{sharedViewModel.updateSearchState(savedAdsFlag = true);true}
                 "Mine"->{sharedViewModel.updateSearchState(myAdsFlag = true);true}
-                else -> false
+                else ->{sharedViewModel.updateSearchState(myAdsFlag = false,activeAdsFlag = true,savedAdsFlag = true);true}
             }
         }
 
