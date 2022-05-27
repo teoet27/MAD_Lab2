@@ -117,7 +117,10 @@ class AdvAdapterCard(
 
         // Search
         if(search!=null)
-            showedData = showedData.filter { it.advTitle.contains(search.toString(), true) }
+            showedData = showedData.filter {
+                it.advTitle.contains(search.toString(), true) ||
+                !it.listOfSkills.none { skill -> skill.contains(search.toString(), true) }
+            }
 
         notifyDataSetChanged()
     }
