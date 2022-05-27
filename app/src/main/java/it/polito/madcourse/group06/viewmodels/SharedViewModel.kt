@@ -44,8 +44,15 @@ class SharedViewModel : ViewModel() {
         searchState.value = _searchState
     }
 
-    fun resetSearchState() {
-        _searchState = SearchState(null, 0, true, false,false,false, AdvFilter())
+    // reset search state and initialize if you want some parameter
+    fun resetSearchState(searchedWord: String? = null,
+                         sortParameter: Int? = 0,
+                         sortUpFlag: Boolean? = true,
+                         myAdsFlag: Boolean? = false,
+                         activeAdsFlag:Boolean?=false,
+                         savedAdsFlag:Boolean?=false,
+                         filter: AdvFilter? = AdvFilter()) {
+        _searchState = SearchState(searchedWord,sortParameter,sortUpFlag,myAdsFlag,activeAdsFlag,savedAdsFlag,filter)
         searchState.value = _searchState
     }
 

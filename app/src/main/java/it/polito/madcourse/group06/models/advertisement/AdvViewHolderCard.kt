@@ -34,15 +34,12 @@ class AdvViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
         this.bookmark.setOnClickListener{
             //TODO: Update Advertisement class and its implementations
             /*
-            val ad =advertisementViewModel.advertisement.value
-            val marked=ad.bookmarked
-
-            if(marked)
+            if(adv.bookmarked)
                 this.bookmark.setImageResource(R.drawable.ic_bookmark_black_24dp)
             else
                 this.bookmark.setImageResource(R.drawable.ic_bookmark_border_black_24dp)
-
-            ad.bookmarked=!marked
+            var ad=adv
+            ad.bookmarked=!adv.bookmarked
             advertisementViewModel.editAdvertisement(ad)
             */
         }

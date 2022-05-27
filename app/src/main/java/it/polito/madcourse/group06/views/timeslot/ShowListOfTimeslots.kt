@@ -75,10 +75,10 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         bottomNavView.menu.getItem(2).isEnabled = false
         bottomNavView.setOnItemSelectedListener {
             when(it.title){
-                "Active"->{sharedViewModel.updateSearchState(activeAdsFlag = true);true}
-                "Saved"->{sharedViewModel.updateSearchState(savedAdsFlag = true);true}
-                "Mine"->{sharedViewModel.updateSearchState(myAdsFlag = true);true}
-                else ->{sharedViewModel.updateSearchState(myAdsFlag = false,activeAdsFlag = true,savedAdsFlag = true);true}
+                "Active"->{sharedViewModel.resetSearchState(activeAdsFlag = true);true}
+                "Saved"->{sharedViewModel.resetSearchState(savedAdsFlag = true);true}
+                "Mine"->{sharedViewModel.resetSearchState(myAdsFlag = true);true}
+                else ->{sharedViewModel.updateSearchState(myAdsFlag = false,activeAdsFlag = false,savedAdsFlag = false);true}
             }
         }
 
@@ -141,7 +141,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             view.findViewById<ImageView>(R.id.create_hint).isVisible =
                 fullListForGivenSkill.isEmpty()
             this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-            advAdapterCard = AdvAdapterCard(fullListForGivenSkill, advertisementViewModel)
+            advAdapterCard = AdvAdapterCard(listOfAdv, advertisementViewModel)
 
             // - Filter
             sharedViewModel.searchState.observe(viewLifecycleOwner) {
@@ -179,10 +179,13 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
                 //update recyclerview
                 advAdapterCard.updateDataSet(
+                    selectedSkill=selectedSkill,
                     advFilter = it.filter,
                     sortUp = it.sortUpFlag,
                     sortParam = it.sortParameter,
                     myAds = it.myAdsFlag,
+                    activeAdsFlag=it.activeAdsFlag,
+                    savedAdsFlag=it.savedAdsFlag,
                     userID = currentAccountID,
                     search = it.searchedWord
                 )

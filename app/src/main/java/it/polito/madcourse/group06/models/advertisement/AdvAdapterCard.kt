@@ -52,16 +52,23 @@ class AdvAdapterCard(
      */
 
     fun updateDataSet(
+        selectedSkill:String?="All",
         advFilter: AdvFilter? = null,
         sortParam: Int? = null,
         sortUp: Boolean? = null,
         myAds: Boolean? = null,
+        activeAdsFlag:Boolean?=null,
+        savedAdsFlag:Boolean?=null,
         userID: String? = null,
         search: String? = null
     ) {
+        // SelectedSkill filtering phase
+        showedData=adsList.filter{ it.listOfSkills.contains(selectedSkill) || selectedSkill == "All" }
+
+
         //Filtering phase
         showedData =
-            if (advFilter == null) adsList else adsList.filter { adv ->
+            if (advFilter == null) showedData else showedData.filter { adv ->
                 ((advFilter.location != null && !advFilter.whole_word && advFilter.location.lowercase()
                     .contains(adv.advLocation.lowercase(), true)) ||
                         (advFilter.location != null && !advFilter.whole_word && adv.advLocation.lowercase()
@@ -112,9 +119,16 @@ class AdvAdapterCard(
 
         // My timeslot filtering
         if (myAds==true) {
-            showedData = showedData.filter { it.accountID == userID }
+            showedData = adsList.filter { it.accountID == userID }
         }
-
+        // Active timeslot filtering
+        if (activeAdsFlag ==true) {
+            //showedData = adsList.filter { it.isActive }
+        }
+        // Saved timeslot filtering
+        if (savedAdsFlag==true) {
+            //showedData = adsList.filter { it.isSaved }
+        }
         // Search
         if(search!=null)
             showedData = showedData.filter {
