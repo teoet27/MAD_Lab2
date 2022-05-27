@@ -20,17 +20,21 @@ class SharedViewModel : ViewModel() {
         selected.value = _selected
     }
 
-    fun updateSearchState(state: SearchState) {
-        if (state.searchedWord != null)
-            _searchState.searchedWord = state.searchedWord
-        if (state.sortParameter != null)
-            _searchState.sortParameter = state.sortParameter
-        if (state.sortUpFlag != null)
-            _searchState.sortUpFlag = state.sortUpFlag
-        if (state.myAdsFlag != null)
-            _searchState.myAdsFlag = state.myAdsFlag
-        if (state.filter != null)
-            _searchState.filter = state.filter
+    fun updateSearchState(searchedWord: String? = null,
+                          sortParameter: Int? = null,
+                          sortUpFlag: Boolean? = null,
+                          myAdsFlag: Boolean? = null,
+                          filter: AdvFilter? = null) {
+        if (searchedWord != null)
+            _searchState.searchedWord = searchedWord
+        if (sortParameter != null)
+            _searchState.sortParameter = sortParameter
+        if (sortUpFlag != null)
+            _searchState.sortUpFlag = sortUpFlag
+        if (myAdsFlag != null)
+            _searchState.myAdsFlag = myAdsFlag
+        if (filter != null)
+            _searchState.filter = filter
         searchState.value = _searchState
     }
 

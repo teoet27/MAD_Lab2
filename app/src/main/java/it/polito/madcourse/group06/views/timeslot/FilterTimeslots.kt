@@ -93,7 +93,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
         }
 
         this.applyButton.setOnClickListener {
-            sharedViewModel.updateSearchState(SearchState(filter=
+            sharedViewModel.updateSearchState(filter=
                 AdvFilter(
                     location = location.text.toString(),
                     whole_word = wholeWord.isChecked && this.location.text.toString().isNotEmpty(),
@@ -104,7 +104,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
                     starting_date = if (fromDate.text == "+") null else fromDate.text.toString(),
                     ending_date = if (toDate.text == "+") null else toDate.text.toString(),
                 )
-            ))
+            )
             slideOutFragment(this, true)
         }
 
@@ -125,7 +125,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
         sharedViewModel.select(false)
 
         if (!filterSet)
-            sharedViewModel.updateSearchState(SearchState())
+            sharedViewModel.updateSearchState()
 
         activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
     }

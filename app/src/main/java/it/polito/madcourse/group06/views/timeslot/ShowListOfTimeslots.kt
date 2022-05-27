@@ -27,6 +27,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private val advertisementViewModel: AdvertisementViewModel by activityViewModels()
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
     private val sharedViewModel: SharedViewModel by activityViewModels()
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var newAdvButton: FloatingActionButton
     private lateinit var filterButton: TextView
@@ -72,8 +73,15 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         // set up bottom nav bar
         bottomNavView.background = null
         bottomNavView.menu.getItem(2).isEnabled = false
-
-
+        bottomNavView.setOnItemSelectedListener {
+            when(it.title){
+                "Services"->{sharedViewModel.updateSearchState(myAdsFlag = false);true}
+                /*"Active"->
+                "Saved"->*/
+                "Mine"->{sharedViewModel.updateSearchState(myAdsFlag = true);true}
+                else -> false
+            }
+        }
 
         // Get current user
         userProfileViewModel.currentUser.observe(viewLifecycleOwner) {
@@ -111,11 +119,11 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         // Modify adapter card when events occur:
         // - MyTimeslots
         this.myTimeslotsButton.setOnClickListener {
-            sharedViewModel.updateSearchState(SearchState(myAdsFlag = !isMyAdv))
+            sharedViewModel.updateSearchState(myAdsFlag = !isMyAdv)
         }
         // - Change sort direction
         this.directionButton.setOnClickListener {
-            sharedViewModel.updateSearchState(SearchState(sortUpFlag = !isUp))
+            sharedViewModel.updateSearchState(sortUpFlag = !isUp)
         }
 
         advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
@@ -216,7 +224,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextChange(newText: String): Boolean {
-                sharedViewModel.updateSearchState(SearchState(searchedWord = newText))
+                sharedViewModel.updateSearchState(searchedWord = newText)
                 return false
             }
 
@@ -255,11 +263,11 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
      */
     override fun onContextItemSelected(item: MenuItem): Boolean {
         when (item.title) {
-            resources.getString(R.string.title) -> sharedViewModel.updateSearchState(SearchState(sortParameter = 0))
-            resources.getString(R.string.duration_menu) -> sharedViewModel.updateSearchState(SearchState(sortParameter = 1))
-            resources.getString(R.string.starting_time_menu) -> sharedViewModel.updateSearchState(SearchState(sortParameter = 2))
-            resources.getString(R.string.ending_time_menu) -> sharedViewModel.updateSearchState(SearchState(sortParameter = 3))
-            resources.getString(R.string.date) -> sharedViewModel.updateSearchState(SearchState(sortParameter = 4))
+            resources.getString(R.string.title) -> sharedViewModel.updateSearchState(sortParameter = 0)
+            resources.getString(R.string.duration_menu) -> sharedViewModel.updateSearchState(sortParameter = 1)
+            resources.getString(R.string.starting_time_menu) -> sharedViewModel.updateSearchState(sortParameter = 2)
+            resources.getString(R.string.ending_time_menu) -> sharedViewModel.updateSearchState(sortParameter = 3)
+            resources.getString(R.string.date) -> sharedViewModel.updateSearchState(sortParameter = 4)
         }
         return true
     }
