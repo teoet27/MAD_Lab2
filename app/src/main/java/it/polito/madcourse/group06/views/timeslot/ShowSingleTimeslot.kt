@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -35,7 +36,8 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
     private lateinit var editButton: ImageView
     private lateinit var skillsChips: ChipGroup
     private lateinit var noSkillsProvidedLabel: TextView
-    private var isMine=false
+    private var isMine = false
+    private lateinit var email: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,6 +60,10 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                     isMine=true
                     this.editButton.setImageResource(R.drawable.ic_edit_black_24dp)
                 }
+                /*else {
+                    // DOES NOT WORK: this substitutes current user to clicked one
+                    userProfileViewModel.fetchUserProfileById(singleAdvertisement.accountID)
+                }*/
             }
 
             this.advTitle.text = singleAdvertisement.advTitle
@@ -92,6 +98,13 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                 Navigation.findNavController(view).navigate(R.id.action_showSingleTimeslot_to_editTimeSlotDetailsFragment)
             else{
                 /*chat*/
+            }
+        }
+
+        this.advAccount.setOnClickListener {
+            // show user profile of the owner of the advertisement
+            if(!isMine) {
+                Navigation.findNavController(view).navigate(R.id.action_showSingleTimeslot_to_showProfileOtherFragment)
             }
         }
 

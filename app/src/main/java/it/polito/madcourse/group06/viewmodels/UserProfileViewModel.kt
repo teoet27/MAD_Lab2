@@ -110,6 +110,30 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     /**
+     * Fetch the user profile by their ID from the db
+     * @param id the id of the user
+     */
+    fun fetchUserProfileById(id: String) {
+        db
+            .collection("UserProfile")
+            .whereEqualTo("id", id)
+            .get()
+            .addOnSuccessListener { query ->
+                query.forEach { docSnap ->
+                    this._singleUserProfilePH = docSnap.toUser()!!
+                    this._pvtUserProfile.value = this._singleUserProfilePH
+                }
+            }
+            .addOnFailureListener {
+                this._singleUserProfilePH = UserProfile(
+                    null, null, null, null,
+                    null, null, null, null, null, null
+                )
+                this._pvtUserProfile.value = this._singleUserProfilePH
+            }
+    }
+
+    /**
      * Look for nicknames in the database to check if one is already present
      * (to be used in the new user profile fragment)
      * @param nickname the email of the user
