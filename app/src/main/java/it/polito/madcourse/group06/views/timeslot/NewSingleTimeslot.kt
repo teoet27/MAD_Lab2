@@ -210,7 +210,11 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                     val sdfTime = SimpleDateFormat("hh:mm")
                     val currentDate = sdfDate.format(Date())
                     var currentTime = sdfTime.format(Date())
-                    val (_, isCurrentTimeDifference) = computeTimeDifference(currentTime, newStartingTime.text.toString())
+                    val (_, isCurrentTimeDifference) =
+                        if(!newStartingTime.text.toString().isNullOrEmpty())
+                            computeTimeDifference(currentTime, newStartingTime.text.toString())
+                        else
+                            Pair(-1,true)
                     val (_, isCurrentDateDifference) = computeDateDifference(currentDate, chosenDate)
 
                     if (!isCurrentDateDifference) {
