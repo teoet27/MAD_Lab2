@@ -43,6 +43,10 @@ data class UserProfile(
     @set:PropertyName("skills")
     var skills: ArrayList<String>?,
 
+    @get:PropertyName("credit")
+    @set:PropertyName("credit")
+    var credit: Double,
+
     @get:PropertyName("img_path")
     @set:PropertyName("img_path")
     var imgPath: String?

@@ -348,6 +348,7 @@ class NewProfileFragment : Fragment() {
                     newPhoneOBJ.text.toString(),
                     newLocationOBJ.text.toString(),
                     this.skillList,
+                    5.0, // initial gift credit for the new user
                     this.imgProfilePicturePath
                 )
             )

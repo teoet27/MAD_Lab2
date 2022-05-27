@@ -34,7 +34,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * Single [UserProfile]
      */
     private var _singleUserProfilePH = UserProfile(
-        "", "", "", "", "", "", "", "", null, null
+        "", "", "", "", "", "", "", "", null, 0.0, null
     )
     private val _pvtUserProfile = MutableLiveData<UserProfile>().also { it.value = _singleUserProfilePH }
     val currentUser: LiveData<UserProfile> = this._pvtUserProfile
@@ -74,10 +74,11 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             val phoneNumber = this.get("phone_number") as String
             val location = this.get("location") as String
             val skills = this.get("skills") as ArrayList<String>
+            val credit = this.get("credit") as Double
             val imgPath = this.get("img_path") as String
             UserProfile(
                 id, nickname, fullname, qualification,
-                description, email, phoneNumber, location, skills, imgPath
+                description, email, phoneNumber, location, skills, credit, imgPath
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -103,7 +104,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             .addOnFailureListener {
                 this._singleUserProfilePH = UserProfile(
                     null, null, null, null,
-                    null, null, null, null, null, null
+                    null, null, null, null, null, 0.0, null
                 )
                 this._pvtUserProfile.value = this._singleUserProfilePH
             }
@@ -127,7 +128,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             .addOnFailureListener {
                 this._singleUserProfilePH = UserProfile(
                     null, null, null, null,
-                    null, null, null, null, null, null
+                    null, null, null, null, null, 0.0, null
                 )
                 this._pvtUserProfile.value = this._singleUserProfilePH
             }
@@ -174,6 +175,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                     "phone_number" to userProfile.phoneNumber,
                     "location" to userProfile.location,
                     "skills" to userProfile.skills,
+                    "credit" to userProfile.credit,
                     "img_path" to userProfile.imgPath
                 )
             )
@@ -211,6 +213,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 "phone_number", userProfile.phoneNumber,
                 "location", userProfile.location,
                 "skills", userProfile.skills,
+                "credit", userProfile.credit,
                 "img_path", userProfile.imgPath
             )
             .addOnSuccessListener {
