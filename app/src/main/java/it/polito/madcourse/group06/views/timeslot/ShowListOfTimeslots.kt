@@ -1,26 +1,21 @@
 package it.polito.madcourse.group06.views.timeslot
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.*
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.AdvAdapterCard
 import it.polito.madcourse.group06.models.advertisement.Advertisement
-import it.polito.madcourse.group06.utilities.AdvFilter
 import it.polito.madcourse.group06.utilities.SearchState
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
@@ -78,7 +73,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         bottomNavView.background = null
         bottomNavView.menu.getItem(2).isEnabled = false
 
-        // top set up search bar
 
 
         // Get current user

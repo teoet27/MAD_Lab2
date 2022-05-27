@@ -32,6 +32,7 @@ class AdvViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
         this.account.text = adv.advAccount
 
         this.bookmark.setOnClickListener{
+            //TODO: Update Advertisement class and its implementations
             /*
             val ad =advertisementViewModel.advertisement.value
             val marked=ad.bookmarked
@@ -44,8 +45,6 @@ class AdvViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
             ad.bookmarked=!marked
             advertisementViewModel.editAdvertisement(ad)
             */
-
-            //TODO: Update Advertisement class and its implementations
         }
     }
 }

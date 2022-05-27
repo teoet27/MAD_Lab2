@@ -20,7 +20,9 @@
             app:destination="@id/showSingleTimeslot" />
         <action
             android:id="@+id/action_ShowListTimeslots_to_showListOfServices"
-            app:destination="@id/ShowListOfServices" />
+            app:destination="@id/ShowListOfServices"
+            app:enterAnim="@anim/slide_in_from_left"
+            app:exitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_ShowListTimeslots_to_filterTimeslots"
             app:destination="@id/filterTimeslots" />
@@ -81,7 +83,9 @@
         android:label="List of offered services">
         <action
             android:id="@+id/action_showListOfSkills_to_ShowListTimeslots"
-            app:destination="@id/ShowListTimeslots" />
+            app:destination="@id/ShowListTimeslots"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_ShowListOfServices_to_newProfileFragment"
             app:destination="@id/newProfileFragment" />
