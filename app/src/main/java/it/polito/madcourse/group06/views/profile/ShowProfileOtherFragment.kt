@@ -11,6 +11,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -29,6 +30,7 @@ class ShowProfileOtherFragment : Fragment() {
     private lateinit var skillsOBJ: TextView
     private lateinit var phoneOBJ: TextView
     private lateinit var profilePictureOBJ: ImageView
+    private lateinit var rateOBJ: TextView
     private lateinit var skillsChips: ChipGroup
 
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
@@ -53,6 +55,7 @@ class ShowProfileOtherFragment : Fragment() {
         this.skillsOBJ = view.findViewById(R.id.skillsListID_other)
         this.phoneOBJ = view.findViewById(R.id.phone_show_ID_other)
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID_other)
+        this.rateOBJ = view.findViewById(R.id.rate_other)
         this.skillsChips = view.findViewById(R.id.skill_chips_group_other)
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
@@ -107,6 +110,11 @@ class ShowProfileOtherFragment : Fragment() {
 
         // Check this option to open onCreateOptionsMenu method
         setHasOptionsMenu(true)
+
+
+        this.rateOBJ.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_showProfileOtherFragment_to_ratingFragment)
+        }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

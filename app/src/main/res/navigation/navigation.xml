@@ -116,5 +116,16 @@
         <action
             android:id="@+id/action_showProfileOtherFragment_to_showSingleTimeslot"
             app:destination="@id/showSingleTimeslot" />
+        <action
+            android:id="@+id/action_showProfileOtherFragment_to_ratingFragment"
+            app:destination="@id/ratingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ratingFragment"
+        android:name="it.polito.madcourse.group06.views.RatingFragment"
+        android:label="Rating">
+        <action
+            android:id="@+id/action_ratingFragment_to_showProfileOtherFragment"
+            app:destination="@id/showProfileOtherFragment" />
     </fragment>
 </navigation>
