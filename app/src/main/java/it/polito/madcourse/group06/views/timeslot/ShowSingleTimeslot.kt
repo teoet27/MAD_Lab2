@@ -61,7 +61,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                     this.editButton.setImageResource(R.drawable.ic_edit_black_24dp)
                 }
                 /*else {
-                    // DOES NOT WORK: this substitutes current user to clicked one
+                    // DOES NOT WORK: this substitutes current user to clicked one (author of the advertisement)
                     userProfileViewModel.fetchUserProfileById(singleAdvertisement.accountID)
                 }*/
             }
