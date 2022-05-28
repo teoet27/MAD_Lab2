@@ -37,7 +37,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var directionButton: ImageView
     private lateinit var barrier: TextView
     private lateinit var filterNotificationDot: TextView
-    private lateinit var myTimeslotsButton: TextView
     private lateinit var currentAccountID: String
     private lateinit var bottomNavView: BottomNavigationView
     private var selectedSkill: String?=null
@@ -69,7 +68,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.recyclerView = view.findViewById(R.id.rvAdvFullList)
         this.barrier = view.findViewById(R.id.barrier)
         this.filterNotificationDot = view.findViewById(R.id.filter_notification)
-        this.myTimeslotsButton = view.findViewById(R.id.myTimeslotsButtonID)
         this.bottomNavView=view.findViewById(R.id.bottomNavigationView)
 
         // Get and set current selected skill
@@ -168,11 +166,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         var advAdapterCard: AdvAdapterCard
 
         // Modify adapter card when events occur:
-        // - MyTimeslots
-        this.myTimeslotsButton.setOnClickListener {
-            sharedViewModel.updateSearchState(myAdsFlag = !isMyAdv)
-        }
-
         // - Change sort direction
         this.directionButton.setOnClickListener {
             sharedViewModel.updateSearchState(sortUpFlag = !isUp)
@@ -209,25 +202,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 this.isUp=it.sortUpFlag?:true
                 this.directionButton.setImageResource(if(this.isUp) R.drawable.sort_up else R.drawable.sort_down)
                 this.isMyAdv=it.myAdsFlag?:false
-                if (isMyAdv) {
-                    this.myTimeslotsButton.backgroundTintList =
-                        AppCompatResources.getColorStateList(requireContext(), R.color.orange_poli)
-                    this.myTimeslotsButton.setTextColor(
-                        AppCompatResources.getColorStateList(
-                            requireContext(),
-                            R.color.black
-                        )
-                    )
-                } else {
-                    this.myTimeslotsButton.backgroundTintList =
-                        AppCompatResources.getColorStateList(requireContext(), R.color.darkGray)
-                    this.myTimeslotsButton.setTextColor(
-                        AppCompatResources.getColorStateList(
-                            requireContext(),
-                            R.color.lightGray
-                        )
-                    )
-                }
+
 
                 if(it.filter?.isEmpty() != false)
                     filterNotificationDot.visibility=View.GONE
