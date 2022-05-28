@@ -8,10 +8,10 @@ import it.polito.madcourse.group06.models.userprofile.UserProfile
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 
 /**
- * [AdvAdapterCard] extending the Adapter of the [RecyclerView] and implements the required methods.
+ * [UserForChatAdapterCard] extending the Adapter of the [RecyclerView] and implements the required methods.
  */
 class UserForChatAdapterCard(
-    private val userList: List<UserProfile>,
+    userList: List<UserProfile>,
     private val userProfileViewModel: UserProfileViewModel
 ) : RecyclerView.Adapter<UserForChatViewHolderCard>() {
 

@@ -1,11 +1,8 @@
 package it.polito.madcourse.group06.models.userforchat
 
-import android.annotation.SuppressLint
-import android.graphics.Bitmap
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.userprofile.UserProfile

@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
@@ -28,11 +30,19 @@ class ShowListOfUsers : Fragment() {
         var userAdapterCard: UserForChatAdapterCard
 
         this.recyclerView = view.findViewById(R.id.usersRecyclerView)
-        this.recyclerView.layoutManager = LinearLayoutManager(this.context)
 
         userProfileViewModel.listOfUsers.observe(viewLifecycleOwner) { listOfUsers ->
             userAdapterCard = UserForChatAdapterCard(listOfUsers, userProfileViewModel)
+            this.recyclerView.layoutManager = LinearLayoutManager(this.context)
             this.recyclerView.adapter = userAdapterCard
         }
+
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.action_showListOfUsers_to_ShowListOfServices)
+                }
+            })
     }
 }
