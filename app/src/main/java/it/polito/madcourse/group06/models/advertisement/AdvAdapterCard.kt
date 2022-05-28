@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.utilities.AdvFilter
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.roundToInt
 
 /**
@@ -52,19 +54,19 @@ class AdvAdapterCard(
      */
 
     fun updateDataSet(
-        selectedSkill:String?="All",
+        selectedSkill: String? = "All",
         advFilter: AdvFilter? = null,
         sortParam: Int? = null,
         sortUp: Boolean? = null,
         myAds: Boolean? = null,
-        activeAdsFlag:Boolean?=null,
-        savedAdsFlag:Boolean?=null,
+        activeAdsFlag: Boolean? = null,
+        savedAdsFlag: Boolean? = null,
         userID: String? = null,
         search: String? = null
     ) {
         // SelectedSkill filtering phase
-        showedData=adsList.filter{ it.listOfSkills.contains(selectedSkill) || selectedSkill == "All" }
-
+        showedData =
+            adsList.filter { it.listOfSkills.contains(selectedSkill) || selectedSkill == "All" }
 
         //Filtering phase
         showedData =
@@ -94,7 +96,7 @@ class AdvAdapterCard(
             }
 
         // Sorting phase
-        if(sortUp!=null) {
+        if (sortUp != null) {
             when (sortUp) {
                 true -> when (sortParam) {
                     0 -> showedData = showedData.sortedBy { it.advTitle.lowercase() }
@@ -118,25 +120,29 @@ class AdvAdapterCard(
         }
 
         // My timeslot filtering
-        if (myAds==true) {
+        if (myAds == true) {
             showedData = adsList.filter { it.accountID == userID }
         }
         // Active timeslot filtering
-        if (activeAdsFlag ==true) {
+        if (activeAdsFlag == true) {
             //showedData = adsList.filter { it.isActive }
         }
         // Saved timeslot filtering
-        if (savedAdsFlag==true) {
+        if (savedAdsFlag == true) {
             //showedData = adsList.filter { it.isSaved }
         }
         // Search
-        if(search!=null)
+        if (search != null)
             showedData = showedData.filter {
                 it.advTitle.contains(search.toString(), true) ||
-                !it.listOfSkills.none { skill -> skill.contains(search.toString(), true) }
+                        !it.listOfSkills.none { skill -> skill.contains(search.toString(), true) }
             }
 
-        notifyDataSetChanged()
+        // Check on date availability
+        showedData=showedData.filter{!it.isExpired()}
+
+
+            notifyDataSetChanged()
     }
 
     private fun dateStringToInt(date: String): Int {
@@ -213,5 +219,7 @@ class AdvAdapterCard(
     }
 
     private fun Boolean.toInt() = if (this) 1 else 0
-
+    private fun Advertisement.isExpired(): Boolean {
+        return this.advDate.isSoonerThanDate(SimpleDateFormat("dd/MM/yyyy").format(Date()))
+    }
 }

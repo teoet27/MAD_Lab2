@@ -3,6 +3,10 @@ package it.polito.madcourse.group06.models.advertisement
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.firebase.firestore.PropertyName
+import it.polito.madcourse.group06.utilities.isLaterThanDate
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * [Advertisement] data class.

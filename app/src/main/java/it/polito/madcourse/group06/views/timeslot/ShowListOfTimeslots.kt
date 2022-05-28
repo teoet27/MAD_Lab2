@@ -119,7 +119,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 }
             }
         }
-
         arguments?.getString("tab")?.let{
             when(it) {
                 "Active" ->{bottomNavView.menu.performIdentifierAction(R.id.active_time_slots_tab,0)
@@ -173,6 +172,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.myTimeslotsButton.setOnClickListener {
             sharedViewModel.updateSearchState(myAdsFlag = !isMyAdv)
         }
+
         // - Change sort direction
         this.directionButton.setOnClickListener {
             sharedViewModel.updateSearchState(sortUpFlag = !isUp)
