@@ -38,7 +38,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var myTimeslotsButton: TextView
     private lateinit var currentAccountID: String
     private lateinit var bottomNavView: BottomNavigationView
-    private var selectedSkill: String = "All"
+    private var selectedSkill: String?=null
     private var fullListForGivenSkill: List<Advertisement> = listOf()
     private var isMyAdv = false
     private var isUp = false
@@ -78,12 +78,12 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 "Active"->{sharedViewModel.resetSearchState(activeAdsFlag = true);setActionBarTitle("Active Timeslots");true}
                 "Saved"->{sharedViewModel.resetSearchState(savedAdsFlag = true);setActionBarTitle("Saved Timeslots");true}
                 "Mine"->{sharedViewModel.resetSearchState(myAdsFlag = true);setActionBarTitle("My Timeslots");true}
-                else ->{if(bottomNavView.menu.getItem(0).isChecked){
+                else ->{if(bottomNavView.menu.getItem(0).isChecked || selectedSkill.isNullOrEmpty()){
                     findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
                 }
                     else {
                         sharedViewModel.updateSearchState(myAdsFlag = false,activeAdsFlag = false,savedAdsFlag = false)
-                        setActionBarTitle(selectedSkill)
+                        setActionBarTitle(selectedSkill!!)
                     }
                     true
                 }
@@ -153,9 +153,9 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
             //compose recycler view
             view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible =
-                fullListForGivenSkill.isEmpty()
+                fullListForGivenSkill.isEmpty()&&!selectedSkill.isNullOrEmpty()
             view.findViewById<ImageView>(R.id.create_hint).isVisible =
-                fullListForGivenSkill.isEmpty()
+                fullListForGivenSkill.isEmpty()&&!selectedSkill.isNullOrEmpty()
             this.recyclerView.layoutManager = LinearLayoutManager(this.context)
             advAdapterCard = AdvAdapterCard(listOfAdv, advertisementViewModel)
 
