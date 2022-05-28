@@ -3,9 +3,11 @@ package it.polito.madcourse.group06.models.advertisement
 import android.annotation.SuppressLint
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.utilities.isExpired
 
 /**
  * [AdvViewHolderCard] extends the ViewHolder of the [RecyclerView]
@@ -18,6 +20,7 @@ class AdvViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
     private val duration: TextView = v.findViewById(R.id.advCardDuration)
     private val account: TextView = v.findViewById(R.id.advCardAccount)
     private val bookmark: ImageView = v.findViewById(R.id.item_bookmark)
+    private val expired: LinearLayout = v.findViewById(R.id.expired_label)
 
     /**
      * bind:
@@ -30,7 +33,7 @@ class AdvViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
         this.location.text = adv.advLocation
         this.duration.text = adv.advDuration.toString()
         this.account.text = adv.advAccount
-
+        this.expired.visibility=if(adv.isExpired())View.VISIBLE else View.GONE
         this.bookmark.setOnClickListener{
             //TODO: Update Advertisement class and its implementations
             /*
