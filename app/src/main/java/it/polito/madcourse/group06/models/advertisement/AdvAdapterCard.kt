@@ -150,7 +150,7 @@ class AdvAdapterCard(
             }
 
         // Check on date availability
-        showedData=showedData.filter{!it.isExpired()}
+        showedData=showedData.filter{!it.isExpired()||advFilter?.starting_date?.isSoonerThanDate(it.advDate) == true }
 
 
             notifyDataSetChanged()
