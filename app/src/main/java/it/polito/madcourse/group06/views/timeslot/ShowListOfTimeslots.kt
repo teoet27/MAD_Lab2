@@ -174,8 +174,18 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             fullListForGivenSkill =
                 listOfAdv.filter { it.listOfSkills.contains(selectedSkill) || selectedSkill == "All" }
 
-            // Close filter window in case it was left open
+            // Close filter fragment in case it was left open
             activity?.supportFragmentManager?.findFragmentByTag("filter_window")?.also { frag ->
+                activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
+                sharedViewModel.select(false)
+            }
+            // Close single timeslot fragment in case it was left open
+            activity?.supportFragmentManager?.findFragmentByTag("single_timeslot")?.also { frag ->
+                activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
+                sharedViewModel.select(false)
+            }
+            // Close other user profile fragment in case it was left open
+            activity?.supportFragmentManager?.findFragmentByTag("other_user_profile")?.also { frag ->
                 activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
                 sharedViewModel.select(false)
             }
