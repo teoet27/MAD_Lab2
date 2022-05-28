@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.models.advertisement.AdvAdapterCard
 import it.polito.madcourse.group06.models.advertisement.Advertisement
 import it.polito.madcourse.group06.utilities.SearchState
@@ -75,9 +76,9 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         bottomNavView.menu.getItem(2).isEnabled = false
         bottomNavView.setOnItemSelectedListener {
             when(it.title){
-                "Active"->{sharedViewModel.resetSearchState(activeAdsFlag = true);true}
-                "Saved"->{sharedViewModel.resetSearchState(savedAdsFlag = true);true}
-                "Mine"->{sharedViewModel.resetSearchState(myAdsFlag = true);true}
+                "Active"->{sharedViewModel.resetSearchState(activeAdsFlag = true);setActionBarTitle("Active Timeslots");true}
+                "Saved"->{sharedViewModel.resetSearchState(savedAdsFlag = true);setActionBarTitle("Saved Timeslots");true}
+                "Mine"->{sharedViewModel.resetSearchState(myAdsFlag = true);setActionBarTitle("My Timeslots");true}
                 else ->{sharedViewModel.updateSearchState(myAdsFlag = false,activeAdsFlag = false,savedAdsFlag = false);true}
             }
         }
@@ -92,7 +93,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         }
 
         // Get and set current selected skill
-        arguments?.getString("selected_skill")?.let { selectedSkill = it }
+        arguments?.getString("selected_skill")?.let { selectedSkill = it; setActionBarTitle(it)}
 
         // Context menu for choosing sort parameter
         registerForContextMenu(sortParam)
@@ -203,6 +204,10 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                     findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
                 }
             })
+    }
+
+    private fun setActionBarTitle(title:String){
+        (activity as TBMainActivity).supportActionBar?.title = title
     }
 
     private fun enableUI(switch: Boolean) {
