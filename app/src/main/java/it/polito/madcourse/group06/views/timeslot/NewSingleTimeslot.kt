@@ -98,7 +98,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
         this.closeButton.setOnClickListener {
             Snackbar.make(
-                requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
+                requireView(), "Creation canceled.", Snackbar.LENGTH_SHORT
             ).show()
             findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
         }
@@ -138,37 +138,37 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                     if (newETH * 60 + newETM >= staticSTH * 60 + staticSTM && newSTH * 60 + newSTM <= staticSTH * 60 + staticSTM) {
                         isPossible = false
                         Snackbar.make(
-                            requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_LONG
+                            requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_SHORT
                         ).show()
                     } else if (newSTH * 60 + newSTM >= staticSTH * 60 + staticSTM && newETH * 60 + newETM <= staticETH * 60 + staticETM) {
                         isPossible = false
                         Snackbar.make(
-                            requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_LONG
+                            requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_SHORT
                         ).show()
                     } else if (newSTH * 60 + newSTM <= staticETH * 60 + staticETM && newETH * 60 + newETM >= staticETH * 60 + staticETM) {
                         isPossible = false
                         Snackbar.make(
-                            requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_LONG
+                            requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_SHORT
                         ).show()
                     }
                 }
                 if (!isDateAndTimeCorrect) {
                     Snackbar.make(
-                        requireView(), "Error: you cannot create a timeslot which lives back in the time.", Snackbar.LENGTH_LONG
+                        requireView(), "Error: you cannot create a timeslot which lives back in the time.", Snackbar.LENGTH_SHORT
                     ).show()
                 } else if (isPossible) {
                     if (areAllFieldsEmpty()) {
                         Snackbar.make(
-                            requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
+                            requireView(), "Creation canceled.", Snackbar.LENGTH_SHORT
                         ).show()
                         findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
                     } else if (!isTimeDifferenceOk && timeDifference < 0) {
                         Snackbar.make(
-                            requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_LONG
+                            requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_SHORT
                         ).show()
                     } else if (!isTimeDifferenceOk) {
                         Snackbar.make(
-                            requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_LONG
+                            requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_SHORT
                         ).show()
                     } else if (isAdvValid()) {
                         advertisementViewModel.insertAdvertisement(
@@ -188,12 +188,12 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         )
                         userProfileViewModel.updateSkillList(skillList)
                         Toast.makeText(
-                            context, "Advertisement created successfully!", Toast.LENGTH_LONG
+                            context, "Advertisement created successfully!", Toast.LENGTH_SHORT
                         ).show()
                         findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
                     } else {
                         Snackbar.make(
-                            requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
+                            requireView(), "Creation canceled.", Snackbar.LENGTH_SHORT
                         ).show()
                         findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
                     }
@@ -241,37 +241,37 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         if (newETH * 60 + newETM >= staticSTH * 60 + staticSTM && newSTH * 60 + newSTM <= staticSTH * 60 + staticSTM) {
                             isPossible = false
                             Snackbar.make(
-                                requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_LONG
+                                requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_SHORT
                             ).show()
                         } else if (newSTH * 60 + newSTM >= staticSTH * 60 + staticSTM && newETH * 60 + newETM <= staticETH * 60 + staticETM) {
                             isPossible = false
                             Snackbar.make(
-                                requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_LONG
+                                requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_SHORT
                             ).show()
                         } else if (newSTH * 60 + newSTM <= staticETH * 60 + staticETM && newETH * 60 + newETM >= staticETH * 60 + staticETM) {
                             isPossible = false
                             Snackbar.make(
-                                requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_LONG
+                                requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_SHORT
                             ).show()
                         }
                     }
                     if (!isDateAndTimeCorrect) {
                         Snackbar.make(
-                            requireView(), "Error: you cannot create a timeslot which lives back in the time.", Snackbar.LENGTH_LONG
+                            requireView(), "Error: you cannot create a timeslot which lives back in the time.", Snackbar.LENGTH_SHORT
                         ).show()
                     } else if (isPossible) {
                         if (areAllFieldsEmpty()) {
                             Snackbar.make(
-                                requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
+                                requireView(), "Creation canceled.", Snackbar.LENGTH_SHORT
                             ).show()
                             findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
                         } else if (!isTimeDifferenceOk && timeDifference < 0) {
                             Snackbar.make(
-                                requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_LONG
+                                requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_SHORT
                             ).show()
                         } else if (!isTimeDifferenceOk) {
                             Snackbar.make(
-                                requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_LONG
+                                requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_SHORT
                             ).show()
                         } else if (isAdvValid()) {
                             advertisementViewModel.insertAdvertisement(
@@ -296,7 +296,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
                         } else {
                             Snackbar.make(
-                                requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
+                                requireView(), "Creation canceled.", Snackbar.LENGTH_SHORT
                             ).show()
                             findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
                         }
@@ -424,17 +424,17 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
          * setPositiveButton
          */
         builder.setPositiveButton("Create", DialogInterface.OnClickListener { dialog, which ->
-            newSkillTitleLabel = newSkillTitle.text.toString()
+            newSkillTitleLabel = newSkillTitle.text.toString().replaceFirstChar(Char::titlecase)
             if (newSkillTitleLabel.isNotEmpty()) {
                 chipGroup.addChip(context, newSkillTitleLabel, isAlreadySelected = true)
                 chipGroup.moveAddChip(context, view?.findViewById(R.id.add_new_skill_chip)!!, chipGroup)
                 skillList.add(newSkillTitleLabel)
                 Snackbar.make(
-                    requireView(), "New skill added!", Snackbar.LENGTH_LONG
+                    requireView(), "New skill added!", Snackbar.LENGTH_SHORT
                 ).show()
             } else {
                 Snackbar.make(
-                    requireView(), "You must provide a name for the new skill.", Snackbar.LENGTH_LONG
+                    requireView(), "You must provide a name for the new skill.", Snackbar.LENGTH_SHORT
                 ).show()
             }
         })

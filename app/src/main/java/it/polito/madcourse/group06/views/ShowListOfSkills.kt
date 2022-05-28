@@ -17,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.skill.SkillAdapterCard
+import it.polito.madcourse.group06.utilities.isExpired
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 
@@ -51,6 +52,7 @@ class ShowListOfSkills : Fragment(R.layout.service_list) {
             var listOfSkills =
                 listOfAds
                     .asSequence()
+                    //.filter { !it.isExpired() }
                     .map { it.listOfSkills }
                     .flatten()
                     .sortedBy { it.lowercase() }

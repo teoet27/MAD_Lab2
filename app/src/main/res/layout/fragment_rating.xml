@@ -9,7 +9,18 @@
     android:orientation="vertical"
     android:gravity ="center">
 
-    <RatingBar
+    <TextView
+        android:id="@+id/ratingMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:text="@string/ratingMessage"
+        android:textSize="18sp" />
+
+    <androidx.appcompat.widget.AppCompatRatingBar
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,10 +35,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Insert your comment here..."
         android:inputType="textPersonName"
+        android:maxEms="300"
         android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:text="Insert your comment here..." />
+        android:paddingBottom="16dp" />
 
     <Button
         android:id="@+id/submitRating"

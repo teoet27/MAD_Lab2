@@ -34,7 +34,7 @@
                 android:layout_marginEnd="16dp"
                 android:background="@android:color/transparent"
                 app:labelVisibilityMode="labeled"
-                app:menu="@menu/bottom_navigation_menu" />
+                app:menu="@menu/bottom_navigation_menu_skills" />
 
         </com.google.android.material.bottomappbar.BottomAppBar>
 
@@ -109,7 +109,9 @@
         android:id="@+id/rvServicesFullList"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:clipToPadding="false"
         android:paddingTop="8dp"
+        android:paddingBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

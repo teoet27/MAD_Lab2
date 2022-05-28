@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_ShowListTimeslots_to_filterTimeslots"
             app:destination="@id/filterTimeslots" />
+        <action
+            android:id="@+id/action_ShowListTimeslots_to_editTimeSlotDetailsFragment"
+            app:destination="@id/editTimeSlotDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"

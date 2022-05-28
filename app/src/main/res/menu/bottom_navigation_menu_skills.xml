@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/services_time_slots_tab"
-        android:icon="@drawable/ic_baseline_arrow_back_ios_24"
+        android:icon="@drawable/ic_baseline_home_24"
         android:title="Services"/>
     <item
         android:id="@+id/active_time_slots_tab"

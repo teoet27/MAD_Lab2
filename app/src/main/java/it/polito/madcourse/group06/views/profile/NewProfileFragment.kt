@@ -217,7 +217,7 @@ class NewProfileFragment : Fragment() {
          * setPositiveButton
          */
         builder.setPositiveButton("Create", DialogInterface.OnClickListener { dialog, which ->
-            val newSkillTitleLabel = newSkillTitle.text.toString()
+            val newSkillTitleLabel = newSkillTitle.text.toString().replaceFirstChar(Char::titlecase)
             if (newSkillTitleLabel.isNotEmpty()) {
                 this.skillsChips.removeAllViews()
                 for (skill in skillList) {

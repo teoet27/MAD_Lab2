@@ -1,12 +1,20 @@
 package it.polito.madcourse.group06.models.advertisement
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.findFragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.utilities.AdvFilter
+import it.polito.madcourse.group06.utilities.isExpired
+import it.polito.madcourse.group06.utilities.toInt
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
+import it.polito.madcourse.group06.views.timeslot.FilterTimeslots
+import it.polito.madcourse.group06.views.timeslot.ShowSingleTimeslot
+import java.util.*
 import kotlin.math.roundToInt
 
 /**
@@ -14,7 +22,8 @@ import kotlin.math.roundToInt
  */
 class AdvAdapterCard(
     private val adsList: List<Advertisement>,
-    private val advViewModel: AdvertisementViewModel
+    private val advViewModel: AdvertisementViewModel,
+    private val activity: Activity
 ) : RecyclerView.Adapter<AdvViewHolderCard>() {
 
     private var showedData = adsList
@@ -33,8 +42,12 @@ class AdvAdapterCard(
         holder.bind(showedData[position])
         holder.itemView.setOnClickListener { view ->
             advViewModel.setSingleAdvertisement((showedData[showedData.indexOf(showedData[position])]))
-            Navigation.findNavController(view)
-                .navigate(R.id.action_ShowListTimeslots_to_showSingleTimeslot)
+            /*Navigation.findNavController(view)
+                .navigate(R.id.action_ShowListTimeslots_to_showSingleTimeslot)*/
+            (activity as TBMainActivity).supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_up, 0)
+                .add(R.id.nav_host_fragment_content_main, ShowSingleTimeslot(), "single_timeslot")
+                .commit()
         }
     }
 
@@ -52,19 +65,19 @@ class AdvAdapterCard(
      */
 
     fun updateDataSet(
-        selectedSkill:String?="All",
+        selectedSkill: String? = "All",
         advFilter: AdvFilter? = null,
         sortParam: Int? = null,
         sortUp: Boolean? = null,
         myAds: Boolean? = null,
-        activeAdsFlag:Boolean?=null,
-        savedAdsFlag:Boolean?=null,
+        activeAdsFlag: Boolean? = null,
+        savedAdsFlag: Boolean? = null,
         userID: String? = null,
         search: String? = null
     ) {
         // SelectedSkill filtering phase
-        showedData=adsList.filter{ it.listOfSkills.contains(selectedSkill) || selectedSkill == "All" }
-
+        showedData =
+            adsList.filter { it.listOfSkills.contains(selectedSkill) || selectedSkill == "All" }
 
         //Filtering phase
         showedData =
@@ -94,7 +107,7 @@ class AdvAdapterCard(
             }
 
         // Sorting phase
-        if(sortUp!=null) {
+        if (sortUp != null) {
             when (sortUp) {
                 true -> when (sortParam) {
                     0 -> showedData = showedData.sortedBy { it.advTitle.lowercase() }
@@ -118,25 +131,29 @@ class AdvAdapterCard(
         }
 
         // My timeslot filtering
-        if (myAds==true) {
+        if (myAds == true) {
             showedData = adsList.filter { it.accountID == userID }
         }
         // Active timeslot filtering
-        if (activeAdsFlag ==true) {
+        if (activeAdsFlag == true) {
             //showedData = adsList.filter { it.isActive }
         }
         // Saved timeslot filtering
-        if (savedAdsFlag==true) {
+        if (savedAdsFlag == true) {
             //showedData = adsList.filter { it.isSaved }
         }
         // Search
-        if(search!=null)
+        if (search != null)
             showedData = showedData.filter {
                 it.advTitle.contains(search.toString(), true) ||
-                !it.listOfSkills.none { skill -> skill.contains(search.toString(), true) }
+                        !it.listOfSkills.none { skill -> skill.contains(search.toString(), true) }
             }
 
-        notifyDataSetChanged()
+        // Check on date availability
+        //showedData=showedData.filter{!it.isExpired()||advFilter?.starting_date?.isSoonerThanDate(it.advDate) == true }
+
+
+            notifyDataSetChanged()
     }
 
     private fun dateStringToInt(date: String): Int {
@@ -211,7 +228,4 @@ class AdvAdapterCard(
             (timeDifference * 100.0).roundToInt() / 100.0 >= 0
         )
     }
-
-    private fun Boolean.toInt() = if (this) 1 else 0
-
 }
