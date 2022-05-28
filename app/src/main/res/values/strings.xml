@@ -109,4 +109,5 @@
     <string name="search_hint">Gardening, Car repairing...</string>
     <string name="remove_your_picture">Remove your picture</string>
     <string name="welcome_message_new_profile">Welcome to TimeBanking! Before starting, please fill the following form to complete the registration phase!</string>
+    <string name="ratingMessage">Please leave a feedback on the service you received with a vote between one and five stars. You can also leave a public anonymous comment.</string>
 </resources>
