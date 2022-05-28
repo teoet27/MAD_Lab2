@@ -67,6 +67,14 @@ data class Advertisement(
 
     @get:PropertyName("accountID")
     @set:PropertyName("accountID")
-    var accountID: String
+    var accountID: String,
+
+    @get:PropertyName("rating")
+    @set:PropertyName("rating")
+    var rating: Double,
+
+    @get:PropertyName("comment")
+    @set:PropertyName("comment")
+    var comment: String
 )
 

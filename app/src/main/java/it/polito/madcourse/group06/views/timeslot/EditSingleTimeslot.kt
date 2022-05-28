@@ -35,7 +35,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     private val dumbAdvertisement: Advertisement = Advertisement(
         "", "", "", arrayListOf<String>(),
         "", "", "", "", 0.0,
-        "", ""
+        "", "", 0.0, ""
     )
 
     private lateinit var advTitle: TextView
@@ -196,7 +196,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
 
                     if (!isDateAndTimeCorrect) {
                         Snackbar.make(
-                            requireView(), "Error: you cannot create a timeslot which lives back in the time.", Snackbar.LENGTH_LONG
+                            requireView(), "Error: you cannot create a timeslot back in time.", Snackbar.LENGTH_LONG
                         ).show()
                     } else if (isPossible) {
                         if (!isTimeDifferenceOk && timeDifference < 0) {
@@ -286,7 +286,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
 
                     if (!isDateAndTimeCorrect) {
                         Snackbar.make(
-                            requireView(), "Error: you cannot create a timeslot which lives back in the time.", Snackbar.LENGTH_LONG
+                            requireView(), "Error: you cannot create a timeslot back in time.", Snackbar.LENGTH_LONG
                         ).show()
                     } else if (isPossible) {
                         if (!isTimeDifferenceOk && timeDifference < 0) {
@@ -309,7 +309,6 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             advertisementViewModel.editAdvertisement(dumbAdvertisement)
                             findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots,
                                 bundleOf("tab" to "Mine"))
-
                         } else {
                             Snackbar.make(
                                 requireView(), "Error: you need to provide at least a title, a starting and ending time, a skill, a location and a date. Try again.", Snackbar.LENGTH_LONG

@@ -114,7 +114,10 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
         this.advAccount.setOnClickListener {
             // show user profile of the owner of the advertisement
             if(!isMine) {
-                Navigation.findNavController(view).navigate(R.id.action_showSingleTimeslot_to_showProfileOtherFragment)
+                val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
+                activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
+                sharedViewModel.select(false)
+                Navigation.findNavController(view).navigate(R.id.action_ShowListTimeslots_to_showProfileOtherFragment)
             }
         }
 

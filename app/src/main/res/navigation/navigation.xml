@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_ShowListTimeslots_to_editTimeSlotDetailsFragment"
             app:destination="@id/editTimeSlotDetailsFragment" />
+        <action
+            android:id="@+id/action_ShowListTimeslots_to_showProfileOtherFragment"
+            app:destination="@id/showProfileOtherFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -65,9 +68,6 @@
         <action
             android:id="@+id/action_showSingleTimeslot_to_ShowListTimeslots"
             app:destination="@id/ShowListTimeslots" />
-        <action
-            android:id="@+id/action_showSingleTimeslot_to_showProfileOtherFragment"
-            app:destination="@id/showProfileOtherFragment" />
     </fragment>
     <fragment
         android:id="@+id/editTimeSlotDetailsFragment"
@@ -132,8 +132,8 @@
         android:name="it.polito.madcourse.group06.views.RatingFragment"
         android:label="Rating">
         <action
-            android:id="@+id/action_ratingFragment_to_showProfileOtherFragment"
-            app:destination="@id/showProfileOtherFragment" />
+            android:id="@+id/action_ratingFragment_to_ShowListTimeslots"
+            app:destination="@id/ShowListTimeslots" />
     </fragment>
     <fragment
         android:id="@+id/showListOfUsers"
