@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="prussian_blue">#003153</color>
+    <color name="dark_prussian_blue">#00192B</color>
     <color name="orange_poli">#fc7a08</color>
     <color name="darkGray">#333533</color>
     <color name="lightGray">#EEE</color>

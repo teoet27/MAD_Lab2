@@ -11,6 +11,7 @@
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/drawable/ex.xml" value="0.3685" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/drawable/ic_account_circle_black_24dp.xml" value="0.387" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/drawable/ic_account_circle_black_ex.xml" value="0.3685" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/drawable/ic_baseline_arrow_back_ios_24.xml" value="0.387" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/drawable/ic_bookmark_black_24dp.xml" value="0.387" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/drawable/ic_bookmark_border_black_24dp.xml" value="0.387" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/drawable/ic_call_black_24dp.xml" value="0.3685" />
@@ -42,7 +43,7 @@
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/layout/adv_item.xml" value="0.24201954397394138" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/layout/app_bar_main.xml" value="0.24201954397394138" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/layout/authentication_fragment.xml" value="0.2444078947368421" />
-        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/layout/chat_layout.xml" value="0.22" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/layout/chat_layout.xml" value="0.67" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/layout/content_main.xml" value="0.3175213675213675" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/layout/edit_profile.xml" value="0.2444078947368421" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/layout/edit_profile_activity_main.xml" value="0.31765711842667804" />
@@ -74,7 +75,7 @@
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/layout/show_profile_other.xml" value="0.24201954397394138" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/layout/show_single_timeslot_frag.xml" value="0.3074074074074074" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/layout/show_timeslots_frag.xml" value="0.2444078947368421" />
-        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/layout/show_user_list_single_user_item.xml" value="0.25" />
+        <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/layout/show_user_list_single_user_item.xml" value="0.31765711842667804" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/layout/single_user_item.xml" value="0.5" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/layout/time_slot_details_fragment.xml" value="0.2444078947368421" />
         <entry key="..\:/The other things/POLITO/MAGISTRALE/Mobile Application Development/Android-Projects/MAD-Lab3/app/src/main/res/layout/time_slot_list.xml" value="0.2444078947368421" />
