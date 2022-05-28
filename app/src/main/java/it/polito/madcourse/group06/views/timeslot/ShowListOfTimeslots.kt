@@ -79,7 +79,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 "Active"->{sharedViewModel.resetSearchState(activeAdsFlag = true);setActionBarTitle("Active Timeslots");true}
                 "Saved"->{sharedViewModel.resetSearchState(savedAdsFlag = true);setActionBarTitle("Saved Timeslots");true}
                 "Mine"->{sharedViewModel.resetSearchState(myAdsFlag = true);setActionBarTitle("My Timeslots");true}
-                else ->{sharedViewModel.updateSearchState(myAdsFlag = false,activeAdsFlag = false,savedAdsFlag = false);true}
+                else ->{sharedViewModel.updateSearchState(myAdsFlag = false,activeAdsFlag = false,savedAdsFlag = false);setActionBarTitle(selectedSkill);true}
             }
         }
 
