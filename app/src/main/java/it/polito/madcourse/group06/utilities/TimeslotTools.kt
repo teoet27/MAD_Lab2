@@ -147,4 +147,7 @@ class SearchState(
 )
 
 //Useful extension functions
-private fun Boolean.toInt() = if (this) 1 else 0
+fun Boolean.toInt() = if (this) 1 else 0
+fun Advertisement.isExpired(): Boolean {
+    return this.advDate.isSoonerThanDate(SimpleDateFormat("dd/MM/yyyy").format(Date()))
+}
