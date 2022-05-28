@@ -20,9 +20,17 @@
             android:id="@+id/ShowProfileMenuItem"
             android:icon="@drawable/ic_account_circle_black_24dp"
             android:title="@string/show_profile" />
+        <item
+            android:id="@+id/ListOfUsers"
+            android:icon="@drawable/ic_badge_black_24dp"
+            android:title="List of users" />
     </group>
     <group android:id="@+id/drawer_bottom"
         android:checkableBehavior="none">
+        <item
+            android:id="@+id/settingID"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="Setting" />
         <item
             android:id="@+id/logOutMenuItem"
             android:icon="@drawable/ic_log_out"

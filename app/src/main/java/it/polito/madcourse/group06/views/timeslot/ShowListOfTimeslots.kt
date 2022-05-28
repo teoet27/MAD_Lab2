@@ -20,7 +20,6 @@ import it.polito.madcourse.group06.models.advertisement.Advertisement
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
-import kotlinx.coroutines.selects.select
 
 
 class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {

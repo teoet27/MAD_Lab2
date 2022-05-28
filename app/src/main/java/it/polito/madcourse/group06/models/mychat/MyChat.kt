@@ -1,13 +1,5 @@
-package it.polito.madcourse.group06.viewmodels
+package it.polito.madcourse.group06.models.mychat
 
-import androidx.room.Entity
-
-@Entity(tableName = "mychatTable")
-data class MyChat (
+data class MyChat(
     var chatID: String,
-    var senderID: String,
-    var receiverID: String,
-    var msg: String,
-    var timestamp: String,
-    var advID: String
 )

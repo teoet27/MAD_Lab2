@@ -1,11 +1,14 @@
 package it.polito.madcourse.group06.viewmodels
 
 import android.app.Application
+import android.graphics.BitmapFactory
+import android.widget.ImageView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.storage.FirebaseStorage
+import java.io.File
 
-class MyChatViewModel(application: Application) {
+class UserForChatViewModel(application: Application) {
     private val db = FirebaseFirestore.getInstance()
     private val storage: FirebaseStorage = FirebaseStorage.getInstance()
     private var listenerRegistration: ListenerRegistration
@@ -13,8 +16,7 @@ class MyChatViewModel(application: Application) {
 
     init {
         listenerRegistration = db.collection("MyChat")
-            .addSnapshotListener { value, error ->
-
-            }
+            .addSnapshotListener { value, error ->  }
     }
+
 }

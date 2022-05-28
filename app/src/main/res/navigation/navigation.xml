@@ -90,6 +90,12 @@
         <action
             android:id="@+id/action_ShowListOfServices_to_newTimeSlotDetailsFragment"
             app:destination="@id/newTimeSlotDetailsFragment" />
+        <action
+            android:id="@+id/action_ShowListOfServices_to_showListOfUsers"
+            app:destination="@id/showListOfUsers" />
+        <action
+            android:id="@+id/action_ShowListOfServices_to_setting"
+            app:destination="@id/setting" />
     </fragment>
     <fragment
         android:id="@+id/newProfileFragment"
@@ -125,5 +131,23 @@
         <action
             android:id="@+id/action_ratingFragment_to_showProfileOtherFragment"
             app:destination="@id/showProfileOtherFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showListOfUsers"
+        android:name="it.polito.madcourse.group06.views.mychat.ShowListOfUsers"
+        android:label="Contacts"
+        tools:layout="@layout/show_list_of_users">
+        <action
+            android:id="@+id/action_showListOfUsers_to_ShowListOfServices"
+            app:destination="@id/ShowListOfServices" />
+    </fragment>
+    <fragment
+        android:id="@+id/setting"
+        android:name="it.polito.madcourse.group06.views.setting.Setting"
+        android:label="setting"
+        tools:layout="@layout/setting" >
+        <action
+            android:id="@+id/action_setting_to_ShowListOfServices"
+            app:destination="@id/ShowListOfServices" />
     </fragment>
 </navigation>
