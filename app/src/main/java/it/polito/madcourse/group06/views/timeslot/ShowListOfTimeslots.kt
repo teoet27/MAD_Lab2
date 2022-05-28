@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -79,20 +80,38 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         bottomNavView.background = null
         bottomNavView.menu.getItem(2).isEnabled = false
         bottomNavView.setOnItemSelectedListener {
+
+            bottomNavView.menu.getItem(0).setIcon(R.drawable.ic_baseline_home_24)
+
             when(it.title){
-                "Active"->{sharedViewModel.resetSearchState(selectedSkill=selectedSkill,activeAdsFlag = true);
-                    setActionBarTitle("Active Timeslots");
+                "Active"->{sharedViewModel.resetSearchState(selectedSkill=selectedSkill,activeAdsFlag = true)
+                    setActionBarTitle("Active Timeslots")
+                    selectedSkill?.let { skill->
+                        bottomNavView.menu.getItem(0).title = skill
+                        bottomNavView.menu.getItem(0).setIcon(R.drawable.savetime)
+                    }
                     true}
                 "Saved"->{sharedViewModel.resetSearchState(selectedSkill=selectedSkill,savedAdsFlag = true)
                     setActionBarTitle("Saved Timeslots")
+                    selectedSkill?.let { skill->
+                        bottomNavView.menu.getItem(0).title = skill
+                        bottomNavView.menu.getItem(0).setIcon(R.drawable.savetime)
+                    }
                     true}
                 "Mine"->{sharedViewModel.resetSearchState(selectedSkill=selectedSkill,myAdsFlag = true)
                     setActionBarTitle("My Timeslots")
+                    selectedSkill?.let { skill->
+                        bottomNavView.menu.getItem(0).title = skill
+                        bottomNavView.menu.getItem(0).setIcon(R.drawable.savetime)
+                    }
                     true}
-                else ->{if(bottomNavView.menu.getItem(0).isChecked || selectedSkill.isNullOrEmpty()){
-                    findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
-                }
+                else ->{
+                    if(bottomNavView.menu.getItem(0).isChecked || selectedSkill.isNullOrEmpty()){
+                        findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
+                    }
                     else {
+                        bottomNavView.menu.getItem(0).setIcon(R.drawable.ic_baseline_arrow_back_ios_24)
+                        bottomNavView.menu.getItem(0).title="Services"
                         sharedViewModel.updateSearchState(myAdsFlag = false,activeAdsFlag = false,savedAdsFlag = false)
                         setActionBarTitle(selectedSkill!!)
                     }
@@ -108,8 +127,13 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                     bottomNavView.menu.getItem(3).isChecked=true;true}
                 "Mine"->{bottomNavView.menu.performIdentifierAction(R.id.my_time_slots_tab,0)
                     bottomNavView.menu.getItem(4).isChecked=true;true}
-                else ->{if(selectedSkill.isNullOrEmpty())
-                    findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices);true}
+                else ->{
+                    if(selectedSkill.isNullOrEmpty())
+                        findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
+                    else{
+                        bottomNavView.menu.performIdentifierAction(R.id.services_time_slots_tab,0)
+                        bottomNavView.menu.getItem(0).isChecked=true}
+                    true}
             }
         }
 
@@ -175,7 +199,9 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             sharedViewModel.searchState.observe(viewLifecycleOwner) {
 
                 // Update page title
-                it.selectedSkill?.let{skill->setActionBarTitle(skill)}
+                it.selectedSkill?.let{ skill->
+                    setActionBarTitle(skill)
+                }
 
                 //update view
                 this.sortParam.text = paramToString(it.sortParameter)
