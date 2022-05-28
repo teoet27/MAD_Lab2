@@ -25,7 +25,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     private var _singleAdvertisementPH = Advertisement(
         "", "", "", arrayListOf<String>(),
         "", "", "", "", 0.0,
-        "", ""
+        "", "", 0.0, ""
     )
     private val _pvtAdvertisement = MutableLiveData<Advertisement>().also {
         it.value = _singleAdvertisementPH
@@ -62,13 +62,15 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             val startingTime = this.get("starting_time") as String
             val endingTime = this.get("ending_time") as String
             val duration = this.get("duration") as Double
+            val rating = this.get("rating") as Double
             val accountName = this.get("account_name") as String
             val accountID = this.get("accountID") as String
+            val comment = this.get("comment") as String
             Advertisement(
                 id, title, description, listOfSkills ?: arrayListOf<String>(),
                 location, date, startingTime,
                 endingTime, duration, accountName,
-                accountID
+                accountID, rating, comment ?: String()
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -97,7 +99,9 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "ending_time" to ad.advEndingTime,
                     "duration" to ad.advDuration,
                     "account_name" to ad.advAccount,
-                    "accountID" to ad.accountID
+                    "accountID" to ad.accountID,
+                    "rating" to ad.rating,
+                    "comment" to ad.comment
                 )
             )
             .addOnSuccessListener {
@@ -162,7 +166,9 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "ending_time" to ad.advEndingTime,
                     "duration" to ad.advDuration,
                     "account_name" to ad.advAccount,
-                    "accountID" to ad.accountID
+                    "accountID" to ad.accountID,
+                    "rating" to ad.rating,
+                    "comment" to ad.comment
                 )
             )
             .addOnSuccessListener {

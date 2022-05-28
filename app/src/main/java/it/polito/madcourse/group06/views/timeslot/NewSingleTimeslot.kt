@@ -154,7 +154,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                 }
                 if (!isDateAndTimeCorrect) {
                     Snackbar.make(
-                        requireView(), "Error: you cannot create a timeslot which lives back in the time.", Snackbar.LENGTH_SHORT
+                        requireView(), "Error: you cannot create a timeslot back in time.", Snackbar.LENGTH_SHORT
                     ).show()
                 } else if (isPossible) {
                     if (areAllFieldsEmpty()) {
@@ -183,7 +183,9 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                                 newEndingTime.text.toString(),
                                 timeDifference,
                                 accountName,
-                                accountID
+                                accountID,
+                                0.0,
+                                ""
                             )
                         )
                         userProfileViewModel.updateSkillList(skillList)
@@ -257,7 +259,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                     }
                     if (!isDateAndTimeCorrect) {
                         Snackbar.make(
-                            requireView(), "Error: you cannot create a timeslot which lives back in the time.", Snackbar.LENGTH_SHORT
+                            requireView(), "Error: you cannot create a timeslot back in time.", Snackbar.LENGTH_SHORT
                         ).show()
                     } else if (isPossible) {
                         if (areAllFieldsEmpty()) {
@@ -286,7 +288,9 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                                     newEndingTime.text.toString(),
                                     timeDifference,
                                     accountName,
-                                    accountID
+                                    accountID,
+                                    0.0,
+                                    ""
                                 )
                             )
                             userProfileViewModel.updateSkillList(skillList)
