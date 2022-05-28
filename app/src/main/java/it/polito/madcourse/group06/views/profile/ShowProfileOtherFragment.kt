@@ -118,7 +118,9 @@ class ShowProfileOtherFragment : Fragment() {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_showProfileOtherFragment_to_showSingleTimeslot)
+                //findNavController().navigate(R.id.action_showProfileOtherFragment_to_showSingleTimeslot)
+                val frag = activity?.supportFragmentManager!!.findFragmentByTag("other_user_profile")
+                activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
             }
         })
 

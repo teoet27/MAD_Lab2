@@ -21,6 +21,7 @@ import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
+import it.polito.madcourse.group06.views.profile.ShowProfileOtherFragment
 
 class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
 
@@ -114,10 +115,13 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
         this.advAccount.setOnClickListener {
             // show user profile of the owner of the advertisement
             if(!isMine) {
-                val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
+                /*val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
                 activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
                 sharedViewModel.select(false)
-                Navigation.findNavController(view).navigate(R.id.action_ShowListTimeslots_to_showProfileOtherFragment)
+                Navigation.findNavController(view).navigate(R.id.action_ShowListTimeslots_to_showProfileOtherFragment)*/
+                activity?.supportFragmentManager?.beginTransaction()?.
+                add(R.id.nav_host_fragment_content_main, ShowProfileOtherFragment(), "other_user_profile")?.
+                commit()
             }
         }
 
