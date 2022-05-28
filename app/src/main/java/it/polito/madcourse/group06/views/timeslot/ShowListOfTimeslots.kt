@@ -17,7 +17,6 @@ import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.models.advertisement.AdvAdapterCard
 import it.polito.madcourse.group06.models.advertisement.Advertisement
-import it.polito.madcourse.group06.utilities.SearchState
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
@@ -79,7 +78,23 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 "Active"->{sharedViewModel.resetSearchState(activeAdsFlag = true);setActionBarTitle("Active Timeslots");true}
                 "Saved"->{sharedViewModel.resetSearchState(savedAdsFlag = true);setActionBarTitle("Saved Timeslots");true}
                 "Mine"->{sharedViewModel.resetSearchState(myAdsFlag = true);setActionBarTitle("My Timeslots");true}
-                else ->{sharedViewModel.updateSearchState(myAdsFlag = false,activeAdsFlag = false,savedAdsFlag = false);setActionBarTitle(selectedSkill);true}
+                else ->{if(bottomNavView.menu.getItem(0).isChecked){
+                    findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
+                }
+                    else {
+                        sharedViewModel.updateSearchState(myAdsFlag = false,activeAdsFlag = false,savedAdsFlag = false)
+                        setActionBarTitle(selectedSkill)
+                    }
+                    true
+                }
+            }
+        }
+        arguments?.getString("tab")?.let{
+            when(it) {
+                "Active" ->{bottomNavView.menu.performIdentifierAction(R.id.active_time_slots_tab,0);true}
+                "Saved" ->{bottomNavView.menu.performIdentifierAction(R.id.saved_time_slots_tab,0);true}
+                "Mine"->{bottomNavView.menu.performIdentifierAction(R.id.my_time_slots_tab,0);true}
+                else -> true
             }
         }
 

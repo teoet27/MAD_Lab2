@@ -6,11 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.skill.SkillAdapterCard
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
@@ -22,6 +26,8 @@ class ShowListOfSkills : Fragment(R.layout.service_list) {
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var recyclerView: RecyclerView
     private lateinit var sortButton: Button
+    private lateinit var bottomNavView: BottomNavigationView
+    private lateinit var newAdvButton: FloatingActionButton
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,5 +73,24 @@ class ShowListOfSkills : Fragment(R.layout.service_list) {
             finalList.add(0, "All")
             this.recyclerView.adapter = SkillAdapterCard(finalList)
         }
+
+        this.bottomNavView = view.findViewById(R.id.bottomNavigationView)
+        this.newAdvButton = view.findViewById(R.id.newAdvButton)
+
+        // set up bottom nav bar
+        bottomNavView.background = null
+        bottomNavView.menu.getItem(2).isEnabled = false
+        bottomNavView.setOnItemSelectedListener {
+            when (it.title) {
+                "Active" -> {findNavController().navigate(R.id.ShowListTimeslots, bundleOf("tab" to "Active"));true}
+                "Saved" -> {findNavController().navigate(R.id.ShowListTimeslots, bundleOf("tab" to "Saved"));true}
+                "Mine" -> {findNavController().navigate(R.id.ShowListTimeslots, bundleOf("tab" to "Mine"));true}
+                else ->true
+            }
+        }
+        this.newAdvButton.setOnClickListener {
+            findNavController().navigate(R.id.action_ShowListOfServices_to_newTimeSlotDetailsFragment)
+        }
+
     }
 }

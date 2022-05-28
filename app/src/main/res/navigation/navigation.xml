@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/ShowListTimeslots"
         android:name="it.polito.madcourse.group06.views.timeslot.ShowListOfTimeslots"
-        android:label="Timeslots" >
+        android:label="All" >
         <action
             android:id="@+id/action_frag5ShowListTimeslots_to_showProfileFragment"
             app:destination="@id/showProfileFragment" />
@@ -20,9 +20,7 @@
             app:destination="@id/showSingleTimeslot" />
         <action
             android:id="@+id/action_ShowListTimeslots_to_showListOfServices"
-            app:destination="@id/ShowListOfServices"
-            app:enterAnim="@anim/slide_in_from_left"
-            app:exitAnim="@anim/slide_out_right" />
+            app:destination="@id/ShowListOfServices" />
         <action
             android:id="@+id/action_ShowListTimeslots_to_filterTimeslots"
             app:destination="@id/filterTimeslots" />
@@ -86,12 +84,13 @@
         android:label="List of offered services">
         <action
             android:id="@+id/action_showListOfSkills_to_ShowListTimeslots"
-            app:destination="@id/ShowListTimeslots"
-            app:enterAnim="@anim/slide_in_from_right"
-            app:exitAnim="@anim/slide_out_left" />
+            app:destination="@id/ShowListTimeslots" />
         <action
             android:id="@+id/action_ShowListOfServices_to_newProfileFragment"
             app:destination="@id/newProfileFragment" />
+        <action
+            android:id="@+id/action_ShowListOfServices_to_newTimeSlotDetailsFragment"
+            app:destination="@id/newTimeSlotDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/newProfileFragment"
