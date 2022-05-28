@@ -68,7 +68,8 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
                 R.id.ShowListTimeslots,
                 R.id.ShowListOfServices,
                 R.id.showProfileFragment,
-                R.id.newProfileFragment
+                R.id.newProfileFragment,
+                R.id.showListOfUsers
             ), drawerLayout
         )
         // setup navigation drawer
@@ -96,6 +97,14 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
                 }
                 R.id.ShowProfileMenuItem -> {
                     navController.navigate(R.id.showProfileFragment)
+                    true
+                }
+                R.id.ListOfUsers -> {
+                    navController.navigate(R.id.showListOfUsers)
+                    true
+                }
+                R.id.settingID -> {
+                    navController.navigate(R.id.setting)
                     true
                 }
                 R.id.logOutMenuItem -> {
