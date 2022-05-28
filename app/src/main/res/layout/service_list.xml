@@ -28,7 +28,7 @@
             app:fabCradleVerticalOffset="10dp">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottomNavigationView"
+                android:id="@+id/bottomNavigationViewSkillList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="16dp"

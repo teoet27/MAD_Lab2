@@ -74,7 +74,7 @@ class ShowListOfSkills : Fragment(R.layout.service_list) {
             this.recyclerView.adapter = SkillAdapterCard(finalList)
         }
 
-        this.bottomNavView = view.findViewById(R.id.bottomNavigationView)
+        this.bottomNavView = view.findViewById(R.id.bottomNavigationViewSkillList)
         this.newAdvButton = view.findViewById(R.id.newAdvButton)
 
         // set up bottom nav bar
