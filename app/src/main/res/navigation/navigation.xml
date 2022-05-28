@@ -46,8 +46,8 @@
             android:id="@+id/action_showProfileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
         <action
-            android:id="@+id/action_showProfileFragment_to_ShowListTimeslots"
-            app:destination="@id/ShowListTimeslots" />
+            android:id="@+id/action_showProfileFragment_to_ShowListOfServices"
+            app:destination="@id/ShowListOfServices" />
     </fragment>
     <fragment
         android:id="@+id/newTimeSlotDetailsFragment"

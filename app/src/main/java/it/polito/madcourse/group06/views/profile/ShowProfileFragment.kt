@@ -110,7 +110,7 @@ class ShowProfileFragment : Fragment() {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_showProfileFragment_to_ShowListTimeslots)
+                findNavController().navigate(R.id.action_showProfileFragment_to_ShowListOfServices)
             }
         })
 
