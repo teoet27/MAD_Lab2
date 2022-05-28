@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -99,7 +100,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             Snackbar.make(
                 requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
             ).show()
-            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
+            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
         }
 
         this.confirmButton.setOnClickListener {
@@ -160,7 +161,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         Snackbar.make(
                             requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
                         ).show()
-                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
+                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
                     } else if (!isTimeDifferenceOk && timeDifference < 0) {
                         Snackbar.make(
                             requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_LONG
@@ -189,12 +190,12 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         Toast.makeText(
                             context, "Advertisement created successfully!", Toast.LENGTH_LONG
                         ).show()
-                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
+                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
                     } else {
                         Snackbar.make(
                             requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
                         ).show()
-                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
+                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
                     }
                 }
             }
@@ -263,7 +264,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             Snackbar.make(
                                 requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
                             ).show()
-                            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
+                            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
                         } else if (!isTimeDifferenceOk && timeDifference < 0) {
                             Snackbar.make(
                                 requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_LONG
@@ -292,12 +293,12 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             Toast.makeText(
                                 context, "Advertisement created successfully!", Toast.LENGTH_LONG
                             ).show()
-                            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
+                            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
                         } else {
                             Snackbar.make(
                                 requireView(), "Creation canceled.", Snackbar.LENGTH_LONG
                             ).show()
-                            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
+                            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
                         }
                     }
                 }

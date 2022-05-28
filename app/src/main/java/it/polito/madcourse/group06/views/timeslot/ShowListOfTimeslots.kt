@@ -94,7 +94,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 "Active" ->{bottomNavView.menu.performIdentifierAction(R.id.active_time_slots_tab,0);true}
                 "Saved" ->{bottomNavView.menu.performIdentifierAction(R.id.saved_time_slots_tab,0);true}
                 "Mine"->{bottomNavView.menu.performIdentifierAction(R.id.my_time_slots_tab,0);true}
-                else -> true
+                else ->{bottomNavView.menu.performIdentifierAction(R.id.services_time_slots_tab,0);true}
             }
         }
 
