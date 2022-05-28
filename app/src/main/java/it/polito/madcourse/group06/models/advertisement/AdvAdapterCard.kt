@@ -1,13 +1,19 @@
 package it.polito.madcourse.group06.models.advertisement
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.findFragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.utilities.AdvFilter
+import it.polito.madcourse.group06.utilities.isExpired
+import it.polito.madcourse.group06.utilities.toInt
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
-import java.text.SimpleDateFormat
+import it.polito.madcourse.group06.views.timeslot.FilterTimeslots
+import it.polito.madcourse.group06.views.timeslot.ShowSingleTimeslot
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -16,7 +22,8 @@ import kotlin.math.roundToInt
  */
 class AdvAdapterCard(
     private val adsList: List<Advertisement>,
-    private val advViewModel: AdvertisementViewModel
+    private val advViewModel: AdvertisementViewModel,
+    private val activity: Activity
 ) : RecyclerView.Adapter<AdvViewHolderCard>() {
 
     private var showedData = adsList
@@ -35,8 +42,12 @@ class AdvAdapterCard(
         holder.bind(showedData[position])
         holder.itemView.setOnClickListener { view ->
             advViewModel.setSingleAdvertisement((showedData[showedData.indexOf(showedData[position])]))
-            Navigation.findNavController(view)
-                .navigate(R.id.action_ShowListTimeslots_to_showSingleTimeslot)
+            /*Navigation.findNavController(view)
+                .navigate(R.id.action_ShowListTimeslots_to_showSingleTimeslot)*/
+            (activity as TBMainActivity).supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_up, 0)
+                .add(R.id.nav_host_fragment_content_main, ShowSingleTimeslot(), "single_timeslot")
+                .commit()
         }
     }
 
@@ -216,10 +227,5 @@ class AdvAdapterCard(
             (timeDifference * 100.0).roundToInt() / 100.0,
             (timeDifference * 100.0).roundToInt() / 100.0 >= 0
         )
-    }
-
-    private fun Boolean.toInt() = if (this) 1 else 0
-    private fun Advertisement.isExpired(): Boolean {
-        return this.advDate.isSoonerThanDate(SimpleDateFormat("dd/MM/yyyy").format(Date()))
     }
 }

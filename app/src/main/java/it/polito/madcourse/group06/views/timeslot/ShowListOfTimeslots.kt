@@ -194,7 +194,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             view.findViewById<ImageView>(R.id.create_hint).isVisible =
                 fullListForGivenSkill.isEmpty()&&!selectedSkill.isNullOrEmpty()
             this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-            advAdapterCard = AdvAdapterCard(listOfAdv, advertisementViewModel)
+            advAdapterCard = AdvAdapterCard(listOfAdv, advertisementViewModel,requireActivity())
 
             // - Filter
             sharedViewModel.searchState.observe(viewLifecycleOwner) {

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -18,12 +19,14 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
+import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 
 class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
 
     private val advViewModel: AdvertisementViewModel by activityViewModels()
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private lateinit var advTitle: TextView
     private lateinit var advAccount: TextView
@@ -41,6 +44,8 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        sharedViewModel.select(true)
 
         this.advTitle = view.findViewById(R.id.advTitle)
         this.advAccount = view.findViewById(R.id.advAccount)
@@ -94,8 +99,13 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
         }
 
         this.editButton.setOnClickListener {
-            if(isMine)
-                Navigation.findNavController(view).navigate(R.id.action_showSingleTimeslot_to_editTimeSlotDetailsFragment)
+            if(isMine) {
+                val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
+                activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
+                sharedViewModel.select(false)
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_ShowListTimeslots_to_editTimeSlotDetailsFragment)
+            }
             else{
                 /*chat*/
             }
@@ -110,7 +120,11 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_showSingleTimeslot_to_ShowListTimeslots)
+                //findNavController().navigate(R.id.action_showSingleTimeslot_to_ShowListTimeslots)
+                val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
+                view.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_down))
+                sharedViewModel.select(false)
+                activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
             }
         })
 
