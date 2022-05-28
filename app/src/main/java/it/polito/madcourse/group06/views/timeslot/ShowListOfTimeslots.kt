@@ -175,7 +175,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             sharedViewModel.searchState.observe(viewLifecycleOwner) {
 
                 // Update page title
-                setActionBarTitle(it.selectedSkill!!)
+                it.selectedSkill?.let{skill->setActionBarTitle(skill)}
 
                 //update view
                 this.sortParam.text = paramToString(it.sortParameter)
