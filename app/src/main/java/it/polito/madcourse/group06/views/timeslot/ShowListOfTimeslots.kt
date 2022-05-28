@@ -79,6 +79,25 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         // set up bottom nav bar
         bottomNavView.background = null
         bottomNavView.menu.getItem(2).isEnabled = false
+
+        arguments?.getString("tab")?.let{
+            when(it) {
+                "Active" ->{bottomNavView.menu.performIdentifierAction(R.id.active_time_slots_tab,0)
+                    bottomNavView.menu.getItem(1).isChecked=true;true}
+                "Saved" ->{bottomNavView.menu.performIdentifierAction(R.id.saved_time_slots_tab,0)
+                    bottomNavView.menu.getItem(3).isChecked=true;true}
+                "Mine"->{bottomNavView.menu.performIdentifierAction(R.id.my_time_slots_tab,0)
+                    bottomNavView.menu.getItem(4).isChecked=true;true}
+                else ->{
+                    if(selectedSkill.isNullOrEmpty())
+                        findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
+                    else{
+                        bottomNavView.menu.performIdentifierAction(R.id.services_time_slots_tab,0)
+                        bottomNavView.menu.getItem(0).isChecked=true}
+                    true}
+            }
+        }
+
         bottomNavView.setOnItemSelectedListener {
 
             bottomNavView.menu.getItem(0).setIcon(R.drawable.ic_baseline_home_24)
@@ -119,23 +138,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 }
             }
         }
-        arguments?.getString("tab")?.let{
-            when(it) {
-                "Active" ->{bottomNavView.menu.performIdentifierAction(R.id.active_time_slots_tab,0)
-                    bottomNavView.menu.getItem(1).isChecked=true;true}
-                "Saved" ->{bottomNavView.menu.performIdentifierAction(R.id.saved_time_slots_tab,0)
-                    bottomNavView.menu.getItem(3).isChecked=true;true}
-                "Mine"->{bottomNavView.menu.performIdentifierAction(R.id.my_time_slots_tab,0)
-                    bottomNavView.menu.getItem(4).isChecked=true;true}
-                else ->{
-                    if(selectedSkill.isNullOrEmpty())
-                        findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
-                    else{
-                        bottomNavView.menu.performIdentifierAction(R.id.services_time_slots_tab,0)
-                        bottomNavView.menu.getItem(0).isChecked=true}
-                    true}
-            }
-        }
+
 
         // Get current user
         userProfileViewModel.currentUser.observe(viewLifecycleOwner) {
