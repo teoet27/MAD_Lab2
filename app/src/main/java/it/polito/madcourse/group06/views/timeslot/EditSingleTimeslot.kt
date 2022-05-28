@@ -437,7 +437,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
          * setPositiveButton
          */
         builder.setPositiveButton("Create", DialogInterface.OnClickListener { dialog, which ->
-            val newSkillTitleLabel = newSkillTitle.text.toString()
+            val newSkillTitleLabel = newSkillTitle.text.toString().replaceFirstChar(Char::titlecase)
             if (newSkillTitleLabel.isNotEmpty()) {
                 this.skillsChips.removeView(view?.findViewById(R.id.editProfileAddNewSkillChip))
                 chipGroup.addChipWithCheck(context, newSkillTitleLabel, true)

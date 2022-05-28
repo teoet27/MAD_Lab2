@@ -424,7 +424,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
          * setPositiveButton
          */
         builder.setPositiveButton("Create", DialogInterface.OnClickListener { dialog, which ->
-            newSkillTitleLabel = newSkillTitle.text.toString()
+            newSkillTitleLabel = newSkillTitle.text.toString().replaceFirstChar(Char::titlecase)
             if (newSkillTitleLabel.isNotEmpty()) {
                 chipGroup.addChip(context, newSkillTitleLabel, isAlreadySelected = true)
                 chipGroup.moveAddChip(context, view?.findViewById(R.id.add_new_skill_chip)!!, chipGroup)
