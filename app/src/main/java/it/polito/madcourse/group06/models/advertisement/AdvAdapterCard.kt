@@ -39,7 +39,7 @@ class AdvAdapterCard(
      * Bind operations.
      */
     override fun onBindViewHolder(holder: AdvViewHolderCard, position: Int) {
-        holder.bind(showedData[position])
+        holder.bind(showedData[position],advViewModel)
         holder.itemView.setOnClickListener { view ->
             advViewModel.setSingleAdvertisement((showedData[showedData.indexOf(showedData[position])]))
             /*Navigation.findNavController(view)
@@ -59,9 +59,26 @@ class AdvAdapterCard(
     }
 
     /**
-     * A method to provide a switch mode between the "All" visualization and the "My adv" one.
-     * @param mode true: show only my adv, false: show all the adv
-     * @param userID if true, show only this user's adv
+     * A method initialize the dataset according to the selected tab
+     */
+    fun initDataset(myAds: Boolean?=null,userID: String?=null,activeAdsFlag: Boolean?=null,savedAdsFlag: Boolean?=null,adsIDs:List<String>?=null){
+
+        // My timeslot filtering
+        if (myAds == true) {
+            showedData = adsList.filter { it.accountID == userID }
+        }
+        // Active or Saved timeslot filtering
+        else if (activeAdsFlag == true||savedAdsFlag == true) {
+            showedData = adsList.
+            filter { adsIDs?.contains(it.id)!! }.
+            map{ ad-> if(savedAdsFlag==true){ad.isSaved=true}; ad }
+        }
+        else
+            showedData=adsList
+        notifyDataSetChanged()
+    }
+    /**
+     * A method to provide filtering options to the initialized data set
      */
 
     fun updateDataSet(
@@ -69,15 +86,11 @@ class AdvAdapterCard(
         advFilter: AdvFilter? = null,
         sortParam: Int? = null,
         sortUp: Boolean? = null,
-        myAds: Boolean? = null,
-        activeAdsFlag: Boolean? = null,
-        savedAdsFlag: Boolean? = null,
-        userID: String? = null,
         search: String? = null
     ) {
         // SelectedSkill filtering phase
         showedData =
-            adsList.filter { it.listOfSkills.contains(selectedSkill) || selectedSkill == "All" }
+            showedData.filter { it.listOfSkills.contains(selectedSkill) || selectedSkill == "All" }
 
         //Filtering phase
         showedData =
@@ -130,18 +143,6 @@ class AdvAdapterCard(
             }
         }
 
-        // My timeslot filtering
-        if (myAds == true) {
-            showedData = adsList.filter { it.accountID == userID }
-        }
-        // Active timeslot filtering
-        if (activeAdsFlag == true) {
-            //showedData = adsList.filter { it.isActive }
-        }
-        // Saved timeslot filtering
-        if (savedAdsFlag == true) {
-            //showedData = adsList.filter { it.isSaved }
-        }
         // Search
         if (search != null)
             showedData = showedData.filter {
@@ -149,11 +150,7 @@ class AdvAdapterCard(
                         !it.listOfSkills.none { skill -> skill.contains(search.toString(), true) }
             }
 
-        // Check on date availability
-        //showedData=showedData.filter{!it.isExpired()||advFilter?.starting_date?.isSoonerThanDate(it.advDate) == true }
-
-
-            notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 
     private fun dateStringToInt(date: String): Int {

@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.utilities.isExpired
+import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 
 /**
  * [AdvViewHolderCard] extends the ViewHolder of the [RecyclerView]
@@ -28,23 +29,20 @@ class AdvViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
      * @param adv an object of class Advertisement
      */
     @SuppressLint("ResourceAsColor")
-    fun bind(adv: Advertisement) {
+    fun bind(adv: Advertisement, advViewModel: AdvertisementViewModel) {
         this.title.text = adv.advTitle
         this.location.text = adv.advLocation
         this.duration.text = adv.advDuration.toString()
         this.account.text = adv.advAccount
         this.expired.visibility=if(adv.isExpired())View.VISIBLE else View.GONE
+        if(adv.isSaved)
+            this.bookmark.setImageResource(R.drawable.ic_bookmark_black_24dp)
+        else
+            this.bookmark.setImageResource(R.drawable.ic_bookmark_border_black_24dp)
+
         this.bookmark.setOnClickListener{
-            //TODO: Update Advertisement class and its implementations
-            /*
-            if(adv.bookmarked)
-                this.bookmark.setImageResource(R.drawable.ic_bookmark_black_24dp)
-            else
-                this.bookmark.setImageResource(R.drawable.ic_bookmark_border_black_24dp)
-            var ad=adv
-            ad.bookmarked=!adv.bookmarked
-            advertisementViewModel.editAdvertisement(ad)
-            */
+            advViewModel.bookmark(adv.id!!,!adv.isSaved)
+            advViewModel.editAdvertisement(adv.apply {isSaved=!isSaved})
         }
     }
 }

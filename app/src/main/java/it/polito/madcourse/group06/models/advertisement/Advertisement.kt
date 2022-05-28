@@ -75,6 +75,10 @@ data class Advertisement(
 
     @get:PropertyName("comment")
     @set:PropertyName("comment")
-    var comment: String
+    var comment: String,
+
+    @get:PropertyName("saved_flag")
+    @set:PropertyName("saved_flag")
+    var isSaved: Boolean = false
 )
 

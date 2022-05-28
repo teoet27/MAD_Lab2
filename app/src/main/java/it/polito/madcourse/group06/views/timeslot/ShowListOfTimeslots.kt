@@ -42,6 +42,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private var fullListForGivenSkill: List<Advertisement> = listOf()
     private var isMyAdv = false
     private var isUp = false
+    private var associatedActiveAdsIdList=listOf<String>()
+    private var associatedSavedAdsIdList=listOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -87,6 +89,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                         bottomNavView.menu.getItem(0).title = skill
                         bottomNavView.menu.getItem(0).setIcon(R.drawable.savetime)
                     }
+
                     true}
                 "Saved"->{sharedViewModel.resetSearchState(selectedSkill=selectedSkill,savedAdsFlag = true)
                     setActionBarTitle("Saved Timeslots")
@@ -170,6 +173,14 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             sharedViewModel.updateSearchState(sortUpFlag = !isUp)
         }
 
+        advertisementViewModel.activeAdsIDs.observe(viewLifecycleOwner){
+            associatedActiveAdsIdList=it!!
+            sharedViewModel.updateSearchState()
+        }
+        advertisementViewModel.savedAdsIDs.observe(viewLifecycleOwner){
+            associatedSavedAdsIdList=it!!
+            sharedViewModel.updateSearchState()
+        }
         advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
             fullListForGivenSkill =
                 listOfAdv.filter { it.listOfSkills.contains(selectedSkill) || selectedSkill == "All" }
@@ -219,16 +230,20 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                     filterNotificationDot.visibility=View.VISIBLE
 
 
+                //init dataset
+                if(it.activeAdsFlag==true)
+                    advAdapterCard.initDataset(it.myAdsFlag,currentAccountID,it.activeAdsFlag,null,associatedActiveAdsIdList)
+                else if(it.savedAdsFlag==true)
+                    advAdapterCard.initDataset(it.myAdsFlag,currentAccountID,null,it.savedAdsFlag,associatedSavedAdsIdList)
+                else
+                    advAdapterCard.initDataset()
+
                 //update recyclerview
                 advAdapterCard.updateDataSet(
                     selectedSkill=selectedSkill,
                     advFilter = it.filter,
                     sortUp = it.sortUpFlag,
                     sortParam = it.sortParameter,
-                    myAds = it.myAdsFlag,
-                    activeAdsFlag=it.activeAdsFlag,
-                    savedAdsFlag=it.savedAdsFlag,
-                    userID = currentAccountID,
                     search = it.searchedWord
                 )
             }

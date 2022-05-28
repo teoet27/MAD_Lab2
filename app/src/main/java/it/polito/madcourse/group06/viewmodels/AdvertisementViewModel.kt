@@ -51,6 +51,31 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             }
     }
 
+    /**
+     * List Of "Saved" Advertisement IDs associated to the current user
+     * */
+
+    private var _savedAdsIDs = listOf<String>().toMutableList()
+    val savedAdsIDs = MutableLiveData<MutableList<String>>().also{
+        it.value=_savedAdsIDs
+    }
+    fun bookmark(id:String,toSave:Boolean){
+        if(toSave)
+            _savedAdsIDs.add(id)
+        else
+            _savedAdsIDs.remove(id)
+        savedAdsIDs.value=_savedAdsIDs
+    }
+    /**
+     * List Of "Active" Advertisement IDs associated to the current user
+     * */
+
+    private val _activeAdsIDs = listOf<String>()
+    val activeAdsIDs = MutableLiveData<List<String>>().also{
+        it.value=_activeAdsIDs
+    }
+
+
     private fun DocumentSnapshot.toAdvertisement(): Advertisement? {
         return try {
             val id = this.get("id") as String
