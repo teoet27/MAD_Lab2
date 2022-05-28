@@ -230,13 +230,13 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                     filterNotificationDot.visibility=View.VISIBLE
 
 
-                //init dataset
+                // init dataset
                 if(it.activeAdsFlag==true)
-                    advAdapterCard.initDataset(it.myAdsFlag,currentAccountID,it.activeAdsFlag,null,associatedActiveAdsIdList)
+                    advAdapterCard.initDataset(activeAdsFlag = it.activeAdsFlag, adsIDs = associatedActiveAdsIdList)
                 else if(it.savedAdsFlag==true)
-                    advAdapterCard.initDataset(it.myAdsFlag,currentAccountID,null,it.savedAdsFlag,associatedSavedAdsIdList)
+                    advAdapterCard.initDataset(savedAdsFlag = it.savedAdsFlag, adsIDs = associatedSavedAdsIdList)
                 else
-                    advAdapterCard.initDataset()
+                    advAdapterCard.initDataset(myAds = it.myAdsFlag, userID = currentAccountID)
 
                 //update recyclerview
                 advAdapterCard.updateDataSet(

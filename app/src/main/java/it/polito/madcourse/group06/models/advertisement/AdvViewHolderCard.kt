@@ -39,7 +39,10 @@ class AdvViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
             this.bookmark.setImageResource(R.drawable.ic_bookmark_black_24dp)
         else
             this.bookmark.setImageResource(R.drawable.ic_bookmark_border_black_24dp)
-
+        if(adv.isActive){
+            /*...*/
+            //check and possible remove from list
+        }
         this.bookmark.setOnClickListener{
             advViewModel.bookmark(adv.id!!,!adv.isSaved)
             advViewModel.editAdvertisement(adv.apply {isSaved=!isSaved})

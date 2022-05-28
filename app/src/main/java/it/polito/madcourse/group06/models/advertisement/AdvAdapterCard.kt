@@ -68,10 +68,15 @@ class AdvAdapterCard(
             showedData = adsList.filter { it.accountID == userID }
         }
         // Active or Saved timeslot filtering
-        else if (activeAdsFlag == true||savedAdsFlag == true) {
+        else if (activeAdsFlag == true) {
             showedData = adsList.
             filter { adsIDs?.contains(it.id)!! }.
-            map{ ad-> if(savedAdsFlag==true){ad.isSaved=true}; ad }
+            map{ ad-> ad.isActive=true; ad }
+        }
+        else if(savedAdsFlag == true) {
+            showedData = adsList.
+            filter { adsIDs?.contains(it.id)!! }.
+            map{ ad-> ad.isSaved=true; ad }
         }
         else
             showedData=adsList
