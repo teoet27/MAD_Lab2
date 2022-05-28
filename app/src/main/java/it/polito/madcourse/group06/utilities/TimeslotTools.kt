@@ -134,6 +134,7 @@ class AdvFilter(
 }
 
 class SearchState(
+    var selectedSkill: String?=null,
     var searchedWord: String? = null,
     var sortParameter: Int? = null,
     var sortUpFlag: Boolean? = null,

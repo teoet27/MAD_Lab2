@@ -11,7 +11,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.chip.Chip
 import it.polito.madcourse.group06.R
-import it.polito.madcourse.group06.utilities.SearchState
 import it.polito.madcourse.group06.utilities.AdvFilter
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import java.util.*

@@ -70,6 +70,10 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.myTimeslotsButton = view.findViewById(R.id.myTimeslotsButtonID)
         this.bottomNavView=view.findViewById(R.id.bottomNavigationView)
 
+        // Get and set current selected skill
+        arguments?.getString("selected_skill")?.let {sharedViewModel.updateSearchState(selectedSkill=it)}
+        selectedSkill=sharedViewModel.searchState.value?.selectedSkill
+
         // set up bottom nav bar
         bottomNavView.background = null
         bottomNavView.menu.getItem(2).isEnabled = false
@@ -94,7 +98,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 "Active" ->{bottomNavView.menu.performIdentifierAction(R.id.active_time_slots_tab,0);true}
                 "Saved" ->{bottomNavView.menu.performIdentifierAction(R.id.saved_time_slots_tab,0);true}
                 "Mine"->{bottomNavView.menu.performIdentifierAction(R.id.my_time_slots_tab,0);true}
-                else ->{bottomNavView.menu.performIdentifierAction(R.id.services_time_slots_tab,0);true}
+                else ->{if(selectedSkill.isNullOrEmpty())
+                    findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices);true}
             }
         }
 
@@ -106,9 +111,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.newAdvButton.setOnClickListener {
             findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
         }
-
-        // Get and set current selected skill
-        arguments?.getString("selected_skill")?.let { selectedSkill = it; setActionBarTitle(it)}
 
         // Context menu for choosing sort parameter
         registerForContextMenu(sortParam)
