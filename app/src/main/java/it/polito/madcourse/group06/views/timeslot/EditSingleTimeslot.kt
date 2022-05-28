@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -115,7 +116,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
             // Delete Button
             this.deleteButton.setOnClickListener {
                 advertisementViewModel.removeAdvertisementByID(singleAdvertisement.id!!)
-                findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
+                findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots,
+                    bundleOf("tab" to "Mine"))
             }
 
             // Button for adding a new skill
@@ -135,7 +137,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
             }
 
             this.discardButton.setOnClickListener {
-                findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
+                findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots,
+                    bundleOf("tab" to "Mine"))
             }
 
             this.confirmButton.setOnClickListener {
@@ -214,7 +217,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             dumbAdvertisement.advDuration = timeDifference
                             dumbAdvertisement.listOfSkills = selectedSkillsList
                             advertisementViewModel.editAdvertisement(dumbAdvertisement)
-                            findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
+                            findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots,
+                                bundleOf("tab" to "Mine"))
 
                         } else {
                             Snackbar.make(
@@ -303,7 +307,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             dumbAdvertisement.advDuration = timeDifference
                             dumbAdvertisement.listOfSkills = selectedSkillsList
                             advertisementViewModel.editAdvertisement(dumbAdvertisement)
-                            findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
+                            findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots,
+                                bundleOf("tab" to "Mine"))
 
                         } else {
                             Snackbar.make(
