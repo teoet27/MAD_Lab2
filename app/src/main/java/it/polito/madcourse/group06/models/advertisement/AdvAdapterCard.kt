@@ -59,7 +59,17 @@ class AdvAdapterCard(
     }
 
     /**
-     * A method initialize the dataset according to the selected tab
+     * A method initialize the dataset according to the selected tab among
+     * - Services
+     * - Active timeslots
+     * - Saved timeslots
+     * - My timeslots
+     *
+     * @param myAds: if true the inital set is based on Ads whose owner ID coincide with [userID]
+     * @param userID: owner ID
+     * @param activeAdsFlag: if true the initial set is based on Ads marked as "active" by inserting them in [adsIDsDs]
+     * @param savedAdsFlag: if true the initial set is based on Ads marked as "saved" by inserting them in [adsIDsDs]
+     * @param adsIDs: list of Ads IDs to be considered for the current recycler view,
      */
     fun initDataset(myAds: Boolean?=null,userID: String?=null,activeAdsFlag: Boolean?=null,savedAdsFlag: Boolean?=null,adsIDs:List<String>?=null){
 
@@ -82,10 +92,15 @@ class AdvAdapterCard(
             showedData=adsList
         notifyDataSetChanged()
     }
-    /**
-     * A method to provide filtering options to the initialized data set
-     */
 
+    /**
+     * A method to provide filtering options for selecting a sorted subset of the initialized one
+     * @param selectedSkill: filter all Ads of the initial set associated to the selected skill
+     * @param advFilter: AdvFilter to filter Ads matching some criteria (location, duration etc.)
+     * @param sortParam: criterion to sort the selected Ads
+     * @param sortUp: flag to set the sort direction
+     * @param search: filters among the currently selected Ads, those whose title or skill list contain the string [search]
+     */
     fun updateDataSet(
         selectedSkill: String? = "All",
         advFilter: AdvFilter? = null,
