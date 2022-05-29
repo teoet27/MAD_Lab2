@@ -65,15 +65,6 @@ class NewProfileFragment : Fragment() {
 
     lateinit var mGoogleSignInClient: GoogleSignInClient
 
-    private var _isRegistered: Boolean = false
-    private fun userRegistered() {
-        if (!_isRegistered) {
-            userProfileViewModel.fetchUserProfile(email)
-            findNavController().navigate(R.id.action_newProfileFragment_to_ShowListOfServices)
-        }
-        _isRegistered = true
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         activityTB = requireActivity() as TBMainActivity
         return inflater.inflate(R.layout.new_profile, container, false)
@@ -81,21 +72,6 @@ class NewProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        userProfileViewModel.currentUser.observe(viewLifecycleOwner) { user ->
-            email = user.email!!
-            userProfileViewModel.listOfUsers.observe(viewLifecycleOwner) {
-                for (u in it) {
-                    if (user.email == u.email) {
-                        userRegistered()
-                        break
-                    }
-                }
-                if (!_isRegistered) {
-                    _isRegistered = true
-                }
-            }
-        }
 
         activityTB.supportActionBar?.setDisplayHomeAsUpEnabled(false)
         activityTB.drawerLock()

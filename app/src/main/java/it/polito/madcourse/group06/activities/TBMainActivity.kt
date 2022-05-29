@@ -77,7 +77,19 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
         navView.setupWithNavController(navController)
 
         userProfileViewModel.setCurrentUserProfile(fullname!!, email!!)
-        navController.navigate(R.id.newProfileFragment)
+
+        // User registration check
+        var is_registered = false
+        userProfileViewModel.listOfUsers.observe(this) { u ->
+            u.find{ email == it.email }?.also {
+                is_registered = true
+            }
+            if (!is_registered)
+                navController.navigate(R.id.newProfileFragment)
+            else
+                userProfileViewModel.fetchUserProfile(email)
+        }
+
 
         // Navigation view item click listener
         navView.setNavigationItemSelectedListener {
