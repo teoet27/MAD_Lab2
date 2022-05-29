@@ -222,7 +222,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
                     if (!isCurrentDateDifference) {
                         isDateAndTimeCorrect = false
-                    } else if (!isCurrentTimeDifference) {
+                    } else if (isCurrentTimeDifference) {
                         isDateAndTimeCorrect = false
                     }
 
