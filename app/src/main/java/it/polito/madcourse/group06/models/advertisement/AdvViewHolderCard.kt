@@ -46,7 +46,9 @@ class AdvViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
             this.bookmark.setImageResource(R.drawable.ic_bookmark_border_black_24dp)
         if(adv.isActive){
             /*...*/
-            //check and possible remove from list
+            if(adv.isExpired()){
+                /*...*/
+            }
         }
         this.bookmark.setOnClickListener{
             advViewModel.bookmark(adv.id!!,!adv.isSaved)

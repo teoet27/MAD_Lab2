@@ -38,12 +38,12 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var filterNotificationDot: TextView
     private lateinit var currentAccountID: String
     private lateinit var bottomNavView: BottomNavigationView
-    private var selectedSkill: String?=null
+    private var selectedSkill: String? = null
     private var fullListForGivenSkill: List<Advertisement> = listOf()
     private var isMyAdv = false
     private var isUp = false
-    private var associatedActiveAdsIdList=listOf<String>()
-    private var associatedSavedAdsIdList=listOf<String>()
+    private var associatedActiveAdsIdList = listOf<String>()
+    private var associatedSavedAdsIdList = listOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,11 +69,12 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.recyclerView = view.findViewById(R.id.rvAdvFullList)
         this.barrier = view.findViewById(R.id.barrier)
         this.filterNotificationDot = view.findViewById(R.id.filter_notification)
-        this.bottomNavView=view.findViewById(R.id.bottomNavigationView)
+        this.bottomNavView = view.findViewById(R.id.bottomNavigationView)
 
         // Get and set current selected skill
-        arguments?.getString("selected_skill")?.let {sharedViewModel.updateSearchState(selectedSkill=it)}
-        selectedSkill=sharedViewModel.searchState.value?.selectedSkill
+        arguments?.getString("selected_skill")
+            ?.let { sharedViewModel.updateSearchState(selectedSkill = it) }
+        selectedSkill = sharedViewModel.searchState.value?.selectedSkill
 
         // set up bottom nav bar
         bottomNavView.background = null
@@ -82,58 +83,76 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
             bottomNavView.menu.getItem(0).setIcon(R.drawable.ic_baseline_home_24)
 
-            when(it.title){
-                "Active"->{sharedViewModel.resetSearchState(activeAdsFlag = true)
+            when (it.title) {
+                "Active" -> {
+                    sharedViewModel.resetSearchState(activeAdsFlag = true)
                     setActionBarTitle("Active Timeslots")
-                    selectedSkill?.let { skill->
+                    selectedSkill?.let { skill ->
                         bottomNavView.menu.getItem(0).title = skill
                         bottomNavView.menu.getItem(0).setIcon(R.drawable.savetime)
                     }
 
-                    true}
-                "Saved"->{sharedViewModel.resetSearchState(savedAdsFlag = true)
+                    true
+                }
+                "Saved" -> {
+                    sharedViewModel.resetSearchState(savedAdsFlag = true)
                     setActionBarTitle("Saved Timeslots")
-                    selectedSkill?.let { skill->
+                    selectedSkill?.let { skill ->
                         bottomNavView.menu.getItem(0).title = skill
                         bottomNavView.menu.getItem(0).setIcon(R.drawable.savetime)
                     }
-                    true}
-                "Mine"->{sharedViewModel.resetSearchState(myAdsFlag = true)
+                    true
+                }
+                "Mine" -> {
+                    sharedViewModel.resetSearchState(myAdsFlag = true)
                     setActionBarTitle("My Timeslots")
-                    selectedSkill?.let { skill->
+                    selectedSkill?.let { skill ->
                         bottomNavView.menu.getItem(0).title = skill
                         bottomNavView.menu.getItem(0).setIcon(R.drawable.savetime)
                     }
-                    true}
-                else ->{
-                    if(bottomNavView.menu.getItem(0).isChecked || selectedSkill.isNullOrEmpty()){
+                    true
+                }
+                else -> {
+                    if (bottomNavView.menu.getItem(0).isChecked || selectedSkill.isNullOrEmpty()) {
                         findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
-                    }
-                    else {
-                        bottomNavView.menu.getItem(0).setIcon(R.drawable.ic_baseline_arrow_back_ios_24)
-                        bottomNavView.menu.getItem(0).title="Services"
-                        sharedViewModel.updateSearchState(myAdsFlag = false,activeAdsFlag = false,savedAdsFlag = false)
+                    } else {
+                        bottomNavView.menu.getItem(0)
+                            .setIcon(R.drawable.ic_baseline_arrow_back_ios_24)
+                        bottomNavView.menu.getItem(0).title = "Services"
+                        sharedViewModel.updateSearchState(
+                            myAdsFlag = false,
+                            activeAdsFlag = false,
+                            savedAdsFlag = false
+                        )
                         setActionBarTitle(selectedSkill!!)
                     }
                     true
                 }
             }
         }
-        arguments?.getString("tab")?.let{
-            when(it) {
-                "Active" ->{bottomNavView.menu.performIdentifierAction(R.id.active_time_slots_tab,0)
-                    bottomNavView.menu.getItem(1).isChecked=true;true}
-                "Saved" ->{bottomNavView.menu.performIdentifierAction(R.id.saved_time_slots_tab,0)
-                    bottomNavView.menu.getItem(3).isChecked=true;true}
-                "Mine"->{bottomNavView.menu.performIdentifierAction(R.id.my_time_slots_tab,0)
-                    bottomNavView.menu.getItem(4).isChecked=true;true}
-                else ->{
-                    if(selectedSkill.isNullOrEmpty())
+        arguments?.getString("tab")?.let {
+            when (it) {
+                "Active" -> {
+                    bottomNavView.menu.performIdentifierAction(R.id.active_time_slots_tab, 0)
+                    bottomNavView.menu.getItem(1).isChecked = true;true
+                }
+                "Saved" -> {
+                    bottomNavView.menu.performIdentifierAction(R.id.saved_time_slots_tab, 0)
+                    bottomNavView.menu.getItem(3).isChecked = true;true
+                }
+                "Mine" -> {
+                    bottomNavView.menu.performIdentifierAction(R.id.my_time_slots_tab, 0)
+                    bottomNavView.menu.getItem(4).isChecked = true;true
+                }
+                else -> {
+                    if (selectedSkill.isNullOrEmpty())
                         findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
-                    else{
-                        bottomNavView.menu.performIdentifierAction(R.id.services_time_slots_tab,0)
-                        bottomNavView.menu.getItem(0).isChecked=true}
-                    true}
+                    else {
+                        bottomNavView.menu.performIdentifierAction(R.id.services_time_slots_tab, 0)
+                        bottomNavView.menu.getItem(0).isChecked = true
+                    }
+                    true
+                }
             }
         }
 
@@ -173,12 +192,12 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             sharedViewModel.updateSearchState(sortUpFlag = !isUp)
         }
 
-        advertisementViewModel.activeAdsIDs.observe(viewLifecycleOwner){
-            associatedActiveAdsIdList=it!!
+        advertisementViewModel.activeAdsIDs.observe(viewLifecycleOwner) {
+            associatedActiveAdsIdList = it!!
             sharedViewModel.updateSearchState()
         }
-        advertisementViewModel.savedAdsIDs.observe(viewLifecycleOwner){
-            associatedSavedAdsIdList=it!!
+        advertisementViewModel.savedAdsIDs.observe(viewLifecycleOwner) {
+            associatedSavedAdsIdList = it!!
             sharedViewModel.updateSearchState()
         }
         advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
@@ -196,51 +215,50 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 sharedViewModel.select(false)
             }
             // Close other user profile fragment in case it was left open
-            activity?.supportFragmentManager?.findFragmentByTag("other_user_profile")?.also { frag ->
-                activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
-                sharedViewModel.select(false)
-            }
+            activity?.supportFragmentManager?.findFragmentByTag("other_user_profile")
+                ?.also { frag ->
+                    activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
+                    sharedViewModel.select(false)
+                }
 
             //compose recycler view
             view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible =
-                fullListForGivenSkill.isEmpty()&&!selectedSkill.isNullOrEmpty()
+                fullListForGivenSkill.isEmpty() && !selectedSkill.isNullOrEmpty()
             view.findViewById<ImageView>(R.id.create_hint).isVisible =
-                fullListForGivenSkill.isEmpty()&&!selectedSkill.isNullOrEmpty()
+                fullListForGivenSkill.isEmpty() && !selectedSkill.isNullOrEmpty()
             this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-            advAdapterCard = AdvAdapterCard(listOfAdv, advertisementViewModel,requireActivity())
+            advAdapterCard = AdvAdapterCard(listOfAdv, advertisementViewModel, requireActivity())
 
             // - Filter
             sharedViewModel.searchState.observe(viewLifecycleOwner) {
 
                 // Update page title
-                it.selectedSkill?.let{ skill->
+                it.selectedSkill?.let { skill ->
                     setActionBarTitle(skill)
                 }
 
                 //update view
                 this.sortParam.text = paramToString(it.sortParameter)
-                this.isUp=it.sortUpFlag?:true
-                this.directionButton.setImageResource(if(this.isUp) R.drawable.sort_up else R.drawable.sort_down)
-                this.isMyAdv=it.myAdsFlag?:false
+                this.isUp = it.sortUpFlag ?: true
+                this.directionButton.setImageResource(if (this.isUp) R.drawable.sort_up else R.drawable.sort_down)
+                this.isMyAdv = it.myAdsFlag ?: false
 
 
-                if(it.filter?.isEmpty() != false)
-                    filterNotificationDot.visibility=View.GONE
+                if (it.filter?.isEmpty() != false)
+                    filterNotificationDot.visibility = View.GONE
                 else
-                    filterNotificationDot.visibility=View.VISIBLE
+                    filterNotificationDot.visibility = View.VISIBLE
 
-
-                // init dataset
-                if(it.activeAdsFlag==true)
-                    advAdapterCard.initDataset(activeAdsFlag = it.activeAdsFlag, adsIDs = associatedActiveAdsIdList)
-                else if(it.savedAdsFlag==true)
-                    advAdapterCard.initDataset(savedAdsFlag = it.savedAdsFlag, adsIDs = associatedSavedAdsIdList)
-                else
-                    advAdapterCard.initDataset(myAds = it.myAdsFlag, userID = currentAccountID)
 
                 //update recyclerview
                 advAdapterCard.updateDataSet(
-                    selectedSkill=if(it.myAdsFlag!=true &&it.activeAdsFlag!=true &&it.savedAdsFlag!=true)selectedSkill else "All",
+                    myAds = it.myAdsFlag,
+                    userID = currentAccountID,
+                    savedAdsFlag = it.savedAdsFlag,
+                    activeAdsFlag = it.activeAdsFlag,
+                    activeAdsIDs = associatedActiveAdsIdList,
+                    savedAdsIDs = associatedSavedAdsIdList,
+                    selectedSkill = if (it.myAdsFlag != true && it.activeAdsFlag != true && it.savedAdsFlag != true) selectedSkill else "All",
                     advFilter = it.filter,
                     sortUp = it.sortUpFlag,
                     sortParam = it.sortParameter,
@@ -262,7 +280,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             })
     }
 
-    private fun setActionBarTitle(title:String){
+    private fun setActionBarTitle(title: String) {
         (activity as TBMainActivity).supportActionBar?.title = title
     }
 
@@ -278,11 +296,11 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 
-        activity?.menuInflater?.inflate(R.menu.search_menu,menu)
+        activity?.menuInflater?.inflate(R.menu.search_menu, menu)
 
-        val menuItem=menu.findItem(R.id.action_search)
-        val searchView=menuItem.actionView as SearchView
-        searchView.queryHint=resources.getString(R.string.search_hint)
+        val menuItem = menu.findItem(R.id.action_search)
+        val searchView = menuItem.actionView as SearchView
+        searchView.queryHint = resources.getString(R.string.search_hint)
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
@@ -300,6 +318,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         return super.onCreateOptionsMenu(menu, inflater)
 
     }
+
     /**
      * This method chooses a menu to be inflated for choosing the sorting parameter
      *
@@ -327,21 +346,27 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         when (item.title) {
             resources.getString(R.string.title) -> sharedViewModel.updateSearchState(sortParameter = 0)
-            resources.getString(R.string.duration_menu) -> sharedViewModel.updateSearchState(sortParameter = 1)
-            resources.getString(R.string.starting_time_menu) -> sharedViewModel.updateSearchState(sortParameter = 2)
-            resources.getString(R.string.ending_time_menu) -> sharedViewModel.updateSearchState(sortParameter = 3)
+            resources.getString(R.string.duration_menu) -> sharedViewModel.updateSearchState(
+                sortParameter = 1
+            )
+            resources.getString(R.string.starting_time_menu) -> sharedViewModel.updateSearchState(
+                sortParameter = 2
+            )
+            resources.getString(R.string.ending_time_menu) -> sharedViewModel.updateSearchState(
+                sortParameter = 3
+            )
             resources.getString(R.string.date) -> sharedViewModel.updateSearchState(sortParameter = 4)
         }
         return true
     }
 
-    private fun paramToString(idx:Int?):String{
-        return when(idx){
-            1->"Duration"
-            2->"Starting time"
-            3->"Ending time"
-            4->"Date"
-            else->"Title"
+    private fun paramToString(idx: Int?): String {
+        return when (idx) {
+            1 -> "Duration"
+            2 -> "Starting time"
+            3 -> "Ending time"
+            4 -> "Date"
+            else -> "Title"
         }
     }
 }

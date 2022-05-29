@@ -22,7 +22,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/linearLayout8"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
 
         <ImageView
             android:id="@+id/imageView18"
@@ -173,7 +174,8 @@
         android:layout_height="match_parent"
         android:paddingBottom="5dp"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/item_bookmark">
+        app:layout_constraintTop_toBottomOf="@+id/item_bookmark"
+        tools:visibility="visible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/trade_window_inner"

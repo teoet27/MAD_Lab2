@@ -39,7 +39,7 @@ class AdvAdapterCard(
      * Bind operations.
      */
     override fun onBindViewHolder(holder: AdvViewHolderCard, position: Int) {
-        holder.bind(showedData[position],advViewModel)
+        holder.bind(showedData[position], advViewModel)
         holder.itemView.setOnClickListener { view ->
             advViewModel.setSingleAdvertisement((showedData[showedData.indexOf(showedData[position])]))
             /*Navigation.findNavController(view)
@@ -69,32 +69,39 @@ class AdvAdapterCard(
      * @param userID: owner ID
      * @param activeAdsFlag: if true the initial set is based on Ads marked as "active" by inserting them in [adsIDsDs]
      * @param savedAdsFlag: if true the initial set is based on Ads marked as "saved" by inserting them in [adsIDsDs]
-     * @param adsIDs: list of Ads IDs to be considered for the current recycler view,
+     * @param savedAdsIDs: list of saved Ads IDs to be considered for the current recycler view,
+     * @param activeAdsIDs: list of active Ads IDs to be considered for the current recycler view,
      */
-    fun initDataset(myAds: Boolean?=null,userID: String?=null,activeAdsFlag: Boolean?=null,savedAdsFlag: Boolean?=null,adsIDs:List<String>?=null){
+    fun initDataset(
+        myAds: Boolean? = null,
+        userID: String? = null,
+        activeAdsFlag: Boolean? = null,
+        savedAdsFlag: Boolean? = null,
+        activeAdsIDs: List<String>? = null,
+        savedAdsIDs: List<String>? = null
+    ): List<Advertisement> {
 
         // My timeslot filtering
         if (myAds == true) {
-            showedData = adsList.filter { it.accountID == userID }
+            return adsList.filter { it.accountID == userID }
         }
         // Active or Saved timeslot filtering
         else if (activeAdsFlag == true) {
-            showedData = adsList.
-            filter { adsIDs?.contains(it.id)!! }.
-            map{ ad-> ad.isActive=true; ad }
-        }
-        else if(savedAdsFlag == true) {
-            showedData = adsList.
-            filter { adsIDs?.contains(it.id)!! }.
-            map{ ad-> ad.isSaved=true; ad }
-        }
-        else
-            showedData=adsList
-        notifyDataSetChanged()
+            return adsList.filter { activeAdsIDs?.contains(it.id)!! }.map { ad -> ad.isActive = true; ad }
+        } else if (savedAdsFlag == true) {
+            return adsList.filter { savedAdsIDs?.contains(it.id)!! }.map { ad -> ad.isSaved = true; ad }
+        } else
+            return adsList
     }
 
     /**
      * A method to provide filtering options for selecting a sorted subset of the initialized one
+     * @param myAds: if true the inital set is based on Ads whose owner ID coincide with [userID]
+     * @param userID: owner ID
+     * @param activeAdsFlag: if true the initial set is based on Ads marked as "active" by inserting them in [adsIDsDs]
+     * @param savedAdsFlag: if true the initial set is based on Ads marked as "saved" by inserting them in [adsIDsDs]
+     * @param savedAdsIDs: list of saved Ads IDs to be considered for the current recycler view,
+     * @param activeAdsIDs: list of active Ads IDs to be considered for the current recycler view,
      * @param selectedSkill: filter all Ads of the initial set associated to the selected skill
      * @param advFilter: AdvFilter to filter Ads matching some criteria (location, duration etc.)
      * @param sortParam: criterion to sort the selected Ads
@@ -102,12 +109,22 @@ class AdvAdapterCard(
      * @param search: filters among the currently selected Ads, those whose title or skill list contain the string [search]
      */
     fun updateDataSet(
+        myAds: Boolean? = null,
+        userID: String? = null,
+        activeAdsFlag: Boolean? = null,
+        savedAdsFlag: Boolean? = null,
+        activeAdsIDs: List<String>? = null,
+        savedAdsIDs: List<String>? = null,
         selectedSkill: String? = "All",
         advFilter: AdvFilter? = null,
         sortParam: Int? = null,
         sortUp: Boolean? = null,
         search: String? = null
     ) {
+
+        // init dataset
+        showedData = initDataset(myAds, userID, activeAdsFlag, savedAdsFlag, activeAdsIDs,savedAdsIDs)
+
         // SelectedSkill filtering phase
         showedData =
             showedData.filter { it.listOfSkills.contains(selectedSkill) || selectedSkill == "All" }
