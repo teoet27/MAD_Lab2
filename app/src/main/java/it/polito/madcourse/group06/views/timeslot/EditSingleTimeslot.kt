@@ -155,7 +155,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
 
                     if (!isCurrentDateDifference) {
                         isDateAndTimeCorrect = false
-                    } else if (!isCurrentTimeDifference) {
+                    } else if (isCurrentTimeDifference) {
                         isDateAndTimeCorrect = false
                     }
 

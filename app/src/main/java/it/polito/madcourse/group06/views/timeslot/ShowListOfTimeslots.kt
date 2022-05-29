@@ -71,7 +71,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.filterNotificationDot = view.findViewById(R.id.filter_notification)
         this.bottomNavView = view.findViewById(R.id.bottomNavigationView)
 
-        // Get and set current selected skill
+        // Get and set current selected skill from argument passed (by list of skills or drawer)
         arguments?.getString("selected_skill")
             ?.let { sharedViewModel.updateSearchState(selectedSkill = it) }
         selectedSkill = sharedViewModel.searchState.value?.selectedSkill
@@ -130,6 +130,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 }
             }
         }
+
+        // get selected tab from navigation bundle
         arguments?.getString("tab")?.let {
             when (it) {
                 "Active" -> {
@@ -156,10 +158,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             }
         }
 
-        // Get current user
-        userProfileViewModel.currentUser.observe(viewLifecycleOwner) {
-            this.currentAccountID = it.id!!
-        }
 
         this.newAdvButton.setOnClickListener {
             findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
@@ -183,11 +181,15 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             enableUI(!it)
         }
 
+        // Get current user ID
+        userProfileViewModel.currentUser.observe(viewLifecycleOwner) {
+            this.currentAccountID = it.id!!
+        }
+
         // Initialize Adapter card for recycler view
         var advAdapterCard: AdvAdapterCard
 
-        // Modify adapter card when events occur:
-        // - Change sort direction
+        // Change sort direction
         this.directionButton.setOnClickListener {
             sharedViewModel.updateSearchState(sortUpFlag = !isUp)
         }
@@ -229,7 +231,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             this.recyclerView.layoutManager = LinearLayoutManager(this.context)
             advAdapterCard = AdvAdapterCard(listOfAdv, advertisementViewModel, requireActivity())
 
-            // - Filter
+            // When some change occurs in the current search, update screen
             sharedViewModel.searchState.observe(viewLifecycleOwner) {
 
                 // Update page title
@@ -237,13 +239,11 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                     setActionBarTitle(skill)
                 }
 
-                //update view
+                //update views
                 this.sortParam.text = paramToString(it.sortParameter)
                 this.isUp = it.sortUpFlag ?: true
                 this.directionButton.setImageResource(if (this.isUp) R.drawable.sort_up else R.drawable.sort_down)
                 this.isMyAdv = it.myAdsFlag ?: false
-
-
                 if (it.filter?.isEmpty() != false)
                     filterNotificationDot.visibility = View.GONE
                 else
