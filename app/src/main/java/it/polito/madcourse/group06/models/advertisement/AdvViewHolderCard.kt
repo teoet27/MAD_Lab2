@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.utilities.isExpired
@@ -22,6 +23,7 @@ class AdvViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
     private val account: TextView = v.findViewById(R.id.advCardAccount)
     private val bookmark: ImageView = v.findViewById(R.id.item_bookmark)
     private val expired: LinearLayout = v.findViewById(R.id.expired_label)
+    private val trading: ConstraintLayout = v.findViewById(R.id.trade_window)
 
     /**
      * bind:
@@ -34,7 +36,10 @@ class AdvViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
         this.location.text = adv.advLocation
         this.duration.text = adv.advDuration.toString()
         this.account.text = adv.advAccount
+
         this.expired.visibility=if(adv.isExpired())View.VISIBLE else View.GONE
+        this.trading.visibility=if(adv.isActive)View.VISIBLE else View.GONE
+
         if(adv.isSaved)
             this.bookmark.setImageResource(R.drawable.ic_bookmark_black_24dp)
         else
