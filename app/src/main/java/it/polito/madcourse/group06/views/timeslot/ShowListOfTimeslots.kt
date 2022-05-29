@@ -83,7 +83,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             bottomNavView.menu.getItem(0).setIcon(R.drawable.ic_baseline_home_24)
 
             when(it.title){
-                "Active"->{sharedViewModel.resetSearchState(selectedSkill=selectedSkill,activeAdsFlag = true)
+                "Active"->{sharedViewModel.resetSearchState(activeAdsFlag = true)
                     setActionBarTitle("Active Timeslots")
                     selectedSkill?.let { skill->
                         bottomNavView.menu.getItem(0).title = skill
@@ -91,14 +91,14 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                     }
 
                     true}
-                "Saved"->{sharedViewModel.resetSearchState(selectedSkill=selectedSkill,savedAdsFlag = true)
+                "Saved"->{sharedViewModel.resetSearchState(savedAdsFlag = true)
                     setActionBarTitle("Saved Timeslots")
                     selectedSkill?.let { skill->
                         bottomNavView.menu.getItem(0).title = skill
                         bottomNavView.menu.getItem(0).setIcon(R.drawable.savetime)
                     }
                     true}
-                "Mine"->{sharedViewModel.resetSearchState(selectedSkill=selectedSkill,myAdsFlag = true)
+                "Mine"->{sharedViewModel.resetSearchState(myAdsFlag = true)
                     setActionBarTitle("My Timeslots")
                     selectedSkill?.let { skill->
                         bottomNavView.menu.getItem(0).title = skill
@@ -240,7 +240,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
                 //update recyclerview
                 advAdapterCard.updateDataSet(
-                    selectedSkill=selectedSkill,
+                    selectedSkill=if(it.myAdsFlag!=true &&it.activeAdsFlag!=true &&it.savedAdsFlag!=true)selectedSkill else "All",
                     advFilter = it.filter,
                     sortUp = it.sortUpFlag,
                     sortParam = it.sortParameter,
