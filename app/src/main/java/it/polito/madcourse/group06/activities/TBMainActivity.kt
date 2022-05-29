@@ -85,7 +85,7 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
                 is_registered = true
             }
             if (!is_registered)
-                navController.navigate(R.id.newProfileFragment)
+                navController.navigate(R.id.newProfileFragment, bundleOf("email" to email))
             else
                 userProfileViewModel.fetchUserProfile(email)
         }

@@ -73,6 +73,9 @@ class NewProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Get current user email
+        email=arguments?.getString("email")!!
+
         activityTB.supportActionBar?.setDisplayHomeAsUpEnabled(false)
         activityTB.drawerLock()
         // Camera
