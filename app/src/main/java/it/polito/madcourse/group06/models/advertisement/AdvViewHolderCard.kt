@@ -51,7 +51,7 @@ class AdvViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
             }
         }
         this.bookmark.setOnClickListener{
-            advViewModel.bookmark(adv.id!!,!adv.isSaved)
+            advViewModel.bookmarkAdvertisement(adv.id!!,!adv.isSaved)
             advViewModel.editAdvertisement(adv.apply {isSaved=!isSaved})
         }
     }

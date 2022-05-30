@@ -79,12 +79,12 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
         userProfileViewModel.setCurrentUserProfile(fullname!!, email!!)
 
         // User registration check
-        var is_registered = false
+        var isRegistered = false
         userProfileViewModel.listOfUsers.observe(this) { u ->
             u.find{ email == it.email }?.also {
-                is_registered = true
+                isRegistered = true
             }
-            if (!is_registered)
+            if (!isRegistered)
                 navController.navigate(R.id.newProfileFragment, bundleOf("email" to email))
             else
                 userProfileViewModel.fetchUserProfile(email)
