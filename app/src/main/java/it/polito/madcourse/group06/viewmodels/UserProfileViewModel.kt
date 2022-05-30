@@ -40,6 +40,15 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     val currentUser: LiveData<UserProfile> = this._pvtUserProfile
 
     /**
+     * Other [UserProfile]
+     */
+    private var _otherUserProfilePH = UserProfile(
+        "", "", "", "", "", "", "", "", null, 0.0, null
+    )
+    private val _pvtOtherUserProfile = MutableLiveData<UserProfile>().also { it.value = _otherUserProfilePH }
+    val otherUser: LiveData<UserProfile> = this._pvtOtherUserProfile
+
+    /**
      * List of Advertisements
      */
     private val _users = MutableLiveData<List<UserProfile>>()
@@ -121,16 +130,16 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             .get()
             .addOnSuccessListener { query ->
                 query.forEach { docSnap ->
-                    this._singleUserProfilePH = docSnap.toUser()!!
-                    this._pvtUserProfile.value = this._singleUserProfilePH
+                    this._otherUserProfilePH = docSnap.toUser()!!
+                    this._pvtOtherUserProfile.value = this._otherUserProfilePH
                 }
             }
             .addOnFailureListener {
-                this._singleUserProfilePH = UserProfile(
+                this._otherUserProfilePH = UserProfile(
                     null, null, null, null,
                     null, null, null, null, null, 0.0, null
                 )
-                this._pvtUserProfile.value = this._singleUserProfilePH
+                this._pvtOtherUserProfile.value = this._otherUserProfilePH
             }
     }
 
@@ -189,10 +198,36 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * @param id user's ID
      */
     fun removeUserProfileByID(id: String) {
+        /**
+         * Deletion of the user
+         */
         db
             .collection("UserProfile")
             .document(id)
             .delete()
+
+        /**
+         * On-Cascade deletion of their advertisements
+         */
+        db
+            .collection("Advertisement")
+            .whereEqualTo("accountID", id)
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    throw Exception()
+                } else {
+                    Log.e("VALUE:", value.toString())
+                    if (value?.documents.isNullOrEmpty()) {
+                        Log.e("VALUE:", value?.documents.toString())
+                        val listOfDocuments: MutableList<DocumentSnapshot>? = value?.documents
+                        for (doc in listOfDocuments!!) {
+                            Log.e("doc:", doc.toString())
+                            doc.reference.delete()
+                        }
+                    }
+                }
+            }
+
     }
 
     /**
@@ -250,7 +285,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * Method to upload the new profile picture to the Firebase Storage
      * @param profilePictureBitmap the Bitmap object containing the profile picture
      */
-    fun uploadProfilePicture(profilePictureBitmap: Bitmap?, imgFilename: String): String{
+    fun uploadProfilePicture(profilePictureBitmap: Bitmap?, imgFilename: String): String {
         val byteArrayOutputStream: ByteArrayOutputStream = ByteArrayOutputStream()
         profilePictureBitmap?.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
         val byteArray = byteArrayOutputStream.toByteArray()
@@ -272,7 +307,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * @param imgPath the path where the image is located into the Firebase Storage
      */
     fun retrieveProfilePicture(imageView: ImageView, imgPath: String) {
-        var suffix = if(imgPath == "staticuser") "png" else "jpg"
+        var suffix = if (imgPath == "staticuser") "png" else "jpg"
         val profilePathReference = this.storage.getReferenceFromUrl("gs://timebankingmadg06.appspot.com").child("images/${imgPath}.${suffix}")
         val localFile = File.createTempFile(imgPath, ".${suffix}")
         profilePathReference.getFile(localFile)

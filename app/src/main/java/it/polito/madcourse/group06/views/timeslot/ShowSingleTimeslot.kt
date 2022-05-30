@@ -62,14 +62,12 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
 
         advViewModel.advertisement.observe(viewLifecycleOwner) { singleAdvertisement ->
             userProfileViewModel.currentUser.observe(viewLifecycleOwner) { user ->
-                if(singleAdvertisement.accountID == user.id) {
-                    isMine=true
+                if (singleAdvertisement.accountID == user.id) {
+                    isMine = true
                     this.editButton.setImageResource(R.drawable.ic_edit_black_24dp)
-                }
-                /*else {
-                    // DOES NOT WORK: this substitutes current user to clicked one (author of the advertisement)
+                } else {
                     userProfileViewModel.fetchUserProfileById(singleAdvertisement.accountID)
-                }*/
+                }
             }
 
             this.advTitle.text = singleAdvertisement.advTitle
@@ -79,8 +77,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
             this.advStartingTime.text = "Starting time: ${singleAdvertisement.advStartingTime}"
             this.advEndingTime.text = "Ending time: ${singleAdvertisement.advEndingTime}"
             this.advDuration.text = "${singleAdvertisement.advDuration} hours"
-            if(singleAdvertisement.listOfSkills.size == 0)
-            {
+            if (singleAdvertisement.listOfSkills.size == 0) {
                 this.noSkillsProvidedLabel.isVisible = true
                 this.skillsChips.isVisible = false
             } else {
@@ -100,28 +97,25 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
         }
 
         this.editButton.setOnClickListener {
-            if(isMine) {
+            if (isMine) {
                 val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
                 activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
                 sharedViewModel.select(false)
                 Navigation.findNavController(view)
                     .navigate(R.id.action_ShowListTimeslots_to_editTimeSlotDetailsFragment)
-            }
-            else{
+            } else {
                 /*chat*/
             }
         }
 
         this.advAccount.setOnClickListener {
             // show user profile of the owner of the advertisement
-            if(!isMine) {
+            if (!isMine) {
                 /*val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
                 activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
                 sharedViewModel.select(false)
                 Navigation.findNavController(view).navigate(R.id.action_ShowListTimeslots_to_showProfileOtherFragment)*/
-                activity?.supportFragmentManager?.beginTransaction()?.
-                add(R.id.nav_host_fragment_content_main, ShowProfileOtherFragment(), "other_user_profile")?.
-                commit()
+                activity?.supportFragmentManager?.beginTransaction()?.add(R.id.nav_host_fragment_content_main, ShowProfileOtherFragment(), "other_user_profile")?.commit()
             }
         }
 

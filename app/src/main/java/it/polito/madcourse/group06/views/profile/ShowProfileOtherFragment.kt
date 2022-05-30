@@ -58,8 +58,7 @@ class ShowProfileOtherFragment : Fragment() {
         this.rateOBJ = view.findViewById(R.id.rate_other)
         this.skillsChips = view.findViewById(R.id.skill_chips_group_other)
 
-        userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
-            Log.e("profile", userProfile.toString())
+        userProfileViewModel.otherUser.observe(this.viewLifecycleOwner) { userProfile ->
             // Fullname
             this.fullnameOBJ.text = userProfile.fullName
 
