@@ -147,8 +147,8 @@
     <fragment
         android:id="@+id/setting"
         android:name="it.polito.madcourse.group06.views.setting.Setting"
-        android:label="setting"
-        tools:layout="@layout/setting" >
+        android:label="Settings"
+        tools:layout="@layout/setting">
         <action
             android:id="@+id/action_setting_to_ShowListOfServices"
             app:destination="@id/ShowListOfServices" />
