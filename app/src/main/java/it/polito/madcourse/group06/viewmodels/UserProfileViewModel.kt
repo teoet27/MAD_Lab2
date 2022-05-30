@@ -34,7 +34,9 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * Single [UserProfile]
      */
     private var _singleUserProfilePH = UserProfile(
-        "", "", "", "", "", "", "", "", null, 0.0, null
+        "", "", "", "", "", "", "",
+        "", null, 0.0, 0.0, 0,
+        null, null, null
     )
     private val _pvtUserProfile = MutableLiveData<UserProfile>().also { it.value = _singleUserProfilePH }
     val currentUser: LiveData<UserProfile> = this._pvtUserProfile
@@ -43,7 +45,9 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * Other [UserProfile]
      */
     private var _otherUserProfilePH = UserProfile(
-        "", "", "", "", "", "", "", "", null, 0.0, null
+        "", "", "", "", "", "",
+        "", "", null, 0.0, 0.0, 0,
+        null, null, null
     )
     private val _pvtOtherUserProfile = MutableLiveData<UserProfile>().also { it.value = _otherUserProfilePH }
     val otherUser: LiveData<UserProfile> = this._pvtOtherUserProfile
@@ -84,10 +88,21 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             val location = this.get("location") as String
             val skills = this.get("skills") as ArrayList<String>
             val credit = this.get("credit") as Double
+            val rating_sum = this.get("rating_sum") as Double
+            // TODO: check why this line gives nullPtrException
+            //val n_ratings = this.get("n_ratings") as Int
+            var n_ratings: Int = 0
+            /*if (this.get("n_ratings") != null) {
+                // even this check does not work
+                n_ratings = this.get("n_ratings") as Int
+            }*/
+            val comments_services_rx = this.get("comments_services_rx") as ArrayList<String>?
+            val comments_services_done = this.get("comments_services_done") as ArrayList<String>?
             val imgPath = this.get("img_path") as String
             UserProfile(
                 id, nickname, fullname, qualification,
-                description, email, phoneNumber, location, skills, credit, imgPath
+                description, email, phoneNumber, location, skills, credit,
+                rating_sum, n_ratings, comments_services_rx, comments_services_done, imgPath
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -113,7 +128,8 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             .addOnFailureListener {
                 this._singleUserProfilePH = UserProfile(
                     null, null, null, null,
-                    null, null, null, null, null, 0.0, null
+                    null, null, null, null, null, 0.0,
+                    0.0, 0, null, null, null
                 )
                 this._pvtUserProfile.value = this._singleUserProfilePH
             }
@@ -137,7 +153,8 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             .addOnFailureListener {
                 this._otherUserProfilePH = UserProfile(
                     null, null, null, null,
-                    null, null, null, null, null, 0.0, null
+                    null, null, null, null, null, 0.0,
+                    0.0, 0, null, null, null
                 )
                 this._pvtOtherUserProfile.value = this._otherUserProfilePH
             }
@@ -185,6 +202,10 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                     "location" to userProfile.location,
                     "skills" to userProfile.skills,
                     "credit" to userProfile.credit,
+                    "rating_sum" to userProfile.rating_sum,
+                    "n_ratings" to userProfile.n_ratings,
+                    "comments_services_rx" to userProfile.comments_services_rx,
+                    "comments_services_done" to userProfile.comments_services_done,
                     "img_path" to userProfile.imgPath
                 )
             )
@@ -249,6 +270,10 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 "location", userProfile.location,
                 "skills", userProfile.skills,
                 "credit", userProfile.credit,
+                "rating_sum" to userProfile.rating_sum,
+                "n_ratings" to userProfile.n_ratings,
+                "comments_services_rx" to userProfile.comments_services_rx,
+                "comments_services_done" to userProfile.comments_services_done,
                 "img_path", userProfile.imgPath
             )
             .addOnSuccessListener {

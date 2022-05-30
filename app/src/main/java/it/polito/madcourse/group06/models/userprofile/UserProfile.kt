@@ -47,6 +47,22 @@ data class UserProfile(
     @set:PropertyName("credit")
     var credit: Double,
 
+    @get:PropertyName("rating_sum")
+    @set:PropertyName("rating_sum")
+    var rating_sum: Double,
+
+    @get:PropertyName("n_ratings")
+    @set:PropertyName("n_ratings")
+    var n_ratings: Int,
+
+    @get:PropertyName("comments_services_rx")
+    @set:PropertyName("comments_services_rx")
+    var comments_services_rx: ArrayList<String>?,
+
+    @get:PropertyName("comments_services_done")
+    @set:PropertyName("comments_services_done")
+    var comments_services_done: ArrayList<String>?,
+
     @get:PropertyName("img_path")
     @set:PropertyName("img_path")
     var imgPath: String?
