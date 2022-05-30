@@ -42,6 +42,7 @@
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:numStars="5"
             android:progressBackgroundTint="#FFAA00"
             android:progressTint="@color/prussian_blue"
@@ -50,19 +51,21 @@
 
         <EditText
             android:id="@+id/comment_rating"
-            android:layout_width="match_parent"
+            android:layout_width="313dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:ems="10"
             android:hint="Insert your comment here..."
             android:inputType="textPersonName"
             android:maxEms="300"
-            android:paddingTop="16dp"
+            android:paddingTop="8dp"
             android:paddingBottom="16dp" />
 
         <Button
             android:id="@+id/submitRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:background="@drawable/rounded_corners_total"
             android:text="Submit" />
 
