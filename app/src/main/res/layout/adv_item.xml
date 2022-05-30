@@ -224,6 +224,7 @@
                 android:textAlignment="gravity"
                 android:textColor="@color/black"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView13"
                 app:layout_constraintEnd_toStartOf="@+id/imageView13" />
 
@@ -235,8 +236,8 @@
                 android:drawableLeft="@drawable/ic_watch_later_black_24dp"
                 android:drawablePadding="8dp"
                 android:gravity="center"
-                android:paddingRight="16dp"
-                android:text="At"
+                android:paddingRight="6dp"
+                android:text="Starts at"
                 android:textColor="@color/black"
                 app:drawableTint="@color/dark_prussian_blue"
                 app:layout_constraintBottom_toBottomOf="parent"
