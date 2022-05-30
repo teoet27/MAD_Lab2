@@ -112,12 +112,16 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                 val sdfTime = SimpleDateFormat("hh:mm")
                 val currentDate = sdfDate.format(Date())
                 var currentTime = sdfTime.format(Date())
-                val (_, isCurrentTimeDifference) = computeTimeDifference(currentTime, newStartingTime.text.toString())
+                val (_, isCurrentTimeDifference) =
+                    if(!newStartingTime.text.toString().isNullOrEmpty())
+                        computeTimeDifference(currentTime, newStartingTime.text.toString())
+                    else
+                        Pair(-1,true)
                 val (_, isCurrentDateDifference) = computeDateDifference(currentDate, chosenDate)
 
                 if (!isCurrentDateDifference) {
                     isDateAndTimeCorrect = false
-                } else if (!isCurrentTimeDifference) {
+                } else if (isCurrentTimeDifference) {
                     isDateAndTimeCorrect = false
                 }
 
@@ -190,7 +194,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         )
                         userProfileViewModel.updateSkillList(skillList)
                         Toast.makeText(
-                            context, "Advertisement created successfully!", Toast.LENGTH_SHORT
+                            context, "Advertisement created successfully!", Toast.LENGTH_LONG
                         ).show()
                         findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
                     } else {
