@@ -2,7 +2,6 @@ package it.polito.madcourse.group06.views.profile
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,11 +11,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 
 
@@ -40,6 +38,8 @@ class ShowProfileOtherFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (requireActivity() as TBMainActivity).supportActionBar?.
+            setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24)
         return inflater.inflate(R.layout.show_profile_other, container, false)
     }
 
@@ -57,6 +57,8 @@ class ShowProfileOtherFragment : Fragment() {
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID_other)
         this.rateOBJ = view.findViewById(R.id.rate_other)
         this.skillsChips = view.findViewById(R.id.skill_chips_group_other)
+
+        (requireActivity() as TBMainActivity).supportActionBar?.title="User Profile"
 
         userProfileViewModel.otherUser.observe(this.viewLifecycleOwner) { userProfile ->
             // Fullname
@@ -107,9 +109,6 @@ class ShowProfileOtherFragment : Fragment() {
             }
         }
 
-        // Check this option to open onCreateOptionsMenu method
-        setHasOptionsMenu(true)
-
 
         this.rateOBJ.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_showProfileOtherFragment_to_ratingFragment)
@@ -117,9 +116,9 @@ class ShowProfileOtherFragment : Fragment() {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                //findNavController().navigate(R.id.action_showProfileOtherFragment_to_showSingleTimeslot)
                 val frag = activity?.supportFragmentManager!!.findFragmentByTag("other_user_profile")
                 activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
+                (requireActivity() as TBMainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
             }
         })
 
@@ -127,6 +126,25 @@ class ShowProfileOtherFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.findItem(R.id.action_search).isVisible=false
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    // this event will enable the back
+    // function to the button on press
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                (requireActivity() as TBMainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
+                activity?.supportFragmentManager!!.findFragmentByTag("other_user_profile")?.also {frag->
+                    activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
+                }
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
     /**
      * Dinamically create a chip within a chip group
      *

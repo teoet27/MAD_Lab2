@@ -94,6 +94,14 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
         // Navigation view item click listener
         navView.setNavigationItemSelectedListener {
             drawerLayout.closeDrawer(GravityCompat.START)
+
+            //Remove fragments which are left open by navigating with drawer
+            for (tag in listOf("single_timeslot","other_user_profile","filter_window")) {
+                supportFragmentManager.findFragmentByTag(tag)
+                    ?.let { frag -> supportFragmentManager.beginTransaction().remove(frag).commit() }
+                sharedViewModel.select(false)
+            }
+
             when (it.itemId) {
                 R.id.ShowListOfServicesMenuItem -> {
                     navController.navigate(R.id.ShowListOfServices)
