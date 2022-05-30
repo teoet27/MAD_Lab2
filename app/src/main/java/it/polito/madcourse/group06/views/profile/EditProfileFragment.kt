@@ -51,6 +51,7 @@ class EditProfileFragment : Fragment() {
     private lateinit var skillText: TextView
     private lateinit var newSkillChip: Chip
     private var credit: Double = 0.0
+    private var rating: Double = 0.0
     private lateinit var imgProfilePicturePath: String
     private var userID: String = ""
     private var skillList = arrayListOf<String>()
@@ -103,8 +104,11 @@ class EditProfileFragment : Fragment() {
             // Location
             this.editLocationOBJ.setText(userProfile.location)
 
-            // credit (not to be modofied)
+            // credit (not to be modified)
             this.credit = userProfile.credit
+
+            // rating (not to be modified)
+            //this.rating = userProfile.rating
 
             // Image path
             this.imgProfilePicturePath = userProfile.imgPath!!
@@ -324,6 +328,7 @@ class EditProfileFragment : Fragment() {
                     editLocationOBJ.text.toString(),
                     this.skillList,
                     this.credit,
+                    //this.rating,
                     imgProfilePicturePath
                 )
             )

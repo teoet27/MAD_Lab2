@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -16,6 +17,8 @@ import com.google.android.material.chip.ChipGroup
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
+import it.polito.madcourse.group06.views.RatingFragment
+import it.polito.madcourse.group06.views.timeslot.FilterTimeslots
 
 
 class ShowProfileOtherFragment : Fragment() {
@@ -29,6 +32,7 @@ class ShowProfileOtherFragment : Fragment() {
     private lateinit var phoneOBJ: TextView
     private lateinit var profilePictureOBJ: ImageView
     private lateinit var rateOBJ: TextView
+    private lateinit var starsOBJ: AppCompatRatingBar
     private lateinit var skillsChips: ChipGroup
 
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
@@ -55,7 +59,8 @@ class ShowProfileOtherFragment : Fragment() {
         this.skillsOBJ = view.findViewById(R.id.skillsListID_other)
         this.phoneOBJ = view.findViewById(R.id.phone_show_ID_other)
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID_other)
-        this.rateOBJ = view.findViewById(R.id.rate_other)
+        this.rateOBJ = view.findViewById(R.id.rating_title_other)
+        this.starsOBJ = view.findViewById(R.id.ratingBar_other)
         this.skillsChips = view.findViewById(R.id.skill_chips_group_other)
 
         (requireActivity() as TBMainActivity).supportActionBar?.title="User Profile"
@@ -107,11 +112,19 @@ class ShowProfileOtherFragment : Fragment() {
             } else {
                 userProfileViewModel.retrieveProfilePicture(profilePictureOBJ, userProfile.imgPath!!)
             }
+
+            // rating
+            //this.starsOBJ.rating = userProfile.rating.toFloat()
         }
 
+        this.starsOBJ.isFocusableInTouchMode = false
+        this.starsOBJ.isClickable = false
 
+        // TODO: to be changed once the chat is finished
         this.rateOBJ.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_showProfileOtherFragment_to_ratingFragment)
+            activity?.supportFragmentManager!!.beginTransaction()
+                .add(R.id.nav_host_fragment_content_main, RatingFragment(), "rating_fragment")
+                .commit()
         }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {

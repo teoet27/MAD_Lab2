@@ -6,12 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RatingBar
-import android.widget.RatingBar.OnRatingBarChangeListener
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
@@ -29,7 +27,7 @@ class RatingFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         activityTB = requireActivity() as TBMainActivity
-        return inflater.inflate(R.layout.fragment_rating, container, false)
+        return inflater.inflate(R.layout.rating_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,11 +56,6 @@ class RatingFragment: Fragment() {
                 // user is forbidden to vote 0 stars
                 ratingBar.setRating(0.5F)
             }
-
-            val msg = ratingBar.rating.toString()
-            Snackbar.make(
-                requireView(), "Rating is " + msg + ".", Snackbar.LENGTH_LONG
-            ).show()
         }
 
         submitRatingButton?.setOnClickListener {
@@ -75,8 +68,11 @@ class RatingFragment: Fragment() {
                 dumbAdvertisement.rating = ratingBar.rating.toDouble()
                 dumbAdvertisement.comment = view.findViewById<TextView>(R.id.comment_rating).text.toString()
                 advertisementViewModel.editAdvertisement(dumbAdvertisement)
+
                 // go back to timeslots list
-                findNavController().navigate(R.id.action_ratingFragment_to_ShowListTimeslots)
+                val frag = activity?.supportFragmentManager!!.findFragmentByTag("rating_fragment")
+                activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
+                //findNavController().navigate(R.id.action_ratingFragment_to_ShowListTimeslots)
             }
         }
 
@@ -91,9 +87,13 @@ class RatingFragment: Fragment() {
                     dumbAdvertisement.rating = ratingBar.rating.toDouble()
                     dumbAdvertisement.comment = view.findViewById<TextView>(R.id.comment_rating).text.toString()
                     advertisementViewModel.editAdvertisement(dumbAdvertisement)
+
                     // go back to timeslots list
-                    findNavController().navigate(R.id.action_ratingFragment_to_ShowListTimeslots)
-                }            }
+                    val frag = activity?.supportFragmentManager!!.findFragmentByTag("rating_fragment")
+                    activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
+                    //findNavController().navigate(R.id.action_ratingFragment_to_ShowListTimeslots)
+                }
+            }
         })
     }
 }

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rating_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -52,9 +53,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:numStars="5"
-                android:progressBackgroundTint="#FFAA00"
-                android:progressTint="@color/prussian_blue"
+                android:numStars="0"
+                android:progressBackgroundTint="@color/prussian_blue"
+                android:progressTint="@color/orange_poli"
                 android:stepSize="0.5"
                 android:theme="@style/Widget.AppCompat.RatingBar" />
 
@@ -65,9 +66,10 @@
                 android:layout_marginTop="16dp"
                 android:ems="10"
                 android:hint="Insert your comment here..."
-                android:inputType="textPersonName"
                 android:maxEms="300"
+                android:paddingStart="16dp"
                 android:paddingTop="8dp"
+                android:paddingEnd="16dp"
                 android:paddingBottom="16dp" />
 
             <Button
