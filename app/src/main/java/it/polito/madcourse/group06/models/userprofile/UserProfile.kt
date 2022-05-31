@@ -53,7 +53,7 @@ data class UserProfile(
 
     @get:PropertyName("n_ratings")
     @set:PropertyName("n_ratings")
-    var n_ratings: Int,
+    var n_ratings: Double,
 
     @get:PropertyName("comments_services_rx")
     @set:PropertyName("comments_services_rx")
