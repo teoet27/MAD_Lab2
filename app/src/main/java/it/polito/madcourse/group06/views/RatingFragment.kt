@@ -57,7 +57,7 @@ class RatingFragment: Fragment() {
             dumbAdvertisement.listOfSkills = singleAdvertisement.listOfSkills
         }
 
-        userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { otherUser ->
+        userProfileViewModel.otherUser.observe(this.viewLifecycleOwner) { otherUser ->
             dumbUser.id = otherUser.id
             dumbUser.nickname = otherUser.nickname
             dumbUser.fullName = otherUser.fullName
@@ -74,11 +74,11 @@ class RatingFragment: Fragment() {
             dumbUser.comments_services_done = otherUser.comments_services_done
             dumbUser.imgPath = otherUser.imgPath
 
-            if (otherUser.comments_services_done != null) {
+            /*if (otherUser.comments_services_done != null) {
                 for (comm in otherUser.comments_services_done!!) {
                     updatedCommentsServicesDoneList.add(comm)
                 }
-            }
+            }*/
         }
 
         val ratingBar = view.findViewById<RatingBar>(R.id.ratingBar)
@@ -99,20 +99,25 @@ class RatingFragment: Fragment() {
                 ).show()
             } else {
                 // save rating and comments
-                val rating = ratingBar.rating.toDouble()
+                val rating = dumbUser.rating_sum + ratingBar.rating.toDouble()
                 val comment = view.findViewById<TextView>(R.id.comment_rating).text.toString()
                 dumbAdvertisement.rating = ratingBar.rating.toDouble()
-                dumbAdvertisement.comment = view.findViewById<TextView>(R.id.comment_rating).text.toString()
+                dumbAdvertisement.comment = comment
                 advertisementViewModel.editAdvertisement(dumbAdvertisement)
 
-                // save rating and comments in user profile
-                dumbUser.rating_sum = dumbUser.rating_sum + rating
-                dumbUser.n_ratings = dumbUser.n_ratings + 1
-                userProfileViewModel.editUserProfile(dumbUser)
-                if (comment != "") {
-                    updatedCommentsServicesDoneList.add(comment)
-                    userProfileViewModel.updateListOfCommentsServicesDone(updatedCommentsServicesDoneList)
+                // save rating and comments in user profile (do not change the order of these edits)
+                val new_n_ratings = dumbUser.n_ratings + 1
+                var new_comments_services_done: ArrayList<String> = ArrayList<String>()
+                if (dumbUser.comments_services_done != null) {
+                    var new_comments_services_done = dumbUser.comments_services_done
                 }
+                if (comment != null) {
+                    new_comments_services_done?.add(comment)
+                }
+                dumbUser.rating_sum = rating
+                dumbUser.n_ratings = new_n_ratings
+                dumbUser.comments_services_done = new_comments_services_done
+                userProfileViewModel.editOtherUserProfile(dumbUser)
 
                 // go back to timeslots list
                 val frag = activity?.supportFragmentManager!!.findFragmentByTag("rating_fragment")
@@ -127,18 +132,26 @@ class RatingFragment: Fragment() {
                         requireView(), "Please vote your experience.", Snackbar.LENGTH_LONG
                     ).show()
                 } else {
-                    // save rating and comments in advertisement
-                    val rating = ratingBar.rating.toDouble()
+                    // save rating and comments
+                    val rating = dumbUser.rating_sum + ratingBar.rating.toDouble()
                     val comment = view.findViewById<TextView>(R.id.comment_rating).text.toString()
-                    dumbAdvertisement.rating = rating
+                    dumbAdvertisement.rating = ratingBar.rating.toDouble()
                     dumbAdvertisement.comment = comment
                     advertisementViewModel.editAdvertisement(dumbAdvertisement)
 
-                    // save rating and comments in user profile
-                    dumbUser.rating_sum = dumbUser.rating_sum + rating
-                    dumbUser.n_ratings = dumbUser.n_ratings + 1
-                    dumbUser.comments_services_done?.add(comment)
-                    userProfileViewModel.editUserProfile(dumbUser)
+                    // save rating and comments in user profile (do not change the order of these edits)
+                    val new_n_ratings = dumbUser.n_ratings + 1
+                    var new_comments_services_done: ArrayList<String> = ArrayList<String>()
+                    if (dumbUser.comments_services_done != null) {
+                        var new_comments_services_done = dumbUser.comments_services_done
+                    }
+                    if (comment != null) {
+                        new_comments_services_done?.add(comment)
+                    }
+                    dumbUser.rating_sum = rating
+                    dumbUser.n_ratings = new_n_ratings
+                    dumbUser.comments_services_done = new_comments_services_done
+                    userProfileViewModel.editOtherUserProfile(dumbUser)
 
                     // go back to timeslots list
                     val frag = activity?.supportFragmentManager!!.findFragmentByTag("rating_fragment")

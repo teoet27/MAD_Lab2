@@ -118,7 +118,7 @@ class ShowProfileOtherFragment : Fragment() {
                 this.starsOBJ.rating = (userProfile.rating_sum / userProfile.n_ratings).toFloat()
             }
             else {
-                this.starsOBJ.rating = 0.0F
+                this.starsOBJ.isVisible = false
             }
         }
 

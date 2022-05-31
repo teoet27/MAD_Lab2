@@ -68,6 +68,14 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                 } else {
                     userProfileViewModel.fetchUserProfileById(singleAdvertisement.accountID)
                 }
+
+                this.advAccount.setOnClickListener {
+                    // show user profile of the owner of the advertisement
+                    if (!isMine) {
+                        userProfileViewModel.fetchUserProfileById(singleAdvertisement.accountID)
+                        activity?.supportFragmentManager?.beginTransaction()?.add(R.id.nav_host_fragment_content_main, ShowProfileOtherFragment(), "other_user_profile")?.commit()
+                    }
+                }
             }
 
             this.advTitle.text = singleAdvertisement.advTitle
@@ -104,17 +112,6 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                     .navigate(R.id.action_ShowListTimeslots_to_editTimeSlotDetailsFragment)
             } else {
                 /*chat*/
-            }
-        }
-
-        this.advAccount.setOnClickListener {
-            // show user profile of the owner of the advertisement
-            if (!isMine) {
-                /*val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
-                activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
-                sharedViewModel.select(false)
-                Navigation.findNavController(view).navigate(R.id.action_ShowListTimeslots_to_showProfileOtherFragment)*/
-                activity?.supportFragmentManager?.beginTransaction()?.add(R.id.nav_host_fragment_content_main, ShowProfileOtherFragment(), "other_user_profile")?.commit()
             }
         }
 

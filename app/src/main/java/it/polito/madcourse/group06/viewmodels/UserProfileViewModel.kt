@@ -36,7 +36,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     private var _singleUserProfilePH = UserProfile(
         "", "", "", "", "", "", "",
         "", null, 0.0, 0.0, 0,
-        null, null, null
+        ArrayList<String>(), ArrayList<String>(), null
     )
     private val _pvtUserProfile = MutableLiveData<UserProfile>().also { it.value = _singleUserProfilePH }
     val currentUser: LiveData<UserProfile> = this._pvtUserProfile
@@ -47,7 +47,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     private var _otherUserProfilePH = UserProfile(
         "", "", "", "", "", "",
         "", "", null, 0.0, 0.0, 0,
-        null, null, null
+        ArrayList<String>(), ArrayList<String>(), null
     )
     private val _pvtOtherUserProfile = MutableLiveData<UserProfile>().also { it.value = _otherUserProfilePH }
     val otherUser: LiveData<UserProfile> = this._pvtOtherUserProfile
@@ -129,7 +129,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 this._singleUserProfilePH = UserProfile(
                     null, null, null, null,
                     null, null, null, null, null, 0.0,
-                    0.0, 0, null, null, null
+                    0.0, 0, ArrayList<String>(), ArrayList<String>(), null
                 )
                 this._pvtUserProfile.value = this._singleUserProfilePH
             }
@@ -154,7 +154,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 this._otherUserProfilePH = UserProfile(
                     null, null, null, null,
                     null, null, null, null, null, 0.0,
-                    0.0, 0, null, null, null
+                    0.0, 0, ArrayList<String>(), ArrayList<String>(), null
                 )
                 this._pvtOtherUserProfile.value = this._otherUserProfilePH
             }
@@ -248,7 +248,6 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                     }
                 }
             }
-
     }
 
     /**
@@ -278,12 +277,47 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             )
             .addOnSuccessListener {
                 Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
+                this._singleUserProfilePH = userProfile
+                this._pvtUserProfile.value = this._singleUserProfilePH
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
             }
-        this._singleUserProfilePH = userProfile
-        this._pvtUserProfile.value = this._singleUserProfilePH
+    }
+
+    /**
+     * Edit the [UserProfile] information with the newer ones passed as parameter.
+     * @param userProfile the object containing the most updated values
+     */
+    fun editOtherUserProfile(userProfile: UserProfile) {
+        db
+            .collection("UserProfile")
+            .document(this._otherUserProfilePH.id!!)
+            .update(
+                "id", userProfile.id,
+                "nickname", userProfile.nickname,
+                "fullname", userProfile.fullName,
+                "qualification", userProfile.qualification,
+                "description", userProfile.description,
+                "email", userProfile.email,
+                "phone_number", userProfile.phoneNumber,
+                "location", userProfile.location,
+                "skills", userProfile.skills,
+                "credit", userProfile.credit,
+                "rating_sum", userProfile.rating_sum,
+                "n_ratings", userProfile.n_ratings,
+                "comments_services_rx", userProfile.comments_services_rx,
+                "comments_services_done", userProfile.comments_services_done,
+                "img_path", userProfile.imgPath
+            )
+            .addOnSuccessListener {
+                Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
+                this._otherUserProfilePH = userProfile
+                this._pvtOtherUserProfile.value = this._otherUserProfilePH
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
+            }
     }
 
     /**
@@ -307,14 +341,14 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     /**
-     * updateListOfCommentsServicesDone is a method which allows to update the list of comments for the services
+     * updateOtherListOfCommentsServicesDone is a method which allows to update the list of comments for the services
      * done by the current user.
      * @param updatedListOfComments a list of comments for services done by the user
      */
-    fun updateListOfCommentsServicesDone(updatedListOfComments: ArrayList<String>) {
+    fun updateOtherListOfCommentsServicesDone(updatedListOfComments: ArrayList<String>) {
         val userProfile = _otherUserProfilePH
         userProfile.comments_services_done = updatedListOfComments
-        this.editUserProfile(userProfile)
+        this.editOtherUserProfile(userProfile)
     }
 
     /**
