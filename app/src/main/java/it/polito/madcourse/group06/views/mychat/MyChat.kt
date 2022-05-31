@@ -34,6 +34,7 @@ class MyChat : Fragment() {
     private lateinit var emptyChatMessage: TextView
     private lateinit var inputMessageBox: EditText
     private lateinit var sendMessageButton: ImageView
+    private lateinit var backArrow: ImageView
 
     private val listOfMessages = mutableListOf<MyMessage>(
         MyMessage("0", "1", "yo wyd?", "31/05/2022 14:30", "0"),
@@ -62,6 +63,7 @@ class MyChat : Fragment() {
         this.emptyChatMessage = view.findViewById(R.id.emptyChatMessageID)
         this.inputMessageBox = view.findViewById(R.id.inputMessageBox)
         this.sendMessageButton = view.findViewById(R.id.chatSendMessageButtonID)
+        this.backArrow = view.findViewById(R.id.chatBackArrowID)
 
         this.emptyChatMessage.isVisible = this.listOfMessages.isEmpty()
 
@@ -79,6 +81,11 @@ class MyChat : Fragment() {
                 )
             )
             this.inputMessageBox.setText("")
+        }
+
+        this.backArrow.setOnClickListener {
+            findNavController().navigate(R.id.action_myChat_to_ShowListOfServices)
+            activityTB.supportActionBar?.show()
         }
 
         this.recyclerView.layoutManager = LinearLayoutManager(this.context)
