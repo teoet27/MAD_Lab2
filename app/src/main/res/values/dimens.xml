@@ -9,4 +9,5 @@
     <dimen name="message_font_size">18dp</dimen>
     <dimen name="timestamp_font_size">12dp</dimen>
     <dimen name="chat_title">22sp</dimen>
+    <dimen name="distance_between_messages">4dp</dimen>
 </resources>

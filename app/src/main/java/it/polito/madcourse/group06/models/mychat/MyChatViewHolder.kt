@@ -1,6 +1,7 @@
 package it.polito.madcourse.group06.models.mychat
 
 import android.animation.ValueAnimator
+import android.os.Handler
 import android.view.Gravity
 import android.view.View
 import android.view.animation.DecelerateInterpolator
@@ -19,23 +20,6 @@ class MyChatViewHolder(private val v: View, private val isMyMessage: Boolean) :
     private var isMsgTimestampShown = false
 
     fun bind(msg: MyMessage, itemViewType: Int) {
-        /*if(itemViewType == R.layout.my_message_layout || itemViewType == R.layout.common_my_message_layout) {
-            this.v.alpha = +0f
-            this.v.translationX = +100f
-            this.v.animate().apply {
-                translationX(0f)
-                duration = 1000
-                alpha(+1f)
-            }
-        } else if(itemViewType == R.layout.other_message_layout || itemViewType == R.layout.common_other_message_layout) {
-            this.v.alpha = +0f
-            this.v.translationX = -100f
-            this.v.animate().apply {
-                translationX(0f)
-                duration = 1000
-                alpha(+1f)
-            }
-        }*/
         if (isMyMessage) {
             if (itemViewType == R.layout.my_message_layout) {
                 this.v.findViewById<LinearLayout>(R.id.myMainContainerID).gravity = Gravity.START
@@ -79,16 +63,19 @@ class MyChatViewHolder(private val v: View, private val isMyMessage: Boolean) :
         if (!this.isMsgTimestampShown) {
             this.startingHeight = this.v.height
             this.isMsgTimestampShown = true
-            expandMessageView(this.v,200,startingHeight+30)
+            expandMessageView(this.v, 200, startingHeight + 40)
             this.msgTimestamp.alpha = 0f
             this.msgTimestamp.animate().apply {
                 duration = 700
                 alpha(1f)
             }.start()
-        }
-        else {
+            Handler().postDelayed({
+                this.isMsgTimestampShown = false
+                collapseMessageView(this.v, 200, startingHeight)
+            }, 2000)
+        } else {
             this.isMsgTimestampShown = false
-            collapseMessageView(this.v,200,startingHeight)
+            collapseMessageView(this.v, 200, startingHeight)
         }
     }
 
