@@ -95,7 +95,8 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
         }
 
         this.applyButton.setOnClickListener {
-            sharedViewModel.updateSearchState(filter=
+            sharedViewModel.updateSearchState(
+                filter =
                 AdvFilter(
                     location = location.text.toString(),
                     whole_word = wholeWord.isChecked && this.location.text.toString().isNotEmpty(),
@@ -129,7 +130,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
     }
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
-        val anim=AnimationUtils.loadAnimation(requireActivity(),R.anim.slide_in_up)
+        val anim = AnimationUtils.loadAnimation(requireActivity(), R.anim.slide_in_up)
         anim.setAnimationListener(object : AnimationListener {
             override fun onAnimationStart(animation: Animation) {
                 // additional functionality
@@ -141,7 +142,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
 
             override fun onAnimationEnd(animation: Animation) {
                 // additional functionality
-                view?.findViewById<ConstraintLayout>(R.id.filterBackground)?.background=resources.getDrawable(R.drawable.semi_transparent_background)
+                view?.findViewById<ConstraintLayout>(R.id.filterBackground)?.background = resources.getDrawable(R.drawable.semi_transparent_background)
             }
         })
         return anim
@@ -159,7 +160,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
 
         val timePickerDialog = TimePickerDialog(
             requireContext(),
-            onTimeSetListener, Calendar.getInstance().get(Calendar.HOUR)+12*Calendar.getInstance().get(Calendar.AM_PM),
+            onTimeSetListener, Calendar.getInstance().get(Calendar.HOUR) + 12 * Calendar.getInstance().get(Calendar.AM_PM),
             Calendar.getInstance().get(Calendar.MINUTE), true
         )
 
@@ -181,12 +182,12 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
         if (this.fromTime.text != "+") {
             h = this.fromTime.text.split(":")[0].toInt()
             m = this.fromTime.text.split(":")[1].toInt()
-            pm=0
+            pm = 0
         }
 
         val timePickerDialog = TimePickerDialog(
             requireContext(),
-            onTimeSetListener, h+12*pm, m, true
+            onTimeSetListener, h + 12 * pm, m, true
         )
 
         timePickerDialog.setTitle("Ending Time")
