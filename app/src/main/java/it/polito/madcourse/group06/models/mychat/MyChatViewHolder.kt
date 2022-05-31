@@ -12,8 +12,7 @@ import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.viewmodels.MyMessage
 
 
-class MyChatViewHolder(private val v: View, private val isMyMessage: Boolean) :
-    RecyclerView.ViewHolder(v) {
+class MyChatViewHolder(private val v: View, private val isMyMessage: Boolean) : RecyclerView.ViewHolder(v) {
     private lateinit var msgContent: TextView
     private lateinit var msgTimestamp: TextView
     private var startingHeight: Int = 0
