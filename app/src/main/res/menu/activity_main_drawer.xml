@@ -17,6 +17,10 @@
     <group android:id="@+id/drawer_middle"
         android:checkableBehavior="single">
         <item
+            android:id="@+id/myChatID"
+            android:icon="@drawable/ic_chat_black_24dp"
+            android:title="MyChat" />
+        <item
             android:id="@+id/ShowProfileMenuItem"
             android:icon="@drawable/ic_account_circle_black_24dp"
             android:title="@string/show_profile" />

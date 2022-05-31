@@ -13,4 +13,5 @@
     <color name="darkGray">#333533</color>
     <color name="lightGray">#EEE</color>
     <color name="red_deleting">#8E0F06</color>
+    <color name="online_green">#2DBA0C</color>
 </resources>

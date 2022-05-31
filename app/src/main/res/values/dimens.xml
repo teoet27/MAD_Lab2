@@ -5,4 +5,7 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">192dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="radius_bubbles">8dp</dimen>
+    <dimen name="message_font_size">16dp</dimen>
+    <dimen name="timestamp_font_size">10dp</dimen>
 </resources>

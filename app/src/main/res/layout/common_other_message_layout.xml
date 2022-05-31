@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/otherMainContainerID"
+    android:id="@+id/otherCommonMainContainerID"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="3dp"
-    android:layout_marginBottom="3dp"
+    android:layout_marginBottom="2dp"
     android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/otherMessageContainerID"
+        android:id="@+id/otherCommonMessageContainerID"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@drawable/other_message_bubble"
+        android:background="@drawable/common_message_bubble"
         android:backgroundTint="@color/lightGray">
 
         <TextView
-            android:id="@+id/otherMessageTextViewID"
+            android:id="@+id/otherCommonMessageTextViewID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="10dp"

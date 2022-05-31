@@ -136,6 +136,11 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
                     }
                     true
                 }
+                // temporary
+                R.id.myChatID -> {
+                    navController.navigate(R.id.myChat)
+                    true
+                }
                 else -> false
             }
         }

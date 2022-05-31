@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/myMainContainerID"
+    android:id="@+id/myCommonMainContainerID"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="end"
-    android:layout_marginTop="3dp"
-    android:layout_marginBottom="3dp"
+    android:layout_marginBottom="2dp"
     android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/myMessageContainerID"
+        android:id="@+id/myCommonMessageContainerID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:background="@drawable/my_message_bubble"
+        android:background="@drawable/common_message_bubble"
         android:backgroundTint="@color/prussian_blue">
 
         <TextView
-            android:id="@+id/myMessageTextViewID"
+            android:id="@+id/myCommonMessageTextViewID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="10dp"
+            android:paddingStart="8dp"
             android:paddingTop="4dp"
             android:paddingEnd="10dp"
             android:paddingBottom="4dp"
@@ -29,4 +28,19 @@
             android:textSize="@dimen/message_font_size" />
 
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/commonMyTimestampID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="3dp"
+        android:layout_weight="1"
+        android:text="TIMESTAMP"
+        android:textColor="@color/darkGray"
+        android:textSize="@dimen/timestamp_font_size"
+        android:visibility="gone" />
 </LinearLayout>

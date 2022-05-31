@@ -139,12 +139,21 @@
         <entry key="..\:/Users/aorig/StudioProjects/MAD_Lab3/app/src/main/res/layout/show_timeslots_frag.xml" value="0.11041666666666666" />
         <entry key="..\:/Users/aorig/StudioProjects/MAD_Lab3/app/src/main/res/layout/welcome_box.xml" value="0.264" />
         <entry key="..\:/Users/aorig/StudioProjects/MAD_Lab3/app/src/main/res/menu/activity_main_drawer.xml" value="0.6" />
+        <entry key="..\:/Users/s287883/StudioProjects/MAD_Lab3/app/src/main/res/drawable/common_message_bubble.xml" value="0.1" />
         <entry key="..\:/Users/s287883/StudioProjects/MAD_Lab3/app/src/main/res/drawable/my_message_bubble.xml" value="0.1" />
-        <entry key="..\:/Users/s287883/StudioProjects/MAD_Lab3/app/src/main/res/drawable/other_message_bubble.xml" value="0.1" />
-        <entry key="..\:/Users/s287883/StudioProjects/MAD_Lab3/app/src/main/res/layout/chat_layout.xml" value="0.29717180244829045" />
+        <entry key="..\:/Users/s287883/StudioProjects/MAD_Lab3/app/src/main/res/drawable/my_message_bubble_2.xml" value="0.1" />
+        <entry key="..\:/Users/s287883/StudioProjects/MAD_Lab3/app/src/main/res/drawable/other_message_bubble.xml" value="0.12" />
+        <entry key="..\:/Users/s287883/StudioProjects/MAD_Lab3/app/src/main/res/drawable/userbubble.xml" value="0.1" />
+        <entry key="..\:/Users/s287883/StudioProjects/MAD_Lab3/app/src/main/res/layout-land/common_my_message_layout.xml" value="0.16973065412569474" />
+        <entry key="..\:/Users/s287883/StudioProjects/MAD_Lab3/app/src/main/res/layout-land/common_other_message_layout.xml" value="0.29717180244829045" />
+        <entry key="..\:/Users/s287883/StudioProjects/MAD_Lab3/app/src/main/res/layout/adv_item.xml" value="0.29717180244829045" />
+        <entry key="..\:/Users/s287883/StudioProjects/MAD_Lab3/app/src/main/res/layout/chat_layout.xml" value="0.25" />
+        <entry key="..\:/Users/s287883/StudioProjects/MAD_Lab3/app/src/main/res/layout/common_my_message_layout.xml" value="0.29717180244829045" />
+        <entry key="..\:/Users/s287883/StudioProjects/MAD_Lab3/app/src/main/res/layout/common_other_message_layout.xml" value="0.29717180244829045" />
         <entry key="..\:/Users/s287883/StudioProjects/MAD_Lab3/app/src/main/res/layout/my_message_layout.xml" value="0.29717180244829045" />
         <entry key="..\:/Users/s287883/StudioProjects/MAD_Lab3/app/src/main/res/layout/other_message_layout.xml" value="0.29717180244829045" />
         <entry key="..\:/Users/s287883/StudioProjects/MAD_Lab3/app/src/main/res/layout/time_slot_details_fragment.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/s287883/StudioProjects/MAD_Lab3/app/src/main/res/menu/activity_main_drawer.xml" value="0.29717180244829045" />
       </map>
     </option>
   </component>

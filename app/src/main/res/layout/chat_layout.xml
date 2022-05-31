@@ -4,13 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/prussian_blue">
+    android:background="@color/white">
 
     <LinearLayout
         android:id="@+id/chattingUserViewID"
         android:layout_width="0dp"
         android:layout_height="82dp"
-        android:background="@color/dark_prussian_blue"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/rounded_corners_total"
+        android:backgroundTint="@color/white"
+        android:elevation="15dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/chatContentViewID"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +37,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.448"
                 app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24"
-                app:tint="@color/white" />
+                app:tint="@color/dark_prussian_blue" />
 
             <ImageView
                 android:id="@+id/chattingUserProfilePicture"
@@ -51,6 +56,44 @@
                 app:layout_constraintVertical_bias="0.428"
                 tools:srcCompat="@tools:sample/avatars" />
 
+            <LinearLayout
+                android:id="@+id/linearLayout11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/chatStatusID"
+                app:layout_constraintStart_toEndOf="@+id/chattingUserProfilePicture"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/chatFullnameID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:text="Name Surname"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/dark_prussian_blue"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/chatNicknameID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:text="\@nickname"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/dark_prussian_blue" />
+            </LinearLayout>
+
             <ImageView
                 android:id="@+id/chattingUserProfilePictureMask"
                 android:layout_width="40dp"
@@ -65,40 +108,24 @@
                 app:layout_constraintTop_toTopOf="@+id/chattingUserProfilePicture"
                 app:layout_constraintVertical_bias="0.0"
                 app:srcCompat="@drawable/circular_mask"
-                app:tint="@color/dark_prussian_blue" />
+                app:tint="@color/white" />
 
-            <LinearLayout
-                android:layout_width="0dp"
+            <ImageView
+                android:id="@+id/chatStatusID"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
+                android:layout_marginEnd="26dp"
+                android:background="@drawable/ic_svg_circle"
+                android:backgroundTint="@color/online_green"
+                android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.05"
-                app:layout_constraintStart_toEndOf="@+id/chattingUserProfilePicture"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintStart_toEndOf="@+id/linearLayout11"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/adv_card_bckgrnd"
+                app:tint="@color/red_deleting" />
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Name Surname"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/white"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="\@nickname"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/white" />
-            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
@@ -109,7 +136,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_corners_down"
-        android:backgroundTint="@color/dark_prussian_blue"
+        android:backgroundTint="@color/white"
         android:padding="16dp"
         app:layout_constraintBottom_toTopOf="@+id/inputMessageBox"
         app:layout_constraintEnd_toEndOf="parent"
@@ -125,14 +152,14 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_corners_total"
-        android:backgroundTint="@color/dark_prussian_blue"
+        android:backgroundTint="@color/lightGray"
         android:hint="@string/type_a_message"
         android:imeOptions="actionDone"
         android:inputType="text"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:textColor="@color/white"
-        android:textColorHint="#80EEEEEE"
+        android:textColor="@color/darkGray"
+        android:textColorHint="#80333533"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageView2"
         app:layout_constraintStart_toStartOf="parent" />
@@ -143,7 +170,7 @@
         android:layout_height="48dp"
         android:layout_marginEnd="4dp"
         android:background="@drawable/rounded_corners_total"
-        android:backgroundTint="@color/dark_prussian_blue"
+        android:backgroundTint="@color/darkGray"
         android:padding="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/inputMessageBox"
         app:layout_constraintEnd_toEndOf="parent"
@@ -152,6 +179,6 @@
         app:layout_constraintTop_toTopOf="@+id/inputMessageBox"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_send_black_24dp"
-        app:tint="@color/white" />
+        app:tint="@color/lightGray" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
