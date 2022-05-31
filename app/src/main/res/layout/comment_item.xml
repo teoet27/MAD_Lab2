@@ -13,7 +13,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,11 +31,9 @@
             android:maxLines="1"
             android:minLines="1"
             android:text="TextView"
-            android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/prussian_blue"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
