@@ -206,9 +206,6 @@ class NewProfileFragment : Fragment() {
                 this.skillsChips.addPlusChip(context, this.skillsChips)
 
                 skillList.add(newSkillTitleLabel)
-                Snackbar.make(
-                    requireView(), "New skill added!", Snackbar.LENGTH_LONG
-                ).show()
             } else {
                 Snackbar.make(
                     requireView(), "You must provide a name for the new skill.", Snackbar.LENGTH_LONG

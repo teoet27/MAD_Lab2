@@ -114,7 +114,12 @@ class ShowProfileOtherFragment : Fragment() {
             }
 
             // rating
-            //this.starsOBJ.rating = userProfile.rating.toFloat()
+            if (userProfile.n_ratings != 0) {
+                this.starsOBJ.rating = (userProfile.rating_sum / userProfile.n_ratings).toFloat()
+            }
+            else {
+                this.starsOBJ.rating = 0.0F
+            }
         }
 
         this.starsOBJ.isFocusableInTouchMode = false
