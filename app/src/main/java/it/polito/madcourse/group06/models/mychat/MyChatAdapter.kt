@@ -46,9 +46,7 @@ class MyChatAdapter(listOfMessages: List<MyMessage>) : RecyclerView.Adapter<MyCh
     override fun onBindViewHolder(holder: MyChatViewHolder, position: Int) {
         holder.bind(chat[position], getItemViewType(position))
         holder.itemView.setOnClickListener {
-            if (holder.msgTimestamp.visibility == View.GONE)
-                holder.msgTimestamp.visibility = View.VISIBLE
-            else holder.msgTimestamp.visibility = View.GONE
+            holder.setTimestampVisibility()
         }
     }
 

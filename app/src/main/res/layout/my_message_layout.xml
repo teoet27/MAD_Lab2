@@ -24,7 +24,7 @@
             android:paddingEnd="10dp"
             android:paddingBottom="4dp"
             android:text="TextView"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textSize="@dimen/message_font_size" />
 
     </FrameLayout>
@@ -35,12 +35,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginLeft="6dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="-16dp"
         android:layout_marginRight="6dp"
         android:layout_marginBottom="3dp"
         android:layout_weight="1"
         android:text="TIMESTAMP"
         android:textColor="@color/darkGray"
         android:textSize="@dimen/timestamp_font_size"
-        android:visibility="gone" />
+        android:visibility="visible" />
 </LinearLayout>

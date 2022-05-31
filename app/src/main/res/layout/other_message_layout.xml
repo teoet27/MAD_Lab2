@@ -3,14 +3,13 @@
     android:id="@+id/otherMainContainerID"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="3dp"
+    android:layout_gravity="end"
     android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/otherMessageContainerID"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:background="@drawable/other_message_bubble"
         android:backgroundTint="@color/other_bubble">
@@ -35,12 +34,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginLeft="6dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="-16dp"
         android:layout_marginRight="6dp"
         android:layout_marginBottom="3dp"
         android:layout_weight="1"
         android:text="TIMESTAMP"
         android:textColor="@color/darkGray"
         android:textSize="@dimen/timestamp_font_size"
-        android:visibility="gone" />
+        android:visibility="visible" />
 </LinearLayout>
