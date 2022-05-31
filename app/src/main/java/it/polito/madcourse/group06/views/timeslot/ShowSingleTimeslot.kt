@@ -4,10 +4,12 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -125,6 +127,25 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
             }
         })
 
+    }
+
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        val anim=AnimationUtils.loadAnimation(requireActivity(),R.anim.slide_in_up)
+        anim.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation) {
+                // additional functionality
+            }
+
+            override fun onAnimationRepeat(animation: Animation) {
+                // additional functionality
+            }
+
+            override fun onAnimationEnd(animation: Animation) {
+                // additional functionality
+                view?.findViewById<ConstraintLayout>(R.id.singleAdBackground)?.background=resources.getDrawable(R.drawable.semi_transparent_background)
+            }
+        })
+        return anim
     }
 
     /**
