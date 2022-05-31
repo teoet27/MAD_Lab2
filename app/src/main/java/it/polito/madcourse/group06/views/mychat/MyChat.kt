@@ -65,4 +65,23 @@ class MyChat : Fragment() {
         })
     }
 
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        val anim = AnimationUtils.loadAnimation(requireActivity(), R.anim.slide_in_from_right)
+        anim.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation) {
+                // additional functionality
+            }
+
+            override fun onAnimationRepeat(animation: Animation) {
+                // additional functionality
+            }
+
+            override fun onAnimationEnd(animation: Animation) {
+                // additional functionality
+                view?.findViewById<ConstraintLayout>(R.id.filterBackground)?.background = resources.getDrawable(R.drawable.semi_transparent_background)
+            }
+        })
+        return anim
+    }
+
 }
