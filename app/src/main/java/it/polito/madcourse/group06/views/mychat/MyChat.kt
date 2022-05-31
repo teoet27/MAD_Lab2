@@ -59,6 +59,7 @@ class MyChat : Fragment() {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.action_myChat_to_ShowListOfServices)
                 activityTB.supportActionBar?.show()
                 findNavController().navigate(R.id.action_myChat_to_ShowListOfServices)
             }
