@@ -67,7 +67,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.sortParam = view.findViewById(R.id.sort_parameter)
         this.directionButton = view.findViewById(R.id.sort_direction_button)
         this.recyclerView = view.findViewById(R.id.rvAdvFullList)
-        this.barrier = view.findViewById(R.id.barrier)
         this.filterNotificationDot = view.findViewById(R.id.filter_notification)
         this.bottomNavView = view.findViewById(R.id.bottomNavigationView)
 
@@ -176,10 +175,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 .add(R.id.nav_host_fragment_content_main, FilterTimeslots(), "filter_window")
                 .commit()
         }
-        // If filter fragment is open, disable RV UI
-        sharedViewModel.selected.observe(viewLifecycleOwner) {
-            enableUI(!it)
-        }
 
         // Get current user ID
         userProfileViewModel.currentUser.observe(viewLifecycleOwner) {
@@ -265,16 +260,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
     private fun setActionBarTitle(title: String) {
         (activity as TBMainActivity).supportActionBar?.title = title
-    }
-
-    private fun enableUI(switch: Boolean) {
-        when (switch) {
-            true -> barrier.visibility = View.GONE
-            false -> {
-                barrier.visibility = View.VISIBLE
-                barrier.bringToFront()
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

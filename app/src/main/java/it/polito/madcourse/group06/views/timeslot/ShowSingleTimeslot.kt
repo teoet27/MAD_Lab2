@@ -46,8 +46,6 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sharedViewModel.select(true)
-
         this.advTitle = view.findViewById(R.id.advTitle)
         this.advAccount = view.findViewById(R.id.advAccount)
         this.advLocation = view.findViewById(R.id.advLocation)
@@ -100,7 +98,6 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
             if (isMine) {
                 val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
                 activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
-                sharedViewModel.select(false)
                 Navigation.findNavController(view)
                     .navigate(R.id.action_ShowListTimeslots_to_editTimeSlotDetailsFragment)
             } else {
@@ -124,7 +121,6 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                 //findNavController().navigate(R.id.action_showSingleTimeslot_to_ShowListTimeslots)
                 val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
                 view.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_down))
-                sharedViewModel.select(false)
                 activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
             }
         })

@@ -64,7 +64,6 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
             this.toDate.setText(if (it.filter?.ending_date.isNullOrEmpty()) "+" else it.filter?.ending_date)
         }
 
-        sharedViewModel.select(true)
 
         this.fromDate.setOnClickListener { popUpStartingDatePicker() }
         this.fromTime.setOnClickListener { popUpStartingTimePicker() }
@@ -112,8 +111,6 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
             override fun handleOnBackPressed() {
                 val frag = activity?.supportFragmentManager!!.findFragmentById(R.id.nav_host_fragment_content_main)
                 view.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_down))
-
-                sharedViewModel.select(false)
                 activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
             }
         })
@@ -121,8 +118,6 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
 
     private fun slideOutFragment(frag: Fragment, filterSet: Boolean = false) {
         view?.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_down))
-        sharedViewModel.select(false)
-
         if (!filterSet)
             sharedViewModel.updateSearchState()
 

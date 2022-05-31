@@ -177,17 +177,4 @@
         app:srcCompat="@drawable/arrow"
         app:tint="@color/prussian_blue" />
 
-    <TextView
-        android:id="@+id/barrier"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#4D001C30"
-        android:clickable="true"
-        android:elevation="100dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/rvAdvFullList"
-        app:layout_constraintEnd_toEndOf="@+id/filterContainer"
-        app:layout_constraintStart_toStartOf="@+id/filterContainer"
-        app:layout_constraintTop_toTopOf="@+id/filterContainer" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
