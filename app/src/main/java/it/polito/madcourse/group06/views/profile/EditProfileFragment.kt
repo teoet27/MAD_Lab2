@@ -52,7 +52,7 @@ class EditProfileFragment : Fragment() {
     private lateinit var newSkillChip: Chip
     private var credit: Double = 0.0
     private var rating_sum: Double = 0.0
-    private var n_ratings: Int = 0
+    private var n_ratings: Double = 0.0
     private var comments_services_rx = arrayListOf<String>()
     private var comments_services_done = arrayListOf<String>()
     private lateinit var imgProfilePicturePath: String
