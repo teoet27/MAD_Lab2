@@ -270,10 +270,10 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 "location", userProfile.location,
                 "skills", userProfile.skills,
                 "credit", userProfile.credit,
-                "rating_sum" to userProfile.rating_sum,
-                "n_ratings" to userProfile.n_ratings,
-                "comments_services_rx" to userProfile.comments_services_rx,
-                "comments_services_done" to userProfile.comments_services_done,
+                "rating_sum", userProfile.rating_sum,
+                "n_ratings", userProfile.n_ratings,
+                "comments_services_rx", userProfile.comments_services_rx,
+                "comments_services_done", userProfile.comments_services_done,
                 "img_path", userProfile.imgPath
             )
             .addOnSuccessListener {
@@ -303,6 +303,17 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     fun updateSkillList(updatedListOfSkills: ArrayList<String>) {
         val userProfile = _singleUserProfilePH
         userProfile.skills = updatedListOfSkills
+        this.editUserProfile(userProfile)
+    }
+
+    /**
+     * updateListOfCommentsServicesDone is a method which allows to update the list of comments for the services
+     * done by the current user.
+     * @param updatedListOfComments a list of comments for services done by the user
+     */
+    fun updateListOfCommentsServicesDone(updatedListOfComments: ArrayList<String>) {
+        val userProfile = _otherUserProfilePH
+        userProfile.comments_services_done = updatedListOfComments
         this.editUserProfile(userProfile)
     }
 
