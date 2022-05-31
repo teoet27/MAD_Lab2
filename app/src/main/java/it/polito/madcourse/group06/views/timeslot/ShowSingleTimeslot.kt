@@ -4,10 +4,12 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -45,8 +47,6 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        sharedViewModel.select(true)
 
         this.advTitle = view.findViewById(R.id.advTitle)
         this.advAccount = view.findViewById(R.id.advAccount)
@@ -100,7 +100,6 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
             if (isMine) {
                 val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
                 activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
-                sharedViewModel.select(false)
                 Navigation.findNavController(view)
                     .navigate(R.id.action_ShowListTimeslots_to_editTimeSlotDetailsFragment)
             } else {
@@ -124,11 +123,29 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                 //findNavController().navigate(R.id.action_showSingleTimeslot_to_ShowListTimeslots)
                 val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
                 view.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_down))
-                sharedViewModel.select(false)
                 activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
             }
         })
 
+    }
+
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        val anim=AnimationUtils.loadAnimation(requireActivity(),R.anim.slide_in_up)
+        anim.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation) {
+                // additional functionality
+            }
+
+            override fun onAnimationRepeat(animation: Animation) {
+                // additional functionality
+            }
+
+            override fun onAnimationEnd(animation: Animation) {
+                // additional functionality
+                view?.findViewById<ConstraintLayout>(R.id.singleAdBackground)?.background=resources.getDrawable(R.drawable.semi_transparent_background)
+            }
+        })
+        return anim
     }
 
     /**

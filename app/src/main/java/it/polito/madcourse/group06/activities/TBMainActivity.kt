@@ -99,7 +99,6 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
             for (tag in listOf("single_timeslot","other_user_profile","filter_window")) {
                 supportFragmentManager.findFragmentByTag(tag)
                     ?.let { frag -> supportFragmentManager.beginTransaction().remove(frag).commit() }
-                sharedViewModel.select(false)
             }
 
             when (it.itemId) {

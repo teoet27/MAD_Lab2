@@ -3,17 +3,21 @@ package it.polito.madcourse.group06.views.timeslot
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.Animation.AnimationListener
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.chip.Chip
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.utilities.AdvFilter
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import java.util.*
+
 
 /**
  * A simple [Fragment] subclass.
@@ -64,7 +68,6 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
             this.toDate.setText(if (it.filter?.ending_date.isNullOrEmpty()) "+" else it.filter?.ending_date)
         }
 
-        sharedViewModel.select(true)
 
         this.fromDate.setOnClickListener { popUpStartingDatePicker() }
         this.fromTime.setOnClickListener { popUpStartingTimePicker() }
@@ -112,8 +115,6 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
             override fun handleOnBackPressed() {
                 val frag = activity?.supportFragmentManager!!.findFragmentById(R.id.nav_host_fragment_content_main)
                 view.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_down))
-
-                sharedViewModel.select(false)
                 activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
             }
         })
@@ -121,13 +122,31 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
 
     private fun slideOutFragment(frag: Fragment, filterSet: Boolean = false) {
         view?.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_down))
-        sharedViewModel.select(false)
-
         if (!filterSet)
             sharedViewModel.updateSearchState()
 
         activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
     }
+
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        val anim=AnimationUtils.loadAnimation(requireActivity(),R.anim.slide_in_up)
+        anim.setAnimationListener(object : AnimationListener {
+            override fun onAnimationStart(animation: Animation) {
+                // additional functionality
+            }
+
+            override fun onAnimationRepeat(animation: Animation) {
+                // additional functionality
+            }
+
+            override fun onAnimationEnd(animation: Animation) {
+                // additional functionality
+                view?.findViewById<ConstraintLayout>(R.id.filterBackground)?.background=resources.getDrawable(R.drawable.semi_transparent_background)
+            }
+        })
+        return anim
+    }
+
 
     /**
      * popUpStartingTimePicker is the callback to launch the TimePicker for inserting the starting time

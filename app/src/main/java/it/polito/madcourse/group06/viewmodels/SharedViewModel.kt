@@ -7,18 +7,12 @@ import it.polito.madcourse.group06.utilities.SearchState
 
 class SharedViewModel : ViewModel() {
 
-    private var _selected = false
     private var _searchState = SearchState()
 
-    var selected = MutableLiveData<Boolean>()
     var searchState = MutableLiveData<SearchState>().also {
         it.value = _searchState
     }
 
-    fun select(value: Boolean) {
-        _selected = value
-        selected.value = _selected
-    }
 
     fun updateSearchState(
                           selectedSkill: String?=null,
