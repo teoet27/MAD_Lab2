@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="end"
-    android:layout_marginTop="3dp"
     android:layout_marginBottom="3dp"
     android:orientation="vertical">
 
@@ -14,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:background="@drawable/my_message_bubble"
-        android:backgroundTint="@color/prussian_blue">
+        android:backgroundTint="@color/my_bubble">
 
         <TextView
             android:id="@+id/myMessageTextViewID"
@@ -29,4 +28,19 @@
             android:textSize="@dimen/message_font_size" />
 
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/myTimestampID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="3dp"
+        android:layout_weight="1"
+        android:text="TIMESTAMP"
+        android:textColor="@color/darkGray"
+        android:textSize="@dimen/timestamp_font_size"
+        android:visibility="gone" />
 </LinearLayout>

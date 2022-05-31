@@ -3,7 +3,7 @@
     android:id="@+id/otherMainContainerID"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="3dp"
+    android:layout_marginTop="5dp"
     android:layout_marginBottom="3dp"
     android:orientation="vertical">
 
@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@drawable/other_message_bubble"
-        android:backgroundTint="@color/lightGray">
+        android:backgroundTint="@color/other_bubble">
 
         <TextView
             android:id="@+id/otherMessageTextViewID"
@@ -28,4 +28,19 @@
             android:textSize="@dimen/message_font_size" />
 
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/otherTimestampID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="3dp"
+        android:layout_weight="1"
+        android:text="TIMESTAMP"
+        android:textColor="@color/darkGray"
+        android:textSize="@dimen/timestamp_font_size"
+        android:visibility="gone" />
 </LinearLayout>
