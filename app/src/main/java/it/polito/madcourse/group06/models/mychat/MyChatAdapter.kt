@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.viewmodels.MyMessage
 
-class MyChatAdapter(private val chat: List<MyMessage>) : RecyclerView.Adapter<MyChatViewHolder>() {
+class MyChatAdapter(listOfMessages: List<MyMessage>) : RecyclerView.Adapter<MyChatViewHolder>() {
+    private val chat: MutableList<MyMessage> = listOfMessages.toMutableList()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyChatViewHolder {
         val vg: View
         val isMyMessage: Boolean
@@ -72,5 +74,10 @@ class MyChatAdapter(private val chat: List<MyMessage>) : RecyclerView.Adapter<My
                 else -> R.layout.common_other_message_layout
             }
         }
+    }
+
+    fun addMessage(message: MyMessage) {
+        this.chat.add(this.chat.size, message)
+        notifyItemInserted(this.chat.size - 1)
     }
 }
