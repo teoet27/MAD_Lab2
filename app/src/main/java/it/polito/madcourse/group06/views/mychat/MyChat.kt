@@ -5,9 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +20,8 @@ import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.models.mychat.MyChatAdapter
 import it.polito.madcourse.group06.viewmodels.MyMessage
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MyChat : Fragment() {
 
