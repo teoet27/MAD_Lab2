@@ -9,31 +9,19 @@
     android:layout_marginRight="4dp"
     android:layout_marginBottom="2dp"
     android:background="@drawable/adv_card_bckgrnd"
-    android:backgroundTint="#FC7A08"
     android:elevation="3dp">
 
-    <ImageView
-        android:id="@+id/imageView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        app:tint="@color/prussian_blue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
-
     <LinearLayout
-        android:id="@+id/linearLayout5"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/serviceCardTitle"
+            android:id="@+id/commentCardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"

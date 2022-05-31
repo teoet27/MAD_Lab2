@@ -1,4 +1,4 @@
-package it.polito.madcourse.group06.views
+package it.polito.madcourse.group06.models.skill
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import it.polito.madcourse.group06.R
-import it.polito.madcourse.group06.models.skill.SkillAdapterCard
-import it.polito.madcourse.group06.utilities.isExpired
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 

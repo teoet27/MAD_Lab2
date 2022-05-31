@@ -112,4 +112,5 @@
     <string name="ratingMessage">Please leave a feedback on the service you received with a vote between one and five stars. You can also leave a public anonymous comment.</string>
     <string name="type_a_message">Type a message</string>
     <string name="empty_chat_message">There\'s nothing here, come on: make the first move, you won\'t regret!</string>
+    <string name="no_comments_in_db">This user has not received any reviews yet.</string>
 </resources>

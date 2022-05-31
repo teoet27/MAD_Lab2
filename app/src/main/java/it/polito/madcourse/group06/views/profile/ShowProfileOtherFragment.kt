@@ -11,14 +11,15 @@ import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.views.RatingFragment
-import it.polito.madcourse.group06.views.timeslot.FilterTimeslots
+import it.polito.madcourse.group06.views.profile.comments.CommentsAdapterCard
 
 
 class ShowProfileOtherFragment : Fragment() {
@@ -36,6 +37,9 @@ class ShowProfileOtherFragment : Fragment() {
     private lateinit var skillsChips: ChipGroup
 
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
+
+    private lateinit var recyclerViewCommentsDone: RecyclerView
+    private lateinit var recyclerViewCommentsRx: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -121,6 +125,18 @@ class ShowProfileOtherFragment : Fragment() {
             else {
                 this.starsOBJ.visibility=View.GONE
             }
+
+            // reviews -> comments-done (recyclerView)
+            recyclerViewCommentsDone = view.findViewById(R.id.commentsDoneRecyclerView)
+            recyclerViewCommentsDone.setHasFixedSize(true) // ?
+            recyclerViewCommentsDone.layoutManager = LinearLayoutManager(view.getContext())
+            recyclerViewCommentsDone.adapter = userProfile.comments_services_done?.let { CommentsAdapterCard(it) }
+
+            // reviews -> comments-done (recyclerView)
+            recyclerViewCommentsRx = view.findViewById(R.id.commentsRxRecyclerView)
+            recyclerViewCommentsRx.setHasFixedSize(true) // ?
+            recyclerViewCommentsRx.layoutManager = LinearLayoutManager(view.getContext())
+            recyclerViewCommentsRx.adapter = userProfile.comments_services_rx?.let { CommentsAdapterCard(it) }
         }
 
         this.starsOBJ.isFocusableInTouchMode = false
