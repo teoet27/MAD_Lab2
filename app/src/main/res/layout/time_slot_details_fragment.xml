@@ -90,10 +90,10 @@
                     android:layout_marginRight="16dp"
                     android:drawablePadding="5dp"
                     android:text="Mario Rossi"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:textColor="@color/orange_poli"
+                    android:textSize="26sp"
                     app:drawableStartCompat="@drawable/ic_account_circle_black_24dp"
-                    app:drawableTint="#454749" />
+                    app:drawableTint="@color/orange_poli" />
 
                 <TextView
                     android:id="@+id/advLocation"
