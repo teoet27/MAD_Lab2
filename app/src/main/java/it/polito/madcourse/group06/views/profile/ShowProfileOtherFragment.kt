@@ -141,6 +141,7 @@ class ShowProfileOtherFragment : Fragment() {
 
         this.starsOBJ.isFocusableInTouchMode = false
         this.starsOBJ.isClickable = false
+        //this.starsOBJ.stepSize = 0.2F
 
         // TODO: to be changed once the chat is finished
         this.rateOBJ.setOnClickListener {

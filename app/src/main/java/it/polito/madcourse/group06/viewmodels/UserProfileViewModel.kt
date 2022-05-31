@@ -84,8 +84,8 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             val phoneNumber = this.get("phone_number") as String
             val location = this.get("location") as String
             val skills = this.get("skills") as ArrayList<String>
-            val credit = this.get("credit") as Double
-            val rating_sum = this.get("rating_sum") as Double
+            val credit = this.getDouble("credit") as Double
+            val rating_sum = this.getDouble("rating_sum") as Double
 
             val nRatings: Double = this.getDouble("n_ratings") as Double
 
