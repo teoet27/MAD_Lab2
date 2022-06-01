@@ -135,7 +135,14 @@ class AdvFilter(
     }
 }
 
+val TAB_SERVICES="Services"
+val TAB_ACTIVE="Active"
+val TAB_SAVED="Saved"
+val TAB_MINE="Mine"
+val ALL_SERVICES="All"
+
 class SearchState(
+    var currentTab: String?=null,
     var selectedSkill: String? = null,
     var searchedWord: String? = null,
     var sortParameter: Int? = null,

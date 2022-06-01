@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.Advertisement
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
+import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,6 +32,7 @@ import kotlin.math.roundToInt
 class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
 
     private val advertisementViewModel: AdvertisementViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
     private val dumbAdvertisement: Advertisement = Advertisement(
         "", "", "", arrayListOf<String>(),
@@ -116,8 +118,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
             // Delete Button
             this.deleteButton.setOnClickListener {
                 advertisementViewModel.removeAdvertisementByID(singleAdvertisement.id!!)
-                findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots,
-                    bundleOf("tab" to "Mine"))
+                sharedViewModel.updateSearchState()
+                findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
             }
 
             // Button for adding a new skill
@@ -137,8 +139,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
             }
 
             this.discardButton.setOnClickListener {
-                findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots,
-                    bundleOf("tab" to "Mine"))
+                sharedViewModel.updateSearchState()
+                findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
             }
 
             this.confirmButton.setOnClickListener {
@@ -217,8 +219,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             dumbAdvertisement.advDuration = timeDifference
                             dumbAdvertisement.listOfSkills = selectedSkillsList
                             advertisementViewModel.editAdvertisement(dumbAdvertisement)
-                            findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots,
-                                bundleOf("tab" to "Mine"))
+                            sharedViewModel.updateSearchState()
+                            findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
 
                         } else {
                             Snackbar.make(
@@ -307,8 +309,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             dumbAdvertisement.advDuration = timeDifference
                             dumbAdvertisement.listOfSkills = selectedSkillsList
                             advertisementViewModel.editAdvertisement(dumbAdvertisement)
-                            findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots,
-                                bundleOf("tab" to "Mine"))
+                            sharedViewModel.updateSearchState()
+                            findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
                         } else {
                             Snackbar.make(
                                 requireView(), "Error: you need to provide at least a title, a starting and ending time, a skill, a location and a date. Try again.", Snackbar.LENGTH_LONG
