@@ -114,9 +114,23 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val frag = activity?.supportFragmentManager!!.findFragmentById(R.id.nav_host_fragment_content_main)
-                view.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_down))
-                activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
+                AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_down).apply {
+                    setAnimationListener(
+                        object : Animation.AnimationListener {
+                            override fun onAnimationStart(arg0: Animation) {
+                                view.findViewById<ConstraintLayout>(R.id.filterBackground)?.background=resources.getDrawable(R.drawable.transparent_background)
+                            }
+                            override fun onAnimationRepeat(arg0: Animation) {}
+                            override fun onAnimationEnd(arg0: Animation) {
+                                activity?.supportFragmentManager!!.findFragmentByTag("filter_window")
+                                    ?.also {
+                                        activity?.supportFragmentManager?.beginTransaction()
+                                            ?.remove(it)?.commit()
+                                    }
+                            }
+                        })
+                    view.startAnimation(this)
+                }
             }
         })
     }

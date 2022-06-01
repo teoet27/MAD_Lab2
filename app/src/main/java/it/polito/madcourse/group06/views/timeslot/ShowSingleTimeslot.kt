@@ -118,10 +118,23 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                //findNavController().navigate(R.id.action_showSingleTimeslot_to_ShowListTimeslots)
-                val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
-                view.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_down))
-                activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
+                AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_down).apply {
+                    setAnimationListener(
+                        object : Animation.AnimationListener {
+                            override fun onAnimationStart(arg0: Animation) {
+                                view.findViewById<ConstraintLayout>(R.id.singleAdBackground)?.background=resources.getDrawable(R.drawable.transparent_background)
+                            }
+                            override fun onAnimationRepeat(arg0: Animation) {}
+                            override fun onAnimationEnd(arg0: Animation) {
+                                activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
+                                    ?.also {
+                                        activity?.supportFragmentManager?.beginTransaction()
+                                            ?.remove(it)?.commit()
+                                    }
+                            }
+                        })
+                    view.startAnimation(this)
+                }
             }
         })
 
