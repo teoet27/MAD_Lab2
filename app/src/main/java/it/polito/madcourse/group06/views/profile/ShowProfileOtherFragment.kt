@@ -162,15 +162,15 @@ class ShowProfileOtherFragment : Fragment() {
             if (userProfile.comments_services_rx == null) {
                 if (userProfile.comments_services_rx?.isEmpty() == true || userProfile.comments_services_rx?.isEmpty() == null) {
                     this.sentenceCommentRx.visibility = View.GONE
-                }
-                else {
+                } else {
                     this.sentenceCommentRx.visibility = View.VISIBLE
                 }
-            if (userProfile.comments_services_rx == null) {
-                if (userProfile.comments_services_rx?.size!! <= 3) {
-                    this.showMoreCommentsRx.visibility = View.GONE
-                } else {
-                    this.showMoreCommentsRx.visibility = View.VISIBLE
+                if (userProfile.comments_services_rx == null) {
+                    if (userProfile.comments_services_rx?.size!! <= 3) {
+                        this.showMoreCommentsRx.visibility = View.GONE
+                    } else {
+                        this.showMoreCommentsRx.visibility = View.VISIBLE
+                    }
                 }
             }
         }
