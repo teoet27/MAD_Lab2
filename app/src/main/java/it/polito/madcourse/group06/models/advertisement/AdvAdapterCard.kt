@@ -8,6 +8,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
+import it.polito.madcourse.group06.utilities.ALL_SERVICES
 import it.polito.madcourse.group06.utilities.AdvFilter
 import it.polito.madcourse.group06.utilities.isExpired
 import it.polito.madcourse.group06.utilities.toInt
@@ -115,7 +116,7 @@ class AdvAdapterCard(
         savedAdsFlag: Boolean? = null,
         activeAdsIDs: List<String>? = null,
         savedAdsIDs: List<String>? = null,
-        selectedSkill: String? = "All",
+        selectedSkill: String? = null,
         advFilter: AdvFilter? = null,
         sortParam: Int? = null,
         sortUp: Boolean? = null,
@@ -125,9 +126,9 @@ class AdvAdapterCard(
         // init dataset
         showedData = initDataset(myAds, userID, activeAdsFlag, savedAdsFlag, activeAdsIDs,savedAdsIDs)
 
-        // SelectedSkill filtering phase
+        // SelectedSkill filtering phase (only in main page)
         showedData =
-            showedData.filter { it.listOfSkills.contains(selectedSkill) || selectedSkill == "All" }
+            showedData.filter { it.listOfSkills.contains(selectedSkill) || selectedSkill == ALL_SERVICES }
 
         //Filtering phase
         showedData =

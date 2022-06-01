@@ -100,7 +100,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             Snackbar.make(
                 requireView(), "Creation canceled.", Snackbar.LENGTH_SHORT
             ).show()
-            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
+            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
         }
 
         this.confirmButton.setOnClickListener {
@@ -165,7 +165,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         Snackbar.make(
                             requireView(), "Creation canceled.", Snackbar.LENGTH_SHORT
                         ).show()
-                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
+                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
                     } else if (!isTimeDifferenceOk && timeDifference < 0) {
                         Snackbar.make(
                             requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_SHORT
@@ -196,12 +196,12 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         Toast.makeText(
                             context, "Advertisement created successfully!", Toast.LENGTH_LONG
                         ).show()
-                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
+                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
                     } else {
                         Snackbar.make(
                             requireView(), "Creation canceled.", Snackbar.LENGTH_SHORT
                         ).show()
-                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
+                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
                     }
                 }
             }
@@ -270,7 +270,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             Snackbar.make(
                                 requireView(), "Creation canceled.", Snackbar.LENGTH_SHORT
                             ).show()
-                            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
+                            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
                         } else if (!isTimeDifferenceOk && timeDifference < 0) {
                             Snackbar.make(
                                 requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_SHORT
@@ -301,12 +301,12 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             Toast.makeText(
                                 context, "Advertisement created successfully!", Toast.LENGTH_LONG
                             ).show()
-                            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
+                            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
                         } else {
                             Snackbar.make(
                                 requireView(), "Creation canceled.", Snackbar.LENGTH_SHORT
                             ).show()
-                            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots,bundleOf("tab" to "home"))
+                            findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
                         }
                     }
                 }

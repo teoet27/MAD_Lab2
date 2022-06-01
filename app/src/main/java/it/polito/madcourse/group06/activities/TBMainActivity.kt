@@ -21,6 +21,7 @@ import it.polito.madcourse.group06.databinding.ActivityMainBinding
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.utilities.ALL_SERVICES
 import it.polito.madcourse.group06.utilities.DrawerInterface
 
 class TBMainActivity : AppCompatActivity(), DrawerInterface {
@@ -110,7 +111,7 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
                     sharedViewModel.resetSearchState()
                     navController.navigate(
                         R.id.ShowListTimeslots,
-                        bundleOf("selected_skill" to "All")
+                        bundleOf("selected_skill" to ALL_SERVICES)
                     )
                     true
                 }

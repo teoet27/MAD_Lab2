@@ -16,6 +16,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.utilities.ALL_SERVICES
+import it.polito.madcourse.group06.utilities.TAB_ACTIVE
+import it.polito.madcourse.group06.utilities.TAB_MINE
+import it.polito.madcourse.group06.utilities.TAB_SAVED
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 
@@ -66,12 +70,12 @@ class ShowListOfSkills : Fragment(R.layout.service_list) {
             sortButton.setOnClickListener {
                 listOfSkills = listOfSkills.asReversed()
                 val finalList = listOfSkills.toMutableList()
-                finalList.add(0, "All")
-                this.recyclerView.adapter = SkillAdapterCard(finalList)
+                finalList.add(0, ALL_SERVICES)
+                this.recyclerView.adapter = SkillAdapterCard(finalList,sharedViewModel)
             }
             val finalList = listOfSkills.toMutableList()
-            finalList.add(0, "All")
-            this.recyclerView.adapter = SkillAdapterCard(finalList)
+            finalList.add(0, ALL_SERVICES)
+            this.recyclerView.adapter = SkillAdapterCard(finalList,sharedViewModel)
         }
 
         this.bottomNavView = view.findViewById(R.id.bottomNavigationViewSkillList)
@@ -82,9 +86,15 @@ class ShowListOfSkills : Fragment(R.layout.service_list) {
         bottomNavView.menu.getItem(2).isEnabled = false
         bottomNavView.setOnItemSelectedListener {
             when (it.title) {
-                "Active" -> {findNavController().navigate(R.id.ShowListTimeslots, bundleOf("tab" to "Active"));true}
-                "Saved" -> {findNavController().navigate(R.id.ShowListTimeslots, bundleOf("tab" to "Saved"));true}
-                "Mine" -> {findNavController().navigate(R.id.ShowListTimeslots, bundleOf("tab" to "Mine"));true}
+                TAB_ACTIVE -> {findNavController().navigate(R.id.ShowListTimeslots)
+                    sharedViewModel.resetSearchState(currentTab = it.title.toString(), activeAdsFlag = true)
+                    true}
+                TAB_SAVED -> {findNavController().navigate(R.id.ShowListTimeslots)
+                    sharedViewModel.resetSearchState(currentTab = it.title.toString(), savedAdsFlag = true)
+                    true}
+                TAB_MINE -> {findNavController().navigate(R.id.ShowListTimeslots)
+                    sharedViewModel.resetSearchState(currentTab = it.title.toString(), myAdsFlag = true)
+                    true}
                 else ->true
             }
         }

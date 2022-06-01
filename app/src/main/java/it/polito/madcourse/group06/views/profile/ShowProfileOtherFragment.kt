@@ -17,6 +17,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
+import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.views.RatingFragment
 import it.polito.madcourse.group06.views.profile.comments.CommentsAdapterCard
@@ -37,6 +38,7 @@ class ShowProfileOtherFragment : Fragment() {
     private lateinit var skillsChips: ChipGroup
 
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private lateinit var recyclerViewCommentsDone: RecyclerView
     private lateinit var recyclerViewCommentsRx: RecyclerView
@@ -152,6 +154,7 @@ class ShowProfileOtherFragment : Fragment() {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                sharedViewModel.updateSearchState()
                 val frag = activity?.supportFragmentManager!!.findFragmentByTag("other_user_profile")
                 activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
                 (requireActivity() as TBMainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
@@ -172,6 +175,7 @@ class ShowProfileOtherFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
+                sharedViewModel.updateSearchState()
                 (requireActivity() as TBMainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
                 activity?.supportFragmentManager!!.findFragmentByTag("other_user_profile")?.also {frag->
                     activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
