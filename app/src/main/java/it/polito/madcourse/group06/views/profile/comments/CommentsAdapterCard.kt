@@ -3,6 +3,7 @@ package it.polito.madcourse.group06.views.profile.comments
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.common.collect.Comparators.min
 import it.polito.madcourse.group06.R
 
 /**
@@ -30,6 +31,9 @@ class CommentsAdapterCard(private val commentList: ArrayList<String>) : Recycler
 
     /**
      * Simply returns the size of the list of comments provided to the adapter.
+     * Show a maximum of 3 comments.
      */
-    override fun getItemCount(): Int = commentList.size
+    override fun getItemCount(): Int {
+        return min(commentList.size, 3)
+    }
 }
