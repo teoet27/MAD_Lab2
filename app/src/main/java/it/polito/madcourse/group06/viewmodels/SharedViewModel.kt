@@ -9,7 +9,6 @@ class SharedViewModel : ViewModel() {
 
     private var _searchState = SearchState()
     private var _homePressedTwice:Boolean =false
-    private var _homePressedOnce:Boolean =false
     private var _pressCnt=0
 
     var searchState = MutableLiveData<SearchState>().also {
@@ -17,9 +16,6 @@ class SharedViewModel : ViewModel() {
     }
 
     var homePressedTwice = MutableLiveData<Boolean>().also{
-        it.value = _homePressedTwice
-    }
-    var homePressedOnce = MutableLiveData<Boolean>().also{
         it.value = _homePressedTwice
     }
 
