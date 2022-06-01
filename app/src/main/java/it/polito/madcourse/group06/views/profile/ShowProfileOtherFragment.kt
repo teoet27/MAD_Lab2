@@ -142,7 +142,7 @@ class ShowProfileOtherFragment : Fragment() {
             recyclerViewCommentsDone = view.findViewById(R.id.commentsDoneRecyclerView)
             recyclerViewCommentsDone.layoutManager = LinearLayoutManager(view.getContext())
             recyclerViewCommentsDone.adapter = userProfile.comments_services_done?.let { CommentsAdapterCard(it) }
-            if (userProfile.comments_services_done == null) {
+            if (userProfile.comments_services_done != null) {
                 if (userProfile.comments_services_done?.isEmpty() == true || userProfile.comments_services_done?.isEmpty() == null) {
                     this.sentenceCommentDone.visibility = View.GONE
                 } else {
@@ -159,18 +159,16 @@ class ShowProfileOtherFragment : Fragment() {
             recyclerViewCommentsRx = view.findViewById(R.id.commentsRxRecyclerView)
             recyclerViewCommentsRx.layoutManager = LinearLayoutManager(view.getContext())
             recyclerViewCommentsRx.adapter = userProfile.comments_services_rx?.let { CommentsAdapterCard(it) }
-            if (userProfile.comments_services_rx == null) {
+            if (userProfile.comments_services_rx != null) {
                 if (userProfile.comments_services_rx?.isEmpty() == true || userProfile.comments_services_rx?.isEmpty() == null) {
                     this.sentenceCommentRx.visibility = View.GONE
                 } else {
                     this.sentenceCommentRx.visibility = View.VISIBLE
                 }
-                if (userProfile.comments_services_rx == null) {
-                    if (userProfile.comments_services_rx!!.size <= 3) {
-                        this.showMoreCommentsRx.visibility = View.GONE
-                    } else {
-                        this.showMoreCommentsRx.visibility = View.VISIBLE
-                    }
+                if (userProfile.comments_services_rx!!.size <= 3) {
+                    this.showMoreCommentsRx.visibility = View.GONE
+                } else {
+                    this.showMoreCommentsRx.visibility = View.VISIBLE
                 }
             }
         }
