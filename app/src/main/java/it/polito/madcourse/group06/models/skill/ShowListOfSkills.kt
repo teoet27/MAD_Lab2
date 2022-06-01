@@ -87,15 +87,15 @@ class ShowListOfSkills : Fragment(R.layout.service_list) {
         bottomNavView.setOnItemSelectedListener {
             when (it.title) {
                 TAB_ACTIVE -> {findNavController().navigate(R.id.ShowListTimeslots)
-                    sharedViewModel.resetSearchState(currentTab = it.title.toString(), activeAdsFlag = true)
+                    sharedViewModel.resetSearchState(currentTab = TAB_ACTIVE, activeAdsFlag = true)
                     true}
                 TAB_SAVED -> {findNavController().navigate(R.id.ShowListTimeslots)
-                    sharedViewModel.resetSearchState(currentTab = it.title.toString(), savedAdsFlag = true)
+                    sharedViewModel.resetSearchState(currentTab = TAB_SAVED, savedAdsFlag = true)
                     true}
                 TAB_MINE -> {findNavController().navigate(R.id.ShowListTimeslots)
-                    sharedViewModel.resetSearchState(currentTab = it.title.toString(), myAdsFlag = true)
+                    sharedViewModel.resetSearchState(currentTab = TAB_MINE, myAdsFlag = true)
                     true}
-                else ->true
+                else ->{sharedViewModel.homeTabPressed();true}
             }
         }
         this.newAdvButton.setOnClickListener {

@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -42,6 +40,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private var isUp = false
     private var associatedActiveAdsIdList = listOf<String>()
     private var associatedSavedAdsIdList = listOf<String>()
+    var home_tab:Boolean=true
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,27 +72,35 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         // set up bottom nav bar
         bottomNavView.background = null
         bottomNavView.menu.getItem(2).isEnabled = false
-        bottomNavView.setOnItemSelectedListener {
-
-            bottomNavView.menu.getItem(0).setIcon(R.drawable.ic_baseline_home_24)
-
+        bottomNavView.setOnItemSelectedListener { it ->
             when (it.title) {
                 TAB_ACTIVE -> {
+                    sharedViewModel.homeTabPressed(false)
                     sharedViewModel.resetSearchState(currentTab = TAB_ACTIVE, activeAdsFlag = true)
                     true
                 }
                 TAB_SAVED -> {
+                    sharedViewModel.homeTabPressed(false)
                     sharedViewModel.resetSearchState(currentTab = TAB_SAVED, savedAdsFlag = true)
                     true
                 }
                 TAB_MINE -> {
+                    sharedViewModel.homeTabPressed(false)
                     sharedViewModel.resetSearchState(currentTab = TAB_MINE, myAdsFlag = true)
                     true
                 }
                 else -> {
+                    sharedViewModel.homeTabPressed()
                     sharedViewModel.resetSearchState(currentTab = TAB_SERVICES)
                     true
                 }
+            }
+        }
+
+        sharedViewModel.homePressedTwice.observe(viewLifecycleOwner){
+            if(it){
+                sharedViewModel.homeTabPressed(false)
+                findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
             }
         }
 
@@ -150,7 +158,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 this.recyclerView.layoutManager = LinearLayoutManager(this.context)
                 advAdapterCard =
                     AdvAdapterCard(listOfAdv, advertisementViewModel, requireActivity())
-
                 when (ss.currentTab) {
                     TAB_ACTIVE -> {
                         setActionBarTitle("Active Timeslots")
@@ -180,16 +187,14 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                     }
 
                     else -> {
-                        if (ss.currentTab == TAB_SERVICES) {
-                            findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
-                        } else {
+                        ss.selectedSkill?.let {
                             bottomNavView.menu.getItem(0).apply {
                                 setIcon(R.drawable.ic_baseline_arrow_back_ios_24)
                                 title = "Services"
                                 isChecked = true
                             }
-                            setActionBarTitle(ss.selectedSkill!!)
-                        }
+                            setActionBarTitle(it)
+                        }?:findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
                     }
                 }
 

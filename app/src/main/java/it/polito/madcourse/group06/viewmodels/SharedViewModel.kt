@@ -8,11 +8,34 @@ import it.polito.madcourse.group06.utilities.SearchState
 class SharedViewModel : ViewModel() {
 
     private var _searchState = SearchState()
+    private var _homePressedTwice:Boolean =false
+    private var _homePressedOnce:Boolean =false
+    private var _pressCnt=0
 
     var searchState = MutableLiveData<SearchState>().also {
         it.value = _searchState
     }
 
+    var homePressedTwice = MutableLiveData<Boolean>().also{
+        it.value = _homePressedTwice
+    }
+    var homePressedOnce = MutableLiveData<Boolean>().also{
+        it.value = _homePressedTwice
+    }
+
+    fun homeTabPressed(state:Boolean=true){
+        _homePressedTwice=false
+        homePressedTwice.value = _homePressedTwice
+        if(state){
+            _pressCnt++
+            if (_pressCnt == 2) {
+                _homePressedTwice = true
+                homePressedTwice.value = _homePressedTwice
+                _pressCnt = 0
+            }
+        }
+        else _pressCnt = 0
+    }
 
     fun updateSearchState(
         currentTab: String? = null,
@@ -71,5 +94,4 @@ class SharedViewModel : ViewModel() {
         )
         searchState.value = _searchState
     }
-
 }
