@@ -56,7 +56,7 @@ class ShowListOfSkills : Fragment(R.layout.service_list) {
             var listOfSkills =
                 listOfAds
                     .asSequence()
-                    //.filter { !it.isExpired() }
+                    .filter { it.isAvailable }
                     .map { it.listOfSkills }
                     .flatten()
                     .sortedBy { it.lowercase() }

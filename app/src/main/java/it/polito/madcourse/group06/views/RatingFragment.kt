@@ -27,7 +27,7 @@ class RatingFragment: Fragment() {
     private val dumbAdvertisement: Advertisement = Advertisement(
         "", "", "", arrayListOf<String>(),
         "", "", "", "", 0.0,
-        "", "", 0.0, ""
+        "", "", 0.0, "",true
     )
     private val dumbUser: UserProfile = UserProfile(null, null, null, null,
     null, null, null, null, null, 0.0, 0.0, 0.0,

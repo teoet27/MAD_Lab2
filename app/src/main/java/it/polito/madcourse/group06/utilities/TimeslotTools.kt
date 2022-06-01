@@ -140,6 +140,10 @@ val TAB_ACTIVE="Active"
 val TAB_SAVED="Saved"
 val TAB_MINE="Mine"
 val ALL_SERVICES="All"
+val NOT_ACTIVE_NOT_SAVED = 0
+val ACTIVE = 2
+val SAVED = 1
+val ACTIVE_AND_SAVED = 3
 
 class SearchState(
     var currentTab: String?=null,

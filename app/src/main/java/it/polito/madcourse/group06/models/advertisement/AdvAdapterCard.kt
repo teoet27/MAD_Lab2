@@ -8,10 +8,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
-import it.polito.madcourse.group06.utilities.ALL_SERVICES
-import it.polito.madcourse.group06.utilities.AdvFilter
-import it.polito.madcourse.group06.utilities.isExpired
-import it.polito.madcourse.group06.utilities.toInt
+import it.polito.madcourse.group06.utilities.*
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.views.timeslot.FilterTimeslots
@@ -30,6 +27,8 @@ class AdvAdapterCard(
 ) : RecyclerView.Adapter<AdvViewHolderCard>() {
 
     private var showedData = adsList
+    private var activeAdsIDs = listOf<String>()
+    private var savedAdsIDs = listOf<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdvViewHolderCard {
         val vg = LayoutInflater
@@ -42,7 +41,7 @@ class AdvAdapterCard(
      * Bind operations.
      */
     override fun onBindViewHolder(holder: AdvViewHolderCard, position: Int) {
-        holder.bind(showedData[position], advViewModel, userViewModel)
+        holder.bind(showedData[position], advViewModel, userViewModel,getItemViewType(position))
         holder.itemView.setOnClickListener { view ->
             advViewModel.setSingleAdvertisement((showedData[showedData.indexOf(showedData[position])]))
             /*Navigation.findNavController(view)
@@ -54,6 +53,16 @@ class AdvAdapterCard(
         }
     }
 
+    override fun getItemViewType(position: Int): Int {
+        if(!showedData[position].isAvailable && activeAdsIDs.contains(showedData[position].id)&&
+            savedAdsIDs.contains(showedData[position].id))
+            return ACTIVE_AND_SAVED
+        if(!showedData[position].isAvailable && activeAdsIDs.contains(showedData[position].id))
+            return ACTIVE
+        if(savedAdsIDs.contains(showedData[position].id))
+            return SAVED
+        return NOT_ACTIVE_NOT_SAVED
+    }
     /**
      * Simply returns the size of the list of advertisement provided to the adapter.
      */
@@ -72,16 +81,12 @@ class AdvAdapterCard(
      * @param userID: owner ID
      * @param activeAdsFlag: if true the initial set is based on Ads marked as "active" by inserting them in [adsIDsDs]
      * @param savedAdsFlag: if true the initial set is based on Ads marked as "saved" by inserting them in [adsIDsDs]
-     * @param savedAdsIDs: list of saved Ads IDs to be considered for the current recycler view,
-     * @param activeAdsIDs: list of active Ads IDs to be considered for the current recycler view,
      */
     fun initDataset(
         myAds: Boolean? = null,
         userID: String? = null,
         activeAdsFlag: Boolean? = null,
-        savedAdsFlag: Boolean? = null,
-        activeAdsIDs: List<String>? = null,
-        savedAdsIDs: List<String>? = null
+        savedAdsFlag: Boolean? = null
     ): List<Advertisement> {
 
         // My timeslot filtering
@@ -90,11 +95,11 @@ class AdvAdapterCard(
         }
         // Active or Saved timeslot filtering
         else if (activeAdsFlag == true) {
-            return adsList.filter { activeAdsIDs?.contains(it.id)!! }.map { ad -> ad.isActive = true; ad }
+            return adsList.filter { activeAdsIDs?.contains(it.id)!! }
         } else if (savedAdsFlag == true) {
-            return adsList.filter { savedAdsIDs?.contains(it.id)!! }.map { ad -> ad.isSaved = true; ad }
+            return adsList.filter { savedAdsIDs?.contains(it.id)!! }
         } else
-            return adsList
+            return adsList.filter{it.isAvailable}
     }
 
     /**
@@ -125,8 +130,15 @@ class AdvAdapterCard(
         search: String? = null
     ) {
 
+        if (activeAdsIDs != null) {
+            this.activeAdsIDs=activeAdsIDs
+        }
+        if (savedAdsIDs != null) {
+            this.savedAdsIDs=savedAdsIDs
+        }
+
         // init dataset
-        showedData = initDataset(myAds, userID, activeAdsFlag, savedAdsFlag, activeAdsIDs,savedAdsIDs)
+        showedData = initDataset(myAds, userID, activeAdsFlag, savedAdsFlag)
 
         // SelectedSkill filtering phase (only in main page)
         showedData =

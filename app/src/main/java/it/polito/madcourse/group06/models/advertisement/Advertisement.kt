@@ -77,12 +77,8 @@ data class Advertisement(
     @set:PropertyName("comment")
     var comment: String,
 
-    @get:PropertyName("active_flag")
-    @set:PropertyName("active_flag")
-    var isActive: Boolean = false,
-
-    @get:PropertyName("saved_flag")
-    @set:PropertyName("saved_flag")
-    var isSaved: Boolean = false
+    @get:PropertyName("available_flag")
+    @set:PropertyName("available_flag")
+    var isAvailable: Boolean
 )
 

@@ -189,7 +189,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                                 accountName,
                                 accountID,
                                 0.0,
-                                ""
+                                "",
+                                true
                             )
                         )
                         userProfileViewModel.updateSkillList(skillList)
@@ -294,7 +295,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                                     accountName,
                                     accountID,
                                     0.0,
-                                    ""
+                                    "",
+                                    true
                                 )
                             )
                             userProfileViewModel.updateSkillList(skillList)
