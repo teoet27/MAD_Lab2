@@ -66,12 +66,12 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             val accountName = this.get("account_name") as String
             val accountID = this.get("accountID") as String
             val comment = this.get("comment") as String
-            val isAvailable = this.get("available_flag") as Boolean
+            val isAvailable = this.get("isAvailable") as Boolean
             Advertisement(
                 id, title, description, listOfSkills ?: arrayListOf<String>(),
                 location, date, startingTime,
                 endingTime, duration, accountName,
-                accountID, rating, comment,isAvailable
+                accountID, rating, comment, isAvailable
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -102,7 +102,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "account_name" to ad.advAccount,
                     "accountID" to ad.accountID,
                     "rating" to ad.rating,
-                    "comment" to ad.comment
+                    "comment" to ad.comment,
+                    "isAvailable" to ad.isAvailable
                 )
             )
             .addOnSuccessListener {
@@ -169,7 +170,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "account_name" to ad.advAccount,
                     "accountID" to ad.accountID,
                     "rating" to ad.rating,
-                    "comment" to ad.comment
+                    "comment" to ad.comment,
+                    "isAvailable" to ad.isAvailable
                 )
             )
             .addOnSuccessListener {

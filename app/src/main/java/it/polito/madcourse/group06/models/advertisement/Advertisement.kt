@@ -77,8 +77,8 @@ data class Advertisement(
     @set:PropertyName("comment")
     var comment: String,
 
-    @get:PropertyName("available_flag")
-    @set:PropertyName("available_flag")
+    @get:PropertyName("isAvailable")
+    @set:PropertyName("isAvailable")
     var isAvailable: Boolean
 )
 

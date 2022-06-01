@@ -112,7 +112,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                 val sdfTime = SimpleDateFormat("hh:mm")
                 val currentDate = sdfDate.format(Date())
                 var currentTime = sdfTime.format(Date())
-                val (_, isCurrentTimeDifference) =
+                // TODO: correggere questo controllo che non funziona
+                /*val (_, isCurrentTimeDifference) =
                     if(!newStartingTime.text.toString().isNullOrEmpty())
                         computeTimeDifference(currentTime, newStartingTime.text.toString())
                     else
@@ -123,7 +124,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                     isDateAndTimeCorrect = false
                 } else if (isCurrentTimeDifference) {
                     isDateAndTimeCorrect = false
-                }
+                }*/
 
                 val tmpList = it.filter { it.accountID == accountID }
                 for (adv in tmpList) {
