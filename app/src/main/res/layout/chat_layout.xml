@@ -191,7 +191,7 @@
         android:id="@+id/emptyChatMessageID"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="52dp"
+        android:layout_marginBottom="108dp"
         android:text="@string/empty_chat_message"
         android:textAlignment="center"
         android:textSize="16sp"
@@ -199,7 +199,61 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/chatContentViewID"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/chatMenuArrowID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/chatAnswerContainerID"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24"
+        app:tint="@color/darkGray" />
+
+    <LinearLayout
+        android:id="@+id/chatAnswerContainerID"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="-50dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/chatContentViewID"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/chatRejectTextViewID"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_corners_right"
+            android:backgroundTint="#98322B"
+            android:gravity="center"
+            android:text="Reject"
+            android:textAlignment="gravity"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/chatAcceptTextViewID"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_corners_left"
+            android:backgroundTint="#3F9C29"
+            android:gravity="center"
+            android:text="Accept"
+            android:textAlignment="gravity"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -35,6 +36,12 @@ class MyChat : Fragment() {
     private lateinit var inputMessageBox: EditText
     private lateinit var sendMessageButton: ImageView
     private lateinit var backArrow: ImageView
+    private lateinit var chatAnswerContainer: LinearLayout
+    private lateinit var chatAcceptButton: TextView
+    private lateinit var chatRejectButton: TextView
+    private lateinit var chatArrowUpButton: ImageView
+    private var chatMenuArrowStartingPosition = 0.0f
+    private var isAnswerMenuOpen = false
 
     private val listOfMessages = mutableListOf<MyMessage>(
         MyMessage("0", "1", "yo wyd?", "31/05/2022 14:30", "0"),
@@ -64,8 +71,14 @@ class MyChat : Fragment() {
         this.inputMessageBox = view.findViewById(R.id.inputMessageBox)
         this.sendMessageButton = view.findViewById(R.id.chatSendMessageButtonID)
         this.backArrow = view.findViewById(R.id.chatBackArrowID)
+        this.chatAcceptButton = view.findViewById(R.id.chatAcceptTextViewID)
+        this.chatRejectButton = view.findViewById(R.id.chatRejectTextViewID)
+        this.chatArrowUpButton = view.findViewById(R.id.chatMenuArrowID)
+        this.chatAnswerContainer = view.findViewById(R.id.chatAnswerContainerID)
 
+        this.chatAnswerContainer.alpha = 0f
         this.emptyChatMessage.isVisible = this.listOfMessages.isEmpty()
+        this.chatMenuArrowStartingPosition = this.chatArrowUpButton.y
 
         this.chatFullname.text = "Bill Gates"
         this.chatNickname.text = "@contocancelli"
@@ -73,14 +86,52 @@ class MyChat : Fragment() {
         chatAdapterCard = MyChatAdapter(listOfMessages)
 
         this.sendMessageButton.setOnClickListener {
-            chatAdapterCard.addMessage(
-                MyMessage(
-                    "0", "1", this.inputMessageBox.text.toString(),
-                    SimpleDateFormat("dd/MM/yyyy hh:mm",
-                        Locale.getDefault()).format(Date()).toString(), "0"
+            if (this.inputMessageBox.text.isNotEmpty()) {
+                chatAdapterCard.addMessage(
+                    MyMessage(
+                        "0", "1", this.inputMessageBox.text.toString(),
+                        SimpleDateFormat(
+                            "dd/MM/yyyy hh:mm",
+                            Locale.getDefault()
+                        ).format(Date()).toString(), "0"
+                    )
                 )
+                this.inputMessageBox.setText("")
+            }
+        }
+
+        this.chatArrowUpButton.setOnClickListener {
+            this.chatArrowUpButton.setImageResource(
+                if (this.isAnswerMenuOpen) {
+                    R.drawable.ic_baseline_keyboard_arrow_up_24
+                } else {
+                    R.drawable.ic_baseline_keyboard_arrow_down_24
+                }
             )
-            this.inputMessageBox.setText("")
+            if (!this.isAnswerMenuOpen) {
+                // should be opened
+                this.chatAnswerContainer.animate().apply {
+                    duration = 350
+                    alpha(1f)
+                    translationY(-120f)
+                }.start()
+                this.chatArrowUpButton.animate().apply {
+                    duration = 350
+                    translationY(chatMenuArrowStartingPosition - 120f)
+                }
+            } else {
+                // should be closed
+                this.chatAnswerContainer.animate().apply {
+                    duration = 350
+                    alpha(0f)
+                    translationY(120f)
+                }.start()
+                this.chatArrowUpButton.animate().apply {
+                    duration = 350
+                    translationY(chatMenuArrowStartingPosition)
+                }
+            }
+            this.isAnswerMenuOpen = !this.isAnswerMenuOpen
         }
 
         this.backArrow.setOnClickListener {

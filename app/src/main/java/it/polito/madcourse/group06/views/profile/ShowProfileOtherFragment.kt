@@ -8,6 +8,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatRatingBar
+import androidx.constraintlayout.widget.ConstraintSet.GONE
+import androidx.constraintlayout.widget.ConstraintSet.VISIBLE
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -35,6 +37,10 @@ class ShowProfileOtherFragment : Fragment() {
     private lateinit var profilePictureOBJ: ImageView
     private lateinit var rateOBJ: TextView
     private lateinit var starsOBJ: AppCompatRatingBar
+    private lateinit var sentenceCommentDone: TextView
+    private lateinit var sentenceCommentRx: TextView
+    private lateinit var showMoreCommentsDone: TextView
+    private lateinit var showMoreCommentsRx: TextView
     private lateinit var skillsChips: ChipGroup
 
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
@@ -67,6 +73,10 @@ class ShowProfileOtherFragment : Fragment() {
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID_other)
         this.rateOBJ = view.findViewById(R.id.rating_title_other)
         this.starsOBJ = view.findViewById(R.id.ratingBar_other)
+        this.sentenceCommentDone = view.findViewById(R.id.comments_other_done)
+        this.sentenceCommentRx = view.findViewById(R.id.comment_other_rx)
+        this.showMoreCommentsDone = view.findViewById(R.id.show_more_comments_done)
+        this.showMoreCommentsRx = view.findViewById(R.id.show_more_comments_rx)
         this.skillsChips = view.findViewById(R.id.skill_chips_group_other)
 
         (requireActivity() as TBMainActivity).supportActionBar?.title="User Profile"
@@ -130,15 +140,37 @@ class ShowProfileOtherFragment : Fragment() {
 
             // reviews -> comments-done (recyclerView)
             recyclerViewCommentsDone = view.findViewById(R.id.commentsDoneRecyclerView)
-            recyclerViewCommentsDone.setHasFixedSize(true) // ?
             recyclerViewCommentsDone.layoutManager = LinearLayoutManager(view.getContext())
             recyclerViewCommentsDone.adapter = userProfile.comments_services_done?.let { CommentsAdapterCard(it) }
+            if (userProfile.comments_services_done?.isEmpty() == true || userProfile.comments_services_done?.isEmpty() == null) {
+                this.sentenceCommentDone.visibility = View.GONE
+            }
+            else {
+                this.sentenceCommentDone.visibility = View.VISIBLE
+            }
+            if (userProfile.comments_services_done?.size!! <= 3) {
+                this.showMoreCommentsDone.visibility = View.GONE
+            }
+            else {
+                this.showMoreCommentsDone.visibility = View.VISIBLE
+            }
 
-            // reviews -> comments-done (recyclerView)
+            // reviews -> comments-rx (recyclerView)
             recyclerViewCommentsRx = view.findViewById(R.id.commentsRxRecyclerView)
-            recyclerViewCommentsRx.setHasFixedSize(true) // ?
             recyclerViewCommentsRx.layoutManager = LinearLayoutManager(view.getContext())
             recyclerViewCommentsRx.adapter = userProfile.comments_services_rx?.let { CommentsAdapterCard(it) }
+            if (userProfile.comments_services_rx?.isEmpty() == true || userProfile.comments_services_rx?.isEmpty() == null) {
+                this.sentenceCommentRx.visibility = View.GONE
+            }
+            else {
+                this.sentenceCommentRx.visibility = View.VISIBLE
+            }
+            if (userProfile.comments_services_rx?.size!! <= 3) {
+                this.showMoreCommentsRx.visibility = View.GONE
+            }
+            else {
+                this.showMoreCommentsRx.visibility = View.VISIBLE
+            }
         }
 
         this.starsOBJ.isFocusableInTouchMode = false
