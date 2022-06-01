@@ -86,6 +86,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                     true
                 }
                 else -> {
+                    sharedViewModel.homeTabPressed()
                     sharedViewModel.resetSearchState(currentTab = TAB_SERVICES)
                     true
                 }
@@ -195,7 +196,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                                     isChecked = true
                                 }
                                 setActionBarTitle(it)
-                                sharedViewModel.homeTabPressed()
+                                //sharedViewModel.homeTabPressed()
                             }
                                 ?: findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
                         }
