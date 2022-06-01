@@ -92,8 +92,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             }
         }
 
-        sharedViewModel.homePressedTwice.observe(viewLifecycleOwner){
-            if(it){
+        sharedViewModel.homePressedTwice.observe(viewLifecycleOwner) {
+            if (it) {
                 sharedViewModel.homeTabPressed(false)
                 findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
             }
@@ -117,10 +117,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 .commit()
         }
 
-        // Get current user ID
-        userProfileViewModel.currentUser.observe(viewLifecycleOwner) {
-            this.currentAccountID = it.id!!
-        }
 
         // Initialize Adapter card for recycler view
         var advAdapterCard: AdvAdapterCard
@@ -130,102 +126,106 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             sharedViewModel.updateSearchState(sortUpFlag = !isUp)
         }
 
-        advertisementViewModel.activeAdsIDs.observe(viewLifecycleOwner) {
-            associatedActiveAdsIdList = it!!
-            sharedViewModel.updateSearchState()
-        }
-        advertisementViewModel.savedAdsIDs.observe(viewLifecycleOwner) {
-            associatedSavedAdsIdList = it!!
-            sharedViewModel.updateSearchState()
-        }
         // When some change occurs in the current search, update screen
-        sharedViewModel.searchState.observe(viewLifecycleOwner){  ss->
-            advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
+        userProfileViewModel.currentUser.observe(viewLifecycleOwner) { user ->
+            sharedViewModel.searchState.observe(viewLifecycleOwner) { ss ->
+                advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
 
-                fullListForGivenSkill =
-                    listOfAdv.filter { it.listOfSkills.contains(ss.selectedSkill) || ss.selectedSkill == ALL_SERVICES }
+                    // Get current user ID and associated saved-ads-ids list
+                    this.currentAccountID = user.id!!
+                    user.saved_ads_ids?.let{
+                        associatedSavedAdsIdList=it
+                    }
 
-                //compose recycler view
-                view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible =
-                    fullListForGivenSkill.isEmpty() && !ss.selectedSkill.isNullOrEmpty()
-                view.findViewById<ImageView>(R.id.create_hint).isVisible =
-                    fullListForGivenSkill.isEmpty() && !ss.selectedSkill.isNullOrEmpty()
-                this.recyclerView.layoutManager = LinearLayoutManager(this.context)
-                advAdapterCard =
-                    AdvAdapterCard(listOfAdv, advertisementViewModel, requireActivity())
-                when (ss.currentTab) {
-                    TAB_ACTIVE -> {
-                        setActionBarTitle("Active Timeslots")
-                        ss.selectedSkill?.let { skill ->
-                            bottomNavView.menu.getItem(0).apply{
-                                title = skill
-                                setIcon(R.drawable.savetime)
+                    fullListForGivenSkill =
+                        listOfAdv.filter { it.listOfSkills.contains(ss.selectedSkill) || ss.selectedSkill == ALL_SERVICES }
+
+                    //compose recycler view
+                    view.findViewById<TextView>(R.id.defaultTextTimeslotsList).isVisible =
+                        fullListForGivenSkill.isEmpty() && !ss.selectedSkill.isNullOrEmpty()
+                    view.findViewById<ImageView>(R.id.create_hint).isVisible =
+                        fullListForGivenSkill.isEmpty() && !ss.selectedSkill.isNullOrEmpty()
+                    this.recyclerView.layoutManager = LinearLayoutManager(this.context)
+                    advAdapterCard =
+                        AdvAdapterCard(listOfAdv, advertisementViewModel,userProfileViewModel, requireActivity())
+                    when (ss.currentTab) {
+                        TAB_ACTIVE -> {
+                            setActionBarTitle("Active Timeslots")
+                            ss.selectedSkill?.let { skill ->
+                                bottomNavView.menu.getItem(0).apply {
+                                    title = skill
+                                    setIcon(R.drawable.savetime)
+                                }
+                            } ?: bottomNavView.menu.getItem(0)
+                                .setIcon(R.drawable.ic_baseline_home_24)
+                            bottomNavView.menu.getItem(1).isChecked = true
+                            sharedViewModel.homeTabPressed(false)
+                        }
+                        TAB_SAVED -> {
+                            setActionBarTitle("Saved Timeslots")
+                            ss.selectedSkill?.let { skill ->
+                                bottomNavView.menu.getItem(0).title = skill
+                                bottomNavView.menu.getItem(0).setIcon(R.drawable.savetime)
+                            } ?: bottomNavView.menu.getItem(0)
+                                .setIcon(R.drawable.ic_baseline_home_24)
+                            bottomNavView.menu.getItem(3).isChecked = true
+                            sharedViewModel.homeTabPressed(false)
+
+                        }
+                        TAB_MINE -> {
+                            setActionBarTitle("My Timeslots")
+                            ss.selectedSkill?.let { skill ->
+                                bottomNavView.menu.getItem(0).title = skill
+                                bottomNavView.menu.getItem(0).setIcon(R.drawable.savetime)
+                            } ?: bottomNavView.menu.getItem(0)
+                                .setIcon(R.drawable.ic_baseline_home_24)
+                            bottomNavView.menu.getItem(4).isChecked = true
+                            sharedViewModel.homeTabPressed(false)
+
+                        }
+
+                        else -> {
+                            ss.selectedSkill?.let {
+                                bottomNavView.menu.getItem(0).apply {
+                                    setIcon(R.drawable.ic_baseline_arrow_back_ios_24)
+                                    title = "Services"
+                                    isChecked = true
+                                }
+                                setActionBarTitle(it)
+                                sharedViewModel.homeTabPressed()
                             }
-                        }?:bottomNavView.menu.getItem(0).setIcon(R.drawable.ic_baseline_home_24)
-                        bottomNavView.menu.getItem(1).isChecked = true
-                        sharedViewModel.homeTabPressed(false)
-                    }
-                    TAB_SAVED -> {
-                        setActionBarTitle("Saved Timeslots")
-                        ss.selectedSkill?.let { skill ->
-                            bottomNavView.menu.getItem(0).title = skill
-                            bottomNavView.menu.getItem(0).setIcon(R.drawable.savetime)
-                        }?:bottomNavView.menu.getItem(0).setIcon(R.drawable.ic_baseline_home_24)
-                        bottomNavView.menu.getItem(3).isChecked = true
-                        sharedViewModel.homeTabPressed(false)
-
-                    }
-                    TAB_MINE -> {
-                        setActionBarTitle("My Timeslots")
-                        ss.selectedSkill?.let { skill ->
-                            bottomNavView.menu.getItem(0).title = skill
-                            bottomNavView.menu.getItem(0).setIcon(R.drawable.savetime)
-                        }?:bottomNavView.menu.getItem(0).setIcon(R.drawable.ic_baseline_home_24)
-                        bottomNavView.menu.getItem(4).isChecked = true
-                        sharedViewModel.homeTabPressed(false)
-
+                                ?: findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
+                        }
                     }
 
-                    else -> {
-                        ss.selectedSkill?.let {
-                            bottomNavView.menu.getItem(0).apply {
-                                setIcon(R.drawable.ic_baseline_arrow_back_ios_24)
-                                title = "Services"
-                                isChecked = true
-                            }
-                            setActionBarTitle(it)
-                            sharedViewModel.homeTabPressed()
-                        }?:findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
-                    }
+                    //update views
+                    this.sortParam.text = paramToString(ss.sortParameter)
+                    this.isUp = ss.sortUpFlag ?: true
+                    this.directionButton.setImageResource(if (this.isUp) R.drawable.sort_up else R.drawable.sort_down)
+                    this.isMyAdv = ss.myAdsFlag ?: false
+                    if (ss.filter?.isEmpty() != false)
+                        filterNotificationDot.visibility = View.GONE
+                    else
+                        filterNotificationDot.visibility = View.VISIBLE
+
+
+                    //update recyclerview
+                    advAdapterCard.updateDataSet(
+                        myAds = ss.myAdsFlag,
+                        userID = currentAccountID,
+                        savedAdsFlag = ss.savedAdsFlag,
+                        activeAdsFlag = ss.activeAdsFlag,
+                        activeAdsIDs = associatedActiveAdsIdList,
+                        savedAdsIDs = associatedSavedAdsIdList,
+                        selectedSkill = if (ss.myAdsFlag != true && ss.activeAdsFlag != true && ss.savedAdsFlag != true) ss.selectedSkill else ALL_SERVICES,
+                        advFilter = ss.filter,
+                        sortUp = ss.sortUpFlag,
+                        sortParam = ss.sortParameter,
+                        search = ss.searchedWord
+                    )
+                    // Adapter setting
+                    this.recyclerView.adapter = advAdapterCard
                 }
-
-                //update views
-                this.sortParam.text = paramToString(ss.sortParameter)
-                this.isUp = ss.sortUpFlag ?: true
-                this.directionButton.setImageResource(if (this.isUp) R.drawable.sort_up else R.drawable.sort_down)
-                this.isMyAdv = ss.myAdsFlag ?: false
-                if (ss.filter?.isEmpty() != false)
-                    filterNotificationDot.visibility = View.GONE
-                else
-                    filterNotificationDot.visibility = View.VISIBLE
-
-
-                //update recyclerview
-                advAdapterCard.updateDataSet(
-                    myAds = ss.myAdsFlag,
-                    userID = currentAccountID,
-                    savedAdsFlag = ss.savedAdsFlag,
-                    activeAdsFlag = ss.activeAdsFlag,
-                    activeAdsIDs = associatedActiveAdsIdList,
-                    savedAdsIDs = associatedSavedAdsIdList,
-                    selectedSkill = if (ss.myAdsFlag != true && ss.activeAdsFlag != true && ss.savedAdsFlag != true) ss.selectedSkill else ALL_SERVICES,
-                    advFilter = ss.filter,
-                    sortUp = ss.sortUpFlag,
-                    sortParam = ss.sortParameter,
-                    search = ss.searchedWord
-                )
-                // Adapter setting
-                this.recyclerView.adapter = advAdapterCard
             }
         }
 

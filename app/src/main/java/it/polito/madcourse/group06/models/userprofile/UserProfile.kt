@@ -65,5 +65,9 @@ data class UserProfile(
 
     @get:PropertyName("img_path")
     @set:PropertyName("img_path")
-    var imgPath: String?
+    var imgPath: String?,
+
+    @get:PropertyName("saved_ads_ids")
+    @set:PropertyName("saved_ads_ids")
+    var saved_ads_ids: ArrayList<String>?
 )

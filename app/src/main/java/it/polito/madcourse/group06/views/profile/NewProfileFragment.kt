@@ -329,7 +329,8 @@ class NewProfileFragment : Fragment() {
                     0.0,
                     null,
                     null,
-                    this.imgProfilePicturePath
+                    this.imgProfilePicturePath,
+                    null
                 )
             )
             userIsOkay = true

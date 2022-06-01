@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.utilities.isExpired
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
+import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 
 /**
  * [AdvViewHolderCard] extends the ViewHolder of the [RecyclerView]
@@ -31,7 +32,7 @@ class AdvViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
      * @param adv an object of class Advertisement
      */
     @SuppressLint("ResourceAsColor")
-    fun bind(adv: Advertisement, advViewModel: AdvertisementViewModel) {
+    fun bind(adv: Advertisement, advViewModel: AdvertisementViewModel, userViewModel:UserProfileViewModel) {
         this.title.text = adv.advTitle
         this.location.text = adv.advLocation
         this.duration.text = adv.advDuration.toString()
@@ -51,7 +52,7 @@ class AdvViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
             }
         }
         this.bookmark.setOnClickListener{
-            advViewModel.bookmarkAdvertisement(adv.id!!,!adv.isSaved)
+            userViewModel.bookmarkAdvertisement(adv.id!!,!adv.isSaved)
             advViewModel.editAdvertisement(adv.apply {isSaved=!isSaved})
         }
     }

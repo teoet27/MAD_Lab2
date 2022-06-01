@@ -13,6 +13,7 @@ import it.polito.madcourse.group06.utilities.AdvFilter
 import it.polito.madcourse.group06.utilities.isExpired
 import it.polito.madcourse.group06.utilities.toInt
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
+import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.views.timeslot.FilterTimeslots
 import it.polito.madcourse.group06.views.timeslot.ShowSingleTimeslot
 import java.util.*
@@ -24,6 +25,7 @@ import kotlin.math.roundToInt
 class AdvAdapterCard(
     private val adsList: List<Advertisement>,
     private val advViewModel: AdvertisementViewModel,
+    private val userViewModel: UserProfileViewModel,
     private val activity: Activity
 ) : RecyclerView.Adapter<AdvViewHolderCard>() {
 
@@ -40,7 +42,7 @@ class AdvAdapterCard(
      * Bind operations.
      */
     override fun onBindViewHolder(holder: AdvViewHolderCard, position: Int) {
-        holder.bind(showedData[position], advViewModel)
+        holder.bind(showedData[position], advViewModel, userViewModel)
         holder.itemView.setOnClickListener { view ->
             advViewModel.setSingleAdvertisement((showedData[showedData.indexOf(showedData[position])]))
             /*Navigation.findNavController(view)

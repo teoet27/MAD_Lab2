@@ -30,6 +30,7 @@ fun emptyUserProfile() = UserProfile(
     0.0,
     null,
     null,
+    null,
     null
 )
 
