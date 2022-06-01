@@ -330,6 +330,7 @@ class NewProfileFragment : Fragment() {
                     null,
                     null,
                     this.imgProfilePicturePath,
+                    null,
                     null
                 )
             )

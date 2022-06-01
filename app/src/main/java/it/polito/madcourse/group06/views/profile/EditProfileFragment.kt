@@ -56,6 +56,7 @@ class EditProfileFragment : Fragment() {
     private var comments_services_rx = arrayListOf<String>()
     private var comments_services_done = arrayListOf<String>()
     private var savedAdsIDs = arrayListOf<String>()
+    private var activeAdsIDs = arrayListOf<String>()
     private lateinit var imgProfilePicturePath: String
     private var userID: String = ""
     private var skillList = arrayListOf<String>()
@@ -340,7 +341,8 @@ class EditProfileFragment : Fragment() {
                     this.comments_services_rx,
                     this.comments_services_done,
                     imgProfilePicturePath,
-                    this.savedAdsIDs
+                    this.savedAdsIDs,
+                    this.activeAdsIDs
                 )
             )
             advertisementViewModel.updateAdvAccountNameByAccountID(this.userID, editFullNameOBJ.text.toString())

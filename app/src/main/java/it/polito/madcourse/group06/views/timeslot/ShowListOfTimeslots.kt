@@ -131,10 +131,13 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
             sharedViewModel.searchState.observe(viewLifecycleOwner) { ss ->
                 advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdv ->
 
-                    // Get current user ID and associated saved-ads-ids list
+                    // Get current user ID and associated saved and active ads-ids list
                     this.currentAccountID = user.id!!
                     user.saved_ads_ids?.let{
                         associatedSavedAdsIdList=it
+                    }
+                    user.active_ads_ids?.let{
+                        associatedActiveAdsIdList=it
                     }
 
                     fullListForGivenSkill =
