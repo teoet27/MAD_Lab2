@@ -101,15 +101,12 @@ class MyChat : Fragment() {
         }
 
         this.chatArrowUpButton.setOnClickListener {
-            this.chatArrowUpButton.setImageResource(
-                if (this.isAnswerMenuOpen) {
-                    R.drawable.ic_baseline_keyboard_arrow_up_24
-                } else {
-                    R.drawable.ic_baseline_keyboard_arrow_down_24
-                }
-            )
             if (!this.isAnswerMenuOpen) {
                 // should be opened
+                this.chatArrowUpButton.animate().apply {
+                    duration = 350
+                    rotationX(180f)
+                }.start()
                 this.chatAnswerContainer.animate().apply {
                     duration = 350
                     alpha(1f)
@@ -121,6 +118,10 @@ class MyChat : Fragment() {
                 }
             } else {
                 // should be closed
+                this.chatArrowUpButton.animate().apply {
+                    duration = 350
+                    rotationX(0f)
+                }.start()
                 this.chatAnswerContainer.animate().apply {
                     duration = 350
                     alpha(0f)
