@@ -148,7 +148,7 @@ class ShowProfileOtherFragment : Fragment() {
                 } else {
                     this.sentenceCommentDone.visibility = View.VISIBLE
                 }
-                if (userProfile.comments_services_done?.size!! <= 3) {
+                if (userProfile.comments_services_done!!.size <= 3) {
                     this.showMoreCommentsDone.visibility = View.GONE
                 } else {
                     this.showMoreCommentsDone.visibility = View.VISIBLE
@@ -166,7 +166,7 @@ class ShowProfileOtherFragment : Fragment() {
                     this.sentenceCommentRx.visibility = View.VISIBLE
                 }
                 if (userProfile.comments_services_rx == null) {
-                    if (userProfile.comments_services_rx?.size!! <= 3) {
+                    if (userProfile.comments_services_rx!!.size <= 3) {
                         this.showMoreCommentsRx.visibility = View.GONE
                     } else {
                         this.showMoreCommentsRx.visibility = View.VISIBLE
