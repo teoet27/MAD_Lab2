@@ -40,7 +40,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private var isUp = false
     private var associatedActiveAdsIdList = listOf<String>()
     private var associatedSavedAdsIdList = listOf<String>()
-    var home_tab:Boolean=true
 
 
     override fun onCreateView(
@@ -75,22 +74,18 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         bottomNavView.setOnItemSelectedListener { it ->
             when (it.title) {
                 TAB_ACTIVE -> {
-                    sharedViewModel.homeTabPressed(false)
                     sharedViewModel.resetSearchState(currentTab = TAB_ACTIVE, activeAdsFlag = true)
                     true
                 }
                 TAB_SAVED -> {
-                    sharedViewModel.homeTabPressed(false)
                     sharedViewModel.resetSearchState(currentTab = TAB_SAVED, savedAdsFlag = true)
                     true
                 }
                 TAB_MINE -> {
-                    sharedViewModel.homeTabPressed(false)
                     sharedViewModel.resetSearchState(currentTab = TAB_MINE, myAdsFlag = true)
                     true
                 }
                 else -> {
-                    sharedViewModel.homeTabPressed()
                     sharedViewModel.resetSearchState(currentTab = TAB_SERVICES)
                     true
                 }
@@ -168,6 +163,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                             }
                         }?:bottomNavView.menu.getItem(0).setIcon(R.drawable.ic_baseline_home_24)
                         bottomNavView.menu.getItem(1).isChecked = true
+                        sharedViewModel.homeTabPressed(false)
                     }
                     TAB_SAVED -> {
                         setActionBarTitle("Saved Timeslots")
@@ -176,6 +172,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                             bottomNavView.menu.getItem(0).setIcon(R.drawable.savetime)
                         }?:bottomNavView.menu.getItem(0).setIcon(R.drawable.ic_baseline_home_24)
                         bottomNavView.menu.getItem(3).isChecked = true
+                        sharedViewModel.homeTabPressed(false)
+
                     }
                     TAB_MINE -> {
                         setActionBarTitle("My Timeslots")
@@ -184,6 +182,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                             bottomNavView.menu.getItem(0).setIcon(R.drawable.savetime)
                         }?:bottomNavView.menu.getItem(0).setIcon(R.drawable.ic_baseline_home_24)
                         bottomNavView.menu.getItem(4).isChecked = true
+                        sharedViewModel.homeTabPressed(false)
+
                     }
 
                     else -> {
@@ -194,6 +194,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                                 isChecked = true
                             }
                             setActionBarTitle(it)
+                            sharedViewModel.homeTabPressed()
                         }?:findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
                     }
                 }

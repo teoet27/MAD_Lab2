@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.utilities.ALL_SERVICES
 import it.polito.madcourse.group06.utilities.TAB_ACTIVE
 import it.polito.madcourse.group06.utilities.TAB_MINE
@@ -49,6 +50,7 @@ class ShowListOfSkills : Fragment(R.layout.service_list) {
         super.onViewCreated(view, savedInstanceState)
         sortButton = view.findViewById(R.id.skill_list_sort_button)
 
+        (activity as TBMainActivity).supportActionBar?.title="Offered Services"
         sharedViewModel.resetSearchState()
         advViewModel.listOfAdvertisements.observe(this.viewLifecycleOwner) { listOfAds ->
             var listOfSkills =
@@ -95,7 +97,7 @@ class ShowListOfSkills : Fragment(R.layout.service_list) {
                 TAB_MINE -> {findNavController().navigate(R.id.ShowListTimeslots)
                     sharedViewModel.resetSearchState(currentTab = TAB_MINE, myAdsFlag = true)
                     true}
-                else ->{sharedViewModel.homeTabPressed();true}
+                else ->{true}
             }
         }
         this.newAdvButton.setOnClickListener {
