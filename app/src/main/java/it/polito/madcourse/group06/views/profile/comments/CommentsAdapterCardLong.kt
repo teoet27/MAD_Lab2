@@ -7,9 +7,10 @@ import com.google.common.collect.Comparators.min
 import it.polito.madcourse.group06.R
 
 /**
- * [CommentsAdapterCard] extending the Adapter of the [RecyclerView] and implements the required methods.
+ * [CommentsAdapterCardLong] extending the Adapter of the [RecyclerView] and implements the required methods.
+ * This is the long version: it returns all the elements in the list.
  */
-class CommentsAdapterCard(private val commentList: ArrayList<String>) : RecyclerView.Adapter<CommentsViewHolderCard>()  {
+class CommentsAdapterCardLong(private val commentList: ArrayList<String>) : RecyclerView.Adapter<CommentsViewHolderCard>()  {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentsViewHolderCard {
         val vg = LayoutInflater
@@ -23,10 +24,10 @@ class CommentsAdapterCard(private val commentList: ArrayList<String>) : Recycler
      */
     override fun onBindViewHolder(holder: CommentsViewHolderCard, position: Int) {
         holder.bind(commentList[position])
-        holder.itemView.setOnClickListener { view ->
+        /*holder.itemView.setOnClickListener { view ->
             /*Navigation.findNavController(view).navigate(R.id.action_showListOfSkills_to_ShowListTimeslots,
                 bundleOf("selected_skill" to commentList[position]))*/
-        }
+        }*/
     }
 
     /**
@@ -34,6 +35,6 @@ class CommentsAdapterCard(private val commentList: ArrayList<String>) : Recycler
      * Show a maximum of 3 comments.
      */
     override fun getItemCount(): Int {
-        return min(commentList.size, 3)
+        return commentList.size
     }
 }
