@@ -113,4 +113,5 @@
     <string name="type_a_message">Type a message</string>
     <string name="empty_chat_message">There\'s nothing here, come on: make the first move, you won\'t regret!</string>
     <string name="no_comments_in_db">This user has not received any reviews yet.</string>
+    <string name="rate_advise">Your service has expired! Please, rate your service and leave a comment</string>
 </resources>

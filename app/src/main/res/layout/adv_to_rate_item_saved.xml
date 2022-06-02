@@ -145,7 +145,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
-                android:text="Your timeslot has expired! Please, rate your service and leave a comment"
+                android:text="@string/rate_advise"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/rate_button"
                 app:layout_constraintEnd_toStartOf="@+id/rate_button"
