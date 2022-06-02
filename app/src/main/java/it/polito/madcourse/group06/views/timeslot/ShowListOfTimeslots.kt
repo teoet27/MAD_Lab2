@@ -134,12 +134,33 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
                     // Get current user ID and associated saved and active ads-ids list
                     this.currentAccountID = user.id!!
-                    user.saved_ads_ids?.let{
-                        associatedSavedAdsIdList=it
+                    user.saved_ads_ids?.let {
+                        associatedSavedAdsIdList = it
                     }
-                    user.active_ads_ids?.let{
-                        associatedActiveAdsIdList=it
+                    user.active_ads_ids?.let {
+                        associatedActiveAdsIdList = it
                     }
+
+                    // Create notification badges for expired ads among my and active timeslots
+                    /*user.to_rate_ads_ids?.let { to_rate_ids ->
+                        to_rate_ids.size.also { size ->
+                            when (size) {
+                                0 -> bottomNavView.removeBadge(R.id.active_time_slots_tab)
+                                else -> bottomNavView.getOrCreateBadge(R.id.active_time_slots_tab)
+                                    .number = size
+                            }
+                        }
+                    }*/
+                    listOfAdv.count { it.accountID == currentAccountID && it.isExpired() }
+                        .also { n ->
+                            when (n) {
+                                0 -> bottomNavView.removeBadge(R.id.my_time_slots_tab)
+                                else -> bottomNavView.getOrCreateBadge(R.id.my_time_slots_tab)
+                                    .number = n
+                            }
+                        }
+
+
 
                     fullListForGivenSkill =
                         listOfAdv.filter { it.listOfSkills.contains(ss.selectedSkill) || ss.selectedSkill == ALL_SERVICES }
@@ -151,7 +172,12 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                         fullListForGivenSkill.isEmpty() && !ss.selectedSkill.isNullOrEmpty()
                     this.recyclerView.layoutManager = LinearLayoutManager(this.context)
                     advAdapterCard =
-                        AdvAdapterCard(listOfAdv, advertisementViewModel,userProfileViewModel, requireActivity())
+                        AdvAdapterCard(
+                            listOfAdv,
+                            advertisementViewModel,
+                            userProfileViewModel,
+                            requireActivity()
+                        )
                     when (ss.currentTab) {
                         TAB_ACTIVE -> {
                             setActionBarTitle("Active Timeslots")
