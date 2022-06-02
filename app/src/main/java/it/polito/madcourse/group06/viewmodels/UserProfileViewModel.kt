@@ -85,8 +85,8 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     }
 
 
-    fun bookmarkAdvertisement(advID: String, toSave: Boolean) {
-        val updatedUser=_singleUserProfilePH.also { if(toSave) it.saved_ads_ids?.add(advID) else it.saved_ads_ids?.remove(advID) }
+    fun bookmarkAdvertisement(advID: String) {
+        val updatedUser=_singleUserProfilePH.also { if(it.saved_ads_ids?.contains(advID) == true) it.saved_ads_ids?.remove(advID) else it.saved_ads_ids?.add(advID) }
 
         db
             .collection("UserProfile")

@@ -2,12 +2,14 @@ package it.polito.madcourse.group06.models.advertisement
 
 import android.app.Activity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.findFragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
+import it.polito.madcourse.group06.models.mychat.MyChatViewHolder
 import it.polito.madcourse.group06.utilities.*
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
@@ -32,16 +34,27 @@ class AdvAdapterCard(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdvViewHolderCard {
         val vg = LayoutInflater
-            .from(parent.context)
-            .inflate(R.layout.adv_item, parent, false)
-        return AdvViewHolderCard(vg)
+            .from(parent.context).run{
+                when(viewType) {
+                    R.layout.adv_item->inflate(R.layout.adv_item, parent, false)
+                    R.layout.adv_item_saved->inflate(R.layout.adv_item_saved, parent, false)
+                    R.layout.adv_active_item->inflate(R.layout.adv_active_item, parent, false)
+                    R.layout.adv_active_item_saved->inflate(R.layout.adv_active_item_saved, parent, false)
+                    R.layout.adv_expired_item->inflate(R.layout.adv_expired_item, parent, false)
+                    R.layout.adv_expired_item_saved->inflate(R.layout.adv_expired_item_saved, parent, false)
+                    R.layout.adv_to_rate_item->inflate(R.layout.adv_to_rate_item, parent, false)
+                    else->inflate(R.layout.adv_to_rate_item_saved, parent, false)
+                 }
+            }
+        return AdvViewHolderCard(vg,userViewModel)
     }
+
 
     /**
      * Bind operations.
      */
     override fun onBindViewHolder(holder: AdvViewHolderCard, position: Int) {
-        holder.bind(showedData[position], userViewModel,getItemViewType(position))
+        holder.bind(showedData[position], getItemViewType(position))
         holder.itemView.setOnClickListener {
             advViewModel.setSingleAdvertisement((showedData[showedData.indexOf(showedData[position])]))
             (activity as TBMainActivity).supportFragmentManager.beginTransaction()
@@ -52,15 +65,34 @@ class AdvAdapterCard(
     }
 
     override fun getItemViewType(position: Int): Int {
-        if(!showedData[position].isAvailable && activeAdsIDs.contains(showedData[position].id)&&
-            savedAdsIDs.contains(showedData[position].id))
-            return ACTIVE_AND_SAVED
-        if(!showedData[position].isAvailable && activeAdsIDs.contains(showedData[position].id))
-            return ACTIVE
-        if(savedAdsIDs.contains(showedData[position].id))
-            return SAVED
-        return NOT_ACTIVE_NOT_SAVED
+
+        if (showedData[position].isExpired()) { //expired
+            return if (activeAdsIDs.contains(showedData[position].id)) {//to rate ads // TODO: replace activeAdsIDs with toRateAdsIDs
+                if (savedAdsIDs.contains(showedData[position].id))
+                    R.layout.adv_to_rate_item_saved
+                else
+                    R.layout.adv_to_rate_item
+            } else { //generic ads
+                if (savedAdsIDs.contains(showedData[position].id))
+                    R.layout.adv_expired_item_saved
+                else
+                    R.layout.adv_expired_item
+            }
+        } else {
+            return if (activeAdsIDs.contains(showedData[position].id)) {//active
+                if (savedAdsIDs.contains(showedData[position].id))
+                    R.layout.adv_active_item_saved
+                else
+                    R.layout.adv_active_item
+            } else { //generic ads
+                if (savedAdsIDs.contains(showedData[position].id))
+                    R.layout.adv_item_saved
+                else
+                    R.layout.adv_item
+            }
+        }
     }
+
     /**
      * Simply returns the size of the list of advertisement provided to the adapter.
      */
@@ -97,7 +129,7 @@ class AdvAdapterCard(
         } else if (savedAdsFlag == true) {
             return adsList.filter { savedAdsIDs.contains(it.id) }
         } else
-            return adsList.filter{it.isAvailable||it.accountID==userID}
+            return adsList.filter { it.isAvailable || it.accountID == userID }
     }
 
     /**
@@ -129,10 +161,10 @@ class AdvAdapterCard(
     ) {
 
         if (activeAdsIDs != null) {
-            this.activeAdsIDs=activeAdsIDs
+            this.activeAdsIDs = activeAdsIDs
         }
         if (savedAdsIDs != null) {
-            this.savedAdsIDs=savedAdsIDs
+            this.savedAdsIDs = savedAdsIDs
         }
 
         // init dataset
