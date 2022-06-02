@@ -41,11 +41,9 @@ class AdvAdapterCard(
      * Bind operations.
      */
     override fun onBindViewHolder(holder: AdvViewHolderCard, position: Int) {
-        holder.bind(showedData[position], advViewModel, userViewModel,getItemViewType(position))
-        holder.itemView.setOnClickListener { view ->
+        holder.bind(showedData[position], userViewModel,getItemViewType(position))
+        holder.itemView.setOnClickListener {
             advViewModel.setSingleAdvertisement((showedData[showedData.indexOf(showedData[position])]))
-            /*Navigation.findNavController(view)
-                .navigate(R.id.action_ShowListTimeslots_to_showSingleTimeslot)*/
             (activity as TBMainActivity).supportFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_up, 0)
                 .add(R.id.nav_host_fragment_content_main, ShowSingleTimeslot(), "single_timeslot")
@@ -95,11 +93,11 @@ class AdvAdapterCard(
         }
         // Active or Saved timeslot filtering
         else if (activeAdsFlag == true) {
-            return adsList.filter { activeAdsIDs?.contains(it.id)!! }
+            return adsList.filter { activeAdsIDs.contains(it.id) }
         } else if (savedAdsFlag == true) {
-            return adsList.filter { savedAdsIDs?.contains(it.id)!! }
+            return adsList.filter { savedAdsIDs.contains(it.id) }
         } else
-            return adsList.filter{it.isAvailable}
+            return adsList.filter{it.isAvailable||it.accountID==userID}
     }
 
     /**

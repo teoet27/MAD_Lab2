@@ -35,7 +35,7 @@ class AdvViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
      * @param adv an object of class Advertisement
      */
     @SuppressLint("ResourceAsColor")
-    fun bind(adv: Advertisement, advViewModel: AdvertisementViewModel, userViewModel:UserProfileViewModel,status:Int) {
+    fun bind(adv: Advertisement, userViewModel:UserProfileViewModel,status:Int) {
         this.title.text = adv.advTitle
         this.location.text = adv.advLocation
         this.duration.text = adv.advDuration.toString()
