@@ -79,6 +79,10 @@ data class Advertisement(
 
     @get:PropertyName("is_available")
     @set:PropertyName("is_available")
-    var isAvailable: Boolean
+    var isAvailable: Boolean,
+
+    @get:PropertyName("rx_user_id")
+    @set:PropertyName("rx_user_id")
+    var rxUserId: String?,
 )
 

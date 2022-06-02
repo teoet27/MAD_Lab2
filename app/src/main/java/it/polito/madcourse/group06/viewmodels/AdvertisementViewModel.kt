@@ -25,7 +25,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     private var _singleAdvertisementPH = Advertisement(
         "", "", "", arrayListOf<String>(),
         "", "", "", "", 0.0,
-        "", "", 0.0, "",true
+        "", "", 0.0, "",true, null
     )
     private val _pvtAdvertisement = MutableLiveData<Advertisement>().also {
         it.value = _singleAdvertisementPH
@@ -67,11 +67,12 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             val accountID = this.get("accountID") as String
             val comment = this.get("comment") as String
             val isAvailable = this.get("is_available") as Boolean
+            val rxUserId = this.get("rx_user_id") as String?
             Advertisement(
                 id, title, description, listOfSkills ?: arrayListOf<String>(),
                 location, date, startingTime,
                 endingTime, duration, accountName,
-                accountID, rating, comment, isAvailable
+                accountID, rating, comment, isAvailable, rxUserId
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -103,7 +104,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "accountID" to ad.accountID,
                     "rating" to ad.rating,
                     "comment" to ad.comment,
-                    "is_available" to ad.isAvailable
+                    "is_available" to ad.isAvailable,
+                    "rx_user_id" to ad.rxUserId
                 )
             )
             .addOnSuccessListener {
@@ -171,7 +173,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "accountID" to ad.accountID,
                     "rating" to ad.rating,
                     "comment" to ad.comment,
-                    "is_available" to ad.isAvailable
+                    "is_available" to ad.isAvailable,
+                    "rx_user_id" to ad.rxUserId
                 )
             )
             .addOnSuccessListener {
