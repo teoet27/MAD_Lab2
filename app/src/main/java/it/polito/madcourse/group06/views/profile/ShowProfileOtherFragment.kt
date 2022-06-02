@@ -182,9 +182,8 @@ class ShowProfileOtherFragment : Fragment() {
 
         this.starsOBJ.isFocusableInTouchMode = false
         this.starsOBJ.isClickable = false
-        //this.starsOBJ.stepSize = 0.2F
+        this.starsOBJ.stepSize = 0.25F
 
-        // TODO: to be changed once the chat is finished
         this.rateOBJ.setOnClickListener {
             activity?.supportFragmentManager!!.beginTransaction()
                 .add(R.id.nav_host_fragment_content_main, RatingFragment(), "rating_fragment")
