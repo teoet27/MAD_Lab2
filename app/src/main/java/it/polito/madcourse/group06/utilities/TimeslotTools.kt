@@ -119,7 +119,7 @@ fun timeStringToDoubleHour(time: String): Double {
 }
 
 fun timeDoubleHourToString(time: Double): String {
-    return "${ floor(time) }:${ round((time - floor(time)) * 60) }"
+    return String.format("%02d:%02d",floor(time).toInt(),round((time - floor(time)) * 60).toInt())
 }
 
 
