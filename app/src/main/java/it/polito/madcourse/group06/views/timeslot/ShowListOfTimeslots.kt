@@ -101,7 +101,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         }
 
         this.newAdvButton.setOnClickListener {
-            findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
+            findNavController().navigate(R.id.ShowListOfServices)
         }
 
         // Context menu for choosing sort parameter
@@ -141,7 +141,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                         associatedActiveAdsIdList = it
                     }
 
-                    // Create notification badges for expired ads among my and active timeslots
+                    // TODO (below): Create notification badges for expired ads among my and active timeslots
                     /*user.to_rate_ads_ids?.let { to_rate_ids ->
                         to_rate_ids.size.also { size ->
                             when (size) {
@@ -222,9 +222,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                                     isChecked = true
                                 }
                                 setActionBarTitle(it)
-                                //sharedViewModel.homeTabPressed()
-                            }
-                                ?: findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
+                            }?:findNavController().navigate(R.id.ShowListOfServices)
                         }
                     }
 

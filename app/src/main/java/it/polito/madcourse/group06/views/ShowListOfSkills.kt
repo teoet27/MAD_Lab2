@@ -1,4 +1,4 @@
-package it.polito.madcourse.group06.models.skill
+package it.polito.madcourse.group06.views
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -17,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
+import it.polito.madcourse.group06.models.skill.SkillAdapterCard
 import it.polito.madcourse.group06.utilities.ALL_SERVICES
 import it.polito.madcourse.group06.utilities.TAB_ACTIVE
 import it.polito.madcourse.group06.utilities.TAB_MINE
