@@ -29,7 +29,7 @@ class AdvAdapterCard(
 ) : RecyclerView.Adapter<AdvViewHolderCard>() {
 
     private var showedData = adsList
-    private var activeAdsIDs = listOf<String>()
+    private var userID:String?=null
     private var savedAdsIDs = listOf<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdvViewHolderCard {
@@ -67,7 +67,8 @@ class AdvAdapterCard(
     override fun getItemViewType(position: Int): Int {
 
         if (showedData[position].isExpired()) { //expired
-            return if (activeAdsIDs.contains(showedData[position].id)) {//to rate ads // TODO: replace activeAdsIDs with toRateAdsIDs
+            return if (!showedData[position].isAvailable &&
+                (showedData[position].rxUserId==userID ||showedData[position].accountID==userID)) {//to rate ads
                 if (savedAdsIDs.contains(showedData[position].id))
                     R.layout.adv_to_rate_item_saved
                 else
@@ -79,7 +80,8 @@ class AdvAdapterCard(
                     R.layout.adv_expired_item
             }
         } else {
-            return if (activeAdsIDs.contains(showedData[position].id)) {//active
+            return if (!showedData[position].isAvailable &&
+                (showedData[position].rxUserId==userID ||(showedData[position].accountID==userID&&showedData[position].rxUserId!=null))) {//active ads
                 if (savedAdsIDs.contains(showedData[position].id))
                     R.layout.adv_active_item_saved
                 else
@@ -114,7 +116,6 @@ class AdvAdapterCard(
      */
     fun initDataset(
         myAds: Boolean? = null,
-        userID: String? = null,
         activeAdsFlag: Boolean? = null,
         savedAdsFlag: Boolean? = null
     ): List<Advertisement> {
@@ -125,7 +126,7 @@ class AdvAdapterCard(
         }
         // Active or Saved timeslot filtering
         else if (activeAdsFlag == true) {
-            return adsList.filter { activeAdsIDs.contains(it.id) }
+            return adsList.filter { it.rxUserId==userID||it.accountID==userID }
         } else if (savedAdsFlag == true) {
             return adsList.filter { savedAdsIDs.contains(it.id) }
         } else
@@ -139,7 +140,6 @@ class AdvAdapterCard(
      * @param activeAdsFlag: if true the initial set is based on Ads marked as "active" by inserting them in [adsIDsDs]
      * @param savedAdsFlag: if true the initial set is based on Ads marked as "saved" by inserting them in [adsIDsDs]
      * @param savedAdsIDs: list of saved Ads IDs to be considered for the current recycler view,
-     * @param activeAdsIDs: list of active Ads IDs to be considered for the current recycler view,
      * @param selectedSkill: filter all Ads of the initial set associated to the selected skill
      * @param advFilter: AdvFilter to filter Ads matching some criteria (location, duration etc.)
      * @param sortParam: criterion to sort the selected Ads
@@ -151,7 +151,6 @@ class AdvAdapterCard(
         userID: String? = null,
         activeAdsFlag: Boolean? = null,
         savedAdsFlag: Boolean? = null,
-        activeAdsIDs: List<String>? = null,
         savedAdsIDs: List<String>? = null,
         selectedSkill: String? = null,
         advFilter: AdvFilter? = null,
@@ -160,15 +159,14 @@ class AdvAdapterCard(
         search: String? = null
     ) {
 
-        if (activeAdsIDs != null) {
-            this.activeAdsIDs = activeAdsIDs
-        }
+
         if (savedAdsIDs != null) {
             this.savedAdsIDs = savedAdsIDs
         }
 
         // init dataset
-        showedData = initDataset(myAds, userID, activeAdsFlag, savedAdsFlag)
+        showedData = initDataset(myAds, activeAdsFlag, savedAdsFlag)
+        this.userID=userID
 
         // SelectedSkill filtering phase (only in main page)
         showedData =

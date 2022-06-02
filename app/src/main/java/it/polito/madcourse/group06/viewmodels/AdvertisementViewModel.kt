@@ -151,6 +151,46 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     }
 
     /**
+     * Activate an [Advertisement] with the account ID of the requesting account
+     * @param rxUserId the requesting account ID
+     */
+    fun activateAdvertisement(rxUserId:String) {
+        this._singleAdvertisementPH.also{ad->
+            ad.rxUserId=rxUserId
+            db
+                .collection("Advertisement")
+                .document(ad.id!!)
+                .set(
+                    mapOf(
+                        "id" to ad.id,
+                        "title" to ad.advTitle,
+                        "description" to ad.advDescription,
+                        "list_of_skills" to ad.listOfSkills,
+                        "location" to ad.advLocation,
+                        "date" to ad.advDate,
+                        "starting_time" to ad.advStartingTime,
+                        "ending_time" to ad.advEndingTime,
+                        "duration" to ad.advDuration,
+                        "account_name" to ad.advAccount,
+                        "accountID" to ad.accountID,
+                        "rating" to ad.rating,
+                        "comment" to ad.comment,
+                        "is_available" to ad.isAvailable,
+                        "rx_user_id" to ad.rxUserId
+                    )
+                )
+                .addOnSuccessListener {
+                    Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
+                    this._singleAdvertisementPH = ad
+                    this._pvtAdvertisement.value = this._singleAdvertisementPH
+                }
+                .addOnFailureListener {
+                    Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    /**
      * Edit an [Advertisement] with the info passed through an Object of class [Advertisement]
      * @param ad the updated [Advertisement]
      */

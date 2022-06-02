@@ -38,7 +38,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private var fullListForGivenSkill: List<Advertisement> = listOf()
     private var isMyAdv = false
     private var isUp = false
-    private var associatedActiveAdsIdList = listOf<String>()
     private var associatedSavedAdsIdList = listOf<String>()
 
 
@@ -136,9 +135,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                     this.currentAccountID = user.id!!
                     user.saved_ads_ids?.let {
                         associatedSavedAdsIdList = it
-                    }
-                    user.active_ads_ids?.let {
-                        associatedActiveAdsIdList = it
                     }
 
                     // TODO (below): Create notification badges for expired ads among my and active timeslots
@@ -243,7 +239,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                         userID = currentAccountID,
                         savedAdsFlag = ss.savedAdsFlag,
                         activeAdsFlag = ss.activeAdsFlag,
-                        activeAdsIDs = associatedActiveAdsIdList,
                         savedAdsIDs = associatedSavedAdsIdList,
                         selectedSkill = if (ss.myAdsFlag != true && ss.activeAdsFlag != true && ss.savedAdsFlag != true) ss.selectedSkill else ALL_SERVICES,
                         advFilter = ss.filter,
