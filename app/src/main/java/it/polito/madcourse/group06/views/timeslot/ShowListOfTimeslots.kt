@@ -137,17 +137,20 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                         associatedSavedAdsIdList = it
                     }
 
-                    // TODO (below): Create notification badges for expired ads among my and active timeslots
-                    /*user.to_rate_ads_ids?.let { to_rate_ids ->
-                        to_rate_ids.size.also { size ->
-                            when (size) {
+                    // Create notification badges for expired ads among my and active timeslots
+                    listOfAdv.count {
+                        it.rxUserId == currentAccountID ||
+                                (it.accountID == currentAccountID && !it.rxUserId.isNullOrEmpty()) }
+                        .also { n ->
+                            when (n) {
                                 0 -> bottomNavView.removeBadge(R.id.active_time_slots_tab)
                                 else -> bottomNavView.getOrCreateBadge(R.id.active_time_slots_tab)
-                                    .number = size
+                                    .number = n
                             }
+
                         }
-                    }*/
-                    listOfAdv.count { it.accountID == currentAccountID && it.isExpired() }
+                    listOfAdv.count { it.accountID == currentAccountID &&
+                            it.isExpired() }
                         .also { n ->
                             when (n) {
                                 0 -> bottomNavView.removeBadge(R.id.my_time_slots_tab)
@@ -218,7 +221,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                                     isChecked = true
                                 }
                                 setActionBarTitle(it)
-                            }?:findNavController().navigate(R.id.ShowListOfServices)
+                            } ?: findNavController().navigate(R.id.ShowListOfServices)
                         }
                     }
 

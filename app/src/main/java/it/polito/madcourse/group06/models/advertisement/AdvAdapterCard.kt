@@ -126,7 +126,7 @@ class AdvAdapterCard(
         }
         // Active or Saved timeslot filtering
         else if (activeAdsFlag == true) {
-            return adsList.filter { it.rxUserId==userID||it.accountID==userID }
+            return adsList.filter { it.rxUserId==userID||(it.accountID==userID&&!it.rxUserId.isNullOrEmpty()) }
         } else if (savedAdsFlag == true) {
             return adsList.filter { savedAdsIDs.contains(it.id) }
         } else
@@ -165,8 +165,8 @@ class AdvAdapterCard(
         }
 
         // init dataset
-        showedData = initDataset(myAds, activeAdsFlag, savedAdsFlag)
         this.userID=userID
+        showedData = initDataset(myAds, activeAdsFlag, savedAdsFlag)
 
         // SelectedSkill filtering phase (only in main page)
         showedData =
