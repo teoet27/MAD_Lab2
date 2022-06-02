@@ -130,7 +130,7 @@ class AdvAdapterCard(
         } else if (savedAdsFlag == true) {
             return adsList.filter { savedAdsIDs.contains(it.id) }
         } else
-            return adsList.filter { it.isAvailable || it.accountID == userID }
+            return adsList.filter { (it.isAvailable || it.accountID == userID)&&!it.isExpired() }
     }
 
     /**

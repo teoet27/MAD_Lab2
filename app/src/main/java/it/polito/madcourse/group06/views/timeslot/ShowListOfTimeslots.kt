@@ -31,14 +31,15 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var filterButton: TextView
     private lateinit var sortParam: TextView
     private lateinit var directionButton: ImageView
-    private lateinit var barrier: TextView
     private lateinit var filterNotificationDot: TextView
+    private lateinit var updateAdHint: TextView
     private lateinit var currentAccountID: String
     private lateinit var bottomNavView: BottomNavigationView
     private var fullListForGivenSkill: List<Advertisement> = listOf()
     private var isMyAdv = false
     private var isUp = false
     private var associatedSavedAdsIdList = listOf<String>()
+    var myExpiredAdsCnt=0
 
 
     override fun onCreateView(
@@ -65,7 +66,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.recyclerView = view.findViewById(R.id.rvAdvFullList)
         this.filterNotificationDot = view.findViewById(R.id.filter_notification)
         this.bottomNavView = view.findViewById(R.id.bottomNavigationView)
-
+        this.updateAdHint=view.findViewById(R.id.update_expired_ads_hint)
 
         // set up bottom nav bar
         bottomNavView.background = null
@@ -149,15 +150,14 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                             }
 
                         }
-                    listOfAdv.count { it.accountID == currentAccountID &&
+                    myExpiredAdsCnt=listOfAdv.count { it.accountID == currentAccountID &&
                             it.isExpired() }
-                        .also { n ->
-                            when (n) {
-                                0 -> bottomNavView.removeBadge(R.id.my_time_slots_tab)
-                                else -> bottomNavView.getOrCreateBadge(R.id.my_time_slots_tab)
-                                    .number = n
-                            }
-                        }
+                    when (myExpiredAdsCnt) {
+                        0 -> bottomNavView.removeBadge(R.id.my_time_slots_tab)
+                        else -> bottomNavView.getOrCreateBadge(R.id.my_time_slots_tab)
+                            .number = myExpiredAdsCnt
+                    }
+
 
 
 
@@ -177,6 +177,8 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                             userProfileViewModel,
                             requireActivity()
                         )
+
+                    this.updateAdHint.visibility=View.GONE
                     when (ss.currentTab) {
                         TAB_ACTIVE -> {
                             setActionBarTitle("Active Timeslots")
@@ -209,6 +211,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                             } ?: bottomNavView.menu.getItem(0)
                                 .setIcon(R.drawable.ic_baseline_home_24)
                             bottomNavView.menu.getItem(4).isChecked = true
+                            if(myExpiredAdsCnt>0)this.updateAdHint.visibility=View.VISIBLE
                             sharedViewModel.homeTabPressed(false)
 
                         }
