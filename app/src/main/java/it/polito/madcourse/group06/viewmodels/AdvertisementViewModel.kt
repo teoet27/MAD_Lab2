@@ -66,7 +66,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             val accountName = this.get("account_name") as String
             val accountID = this.get("accountID") as String
             val comment = this.get("comment") as String
-            val isAvailable = this.get("isAvailable") as Boolean
+            val isAvailable = this.get("is_available") as Boolean
             Advertisement(
                 id, title, description, listOfSkills ?: arrayListOf<String>(),
                 location, date, startingTime,
@@ -103,7 +103,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "accountID" to ad.accountID,
                     "rating" to ad.rating,
                     "comment" to ad.comment,
-                    "isAvailable" to ad.isAvailable
+                    "is_available" to ad.isAvailable
                 )
             )
             .addOnSuccessListener {
@@ -171,7 +171,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "accountID" to ad.accountID,
                     "rating" to ad.rating,
                     "comment" to ad.comment,
-                    "isAvailable" to ad.isAvailable
+                    "is_available" to ad.isAvailable
                 )
             )
             .addOnSuccessListener {
