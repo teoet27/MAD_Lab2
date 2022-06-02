@@ -2,25 +2,24 @@ package it.polito.madcourse.group06.models.advertisement
 
 import android.annotation.SuppressLint
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
-import it.polito.madcourse.group06.utilities.ACTIVE
-import it.polito.madcourse.group06.utilities.ACTIVE_AND_SAVED
-import it.polito.madcourse.group06.utilities.SAVED
-import it.polito.madcourse.group06.utilities.isExpired
+import it.polito.madcourse.group06.utilities.*
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
+import org.w3c.dom.Text
 
 /**
  * [AdvViewHolderCard] extends the ViewHolder of the [RecyclerView]
  * and provides the references to each component of the advertisement
  * card.
  */
-class AdvViewHolderCard(v: View,private val userViewModel:UserProfileViewModel,) : RecyclerView.ViewHolder(v) {
+class AdvViewHolderCard(private val v: View,private val userViewModel:UserProfileViewModel,) : RecyclerView.ViewHolder(v) {
     private val title: TextView = v.findViewById(R.id.advCardTitle)
     private val location: TextView = v.findViewById(R.id.advCardLocation)
     private val duration: TextView = v.findViewById(R.id.advCardDuration)
@@ -41,11 +40,13 @@ class AdvViewHolderCard(v: View,private val userViewModel:UserProfileViewModel,)
         this.bookmark.setOnClickListener{
             userViewModel.bookmarkAdvertisement(adv.id!!)
         }
-        /*if(rate layout)
-            rate_button = find.... .apply{setOnClickListener{...}}
-         else if(active layout)
-            date = find ....apply{it.text=adv.advDate}
-            cost = find ....apply{it.text=adv.duration.toCost()}
-         */
+        if(viewType==R.layout.adv_to_rate_item||viewType==R.layout.adv_to_rate_item_saved)
+             v.findViewById<Button>(R.id.rate_button).setOnClickListener{
+                 /*open rate fragment*/
+             }
+        if(viewType==R.layout.adv_active_item||viewType==R.layout.adv_active_item_saved){
+            v.findViewById<TextView>(R.id.trade_credit).text=hoursToCredit(adv.advDuration).toString()
+            v.findViewById<TextView>(R.id.trade_starting_time).text=adv.advStartingTime
+        }
     }
 }

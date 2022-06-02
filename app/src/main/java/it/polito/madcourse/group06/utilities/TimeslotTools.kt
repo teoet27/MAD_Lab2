@@ -3,6 +3,7 @@ package it.polito.madcourse.group06.utilities
 import it.polito.madcourse.group06.models.advertisement.Advertisement
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.floor
 import kotlin.math.roundToInt
 
 
@@ -157,6 +158,9 @@ class SearchState(
     var filter: AdvFilter? = null
 )
 
+fun hoursToCredit(hours:Double):Int{
+    return floor(hours).toInt()
+}
 //Useful extension functions
 fun Boolean.toInt() = if (this) 1 else 0
 fun Advertisement.isExpired(): Boolean {
