@@ -118,7 +118,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 .commit()
         }
 
-
         // Initialize Adapter card for recycler view
         var advAdapterCard: AdvAdapterCard
 
@@ -157,9 +156,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                         else -> bottomNavView.getOrCreateBadge(R.id.my_time_slots_tab)
                             .number = myExpiredAdsCnt
                     }
-
-
-
 
                     fullListForGivenSkill =
                         listOfAdv.filter { it.listOfSkills.contains(ss.selectedSkill) || ss.selectedSkill == ALL_SERVICES }
@@ -237,7 +233,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                         filterNotificationDot.visibility = View.GONE
                     else
                         filterNotificationDot.visibility = View.VISIBLE
-
 
                     //update recyclerview
                     advAdapterCard.updateDataSet(
