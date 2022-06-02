@@ -4,6 +4,7 @@ import it.polito.madcourse.group06.models.advertisement.Advertisement
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.floor
+import kotlin.math.round
 import kotlin.math.roundToInt
 
 
@@ -117,6 +118,10 @@ fun timeStringToDoubleHour(time: String): Double {
     return time.split(":").foldRight(0.0) { a, b -> (a.toDouble() + b.toDouble()) / 60.0 } * 60
 }
 
+fun timeDoubleHourToString(time: Double): String {
+    return "${ floor(time) }:${ round((time - floor(time)) * 60) }"
+}
+
 
 class AdvFilter(
     val location: String? = null,
@@ -159,7 +164,7 @@ class SearchState(
 )
 
 fun hoursToCredit(hours:Double):Int{
-    return floor(hours).toInt()
+    return round(hours * 4).toInt()
 }
 //Useful extension functions
 fun Boolean.toInt() = if (this) 1 else 0

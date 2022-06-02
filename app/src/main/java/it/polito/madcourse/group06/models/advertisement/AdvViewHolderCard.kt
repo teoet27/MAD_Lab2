@@ -34,7 +34,7 @@ class AdvViewHolderCard(private val v: View,private val userViewModel:UserProfil
     fun bind(adv: Advertisement,viewType:Int) {
         this.title.text = adv.advTitle
         this.location.text = adv.advLocation
-        this.duration.text = adv.advDuration.toString()
+        this.duration.text = timeDoubleHourToString(adv.advDuration)
         this.account.text = adv.advAccount
 
         this.bookmark.setOnClickListener{
