@@ -71,8 +71,7 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
                 R.id.ShowListTimeslots,
                 R.id.ShowListOfServices,
                 R.id.showProfileFragment,
-                R.id.newProfileFragment,
-                R.id.showListOfUsers
+                R.id.newProfileFragment
             ), drawerLayout
         )
         // setup navigation drawer
@@ -121,10 +120,6 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
                     navController.navigate(R.id.showProfileFragment)
                     true
                 }
-                R.id.ListOfUsers -> {
-                    navController.navigate(R.id.showListOfUsers)
-                    true
-                }
                 R.id.settingID -> {
                     navController.navigate(R.id.setting)
                     true
@@ -138,9 +133,8 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
                     }
                     true
                 }
-                // temporary
                 R.id.myChatID -> {
-                    navController.navigate(R.id.myChat)
+                    navController.navigate(R.id.activeChats)
                     true
                 }
                 else -> false

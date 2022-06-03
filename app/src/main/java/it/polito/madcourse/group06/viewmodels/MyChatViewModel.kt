@@ -8,6 +8,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.storage.FirebaseStorage
+import it.polito.madcourse.group06.models.advertisement.Advertisement
 import it.polito.madcourse.group06.models.mychat.MyChatModel
 import it.polito.madcourse.group06.models.mychat.MyMessage
 import it.polito.madcourse.group06.models.userprofile.UserProfile
@@ -15,6 +16,8 @@ import java.lang.Exception
 
 class MyChatViewModel(application: Application) : AndroidViewModel(application) {
     private val db = FirebaseFirestore.getInstance()
+    private var listenerRegistration: ListenerRegistration
+    private val context = application
 
     /**
      * [UserProfile] with which the current user is chatting
@@ -33,6 +36,29 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
     private var _myChatPH = MyChatModel("", "", "", arrayListOf(), "-1")
     private val _pvtMyChat = MutableLiveData<MyChatModel>().also { it.value = _myChatPH }
     val myCurrentChat: LiveData<MyChatModel> = this._pvtMyChat
+
+    /**
+     * List of Chats
+     */
+
+    /**
+     * List of Advertisements
+     */
+    private val _chats = MutableLiveData<List<MyChatModel>>()
+    val listOfChats: LiveData<List<MyChatModel>> = _chats
+
+    init {
+        listenerRegistration = db.collection("Chat")
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    _chats.value = emptyList()
+                } else {
+                    _chats.value = value!!.mapNotNull { elem ->
+                        elem.toMyChatModel()
+                    }
+                }
+            }
+    }
 
     /**
      * setChattingUserProfile sets the chattingUser in order to retrieve the information
