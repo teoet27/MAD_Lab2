@@ -141,7 +141,6 @@ class MyChat : Fragment() {
         this.chatArrowUpButton.setOnClickListener {
             if (!this.isAnswerMenuOpen) {
                 // should be opened
-                this.recyclerView.isEnabled = false
                 this.recyclerView.animate().apply {
                     alpha(0.3f)
                 }
@@ -174,7 +173,6 @@ class MyChat : Fragment() {
                     ?.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_from_right))
             } else {
                 // should be closed
-                this.recyclerView.isEnabled = true
                 this.recyclerView.animate().apply {
                     alpha(1f)
                 }
