@@ -33,21 +33,10 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     private var _singleUserProfilePH = UserProfile(
         "", "", "", "", "", "", "",
         "", null, 0.0, 0.0, 0.0,
-        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>()
+        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), ArrayList<String>()
     )
     private val _pvtUserProfile = MutableLiveData<UserProfile>().also { it.value = _singleUserProfilePH }
     val currentUser: LiveData<UserProfile> = this._pvtUserProfile
-
-    /**
-     * [UserProfile] with which the current user is chatting
-     */
-    private var _chattingUserPH = UserProfile(
-        "", "", "", "", "", "", "",
-        "", null, 0.0, 0.0, 0.0,
-        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>()
-    )
-    private val _pvtChattingUser = MutableLiveData<UserProfile>().also { it.value = _chattingUserPH }
-    val chattingUser: LiveData<UserProfile> = this._pvtChattingUser
 
     /**
      * Other [UserProfile]
@@ -55,7 +44,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     private var _otherUserProfilePH = UserProfile(
         "", "", "", "", "", "",
         "", "", null, 0.0, 0.0, 0.0,
-        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>()
+        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), ArrayList<String>()
     )
     private val _pvtOtherUserProfile = MutableLiveData<UserProfile>().also { it.value = _otherUserProfilePH }
     val otherUser: LiveData<UserProfile> = this._pvtOtherUserProfile
@@ -89,7 +78,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
 
 
     fun bookmarkAdvertisement(advID: String) {
-        val updatedUser=_singleUserProfilePH.also { if(it.saved_ads_ids?.contains(advID) == true) it.saved_ads_ids?.remove(advID) else it.saved_ads_ids?.add(advID) }
+        val updatedUser = _singleUserProfilePH.also { if (it.saved_ads_ids?.contains(advID) == true) it.saved_ads_ids?.remove(advID) else it.saved_ads_ids?.add(advID) }
 
         db
             .collection("UserProfile")
@@ -110,7 +99,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 "comments_services_rx", updatedUser.comments_services_rx,
                 "comments_services_done", updatedUser.comments_services_done,
                 "img_path", updatedUser.imgPath,
-                "saved_ads_ids",updatedUser.saved_ads_ids
+                "saved_ads_ids", updatedUser.saved_ads_ids
             )
             .addOnSuccessListener {
                 Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
@@ -124,7 +113,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
 
     // TODO: add title to comments
     fun commentAd(advTitle: String?, comment: String?, rating: Double, isServiceDone: Boolean) {
-        val updatedUser=_otherUserProfilePH.also { dumbUser ->
+        val updatedUser = _otherUserProfilePH.also { dumbUser ->
             dumbUser.n_ratings++
             dumbUser.rating_sum += rating
 
@@ -135,8 +124,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 } else {
                     dumbUser.comments_services_done = arrayListOf(comment)
                 }
-            }
-            else if (!isServiceDone && !comment.isNullOrEmpty()) {
+            } else if (!isServiceDone && !comment.isNullOrEmpty()) {
                 // done
                 if (dumbUser.comments_services_rx != null) {
                     dumbUser.comments_services_rx!!.add(comment)
@@ -165,7 +153,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 "comments_services_rx", updatedUser.comments_services_rx,
                 "comments_services_done", updatedUser.comments_services_done,
                 "img_path", updatedUser.imgPath,
-                "saved_ads_ids",updatedUser.saved_ads_ids
+                "saved_ads_ids", updatedUser.saved_ads_ids
             )
             .addOnSuccessListener {
                 Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
@@ -201,11 +189,12 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             val comments_services_rx = this.get("comments_services_rx") as ArrayList<String>?
             val comments_services_done = this.get("comments_services_done") as ArrayList<String>?
             val imgPath = this.get("img_path") as String
-            val savedAdsIDs=this.get("saved_ads_ids") as ArrayList<String>?
+            val savedAdsIDs = this.get("saved_ads_ids") as ArrayList<String>?
+            val listOfChatIDs = this.get("chats_id") as ArrayList<String>?
             UserProfile(
                 id, nickname, fullname, qualification,
                 description, email, phoneNumber, location, skills, credit,
-                rating_sum, nRatings, comments_services_rx, comments_services_done, imgPath,savedAdsIDs
+                rating_sum, nRatings, comments_services_rx, comments_services_done, imgPath, savedAdsIDs, listOfChatIDs
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -232,7 +221,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 this._singleUserProfilePH = UserProfile(
                     null, null, null, null,
                     null, null, null, null, null, 0.0,
-                    0.0, 0.0, ArrayList<String>(), ArrayList<String>(), null,ArrayList<String>()
+                    0.0, 0.0, ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), ArrayList<String>()
                 )
                 this._pvtUserProfile.value = this._singleUserProfilePH
             }
@@ -257,7 +246,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 this._otherUserProfilePH = UserProfile(
                     null, null, null, null,
                     null, null, null, null, null, 0.0,
-                    0.0, 0.0, ArrayList<String>(), ArrayList<String>(), null,ArrayList<String>()
+                    0.0, 0.0, ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), ArrayList<String>()
                 )
                 this._pvtOtherUserProfile.value = this._otherUserProfilePH
             }
@@ -378,7 +367,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 "comments_services_rx", userProfile.comments_services_rx,
                 "comments_services_done", userProfile.comments_services_done,
                 "img_path", userProfile.imgPath,
-                "saved_ads_ids",userProfile.saved_ads_ids
+                "saved_ads_ids", userProfile.saved_ads_ids
             )
             .addOnSuccessListener {
                 Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
@@ -394,7 +383,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * Edit the [UserProfile] information with the newer ones passed as parameter.
      * @param userProfile the object containing the most updated values
      */
-    private fun editOtherUserProfile(userProfile: UserProfile) {
+    fun editOtherUserProfile(userProfile: UserProfile) {
         db
             .collection("UserProfile")
             .document(this._otherUserProfilePH.id!!)
@@ -414,7 +403,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 "comments_services_rx", userProfile.comments_services_rx,
                 "comments_services_done", userProfile.comments_services_done,
                 "img_path", userProfile.imgPath,
-                "saved_ads_ids",userProfile.saved_ads_ids
+                "saved_ads_ids", userProfile.saved_ads_ids
             )
             .addOnSuccessListener {
                 Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
@@ -503,16 +492,6 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 imageView.setImageBitmap(bitmapProfilePicture)
             }
             .addOnFailureListener { error -> error.printStackTrace() }
-    }
-
-    /**
-     * setChattingUserProfile sets the chattingUser in order to retrieve the information
-     * of the user with which the current user is chatting and get them in the MyChat fragment
-     * @param usr the user profile with which we are going to chat
-     */
-    fun setChattingUserProfile(usr: UserProfile) {
-        this._chattingUserPH = usr
-        this._pvtChattingUser.value = this._chattingUserPH
     }
 
     /**
