@@ -141,6 +141,7 @@ class MyChat : Fragment() {
         this.chatArrowUpButton.setOnClickListener {
             if (!this.isAnswerMenuOpen) {
                 // should be opened
+                this.recyclerView.isEnabled = false
                 this.recyclerView.animate().apply {
                     alpha(0.3f)
                 }
@@ -154,8 +155,10 @@ class MyChat : Fragment() {
                 }
 
                 this.chatArrowUpButton.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24)
-                this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(),
-                    R.color.prussian_blue)
+                this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(
+                    requireContext(),
+                    R.color.prussian_blue
+                )
                 this.myPurposeContainer.isGone = false
                 this.myPurposeContainer.animate().apply {
                     duration = 350
@@ -167,11 +170,11 @@ class MyChat : Fragment() {
                     translationY(chatMenuArrowStartingPositionY - 1000f)
                     translationX(chatMenuArrowStartingPositionX - 400f)
                 }.start()
-                this.myPurposeContainer.
-                findViewById<ImageView>(R.id.sendPurposeButtonID)
+                this.myPurposeContainer.findViewById<ImageView>(R.id.sendPurposeButtonID)
                     ?.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_from_right))
             } else {
                 // should be closed
+                this.recyclerView.isEnabled = true
                 this.recyclerView.animate().apply {
                     alpha(1f)
                 }
@@ -185,8 +188,10 @@ class MyChat : Fragment() {
                 }
 
                 this.chatArrowUpButton.setImageResource(R.drawable.ic_add_black_24dp)
-                this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(),
-                    R.color.darkGray)
+                this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(
+                    requireContext(),
+                    R.color.darkGray
+                )
                 this.myPurposeContainer.animate().apply {
                     duration = 150
                     alpha(0f)
