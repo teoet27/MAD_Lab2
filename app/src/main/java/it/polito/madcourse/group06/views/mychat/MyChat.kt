@@ -24,8 +24,8 @@ import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.models.mychat.MyChatAdapter
 import it.polito.madcourse.group06.viewmodels.MyChatViewModel
-import it.polito.madcourse.group06.viewmodels.MyMessage
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
+import it.polito.madcourse.group06.models.mychat.MyMessage
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -48,8 +48,10 @@ class MyChat : Fragment() {
     private lateinit var chatAcceptButton: TextView
     private lateinit var chatRejectButton: TextView
     private lateinit var chatArrowUpButton: ImageView
-    private var myID = ""
+    private var listOfMessages = arrayListOf<MyMessage>()
+    private var currentID = ""
     private var otherID = ""
+    private var chatID = ""
     private var chatMenuArrowStartingPositionY = 0.0f
     private var chatMenuArrowStartingPositionX = 0.0f
     private var isAnswerMenuOpen = false
@@ -112,15 +114,40 @@ class MyChat : Fragment() {
         this.chatMenuArrowStartingPositionY = this.chatArrowUpButton.y
         this.chatMenuArrowStartingPositionX = this.chatArrowUpButton.x
 
+        userProfileViewModel.currentUser.observe(viewLifecycleOwner) {
+            this.currentID = it.id!!
+        }
         myChatViewModel.chattingUser.observe(viewLifecycleOwner) {
             this.chatFullname.text = it.fullName
             this.chatNickname.text = "@${it.nickname}"
             userProfileViewModel.retrieveProfilePicture(this.chattingUserProfilePicture, it.imgPath!!)
+            this.otherID = it.id!!
+        }
+        myChatViewModel.myCurrentChat.observe(viewLifecycleOwner) {
+            this.chatID = it.chatID
+            this.listOfMessages = it.chatContent
         }
 
 
         this.sendMessageButton.setOnClickListener {
             if (this.inputMessageBox.text.isNotEmpty()) {
+                /**
+                 * Add the new message on the remote DB
+                 */
+                val msg = MyMessage(
+                    currentID, otherID,
+                    this.inputMessageBox.text.toString(),
+                    SimpleDateFormat(
+                        "dd/MM/yyyy hh:mm",
+                        Locale.getDefault()
+                    ).format(Date()).toString(), false
+                )
+                this.listOfMessages.add(msg)
+                myChatViewModel.addNewMessage(this.chatID, this.listOfMessages)
+
+                /**
+                 * Add the message to the adapter
+                 */
                 chatAdapterCard.addMessage(
                     MyMessage(
                         "0", "1", this.inputMessageBox.text.toString(),
@@ -130,8 +157,12 @@ class MyChat : Fragment() {
                         ).format(Date()).toString(), false
                     )
                 )
+
+                // Set the input message box to an empty textview
                 this.inputMessageBox.setText("")
-                val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(this.context)
+
+                // Set the linear layout of the recycler view
+                val linearLayoutManager = LinearLayoutManager(this.context)
                 linearLayoutManager.stackFromEnd = true
                 this.recyclerView.layoutManager = linearLayoutManager
                 this.recyclerView.adapter = chatAdapterCard
@@ -143,15 +174,15 @@ class MyChat : Fragment() {
                 // should be opened
                 this.recyclerView.animate().apply {
                     alpha(0.3f)
-                }
+                }.start()
                 this.inputMessageBox.isEnabled = false
                 this.sendMessageButton.isEnabled = false
                 this.inputMessageBox.animate().apply {
                     alpha(0.3f)
-                }
+                }.start()
                 this.sendMessageButton.animate().apply {
                     alpha(0.3f)
-                }
+                }.start()
 
                 this.chatArrowUpButton.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24)
                 this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(
@@ -175,15 +206,15 @@ class MyChat : Fragment() {
                 // should be closed
                 this.recyclerView.animate().apply {
                     alpha(1f)
-                }
+                }.start()
                 this.inputMessageBox.isEnabled = true
                 this.sendMessageButton.isEnabled = true
                 this.inputMessageBox.animate().apply {
                     alpha(1f)
-                }
+                }.start()
                 this.sendMessageButton.animate().apply {
                     alpha(1f)
-                }
+                }.start()
 
                 this.chatArrowUpButton.setImageResource(R.drawable.ic_add_black_24dp)
                 this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(
