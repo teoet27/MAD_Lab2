@@ -10,14 +10,17 @@ import it.polito.madcourse.group06.R
  * and provides the references to each component of the comment card.
  */
 class CommentsViewHolderCard(v: View) : RecyclerView.ViewHolder(v)  {
-    val name: TextView = v.findViewById(R.id.commentCardTitle)
+    private val title: TextView = v.findViewById(R.id.commentTitle)
+    private val body: TextView = v.findViewById(R.id.commentBody)
 
     /**
      * bind:
      * A method to bind the i-th entry of the commentsList to the i-th holder properties.
-     * @param commentName an object of class Service
+     * @param comment an object of class Service
      */
-    fun bind(commentName: String) {
-        this.name.text = commentName
+    fun bind(comment: String) {
+        val list = comment.split("#*#")
+        this.title.text = list[0]
+        this.body.text = list[1]
     }
 }
