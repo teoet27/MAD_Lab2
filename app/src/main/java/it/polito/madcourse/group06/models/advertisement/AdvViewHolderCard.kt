@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
@@ -40,15 +41,22 @@ class AdvViewHolderCard(private val v: View, private val userViewModel: UserProf
         this.duration.text = timeDoubleHourToString(if(adv.activeFor>0) adv.activeFor else adv.advDuration)
         this.account.text = adv.advAccount
 
-        this.bookmark.setOnClickListener{
-            userViewModel.bookmarkAdvertisement(adv.id!!)
-        }
-        if(viewType == R.layout.adv_to_rate_item || viewType == R.layout.adv_to_rate_item_saved)
-             v.findViewById<Button>(R.id.rate_button).setOnClickListener{
-                 (v.context as TBMainActivity).supportFragmentManager.beginTransaction()
-                         .add(R.id.nav_host_fragment_content_main, RatingFragment(), "rating_fragment")
+            this.bookmark.setOnClickListener{
+                userViewModel.bookmarkAdvertisement(adv.id!!)
+            }
+            if(viewType == R.layout.adv_to_rate_item || viewType == R.layout.adv_to_rate_item_saved)
+                 v.findViewById<Button>(R.id.rate_button).setOnClickListener {
+                 RatingFragment().also {
+                     it.arguments = bundleOf(
+                         "other_id" to adv.accountID,
+                         "adv_title" to adv.advTitle,
+                         "adv_id" to adv.id
+                     )
+                     (v.context as TBMainActivity).supportFragmentManager.beginTransaction()
+                         .add(R.id.nav_host_fragment_content_main, it, "rating_fragment")
                          .commit()
-             }
+                     }
+                 }
 
         if(viewType == R.layout.adv_active_item || viewType == R.layout.adv_active_item_saved){
             v.findViewById<TextView>(R.id.trade_credit).text = hoursToCredit(adv.activeFor).toString()

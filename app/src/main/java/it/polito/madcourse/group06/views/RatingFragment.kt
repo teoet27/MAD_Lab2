@@ -1,5 +1,6 @@
 package it.polito.madcourse.group06.views
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.Button
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
@@ -21,20 +23,20 @@ import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 class RatingFragment: Fragment() {
     private lateinit var activityTB: TBMainActivity
 
-    private val advertisementViewModel: AdvertisementViewModel by activityViewModels()
     private val userProfileViewModel by activityViewModels<UserProfileViewModel>()
+    private val advertisementViewModel by activityViewModels<AdvertisementViewModel>()
 
-    private val dumbAdvertisement: Advertisement = Advertisement(
-        "", "", "", arrayListOf<String>(),
-        "", "", "", "", 0.0,
-        "", "", 0.0, "",true,
-        null, null, null, 0.0, false
-    )
-    private val dumbUser: UserProfile = UserProfile(null, null, null, null,
-    null, null, null, null, null, 0.0, 0.0, 0.0,
-        null, null, null,null)
+    private var otherId: String? = ""
+    private var advId: String? = ""
+    private var advTitle: String? = ""
 
-    private val updatedCommentsServicesDoneList = ArrayList<String>()
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        otherId = arguments?.getString("other_id")
+        advId = arguments?.getString("adv_id")
+        advTitle = arguments?.getString("adv_title")
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         activityTB = requireActivity() as TBMainActivity
@@ -44,46 +46,16 @@ class RatingFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        advertisementViewModel.advertisement.observe(viewLifecycleOwner) { singleAdvertisement ->
-            dumbAdvertisement.id = singleAdvertisement.id
-            dumbAdvertisement.advAccount = singleAdvertisement.advAccount
-            dumbAdvertisement.accountID = singleAdvertisement.accountID
-            dumbAdvertisement.advTitle = singleAdvertisement.advTitle
-            dumbAdvertisement.advLocation = singleAdvertisement.advLocation
-            dumbAdvertisement.advDescription = singleAdvertisement.advDescription
-            dumbAdvertisement.advDate = singleAdvertisement.advDate
-            dumbAdvertisement.advStartingTime = singleAdvertisement.advStartingTime
-            dumbAdvertisement.advEndingTime = singleAdvertisement.advEndingTime
-            dumbAdvertisement.advDuration = singleAdvertisement.advDuration
-            dumbAdvertisement.listOfSkills = singleAdvertisement.listOfSkills
-        }
-
-        userProfileViewModel.otherUser.observe(this.viewLifecycleOwner) { otherUser ->
-            dumbUser.id = otherUser.id
-            dumbUser.nickname = otherUser.nickname
-            dumbUser.fullName = otherUser.fullName
-            dumbUser.qualification = otherUser.qualification
-            dumbUser.description = otherUser.description
-            dumbUser.email = otherUser.email
-            dumbUser.phoneNumber = otherUser.phoneNumber
-            dumbUser.location = otherUser.location
-            dumbUser.skills = otherUser.skills
-            dumbUser.credit = otherUser.credit
-            dumbUser.rating_sum = otherUser.rating_sum
-            dumbUser.n_ratings = otherUser.n_ratings
-            dumbUser.comments_services_rx = otherUser.comments_services_rx
-            dumbUser.comments_services_done = otherUser.comments_services_done
-            dumbUser.imgPath = otherUser.imgPath
-
-            /*if (otherUser.comments_services_done != null) {
-                for (comm in otherUser.comments_services_done!!) {
-                    updatedCommentsServicesDoneList.add(comm)
-                }
-            }*/
+        view.findViewById<ConstraintLayout>(R.id.background_rating).setOnClickListener {
+            // go back to timeslots list
+            val frag = activity?.supportFragmentManager!!.findFragmentByTag("rating_fragment")
+            activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
         }
 
         val ratingBar = view.findViewById<RatingBar>(R.id.ratingBar)
         val submitRatingButton = view.findViewById<Button>(R.id.submitRating)
+
+        var isServiceDone: Boolean = true
 
         ratingBar.setRating(0F)
         ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
@@ -93,72 +65,60 @@ class RatingFragment: Fragment() {
             }
         }
 
-        submitRatingButton?.setOnClickListener {
-            if (ratingBar.rating == 0F) {
-                Snackbar.make(
-                    requireView(), "Please vote your experience.", Snackbar.LENGTH_LONG
-                ).show()
-            } else {
-                // save rating and comments
-                val rating = dumbUser.rating_sum + ratingBar.rating.toDouble()
-                val comment = view.findViewById<TextView>(R.id.comment_rating).text.toString()
-                dumbAdvertisement.rating = ratingBar.rating.toDouble()
-                dumbAdvertisement.comment = comment
-                advertisementViewModel.editAdvertisement(dumbAdvertisement)
-
-                // save rating and comments in user profile (do not change the order of these edits)
-                val new_n_ratings = dumbUser.n_ratings + 1
-                var new_comments_services_done: ArrayList<String> = ArrayList<String>()
-                if (dumbUser.comments_services_done != null) {
-                    var new_comments_services_done = dumbUser.comments_services_done
-                }
-                if (comment != null) {
-                    new_comments_services_done?.add(comment)
-                }
-                dumbUser.rating_sum = rating
-                dumbUser.n_ratings = new_n_ratings
-                dumbUser.comments_services_done = new_comments_services_done
-                userProfileViewModel.editOtherUserProfile(dumbUser)
-
-                // go back to timeslots list
-                val frag = activity?.supportFragmentManager!!.findFragmentByTag("rating_fragment")
-                activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
-            }
-        }
-
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (ratingBar.rating == 0F) {
-                    Snackbar.make(
-                        requireView(), "Please vote your experience.", Snackbar.LENGTH_LONG
-                    ).show()
-                } else {
-                    // save rating and comments
-                    val rating = dumbUser.rating_sum + ratingBar.rating.toDouble()
-                    val comment = view.findViewById<TextView>(R.id.comment_rating).text.toString()
-                    dumbAdvertisement.rating = ratingBar.rating.toDouble()
-                    dumbAdvertisement.comment = comment
-                    advertisementViewModel.editAdvertisement(dumbAdvertisement)
-
-                    // save rating and comments in user profile (do not change the order of these edits)
-                    val new_n_ratings = dumbUser.n_ratings + 1
-                    var new_comments_services_done: ArrayList<String> = ArrayList<String>()
-                    if (dumbUser.comments_services_done != null) {
-                        var new_comments_services_done = dumbUser.comments_services_done
-                    }
-                    if (comment != null) {
-                        new_comments_services_done?.add(comment)
-                    }
-                    dumbUser.rating_sum = rating
-                    dumbUser.n_ratings = new_n_ratings
-                    dumbUser.comments_services_done = new_comments_services_done
-                    userProfileViewModel.editOtherUserProfile(dumbUser)
-
                     // go back to timeslots list
                     val frag = activity?.supportFragmentManager!!.findFragmentByTag("rating_fragment")
                     activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
+                } else {
+                    submitRatingButton.performClick()
                 }
             }
         })
+
+        otherId?.let {
+            advId?.let { it1 ->
+                advertisementViewModel.fetchSingleAdvertisementById(it1)
+                userProfileViewModel.fetchUserProfileById(it)
+
+                userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { currentUser ->
+                    userProfileViewModel.otherUser.observe(this.viewLifecycleOwner) { otherUser ->
+                        if (!otherUser.id.isNullOrEmpty()) {
+                            submitRatingButton?.setOnClickListener {
+                                if (ratingBar.rating == 0F) {
+                                    Snackbar.make(
+                                        requireView(),
+                                        "Please vote your experience.",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                } else {
+                                    // save rating and comments
+                                    val rating = ratingBar.rating.toDouble()
+                                    val comment =
+                                        view.findViewById<TextView>(R.id.comment_rating).text.toString()
+
+                                    userProfileViewModel.commentAd(
+                                        advTitle,
+                                        comment,
+                                        rating,
+                                        isServiceDone
+                                    )
+
+                                    advertisementViewModel.deactivateAd(isServiceDone)
+
+                                    // go back to timeslots list
+                                    val frag =
+                                        activity?.supportFragmentManager!!.findFragmentByTag("rating_fragment")
+                                    activity?.supportFragmentManager?.beginTransaction()
+                                        ?.remove(frag!!)
+                                        ?.commit()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

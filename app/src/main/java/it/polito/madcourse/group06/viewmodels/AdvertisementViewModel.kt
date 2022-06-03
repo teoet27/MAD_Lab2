@@ -9,6 +9,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import it.polito.madcourse.group06.models.advertisement.Advertisement
+import it.polito.madcourse.group06.models.userprofile.UserProfile
 import java.lang.Exception
 
 class AdvertisementViewModel(application: Application) : AndroidViewModel(application) {
@@ -204,6 +205,50 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
+    fun deactivateAd(isServiceDone: Boolean) {
+        this._singleAdvertisementPH.also{ad->
+            if (isServiceDone) {
+                ad.rxUserId = null
+            } else {
+                ad.ratingUserId = null
+            }
+            db
+                .collection("Advertisement")
+                .document(ad.id!!)
+                .set(
+                    mapOf(
+                        "id" to ad.id,
+                        "title" to ad.advTitle,
+                        "description" to ad.advDescription,
+                        "list_of_skills" to ad.listOfSkills,
+                        "location" to ad.advLocation,
+                        "date" to ad.advDate,
+                        "starting_time" to ad.advStartingTime,
+                        "ending_time" to ad.advEndingTime,
+                        "duration" to ad.advDuration,
+                        "account_name" to ad.advAccount,
+                        "accountID" to ad.accountID,
+                        "rating" to ad.rating,
+                        "comment" to ad.comment,
+                        "is_available" to ad.isAvailable,
+                        "rx_user_id" to ad.rxUserId,
+                        "rating_user_id" to ad.ratingUserId,
+                        "active_at" to ad.activeAt,
+                        "active_for" to ad.activeFor,
+                        "is_ended" to ad.isEnded
+                    )
+                )
+                .addOnSuccessListener {
+                    Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
+                    this._singleAdvertisementPH = ad
+                    this._pvtAdvertisement.value = this._singleAdvertisementPH
+                }
+                .addOnFailureListener {
+                    Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
     /**
      * Edit an [Advertisement] with the info passed through an Object of class [Advertisement]
      * @param ad the updated [Advertisement]
@@ -277,6 +322,32 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     fun setSingleAdvertisement(newAdv: Advertisement) {
         this._singleAdvertisementPH = newAdv
         this._pvtAdvertisement.value = _singleAdvertisementPH
+    }
+
+    /**
+     * fetchSingleAdvertisementById: Fetch the advertisement by their id
+     * @param id the id of the ad
+     */
+    fun fetchSingleAdvertisementById(id: String) {
+        db
+            .collection("Advertisement")
+            .whereEqualTo("id", id)
+            .get()
+            .addOnSuccessListener { query ->
+                query.forEach { docSnap ->
+                    this._singleAdvertisementPH = docSnap.toAdvertisement()!!
+                    this._pvtAdvertisement.value = this._singleAdvertisementPH
+                }
+            }
+            .addOnFailureListener {
+                this._singleAdvertisementPH = Advertisement(
+                    "", "", "", arrayListOf<String>(),
+                    "", "", "", "", 0.0,
+                    "", "", 0.0, "",true,
+                    null, null, null, 0.0, false
+                )
+                this._pvtAdvertisement.value = this._singleAdvertisementPH
+            }
     }
 
     /**
