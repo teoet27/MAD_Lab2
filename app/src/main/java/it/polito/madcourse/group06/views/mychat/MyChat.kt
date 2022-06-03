@@ -213,7 +213,8 @@ class MyChat : Fragment() {
         myChatViewModel.myCurrentChat.observe(viewLifecycleOwner) { chat ->
             this.emptyChatMessage.isVisible = chat.chatContent.isEmpty()
             chatAdapterCard = MyChatAdapter(chat.chatContent)
-            val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(this.context)
+
+            val linearLayoutManager = LinearLayoutManager(this.context)
             linearLayoutManager.stackFromEnd = true
             this.recyclerView.layoutManager = linearLayoutManager
             this.recyclerView.adapter = chatAdapterCard
