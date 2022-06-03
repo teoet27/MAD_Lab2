@@ -37,8 +37,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     private val dumbAdvertisement: Advertisement = Advertisement(
         "", "", "", arrayListOf<String>(),
         "", "", "", "", 0.0,
-        "", "", 0.0, "",true,
-        null, null, null, 0.0, false
+        "", "",
+        null, null, null, 0.0
     )
 
     private lateinit var advTitle: TextView

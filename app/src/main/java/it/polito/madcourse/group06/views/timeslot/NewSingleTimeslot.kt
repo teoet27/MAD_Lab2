@@ -190,14 +190,10 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                                 timeDifference,
                                 accountName,
                                 accountID,
-                                0.0,
-                                "",
-                                true,
                                 null,
                                 null,
                                 null,
-                                0.0,
-                                false
+                                0.0
                             )
                         )
                         userProfileViewModel.updateSkillList(skillList)
@@ -303,14 +299,10 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                                     timeDifference,
                                     accountName,
                                     accountID,
-                                    0.0,
-                                    "",
-                                    true,
                                     null,
                                     null,
                                     null,
                                     0.0,
-                                    false
                                 )
                             )
                             userProfileViewModel.updateSkillList(skillList)

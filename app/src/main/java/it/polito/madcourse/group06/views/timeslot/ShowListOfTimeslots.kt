@@ -137,11 +137,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                         associatedSavedAdsIdList = it
                     }
 
-                    // check if ad are ended
-                    listOfAdv.map { adv ->
-                        adv.isEnded = adv.rxUserId.isNullOrEmpty() && adv.ratingUserId.isNullOrEmpty() && !adv.activeAt.isNullOrEmpty()
-                    }
-
                     // Create notification badges for expired ads among my and active timeslots
                     listOfAdv.count { adv ->
                             // current user owns the ad
