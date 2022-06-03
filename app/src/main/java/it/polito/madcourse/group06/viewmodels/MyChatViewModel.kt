@@ -1,6 +1,7 @@
 package it.polito.madcourse.group06.viewmodels
 
 import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,10 +10,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.storage.FirebaseStorage
 import it.polito.madcourse.group06.models.mychat.MyChatModel
+import it.polito.madcourse.group06.models.mychat.MyMessage
 import it.polito.madcourse.group06.models.userprofile.UserProfile
 import java.lang.Exception
 
-class MyChatViewModel(application: Application) : ViewModel() {
+class MyChatViewModel(application: Application) : AndroidViewModel(application) {
     private val db = FirebaseFirestore.getInstance()
     private val storage: FirebaseStorage = FirebaseStorage.getInstance()
     private var listenerRegistration: ListenerRegistration
@@ -87,7 +89,7 @@ class MyChatViewModel(application: Application) : ViewModel() {
 
     fun fetchChatByAdvertisementID(currentUserID: String, otherUserID: String, advertisementID: String) {
         db
-            .collection("UserProfile")
+            .collection("Chat")
             .whereEqualTo("id", currentUserID)
             .whereArrayContains("chats_id", advertisementID)
             .get()
@@ -99,6 +101,19 @@ class MyChatViewModel(application: Application) : ViewModel() {
                         this.fetchChat(docSnap.toString())
                     }
                 }
+            }
+    }
+
+    fun addNewMessage(chatID: String, messages: ArrayList<MyMessage>) {
+        db
+            .collection("Chat")
+            .document(chatID)
+            .update(
+                "chat_content", messages
+            )
+            .addOnSuccessListener {
+                this._myChatPH.chatContent = messages
+                this._pvtMyChat.value = this._myChatPH
             }
     }
 
