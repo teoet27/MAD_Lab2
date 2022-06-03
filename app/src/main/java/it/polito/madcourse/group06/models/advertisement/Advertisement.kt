@@ -84,5 +84,21 @@ data class Advertisement(
     @get:PropertyName("rx_user_id")
     @set:PropertyName("rx_user_id")
     var rxUserId: String?,
+
+    @get:PropertyName("rating_user_id")
+    @set:PropertyName("rating_user_id")
+    var ratingUserId: String?,
+
+    @get:PropertyName("active_at")
+    @set:PropertyName("active_at")
+    var activeAt: String?,
+
+    @get:PropertyName("active_for")
+    @set:PropertyName("active_for")
+    var activeFor: Double,
+
+    @get:PropertyName("is_ended")
+    @set:PropertyName("is_ended")
+    var isEnded: Boolean
 )
 

@@ -18,6 +18,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
@@ -101,20 +102,28 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
             } else {
                 this.advDescription.text = singleAdvertisement.advDescription
             }
+
+            this.editButton.setOnClickListener {
+                if (isMine) {
+                    if (singleAdvertisement.rxUserId.isNullOrEmpty() && singleAdvertisement.ratingUserId.isNullOrBlank()) {
+                        // timeslot can be modified as it is not active
+                        val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
+                        activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
+                        Navigation.findNavController(view)
+                            .navigate(R.id.action_ShowListTimeslots_to_editTimeSlotDetailsFragment)
+                    } else {
+                        // timeslot cannot be modified as it is active
+                        Snackbar.make(
+                            requireView(), "Error: you cannot modify this timeslot while it is active.", Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+                } else {
+                    /*chat*/
+                }
+            }
         }
 
         this.advAccount.setPaintFlags(this.advAccount.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
-
-        this.editButton.setOnClickListener {
-            if (isMine) {
-                val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
-                activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_ShowListTimeslots_to_editTimeSlotDetailsFragment)
-            } else {
-                /*chat*/
-            }
-        }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

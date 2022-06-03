@@ -111,9 +111,11 @@ class ShowListOfSkills : Fragment(R.layout.service_list) {
                 this.recyclerView.adapter = SkillAdapterCard(finalList, sharedViewModel)
 
                 // Create notification badges for expired ads among my and active timeslots
-                listOfAdv.count {
-                    it.rxUserId == user.id ||
-                            (it.accountID == user.id && !it.rxUserId.isNullOrEmpty())
+                listOfAdv.count { adv ->
+                    // current user owns the ad
+                    (user.id == adv.accountID && adv.isToBeRated() && adv.rxUserId.isNullOrEmpty()) ||
+                            // current user is the client of the ad
+                            (user.id == adv.ratingUserId && adv.isToBeRated())
                 }
                     .also { n ->
                         when (n) {

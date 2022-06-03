@@ -13,6 +13,8 @@ import it.polito.madcourse.group06.utilities.*
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import org.w3c.dom.Text
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * [AdvViewHolderCard] extends the ViewHolder of the [RecyclerView]
@@ -34,19 +36,25 @@ class AdvViewHolderCard(private val v: View,private val userViewModel:UserProfil
     fun bind(adv: Advertisement,viewType:Int) {
         this.title.text = adv.advTitle
         this.location.text = adv.advLocation
-        this.duration.text = timeDoubleHourToString(adv.advDuration)
+        this.duration.text = timeDoubleHourToString(adv.activeFor)
         this.account.text = adv.advAccount
 
         this.bookmark.setOnClickListener{
             userViewModel.bookmarkAdvertisement(adv.id!!)
         }
-        if(viewType==R.layout.adv_to_rate_item||viewType==R.layout.adv_to_rate_item_saved)
+        if(viewType == R.layout.adv_to_rate_item || viewType == R.layout.adv_to_rate_item_saved)
              v.findViewById<Button>(R.id.rate_button).setOnClickListener{
                  /*open rate fragment*/
              }
-        if(viewType==R.layout.adv_active_item||viewType==R.layout.adv_active_item_saved){
-            v.findViewById<TextView>(R.id.trade_credit).text=hoursToCredit(adv.advDuration).toString()
-            v.findViewById<TextView>(R.id.trade_starting_time).text=adv.advStartingTime
+        if(viewType == R.layout.adv_active_item || viewType == R.layout.adv_active_item_saved){
+            v.findViewById<TextView>(R.id.trade_credit).text = hoursToCredit(adv.activeFor).toString()
+            val timeDate = if (adv.advDate != SimpleDateFormat("dd/MM/yyyy").format(Date())) {
+                adv.activeAt + ", on " + adv.advDate
+            }
+            else {
+                adv.activeAt
+            }
+            v.findViewById<TextView>(R.id.trade_starting_time).text = timeDate
         }
     }
 }

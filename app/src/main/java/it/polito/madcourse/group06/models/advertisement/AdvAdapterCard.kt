@@ -65,33 +65,37 @@ class AdvAdapterCard(
     }
 
     override fun getItemViewType(position: Int): Int {
-
-        if (showedData[position].isExpired()) { //expired
-            return if (!showedData[position].isAvailable &&
-                (showedData[position].rxUserId==userID ||showedData[position].accountID==userID)) {//to rate ads
-                if (savedAdsIDs.contains(showedData[position].id))
-                    R.layout.adv_to_rate_item_saved
-                else
-                    R.layout.adv_to_rate_item
-            } else { //generic ads
-                if (savedAdsIDs.contains(showedData[position].id))
-                    R.layout.adv_expired_item_saved
-                else
-                    R.layout.adv_expired_item
-            }
-        } else {
-            return if (!showedData[position].isAvailable &&
-                (showedData[position].rxUserId==userID ||(showedData[position].accountID==userID&&showedData[position].rxUserId!=null))) {//active ads
-                if (savedAdsIDs.contains(showedData[position].id))
-                    R.layout.adv_active_item_saved
-                else
-                    R.layout.adv_active_item
-            } else { //generic ads
-                if (savedAdsIDs.contains(showedData[position].id))
-                    R.layout.adv_item_saved
-                else
-                    R.layout.adv_item
-            }
+        // case 1: adv was active, it needs to be rated
+        return if (showedData[position].isToBeRated() && userID == showedData[position].accountID
+            && showedData[position].rxUserId.isNullOrEmpty()
+            || (userID == showedData[position].ratingUserId && showedData[position].isToBeRated()) ) {
+            if (savedAdsIDs.contains(showedData[position].id))
+                R.layout.adv_to_rate_item_saved
+            else
+                R.layout.adv_to_rate_item
+        }
+        // case 2: generic adv is expired
+        else if (showedData[position].isExpired()) {
+            if (savedAdsIDs.contains(showedData[position].id))
+                R.layout.adv_expired_item_saved
+            else
+                R.layout.adv_expired_item
+        }
+        // case 3: active ads, still to begin
+        else if (userID == showedData[position].accountID
+            && !showedData[position].rxUserId.isNullOrEmpty()
+            || (userID == showedData[position].ratingUserId)) {
+            if (savedAdsIDs.contains(showedData[position].id))
+                R.layout.adv_active_item_saved
+            else
+                R.layout.adv_active_item
+        }
+        // case 4: generic adv, not in any particular state
+        else {
+            if (savedAdsIDs.contains(showedData[position].id))
+                R.layout.adv_item_saved
+            else
+                R.layout.adv_item
         }
     }
 
@@ -121,16 +125,16 @@ class AdvAdapterCard(
     ): List<Advertisement> {
 
         // My timeslot filtering
-        if (myAds == true) {
-            return adsList.filter { it.accountID == userID }
+        return if (myAds == true) {
+            adsList.filter { it.accountID == userID }
         }
         // Active or Saved timeslot filtering
         else if (activeAdsFlag == true) {
-            return adsList.filter { it.rxUserId==userID||(it.accountID==userID&&!it.rxUserId.isNullOrEmpty()) }
+            adsList.filter { it.rxUserId == userID || (it.accountID == userID && !it.rxUserId.isNullOrEmpty()) }
         } else if (savedAdsFlag == true) {
-            return adsList.filter { savedAdsIDs.contains(it.id) }
+            adsList.filter { savedAdsIDs.contains(it.id) }
         } else
-            return adsList.filter { (it.isAvailable || it.accountID == userID)&&!it.isExpired() }
+            adsList.filter { (it.isAvailable || it.accountID == userID) && !it.isExpired() }
     }
 
     /**
@@ -158,7 +162,6 @@ class AdvAdapterCard(
         sortUp: Boolean? = null,
         search: String? = null
     ) {
-
 
         if (savedAdsIDs != null) {
             this.savedAdsIDs = savedAdsIDs

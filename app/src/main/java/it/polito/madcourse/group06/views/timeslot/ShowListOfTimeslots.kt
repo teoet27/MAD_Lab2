@@ -137,17 +137,24 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                         associatedSavedAdsIdList = it
                     }
 
+                    // check if ad are ended
+                    listOfAdv.map { adv ->
+                        adv.isEnded = adv.rxUserId.isNullOrEmpty() && adv.ratingUserId.isNullOrEmpty() && !adv.activeAt.isNullOrEmpty()
+                    }
+
                     // Create notification badges for expired ads among my and active timeslots
-                    listOfAdv.count {
-                        it.rxUserId == currentAccountID ||
-                                (it.accountID == currentAccountID && !it.rxUserId.isNullOrEmpty()) }
+                    listOfAdv.count { adv ->
+                            // current user owns the ad
+                            (currentAccountID == adv.accountID && adv.isToBeRated() && adv.rxUserId.isNullOrEmpty()) ||
+                                    // current user is the client of the ad
+                                    (currentAccountID == adv.ratingUserId && adv.isToBeRated())
+                        }
                         .also { n ->
                             when (n) {
                                 0 -> bottomNavView.removeBadge(R.id.active_time_slots_tab)
                                 else -> bottomNavView.getOrCreateBadge(R.id.active_time_slots_tab)
                                     .number = n
                             }
-
                         }
                     myExpiredAdsCnt=listOfAdv.count { it.accountID == currentAccountID &&
                             it.isExpired() }

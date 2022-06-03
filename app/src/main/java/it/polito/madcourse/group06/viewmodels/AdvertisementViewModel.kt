@@ -25,7 +25,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     private var _singleAdvertisementPH = Advertisement(
         "", "", "", arrayListOf<String>(),
         "", "", "", "", 0.0,
-        "", "", 0.0, "",true, null
+        "", "", 0.0, "",true,
+        null, null, null, 0.0, false
     )
     private val _pvtAdvertisement = MutableLiveData<Advertisement>().also {
         it.value = _singleAdvertisementPH
@@ -68,11 +69,16 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             val comment = this.get("comment") as String
             val isAvailable = this.get("is_available") as Boolean
             val rxUserId = this.get("rx_user_id") as String?
+            val ratingUserId = this.get("rating_user_id") as String?
+            val activeAt = this.get("active_at") as String?
+            val activeFor = this.get("active_for") as Double
+            val isEnded = this.get("is_ended") as Boolean
             Advertisement(
                 id, title, description, listOfSkills ?: arrayListOf<String>(),
                 location, date, startingTime,
                 endingTime, duration, accountName,
-                accountID, rating, comment, isAvailable, rxUserId
+                accountID, rating, comment, isAvailable,
+                rxUserId, ratingUserId, activeAt, activeFor, isEnded
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -105,7 +111,11 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "rating" to ad.rating,
                     "comment" to ad.comment,
                     "is_available" to ad.isAvailable,
-                    "rx_user_id" to ad.rxUserId
+                    "rx_user_id" to ad.rxUserId,
+                    "rating_user_id" to ad.ratingUserId,
+                    "active_at" to ad.activeAt,
+                    "active_for" to ad.activeFor,
+                    "is_ended" to ad.isEnded
                 )
             )
             .addOnSuccessListener {
@@ -176,7 +186,11 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                         "rating" to ad.rating,
                         "comment" to ad.comment,
                         "is_available" to ad.isAvailable,
-                        "rx_user_id" to ad.rxUserId
+                        "rx_user_id" to ad.rxUserId,
+                        "rating_user_id" to ad.ratingUserId,
+                        "active_at" to ad.activeAt,
+                        "active_for" to ad.activeFor,
+                        "is_ended" to ad.isEnded
                     )
                 )
                 .addOnSuccessListener {
@@ -214,7 +228,11 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "rating" to ad.rating,
                     "comment" to ad.comment,
                     "is_available" to ad.isAvailable,
-                    "rx_user_id" to ad.rxUserId
+                    "rx_user_id" to ad.rxUserId,
+                    "rating_user_id" to ad.ratingUserId,
+                    "active_at" to ad.activeAt,
+                    "active_for" to ad.activeFor,
+                    "is_ended" to ad.isEnded
                 )
             )
             .addOnSuccessListener {
@@ -268,5 +286,4 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
         super.onCleared()
         listenerRegistration.remove()
     }
-
 }
