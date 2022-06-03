@@ -46,6 +46,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
     private lateinit var skillsChips: ChipGroup
     private lateinit var noSkillsProvidedLabel: TextView
     private lateinit var backgroundAd: ConstraintLayout
+    private var currentAccountID: String = ""
     private var isMine = false
     private lateinit var email: String
 
@@ -87,7 +88,8 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
 
         advViewModel.advertisement.observe(viewLifecycleOwner) { singleAdvertisement ->
             userProfileViewModel.currentUser.observe(viewLifecycleOwner) { user ->
-                if (singleAdvertisement.accountID == user.id) {
+                currentAccountID = user.id!!
+                if (singleAdvertisement.accountID == currentAccountID) {
                     isMine = true
                     this.editButton.setImageResource(R.drawable.ic_edit_black_24dp)
                 } else {
@@ -149,7 +151,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                     /**
                      * Call to a chat with this user
                      */
-                    myChatViewModel.fetchChat("")
+                    myChatViewModel.fetchChatByAdvertisementID(currentAccountID, singleAdvertisement.id!!)
                     val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
                     activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
                     Navigation.findNavController(view).navigate(R.id.action_ShowListTimeslots_to_myChat)
