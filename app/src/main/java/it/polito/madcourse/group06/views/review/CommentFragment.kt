@@ -1,4 +1,4 @@
-package it.polito.madcourse.group06.views
+package it.polito.madcourse.group06.views.review
 
 import android.os.Bundle
 import android.view.*

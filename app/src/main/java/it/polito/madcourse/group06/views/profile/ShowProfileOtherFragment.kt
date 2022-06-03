@@ -19,8 +19,7 @@ import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
-import it.polito.madcourse.group06.views.CommentFragment
-import it.polito.madcourse.group06.views.RatingFragment
+import it.polito.madcourse.group06.views.review.CommentFragment
 import it.polito.madcourse.group06.views.profile.comments.CommentsAdapterCardShort
 
 

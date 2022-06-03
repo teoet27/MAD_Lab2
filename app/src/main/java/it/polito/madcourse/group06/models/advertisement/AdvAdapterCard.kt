@@ -2,20 +2,13 @@ package it.polito.madcourse.group06.models.advertisement
 
 import android.app.Activity
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.fragment.app.findFragment
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
-import it.polito.madcourse.group06.models.mychat.MyChatViewHolder
 import it.polito.madcourse.group06.utilities.*
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
-import it.polito.madcourse.group06.views.RatingFragment
-import it.polito.madcourse.group06.views.timeslot.FilterTimeslots
 import it.polito.madcourse.group06.views.timeslot.ShowSingleTimeslot
 import java.util.*
 import kotlin.math.roundToInt

@@ -85,7 +85,7 @@
     </fragment>
     <fragment
         android:id="@+id/ShowListOfServices"
-        android:name="it.polito.madcourse.group06.views.ShowListOfSkills"
+        android:name="it.polito.madcourse.group06.views.timeslot.ShowListOfSkills"
         android:label="Offered Services">
         <action
             android:id="@+id/action_showListOfSkills_to_ShowListTimeslots"
@@ -135,7 +135,7 @@
     </fragment>
     <fragment
         android:id="@+id/ratingFragment"
-        android:name="it.polito.madcourse.group06.views.RatingFragment"
+        android:name="it.polito.madcourse.group06.views.review.RatingFragment"
         android:label="Rating">
         <action
             android:id="@+id/action_ratingFragment_to_ShowListTimeslots"
