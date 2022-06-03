@@ -25,7 +25,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     private var _singleAdvertisementPH = Advertisement(
         "", "", "", arrayListOf<String>(),
         "", "", "", "", 0.0,
-        "", "", 0.0, "",true
+        "", "", 0.0, "",true,
+        null, null, null, 0.0, false
     )
     private val _pvtAdvertisement = MutableLiveData<Advertisement>().also {
         it.value = _singleAdvertisementPH
@@ -66,12 +67,18 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             val accountName = this.get("account_name") as String
             val accountID = this.get("accountID") as String
             val comment = this.get("comment") as String
-            val isAvailable = this.get("available_flag") as Boolean
+            val isAvailable = this.get("is_available") as Boolean
+            val rxUserId = this.get("rx_user_id") as String?
+            val ratingUserId = this.get("rating_user_id") as String?
+            val activeAt = this.get("active_at") as String?
+            val activeFor = this.get("active_for") as Double
+            val isEnded = this.get("is_ended") as Boolean
             Advertisement(
                 id, title, description, listOfSkills ?: arrayListOf<String>(),
                 location, date, startingTime,
                 endingTime, duration, accountName,
-                accountID, rating, comment,isAvailable
+                accountID, rating, comment, isAvailable,
+                rxUserId, ratingUserId, activeAt, activeFor, isEnded
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -102,7 +109,13 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "account_name" to ad.advAccount,
                     "accountID" to ad.accountID,
                     "rating" to ad.rating,
-                    "comment" to ad.comment
+                    "comment" to ad.comment,
+                    "is_available" to ad.isAvailable,
+                    "rx_user_id" to ad.rxUserId,
+                    "rating_user_id" to ad.ratingUserId,
+                    "active_at" to ad.activeAt,
+                    "active_for" to ad.activeFor,
+                    "is_ended" to ad.isEnded
                 )
             )
             .addOnSuccessListener {
@@ -148,6 +161,50 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     }
 
     /**
+     * Activate an [Advertisement] with the account ID of the requesting account
+     * @param rxUserId the requesting account ID
+     */
+    fun activateAdvertisement(rxUserId:String) {
+        this._singleAdvertisementPH.also{ad->
+            ad.rxUserId=rxUserId
+            db
+                .collection("Advertisement")
+                .document(ad.id!!)
+                .set(
+                    mapOf(
+                        "id" to ad.id,
+                        "title" to ad.advTitle,
+                        "description" to ad.advDescription,
+                        "list_of_skills" to ad.listOfSkills,
+                        "location" to ad.advLocation,
+                        "date" to ad.advDate,
+                        "starting_time" to ad.advStartingTime,
+                        "ending_time" to ad.advEndingTime,
+                        "duration" to ad.advDuration,
+                        "account_name" to ad.advAccount,
+                        "accountID" to ad.accountID,
+                        "rating" to ad.rating,
+                        "comment" to ad.comment,
+                        "is_available" to ad.isAvailable,
+                        "rx_user_id" to ad.rxUserId,
+                        "rating_user_id" to ad.ratingUserId,
+                        "active_at" to ad.activeAt,
+                        "active_for" to ad.activeFor,
+                        "is_ended" to ad.isEnded
+                    )
+                )
+                .addOnSuccessListener {
+                    Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
+                    this._singleAdvertisementPH = ad
+                    this._pvtAdvertisement.value = this._singleAdvertisementPH
+                }
+                .addOnFailureListener {
+                    Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    /**
      * Edit an [Advertisement] with the info passed through an Object of class [Advertisement]
      * @param ad the updated [Advertisement]
      */
@@ -169,7 +226,13 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "account_name" to ad.advAccount,
                     "accountID" to ad.accountID,
                     "rating" to ad.rating,
-                    "comment" to ad.comment
+                    "comment" to ad.comment,
+                    "is_available" to ad.isAvailable,
+                    "rx_user_id" to ad.rxUserId,
+                    "rating_user_id" to ad.ratingUserId,
+                    "active_at" to ad.activeAt,
+                    "active_for" to ad.activeFor,
+                    "is_ended" to ad.isEnded
                 )
             )
             .addOnSuccessListener {
@@ -223,5 +286,4 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
         super.onCleared()
         listenerRegistration.remove()
     }
-
 }

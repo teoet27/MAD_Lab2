@@ -2,12 +2,14 @@ package it.polito.madcourse.group06.models.advertisement
 
 import android.app.Activity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.findFragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
+import it.polito.madcourse.group06.models.mychat.MyChatViewHolder
 import it.polito.madcourse.group06.utilities.*
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
@@ -27,25 +29,34 @@ class AdvAdapterCard(
 ) : RecyclerView.Adapter<AdvViewHolderCard>() {
 
     private var showedData = adsList
-    private var activeAdsIDs = listOf<String>()
+    private var userID:String?=null
     private var savedAdsIDs = listOf<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdvViewHolderCard {
         val vg = LayoutInflater
-            .from(parent.context)
-            .inflate(R.layout.adv_item, parent, false)
-        return AdvViewHolderCard(vg)
+            .from(parent.context).run{
+                when(viewType) {
+                    R.layout.adv_item->inflate(R.layout.adv_item, parent, false)
+                    R.layout.adv_item_saved->inflate(R.layout.adv_item_saved, parent, false)
+                    R.layout.adv_active_item->inflate(R.layout.adv_active_item, parent, false)
+                    R.layout.adv_active_item_saved->inflate(R.layout.adv_active_item_saved, parent, false)
+                    R.layout.adv_expired_item->inflate(R.layout.adv_expired_item, parent, false)
+                    R.layout.adv_expired_item_saved->inflate(R.layout.adv_expired_item_saved, parent, false)
+                    R.layout.adv_to_rate_item->inflate(R.layout.adv_to_rate_item, parent, false)
+                    else->inflate(R.layout.adv_to_rate_item_saved, parent, false)
+                 }
+            }
+        return AdvViewHolderCard(vg,userViewModel)
     }
+
 
     /**
      * Bind operations.
      */
     override fun onBindViewHolder(holder: AdvViewHolderCard, position: Int) {
-        holder.bind(showedData[position], advViewModel, userViewModel,getItemViewType(position))
-        holder.itemView.setOnClickListener { view ->
+        holder.bind(showedData[position], getItemViewType(position))
+        holder.itemView.setOnClickListener {
             advViewModel.setSingleAdvertisement((showedData[showedData.indexOf(showedData[position])]))
-            /*Navigation.findNavController(view)
-                .navigate(R.id.action_ShowListTimeslots_to_showSingleTimeslot)*/
             (activity as TBMainActivity).supportFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_up, 0)
                 .add(R.id.nav_host_fragment_content_main, ShowSingleTimeslot(), "single_timeslot")
@@ -54,15 +65,40 @@ class AdvAdapterCard(
     }
 
     override fun getItemViewType(position: Int): Int {
-        if(!showedData[position].isAvailable && activeAdsIDs.contains(showedData[position].id)&&
-            savedAdsIDs.contains(showedData[position].id))
-            return ACTIVE_AND_SAVED
-        if(!showedData[position].isAvailable && activeAdsIDs.contains(showedData[position].id))
-            return ACTIVE
-        if(savedAdsIDs.contains(showedData[position].id))
-            return SAVED
-        return NOT_ACTIVE_NOT_SAVED
+        // case 1: adv was active, it needs to be rated
+        return if (showedData[position].isToBeRated() && userID == showedData[position].accountID
+            && !showedData[position].rxUserId.isNullOrEmpty()
+            || (userID == showedData[position].ratingUserId && showedData[position].isToBeRated()) ) {
+            if (savedAdsIDs.contains(showedData[position].id))
+                R.layout.adv_to_rate_item_saved
+            else
+                R.layout.adv_to_rate_item
+        }
+        // case 2: generic adv is expired
+        else if (showedData[position].isExpired()) {
+            if (savedAdsIDs.contains(showedData[position].id))
+                R.layout.adv_expired_item_saved
+            else
+                R.layout.adv_expired_item
+        }
+        // case 3: active ads, still to begin
+        else if (userID == showedData[position].accountID
+            && !showedData[position].rxUserId.isNullOrEmpty()
+            || (userID == showedData[position].ratingUserId)) {
+            if (savedAdsIDs.contains(showedData[position].id))
+                R.layout.adv_active_item_saved
+            else
+                R.layout.adv_active_item
+        }
+        // case 4: generic adv, not in any particular state
+        else {
+            if (savedAdsIDs.contains(showedData[position].id))
+                R.layout.adv_item_saved
+            else
+                R.layout.adv_item
+        }
     }
+
     /**
      * Simply returns the size of the list of advertisement provided to the adapter.
      */
@@ -84,22 +120,22 @@ class AdvAdapterCard(
      */
     fun initDataset(
         myAds: Boolean? = null,
-        userID: String? = null,
         activeAdsFlag: Boolean? = null,
         savedAdsFlag: Boolean? = null
     ): List<Advertisement> {
 
         // My timeslot filtering
-        if (myAds == true) {
-            return adsList.filter { it.accountID == userID }
+        return if (myAds == true) {
+            adsList.filter { it.accountID == userID }
         }
         // Active or Saved timeslot filtering
         else if (activeAdsFlag == true) {
-            return adsList.filter { activeAdsIDs?.contains(it.id)!! }
+            adsList.filter { it.rxUserId == userID || (it.accountID == userID && !it.rxUserId.isNullOrEmpty()) }
         } else if (savedAdsFlag == true) {
-            return adsList.filter { savedAdsIDs?.contains(it.id)!! }
+            adsList.filter { savedAdsIDs.contains(it.id) }
         } else
-            return adsList.filter{it.isAvailable}
+            // hide expired or active timeslots
+            adsList.filter { it.isAvailable() }
     }
 
     /**
@@ -109,7 +145,6 @@ class AdvAdapterCard(
      * @param activeAdsFlag: if true the initial set is based on Ads marked as "active" by inserting them in [adsIDsDs]
      * @param savedAdsFlag: if true the initial set is based on Ads marked as "saved" by inserting them in [adsIDsDs]
      * @param savedAdsIDs: list of saved Ads IDs to be considered for the current recycler view,
-     * @param activeAdsIDs: list of active Ads IDs to be considered for the current recycler view,
      * @param selectedSkill: filter all Ads of the initial set associated to the selected skill
      * @param advFilter: AdvFilter to filter Ads matching some criteria (location, duration etc.)
      * @param sortParam: criterion to sort the selected Ads
@@ -121,7 +156,6 @@ class AdvAdapterCard(
         userID: String? = null,
         activeAdsFlag: Boolean? = null,
         savedAdsFlag: Boolean? = null,
-        activeAdsIDs: List<String>? = null,
         savedAdsIDs: List<String>? = null,
         selectedSkill: String? = null,
         advFilter: AdvFilter? = null,
@@ -130,15 +164,13 @@ class AdvAdapterCard(
         search: String? = null
     ) {
 
-        if (activeAdsIDs != null) {
-            this.activeAdsIDs=activeAdsIDs
-        }
         if (savedAdsIDs != null) {
-            this.savedAdsIDs=savedAdsIDs
+            this.savedAdsIDs = savedAdsIDs
         }
 
         // init dataset
-        showedData = initDataset(myAds, userID, activeAdsFlag, savedAdsFlag)
+        this.userID=userID
+        showedData = initDataset(myAds, activeAdsFlag, savedAdsFlag)
 
         // SelectedSkill filtering phase (only in main page)
         showedData =

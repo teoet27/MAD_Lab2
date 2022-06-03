@@ -10,6 +10,53 @@
     android:layout_marginBottom="2dp"
     android:elevation="2dp">
 
+    <LinearLayout
+        android:id="@+id/expired_label"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="200dp"
+        android:elevation="3dp"
+        android:orientation="vertical"
+        android:rotation="-70"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout8"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView18"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/red_deleting"
+            android:contentDescription='@string/separation_line'
+            android:paddingTop="2dp"
+            android:src="@drawable/rounded_corners_land" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F2DADADA"
+            android:gravity="center"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="Expired!"
+            android:textColor="@color/red_deleting"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView19"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/red_deleting"
+            android:contentDescription='@string/separation_line'
+            android:paddingTop="2dp"
+            android:src="@drawable/rounded_corners_land" />
+
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/item_bookmark"
         android:layout_width="wrap_content"

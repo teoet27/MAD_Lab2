@@ -31,15 +31,15 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
     private lateinit var filterButton: TextView
     private lateinit var sortParam: TextView
     private lateinit var directionButton: ImageView
-    private lateinit var barrier: TextView
     private lateinit var filterNotificationDot: TextView
+    private lateinit var updateAdHint: TextView
     private lateinit var currentAccountID: String
     private lateinit var bottomNavView: BottomNavigationView
     private var fullListForGivenSkill: List<Advertisement> = listOf()
     private var isMyAdv = false
     private var isUp = false
-    private var associatedActiveAdsIdList = listOf<String>()
     private var associatedSavedAdsIdList = listOf<String>()
+    var myExpiredAdsCnt=0
 
 
     override fun onCreateView(
@@ -66,7 +66,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         this.recyclerView = view.findViewById(R.id.rvAdvFullList)
         this.filterNotificationDot = view.findViewById(R.id.filter_notification)
         this.bottomNavView = view.findViewById(R.id.bottomNavigationView)
-
+        this.updateAdHint=view.findViewById(R.id.update_expired_ads_hint)
 
         // set up bottom nav bar
         bottomNavView.background = null
@@ -118,7 +118,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                 .commit()
         }
 
-
         // Initialize Adapter card for recycler view
         var advAdapterCard: AdvAdapterCard
 
@@ -134,11 +133,35 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
                     // Get current user ID and associated saved and active ads-ids list
                     this.currentAccountID = user.id!!
-                    user.saved_ads_ids?.let{
-                        associatedSavedAdsIdList=it
+                    user.saved_ads_ids?.let {
+                        associatedSavedAdsIdList = it
                     }
-                    user.active_ads_ids?.let{
-                        associatedActiveAdsIdList=it
+
+                    // check if ad are ended
+                    listOfAdv.map { adv ->
+                        adv.isEnded = adv.rxUserId.isNullOrEmpty() && adv.ratingUserId.isNullOrEmpty() && !adv.activeAt.isNullOrEmpty()
+                    }
+
+                    // Create notification badges for expired ads among my and active timeslots
+                    listOfAdv.count { adv ->
+                            // current user owns the ad
+                            (currentAccountID == adv.accountID && adv.isToBeRated() && adv.rxUserId.isNullOrEmpty()) ||
+                                    // current user is the client of the ad
+                                    (currentAccountID == adv.ratingUserId && adv.isToBeRated())
+                        }
+                        .also { n ->
+                            when (n) {
+                                0 -> bottomNavView.removeBadge(R.id.active_time_slots_tab)
+                                else -> bottomNavView.getOrCreateBadge(R.id.active_time_slots_tab)
+                                    .number = n
+                            }
+                        }
+                    myExpiredAdsCnt=listOfAdv.count { it.accountID == currentAccountID &&
+                            it.isExpired() }
+                    when (myExpiredAdsCnt) {
+                        0 -> bottomNavView.removeBadge(R.id.my_time_slots_tab)
+                        else -> bottomNavView.getOrCreateBadge(R.id.my_time_slots_tab)
+                            .number = myExpiredAdsCnt
                     }
 
                     fullListForGivenSkill =
@@ -151,7 +174,14 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                         fullListForGivenSkill.isEmpty() && !ss.selectedSkill.isNullOrEmpty()
                     this.recyclerView.layoutManager = LinearLayoutManager(this.context)
                     advAdapterCard =
-                        AdvAdapterCard(listOfAdv, advertisementViewModel,userProfileViewModel, requireActivity())
+                        AdvAdapterCard(
+                            listOfAdv,
+                            advertisementViewModel,
+                            userProfileViewModel,
+                            requireActivity()
+                        )
+
+                    this.updateAdHint.visibility=View.GONE
                     when (ss.currentTab) {
                         TAB_ACTIVE -> {
                             setActionBarTitle("Active Timeslots")
@@ -184,6 +214,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                             } ?: bottomNavView.menu.getItem(0)
                                 .setIcon(R.drawable.ic_baseline_home_24)
                             bottomNavView.menu.getItem(4).isChecked = true
+                            if(myExpiredAdsCnt>0)this.updateAdHint.visibility=View.VISIBLE
                             sharedViewModel.homeTabPressed(false)
 
                         }
@@ -196,9 +227,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                                     isChecked = true
                                 }
                                 setActionBarTitle(it)
-                                //sharedViewModel.homeTabPressed()
-                            }
-                                ?: findNavController().navigate(R.id.action_ShowListTimeslots_to_showListOfServices)
+                            } ?: findNavController().navigate(R.id.ShowListOfServices)
                         }
                     }
 
@@ -212,14 +241,12 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                     else
                         filterNotificationDot.visibility = View.VISIBLE
 
-
                     //update recyclerview
                     advAdapterCard.updateDataSet(
                         myAds = ss.myAdsFlag,
                         userID = currentAccountID,
                         savedAdsFlag = ss.savedAdsFlag,
                         activeAdsFlag = ss.activeAdsFlag,
-                        activeAdsIDs = associatedActiveAdsIdList,
                         savedAdsIDs = associatedSavedAdsIdList,
                         selectedSkill = if (ss.myAdsFlag != true && ss.activeAdsFlag != true && ss.savedAdsFlag != true) ss.selectedSkill else ALL_SERVICES,
                         advFilter = ss.filter,

@@ -8,8 +8,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatRatingBar
-import androidx.constraintlayout.widget.ConstraintSet.GONE
-import androidx.constraintlayout.widget.ConstraintSet.VISIBLE
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -21,8 +19,9 @@ import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
+import it.polito.madcourse.group06.views.CommentFragment
 import it.polito.madcourse.group06.views.RatingFragment
-import it.polito.madcourse.group06.views.profile.comments.CommentsAdapterCard
+import it.polito.madcourse.group06.views.profile.comments.CommentsAdapterCardShort
 
 
 class ShowProfileOtherFragment : Fragment() {
@@ -39,8 +38,9 @@ class ShowProfileOtherFragment : Fragment() {
     private lateinit var starsOBJ: AppCompatRatingBar
     private lateinit var sentenceCommentDone: TextView
     private lateinit var sentenceCommentRx: TextView
-    private lateinit var showMoreCommentsDone: TextView
-    private lateinit var showMoreCommentsRx: TextView
+    private var commentsDone: ArrayList<String>? = ArrayList<String>()
+    private var commentsRx: ArrayList<String>? = ArrayList<String>()
+    private lateinit var showMoreComments: TextView
     private lateinit var skillsChips: ChipGroup
 
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
@@ -75,8 +75,7 @@ class ShowProfileOtherFragment : Fragment() {
         this.starsOBJ = view.findViewById(R.id.ratingBar_other)
         this.sentenceCommentDone = view.findViewById(R.id.comments_other_done)
         this.sentenceCommentRx = view.findViewById(R.id.comment_other_rx)
-        this.showMoreCommentsDone = view.findViewById(R.id.show_more_comments_done)
-        this.showMoreCommentsRx = view.findViewById(R.id.show_more_comments_rx)
+        this.showMoreComments = view.findViewById(R.id.show_more_comments)
         this.skillsChips = view.findViewById(R.id.skill_chips_group_other)
 
         (requireActivity() as TBMainActivity).supportActionBar?.title="User Profile"
@@ -112,10 +111,13 @@ class ShowProfileOtherFragment : Fragment() {
                     this.skillsChips.addChip(requireContext(), sk)
                     this.skillsChips.setOnCheckedChangeListener { chipGroup, checkedId ->
                         val selectedService = chipGroup.findViewById<Chip>(checkedId)?.text
-                        Toast.makeText(chipGroup.context, selectedService ?: "No Choice", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            chipGroup.context,
+                            selectedService ?: "No Choice",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
-            }
 
             // Email
             this.emailOBJ.text = userProfile.email
@@ -139,50 +141,55 @@ class ShowProfileOtherFragment : Fragment() {
             }
 
             // reviews -> comments-done (recyclerView)
+            this.commentsDone = userProfile.comments_services_done
             recyclerViewCommentsDone = view.findViewById(R.id.commentsDoneRecyclerView)
             recyclerViewCommentsDone.layoutManager = LinearLayoutManager(view.getContext())
-            recyclerViewCommentsDone.adapter = userProfile.comments_services_done?.let { CommentsAdapterCard(it) }
-            if (userProfile.comments_services_done != null) {
-                if (userProfile.comments_services_done?.isEmpty() == true || userProfile.comments_services_done?.isEmpty() == null) {
-                    this.sentenceCommentDone.visibility = View.GONE
-                } else {
-                    this.sentenceCommentDone.visibility = View.VISIBLE
-                }
-                if (userProfile.comments_services_done!!.size <= 3) {
-                    this.showMoreCommentsDone.visibility = View.GONE
-                } else {
-                    this.showMoreCommentsDone.visibility = View.VISIBLE
-                }
+            recyclerViewCommentsDone.adapter = userProfile.comments_services_done?.let { CommentsAdapterCardShort(it) }
+            if (userProfile.comments_services_done == null || userProfile.comments_services_done!!.size == 0) {
+                sentenceCommentDone.visibility = View.GONE
+            } else {
+                sentenceCommentDone.visibility = View.VISIBLE
             }
 
             // reviews -> comments-rx (recyclerView)
+            this.commentsRx = userProfile.comments_services_rx
             recyclerViewCommentsRx = view.findViewById(R.id.commentsRxRecyclerView)
             recyclerViewCommentsRx.layoutManager = LinearLayoutManager(view.getContext())
-            recyclerViewCommentsRx.adapter = userProfile.comments_services_rx?.let { CommentsAdapterCard(it) }
-            if (userProfile.comments_services_rx != null) {
-                if (userProfile.comments_services_rx?.isEmpty() == true || userProfile.comments_services_rx?.isEmpty() == null) {
-                    this.sentenceCommentRx.visibility = View.GONE
-                } else {
-                    this.sentenceCommentRx.visibility = View.VISIBLE
-                }
-                if (userProfile.comments_services_rx!!.size <= 3) {
-                    this.showMoreCommentsRx.visibility = View.GONE
-                } else {
-                    this.showMoreCommentsRx.visibility = View.VISIBLE
+            recyclerViewCommentsRx.adapter = userProfile.comments_services_rx?.let { CommentsAdapterCardShort(it) }
+            if (userProfile.comments_services_rx == null || userProfile.comments_services_rx!!.size == 0) {
+                sentenceCommentRx.visibility = View.GONE
+            } else {
+                sentenceCommentRx.visibility = View.VISIBLE
+            }
+
+            // display the 'show more...' button only if some comments are not shown here because they exceed the limit of 3
+            if ((userProfile.comments_services_done != null && userProfile.comments_services_done!!.size > 3) || (userProfile.comments_services_rx != null && userProfile.comments_services_rx!!.size > 3)) {
+                this.showMoreComments.visibility = View.VISIBLE
+                this.showMoreComments.isClickable = true
+            } else {
+                this.showMoreComments.visibility = View.GONE
+            }
+
+            // show all comments
+            this.showMoreComments.setOnClickListener {
+                val frag = CommentFragment()
+                activity?.supportFragmentManager!!.beginTransaction()
+                    .add(R.id.nav_host_fragment_content_main, frag, "comment_fragment")
+                    .commit()
                 }
             }
         }
 
         this.starsOBJ.isFocusableInTouchMode = false
         this.starsOBJ.isClickable = false
-        //this.starsOBJ.stepSize = 0.2F
+        this.starsOBJ.stepSize = 0.25F
 
-        // TODO: to be changed once the chat is finished
-        this.rateOBJ.setOnClickListener {
+        // TODO: move this in ad fragment, but which one?
+        /*this.rateOBJ.setOnClickListener {
             activity?.supportFragmentManager!!.beginTransaction()
                 .add(R.id.nav_host_fragment_content_main, RatingFragment(), "rating_fragment")
                 .commit()
-        }
+        }*/
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

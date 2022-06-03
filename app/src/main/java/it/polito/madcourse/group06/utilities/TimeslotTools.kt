@@ -3,6 +3,8 @@ package it.polito.madcourse.group06.utilities
 import it.polito.madcourse.group06.models.advertisement.Advertisement
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.floor
+import kotlin.math.round
 import kotlin.math.roundToInt
 
 
@@ -116,6 +118,9 @@ fun timeStringToDoubleHour(time: String): Double {
     return time.split(":").foldRight(0.0) { a, b -> (a.toDouble() + b.toDouble()) / 60.0 } * 60
 }
 
+fun timeDoubleHourToString(time: Double): String {
+    return String.format("%02d:%02d",floor(time).toInt(),round((time - floor(time)) * 60).toInt())
+}
 
 class AdvFilter(
     val location: String? = null,
@@ -157,8 +162,28 @@ class SearchState(
     var filter: AdvFilter? = null
 )
 
+fun hoursToCredit(hours:Double):Int{
+    return round(hours * 4).toInt()
+}
 //Useful extension functions
 fun Boolean.toInt() = if (this) 1 else 0
+
+fun Advertisement.isAvailable():Boolean{
+    return this.rxUserId.isNullOrEmpty() && this.ratingUserId.isNullOrEmpty() && !this.isExpired()
+}
 fun Advertisement.isExpired(): Boolean {
-    return this.advDate.isSoonerThanDate(SimpleDateFormat("dd/MM/yyyy").format(Date()))
+    return (timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())) >= timeStringToDoubleHour(advEndingTime)
+                && this.advDate == SimpleDateFormat("dd/MM/yyyy").format(Date())
+                || (computeDateDifference(SimpleDateFormat("dd/MM/yyyy").format(Date()), this.advDate).first < 0))
+}
+
+fun Advertisement.isToBeRated(): Boolean {
+    return if (!activeAt.isNullOrEmpty()) {
+        (timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())) >= timeStringToDoubleHour(activeAt!!) + activeFor
+                && this.advDate == SimpleDateFormat("dd/MM/yyyy").format(Date())
+                || (computeDateDifference(SimpleDateFormat("dd/MM/yyyy").format(Date()), this.advDate).first < 0))
+    }
+    else {
+        false
+    }
 }

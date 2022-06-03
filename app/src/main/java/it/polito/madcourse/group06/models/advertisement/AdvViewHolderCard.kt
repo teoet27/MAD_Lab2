@@ -2,60 +2,69 @@ package it.polito.madcourse.group06.models.advertisement
 
 import android.annotation.SuppressLint
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
-import it.polito.madcourse.group06.utilities.ACTIVE
-import it.polito.madcourse.group06.utilities.ACTIVE_AND_SAVED
-import it.polito.madcourse.group06.utilities.SAVED
-import it.polito.madcourse.group06.utilities.isExpired
+import it.polito.madcourse.group06.utilities.*
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
+import org.w3c.dom.Text
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * [AdvViewHolderCard] extends the ViewHolder of the [RecyclerView]
  * and provides the references to each component of the advertisement
  * card.
  */
-class AdvViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
+class AdvViewHolderCard(private val v: View,private val userViewModel:UserProfileViewModel,) : RecyclerView.ViewHolder(v) {
     private val title: TextView = v.findViewById(R.id.advCardTitle)
     private val location: TextView = v.findViewById(R.id.advCardLocation)
     private val duration: TextView = v.findViewById(R.id.advCardDuration)
     private val account: TextView = v.findViewById(R.id.advCardAccount)
     private val bookmark: ImageView = v.findViewById(R.id.item_bookmark)
-    private val expired: LinearLayout = v.findViewById(R.id.expired_label)
-    private val trading: ConstraintLayout = v.findViewById(R.id.trade_window)
 
     /**
      * bind:
      * A method to bind the i-th entry of the adsList to the i-th holder properties.
      * @param adv an object of class Advertisement
      */
-    @SuppressLint("ResourceAsColor")
-    fun bind(adv: Advertisement, advViewModel: AdvertisementViewModel, userViewModel:UserProfileViewModel,status:Int) {
+    fun bind(adv: Advertisement,viewType:Int) {
         this.title.text = adv.advTitle
         this.location.text = adv.advLocation
-        this.duration.text = adv.advDuration.toString()
+        this.duration.text = timeDoubleHourToString(if(adv.activeFor>0) adv.activeFor else adv.advDuration)
         this.account.text = adv.advAccount
 
-        this.expired.visibility=if(adv.isExpired())View.VISIBLE else View.GONE
-        this.trading.visibility=if(status== ACTIVE_AND_SAVED||status==ACTIVE) View.VISIBLE else View.GONE
-
-        if(status==SAVED || status== ACTIVE_AND_SAVED)
-            this.bookmark.setImageResource(R.drawable.ic_bookmark_black_24dp)
-        else
-            this.bookmark.setImageResource(R.drawable.ic_bookmark_border_black_24dp)
-        if(status== ACTIVE_AND_SAVED||status==ACTIVE){
-            /*...*/
-            if(adv.isExpired()){
-                /*...*/
-            }
-        }
         this.bookmark.setOnClickListener{
-            userViewModel.bookmarkAdvertisement(adv.id!!,!(status==SAVED || status== ACTIVE_AND_SAVED))
+            userViewModel.bookmarkAdvertisement(adv.id!!)
+        }
+        if(viewType == R.layout.adv_to_rate_item || viewType == R.layout.adv_to_rate_item_saved)
+             v.findViewById<Button>(R.id.rate_button).setOnClickListener{
+                 /*open rate fragment*/
+             }
+
+        if(viewType == R.layout.adv_active_item || viewType == R.layout.adv_active_item_saved){
+            v.findViewById<TextView>(R.id.trade_credit).text = hoursToCredit(adv.activeFor).toString()
+            var timeDate=""
+            if (adv.advDate != SimpleDateFormat("dd/MM/yyyy").format(Date())) {
+                timeDate="Starts at ${adv.activeAt}, on ${adv.advDate}"
+            }
+            else {
+                if(adv.activeAt?.isLaterThanTime(SimpleDateFormat("HH:mm").format(Date()))==true)
+                    timeDate="Starts at ${adv.activeAt}"
+                else if(timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date()))
+                        >timeStringToDoubleHour(adv.activeAt!!)+adv.activeFor) {
+                    timeDate="Ended"//do stuff
+                }
+                else {
+                    timeDate="Started"
+                }
+            }
+            v.findViewById<TextView>(R.id.trade_starting_time).text = timeDate
         }
     }
 }

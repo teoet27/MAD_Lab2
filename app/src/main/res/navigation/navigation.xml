@@ -82,7 +82,7 @@
     </fragment>
     <fragment
         android:id="@+id/ShowListOfServices"
-        android:name="it.polito.madcourse.group06.models.skill.ShowListOfSkills"
+        android:name="it.polito.madcourse.group06.views.ShowListOfSkills"
         android:label="Offered Services">
         <action
             android:id="@+id/action_showListOfSkills_to_ShowListTimeslots"
