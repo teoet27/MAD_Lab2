@@ -394,7 +394,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * Edit the [UserProfile] information with the newer ones passed as parameter.
      * @param userProfile the object containing the most updated values
      */
-    fun editOtherUserProfile(userProfile: UserProfile) {
+    private fun editOtherUserProfile(userProfile: UserProfile) {
         db
             .collection("UserProfile")
             .document(this._otherUserProfilePH.id!!)
