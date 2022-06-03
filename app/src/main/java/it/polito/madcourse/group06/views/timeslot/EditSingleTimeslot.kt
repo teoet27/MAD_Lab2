@@ -162,8 +162,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             Pair(-1,true)
                     val (_, isCurrentDateDifference) = computeDateDifference(currentDate, chosenDate)
 
-                    if (!isCurrentDateDifference) {
-                        isDateAndTimeCorrect = false
+                    if (isCurrentDateDifference) {
+                        isDateAndTimeCorrect = true
                     } else if (!isCurrentTimeDifference) {
                         isDateAndTimeCorrect = false
                     }

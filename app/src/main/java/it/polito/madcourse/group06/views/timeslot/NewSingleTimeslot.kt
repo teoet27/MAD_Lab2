@@ -121,8 +121,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         Pair(-1,true)
                 val (_, isCurrentDateDifference) = computeDateDifference(currentDate, chosenDate)
 
-                if (!isCurrentDateDifference) {
-                    isDateAndTimeCorrect = false
+                if (isCurrentDateDifference) {
+                    isDateAndTimeCorrect = true
                 } else if (!isCurrentTimeDifference) {
                     isDateAndTimeCorrect = false
                 }
