@@ -140,10 +140,19 @@ class MyChat : Fragment() {
 
         this.chatArrowUpButton.setOnClickListener {
             if (!this.isAnswerMenuOpen) {
+                // should be opened
                 this.recyclerView.animate().apply {
                     alpha(0.3f)
                 }
-                // should be opened
+                this.inputMessageBox.isEnabled = false
+                this.sendMessageButton.isEnabled = false
+                this.inputMessageBox.animate().apply {
+                    alpha(0.3f)
+                }
+                this.sendMessageButton.animate().apply {
+                    alpha(0.3f)
+                }
+
                 this.chatArrowUpButton.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24)
                 this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(),
                     R.color.prussian_blue)
@@ -162,10 +171,19 @@ class MyChat : Fragment() {
                 findViewById<ImageView>(R.id.sendPurposeButtonID)
                     ?.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_from_right))
             } else {
+                // should be closed
                 this.recyclerView.animate().apply {
                     alpha(1f)
                 }
-                // should be closed
+                this.inputMessageBox.isEnabled = true
+                this.sendMessageButton.isEnabled = true
+                this.inputMessageBox.animate().apply {
+                    alpha(1f)
+                }
+                this.sendMessageButton.animate().apply {
+                    alpha(1f)
+                }
+
                 this.chatArrowUpButton.setImageResource(R.drawable.ic_add_black_24dp)
                 this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(),
                     R.color.darkGray)
