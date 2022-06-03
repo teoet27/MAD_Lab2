@@ -24,7 +24,7 @@ class MyChatViewModel(application: Application) : ViewModel() {
     private var _chattingUserPH = UserProfile(
         "", "", "", "", "", "", "",
         "", null, 0.0, 0.0, 0.0,
-        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), ArrayList<String>()
+        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String, String>()
     )
     private val _pvtChattingUser = MutableLiveData<UserProfile>().also { it.value = _chattingUserPH }
     val chattingUser: LiveData<UserProfile> = this._pvtChattingUser
@@ -32,7 +32,7 @@ class MyChatViewModel(application: Application) : ViewModel() {
     /**
      * [MyChatModel] live data
      */
-    private var _myChatPH = MyChatModel("","", "", mutableListOf(), "-1")
+    private var _myChatPH = MyChatModel("", "", "", arrayListOf(), "-1")
     private val _pvtMyChat = MutableLiveData<MyChatModel>().also { it.value = _myChatPH }
     val myCurrentChat: LiveData<MyChatModel> = this._pvtMyChat
 
@@ -53,7 +53,7 @@ class MyChatViewModel(application: Application) : ViewModel() {
         this._pvtChattingUser.value = this._chattingUserPH
     }
 
-    fun createNewChat(advID: String, isCurrentChat: Boolean = true) {
+    private fun createNewChat(advID: String, isCurrentChat: Boolean = true) {
         var chatID: String = ""
         db
             .collection("Chat")
@@ -65,24 +65,38 @@ class MyChatViewModel(application: Application) : ViewModel() {
                     "adv_id" to advID,
                 )
             )
-        this._myChatPH = MyChatModel(chatID, "", "", mutableListOf(), advID)
+        this._myChatPH = MyChatModel(chatID, "", "", arrayListOf(), advID)
         this._pvtMyChat.value = this._myChatPH
     }
 
-    fun fetchChat(chatID: String, advID: String) {
+    private fun fetchChat(chatID: String) {
         db
             .collection("Chat")
             .whereEqualTo("id", chatID)
             .get()
             .addOnSuccessListener {
                 for (x in it) {
-                    this._myChatPH = x.toMyChatModel() ?: MyChatModel("", "", "", mutableListOf(), advID)
+                    this._myChatPH = x.toMyChatModel() ?: MyChatModel("", "", "", arrayListOf(), "")
                     this._pvtMyChat.value = this._myChatPH
                     break
                 }
             }
-            .addOnFailureListener {
-                this.createNewChat(advID)
+    }
+
+    fun fetchChatByAdvertisementID(currentUserID: String, advertisementID: String) {
+        db
+            .collection("UserProfile")
+            .whereEqualTo("id", currentUserID)
+            .whereArrayContains("chats_id", advertisementID)
+            .get()
+            .addOnSuccessListener { query ->
+                if (query.isEmpty) {
+                    this.createNewChat(advertisementID)
+                } else {
+                    query.forEach { docSnap ->
+                        this.fetchChat(docSnap.toString())
+                    }
+                }
             }
     }
 
@@ -90,7 +104,7 @@ class MyChatViewModel(application: Application) : ViewModel() {
         return try {
             val id = this.get("id") as String
             val content = this.get("nickname") as ArrayList<MyMessage>?
-            MyChatModel(id, "", "", content?.toList()!!,  "-1")
+            MyChatModel(id, "", "", content!!, "-1")
         } catch (e: Exception) {
             null
         }
