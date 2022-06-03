@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.models.mychat.MyChatAdapter
+import it.polito.madcourse.group06.viewmodels.MyChatViewModel
 import it.polito.madcourse.group06.viewmodels.MyMessage
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import java.text.SimpleDateFormat
@@ -30,6 +31,7 @@ import java.util.*
 
 class MyChat : Fragment() {
 
+    private val myChatViewModel by activityViewModels<MyChatViewModel>()
     private val userProfileViewModel by activityViewModels<UserProfileViewModel>()
 
     private lateinit var recyclerView: RecyclerView
@@ -55,7 +57,7 @@ class MyChat : Fragment() {
     /**
      * Temporary list of MyMessages to test the front-end
      */
-    private val listOfMessages = mutableListOf<MyMessage>(
+    /*private val listOfMessages = mutableListOf<MyMessage>(
         MyMessage("0", "1", "yo wyd?", "31/05/2022 14:30", "0"),
         MyMessage("0", "1", "you still interested?", "31/05/2022 14:31", "0"),
         MyMessage("1", "0", "sorry, i've been sleeping till now... :D", "31/05/2022 16:45", "0"),
@@ -80,7 +82,7 @@ class MyChat : Fragment() {
         MyMessage("1", "0", "can we still make this up?", "31/05/2022 16:47", "0"),
         MyMessage("1", "0", "ayooo?", "01/06/2022 10:44", "0"),
         MyMessage("0", "1", "stop playing bro .-.", "01/06/2022 10:46", "0"),
-    )
+    )*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -107,17 +109,15 @@ class MyChat : Fragment() {
         this.myPurposeContainer = view.findViewById(R.id.myPurposeID)
 
         this.myPurposeContainer.alpha = 0f
-        this.emptyChatMessage.isVisible = this.listOfMessages.isEmpty()
         this.chatMenuArrowStartingPositionY = this.chatArrowUpButton.y
         this.chatMenuArrowStartingPositionX = this.chatArrowUpButton.x
 
-        userProfileViewModel.chattingUser.observe(viewLifecycleOwner) {
+        myChatViewModel.chattingUser.observe(viewLifecycleOwner) {
             this.chatFullname.text = it.fullName
             this.chatNickname.text = "@${it.nickname}"
             userProfileViewModel.retrieveProfilePicture(this.chattingUserProfilePicture, it.imgPath!!)
         }
 
-        chatAdapterCard = MyChatAdapter(listOfMessages)
 
         this.sendMessageButton.setOnClickListener {
             if (this.inputMessageBox.text.isNotEmpty()) {
@@ -127,7 +127,7 @@ class MyChat : Fragment() {
                         SimpleDateFormat(
                             "dd/MM/yyyy hh:mm",
                             Locale.getDefault()
-                        ).format(Date()).toString(), "0"
+                        ).format(Date()).toString(), false
                     )
                 )
                 this.inputMessageBox.setText("")
@@ -210,10 +210,14 @@ class MyChat : Fragment() {
             activityTB.supportActionBar?.show()
         }
 
-        val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(this.context)
-        linearLayoutManager.stackFromEnd = true
-        this.recyclerView.layoutManager = linearLayoutManager
-        this.recyclerView.adapter = chatAdapterCard
+        myChatViewModel.myCurrentChat.observe(viewLifecycleOwner) { chat ->
+            this.emptyChatMessage.isVisible = chat.chatContent.isEmpty()
+            chatAdapterCard = MyChatAdapter(chat.chatContent)
+            val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(this.context)
+            linearLayoutManager.stackFromEnd = true
+            this.recyclerView.layoutManager = linearLayoutManager
+            this.recyclerView.adapter = chatAdapterCard
+        }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

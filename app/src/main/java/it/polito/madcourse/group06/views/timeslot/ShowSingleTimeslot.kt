@@ -22,6 +22,7 @@ import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
+import it.polito.madcourse.group06.viewmodels.MyChatViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.views.profile.ShowProfileOtherFragment
@@ -31,6 +32,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
     private val advViewModel: AdvertisementViewModel by activityViewModels()
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
     private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val myChatViewModel by activityViewModels<MyChatViewModel>()
 
     private lateinit var advTitle: TextView
     private lateinit var advAccount: TextView
@@ -91,7 +93,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                 } else {
                     userProfileViewModel.fetchUserProfileById(singleAdvertisement.accountID)
                     userProfileViewModel.otherUser.observe(viewLifecycleOwner) {
-                        userProfileViewModel.setChattingUserProfile(it)
+                        myChatViewModel.setChattingUserProfile(it)
                     }
                 }
 
@@ -147,6 +149,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                     /**
                      * Call to a chat with this user
                      */
+                    myChatViewModel.fetchChat("")
                     val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
                     activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
                     Navigation.findNavController(view).navigate(R.id.action_ShowListTimeslots_to_myChat)
