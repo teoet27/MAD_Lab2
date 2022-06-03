@@ -23,6 +23,7 @@ import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.utilities.ALL_SERVICES
 import it.polito.madcourse.group06.utilities.DrawerInterface
+import it.polito.madcourse.group06.viewmodels.MyChatViewModel
 
 class TBMainActivity : AppCompatActivity(), DrawerInterface {
 
@@ -31,6 +32,7 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
 
     private val userProfileViewModel: UserProfileViewModel by viewModels()
     private val sharedViewModel: SharedViewModel by viewModels()
+    private val myChatViewModel: MyChatViewModel by viewModels()
 
     // declare the GoogleSignInClient
     lateinit var mGoogleSignInClient: GoogleSignInClient
