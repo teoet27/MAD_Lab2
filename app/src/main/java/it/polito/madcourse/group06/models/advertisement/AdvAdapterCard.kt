@@ -135,16 +135,17 @@ class AdvAdapterCard(
 
         // My timeslot filtering
         return if (myAds == true) {
-            adsList.filter { it.accountID == userID && !it.isEnded()}
+            adsList.filter { it.accountID == userID }
         }
         // Active or Saved timeslot filtering
         else if (activeAdsFlag == true) {
-            adsList.filter { (it.rxUserId == userID || (it.accountID == userID && !it.rxUserId.isNullOrEmpty()))&& !it.isEnded() }
+            adsList.filter { (it.rxUserId == userID && !it.ratingUserId.isNullOrEmpty() ||
+                             (it.accountID == userID && !it.rxUserId.isNullOrEmpty()))}
         } else if (savedAdsFlag == true) {
-            adsList.filter { savedAdsIDs.contains(it.id)&& !it.isEnded() }
+            adsList.filter { savedAdsIDs.contains(it.id) }
         } else
             // hide expired or active timeslots
-            adsList.filter { it.isAvailable() && !it.isEnded() }
+            adsList.filter { it.isAvailable()}
     }
 
     /**
