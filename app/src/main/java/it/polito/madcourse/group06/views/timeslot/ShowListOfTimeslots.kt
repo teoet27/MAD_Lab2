@@ -145,7 +145,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                     // Create notification badges for expired ads among my and active timeslots
                     listOfAdv.count { adv ->
                             // current user owns the ad
-                            (currentAccountID == adv.accountID && adv.isToBeRated() && adv.rxUserId.isNullOrEmpty()) ||
+                            (currentAccountID == adv.accountID && adv.isToBeRated() && !adv.rxUserId.isNullOrEmpty()) ||
                                     // current user is the client of the ad
                                     (currentAccountID == adv.ratingUserId && adv.isToBeRated())
                         }
