@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.findFragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import it.polito.madcourse.group06.models.mychat.MyChatViewHolder
 import it.polito.madcourse.group06.utilities.*
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
+import it.polito.madcourse.group06.views.RatingFragment
 import it.polito.madcourse.group06.views.timeslot.FilterTimeslots
 import it.polito.madcourse.group06.views.timeslot.ShowSingleTimeslot
 import java.util.*
@@ -62,6 +64,13 @@ class AdvAdapterCard(
                 .add(R.id.nav_host_fragment_content_main, ShowSingleTimeslot(), "single_timeslot")
                 .commit()
         }
+
+        /*if(viewType == R.layout.adv_to_rate_item || viewType == R.layout.adv_to_rate_item_saved)
+            v.findViewById<Button>(R.id.rate_button).setOnClickListener{
+                (holder.itemView.context as TBMainActivity).supportFragmentManager!!.beginTransaction()
+                    .add(R.id.nav_host_fragment_content_main, RatingFragment(), "rating_fragment")
+                    .commit()
+            }*/
     }
 
     override fun getItemViewType(position: Int): Int {

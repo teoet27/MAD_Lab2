@@ -38,6 +38,8 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
     private lateinit var applyButton: Button
     private lateinit var wholeWord: CheckBox
 
+    private lateinit var backgroundFilter: ConstraintLayout
+
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,6 +58,28 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
         this.applyButton = view.findViewById(R.id.apply_button)
         this.wholeWord = view.findViewById(R.id.whole_word)
 
+        this.backgroundFilter = view.findViewById(R.id.filterBackground)
+
+        this.backgroundFilter.setOnClickListener {
+            AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_down).apply {
+                setAnimationListener(
+                    object : Animation.AnimationListener {
+                        override fun onAnimationStart(arg0: Animation) {
+                            backgroundFilter.background=resources.getDrawable(R.drawable.transparent_background)
+                        }
+                        override fun onAnimationRepeat(arg0: Animation) {}
+                        override fun onAnimationEnd(arg0: Animation) {
+                            activity?.supportFragmentManager!!.findFragmentByTag("filter_window")
+                                ?.also {
+                                    activity?.supportFragmentManager?.beginTransaction()
+                                        ?.remove(it)?.commit()
+                                }
+                        }
+                    })
+                view.startAnimation(this)
+            }
+        }
+
         sharedViewModel.searchState.observe(viewLifecycleOwner) {
 
             this.location.setText(it.filter?.location ?: "")
@@ -67,6 +91,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
             this.fromDate.setText(if (it.filter?.starting_date.isNullOrEmpty()) "+" else it.filter?.starting_date)
             this.toDate.setText(if (it.filter?.ending_date.isNullOrEmpty()) "+" else it.filter?.ending_date)
         }
+
 
 
         this.fromDate.setOnClickListener { popUpStartingDatePicker() }
@@ -118,7 +143,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
                     setAnimationListener(
                         object : Animation.AnimationListener {
                             override fun onAnimationStart(arg0: Animation) {
-                                view.findViewById<ConstraintLayout>(R.id.filterBackground)?.background=resources.getDrawable(R.drawable.transparent_background)
+                                backgroundFilter.background=resources.getDrawable(R.drawable.transparent_background)
                             }
                             override fun onAnimationRepeat(arg0: Animation) {}
                             override fun onAnimationEnd(arg0: Animation) {
@@ -156,7 +181,7 @@ class FilterTimeslots : Fragment(R.layout.filter_timeslots) {
 
             override fun onAnimationEnd(animation: Animation) {
                 // additional functionality
-                view?.findViewById<ConstraintLayout>(R.id.filterBackground)?.background = resources.getDrawable(R.drawable.semi_transparent_background)
+                backgroundFilter.background = resources.getDrawable(R.drawable.semi_transparent_background)
             }
         })
         return anim

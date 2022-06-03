@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.TintableBackgroundView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -42,6 +43,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
     private lateinit var editButton: ImageView
     private lateinit var skillsChips: ChipGroup
     private lateinit var noSkillsProvidedLabel: TextView
+    private lateinit var backgroundAd: ConstraintLayout
     private var isMine = false
     private lateinit var email: String
 
@@ -59,6 +61,27 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
         this.editButton = view.findViewById(R.id.moreButtonID)
         this.skillsChips = view.findViewById(R.id.showTimeslotSkills)
         this.noSkillsProvidedLabel = view.findViewById(R.id.noSkillsProvidedLabel)
+        this.backgroundAd = view.findViewById(R.id.singleAdBackground)
+
+        this.backgroundAd.setOnClickListener {
+            AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_down).apply {
+                setAnimationListener(
+                    object : Animation.AnimationListener {
+                        override fun onAnimationStart(arg0: Animation) {
+                            backgroundAd.background=resources.getDrawable(R.drawable.transparent_background)
+                        }
+                        override fun onAnimationRepeat(arg0: Animation) {}
+                        override fun onAnimationEnd(arg0: Animation) {
+                            activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
+                                ?.also {
+                                    activity?.supportFragmentManager?.beginTransaction()
+                                        ?.remove(it)?.commit()
+                                }
+                        }
+                    })
+                view.startAnimation(this)
+            }
+        }
 
         advViewModel.advertisement.observe(viewLifecycleOwner) { singleAdvertisement ->
             userProfileViewModel.currentUser.observe(viewLifecycleOwner) { user ->
@@ -139,7 +162,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                     setAnimationListener(
                         object : Animation.AnimationListener {
                             override fun onAnimationStart(arg0: Animation) {
-                                view.findViewById<ConstraintLayout>(R.id.singleAdBackground)?.background=resources.getDrawable(R.drawable.transparent_background)
+                                backgroundAd.background=resources.getDrawable(R.drawable.transparent_background)
                             }
                             override fun onAnimationRepeat(arg0: Animation) {}
                             override fun onAnimationEnd(arg0: Animation) {
@@ -170,7 +193,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
 
             override fun onAnimationEnd(animation: Animation) {
                 // additional functionality
-                view?.findViewById<ConstraintLayout>(R.id.singleAdBackground)?.background=resources.getDrawable(R.drawable.semi_transparent_background)
+                backgroundAd.background=resources.getDrawable(R.drawable.semi_transparent_background)
             }
         })
         return anim

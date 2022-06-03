@@ -122,6 +122,61 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             }
     }
 
+    // TODO: add title to comments
+    fun commentAd(advTitle: String?, comment: String?, rating: Double, isServiceDone: Boolean) {
+        val updatedUser=_otherUserProfilePH.also { dumbUser ->
+            dumbUser.n_ratings++
+            dumbUser.rating_sum += rating
+
+            if (isServiceDone && !comment.isNullOrEmpty()) {
+                // done
+                if (dumbUser.comments_services_done != null) {
+                    dumbUser.comments_services_done!!.add(comment)
+                } else {
+                    dumbUser.comments_services_done = arrayListOf(comment)
+                }
+            }
+            else if (!isServiceDone && !comment.isNullOrEmpty()) {
+                // done
+                if (dumbUser.comments_services_rx != null) {
+                    dumbUser.comments_services_rx!!.add(comment)
+                } else {
+                    dumbUser.comments_services_rx = arrayListOf(comment)
+                }
+            }
+        }
+
+        db
+            .collection("UserProfile")
+            .document(this._otherUserProfilePH.id!!)
+            .update(
+                "id", updatedUser.id,
+                "nickname", updatedUser.nickname,
+                "fullname", updatedUser.fullName,
+                "qualification", updatedUser.qualification,
+                "description", updatedUser.description,
+                "email", updatedUser.email,
+                "phone_number", updatedUser.phoneNumber,
+                "location", updatedUser.location,
+                "skills", updatedUser.skills,
+                "credit", updatedUser.credit,
+                "rating_sum", updatedUser.rating_sum,
+                "n_ratings", updatedUser.n_ratings,
+                "comments_services_rx", updatedUser.comments_services_rx,
+                "comments_services_done", updatedUser.comments_services_done,
+                "img_path", updatedUser.imgPath,
+                "saved_ads_ids",updatedUser.saved_ads_ids
+            )
+            .addOnSuccessListener {
+                Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
+                this._otherUserProfilePH = updatedUser
+                this._pvtOtherUserProfile.value = this._otherUserProfilePH
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
     /**
      * toUser is an extension function which provide translation from
      * [DocumentSnapshot] to [UserProfile]
@@ -187,7 +242,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * Fetch the user profile by their ID from the db
      * @param id the id of the user
      */
-    fun fetchUserProfileById(id: String) {
+    fun fetchUserProfileById(id: String?) {
         db
             .collection("UserProfile")
             .whereEqualTo("id", id)
