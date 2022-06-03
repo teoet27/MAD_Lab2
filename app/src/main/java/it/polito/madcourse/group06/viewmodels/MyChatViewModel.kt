@@ -53,7 +53,7 @@ class MyChatViewModel(application: Application) : ViewModel() {
         this._pvtChattingUser.value = this._chattingUserPH
     }
 
-    private fun createNewChat(advID: String, isCurrentChat: Boolean = true) {
+    private fun createNewChat(advID: String, currentUserID: String, otherUserID: String) {
         var chatID: String = ""
         db
             .collection("Chat")
@@ -61,11 +61,13 @@ class MyChatViewModel(application: Application) : ViewModel() {
             .set(
                 mapOf(
                     "chat_id" to chatID,
+                    "user_id" to currentUserID,
+                    "other_user_id" to otherUserID,
                     "content" to mutableListOf<MyMessage>(),
                     "adv_id" to advID,
                 )
             )
-        this._myChatPH = MyChatModel(chatID, "", "", arrayListOf(), advID)
+        this._myChatPH = MyChatModel(chatID, currentUserID, otherUserID, arrayListOf(), advID)
         this._pvtMyChat.value = this._myChatPH
     }
 
@@ -83,7 +85,7 @@ class MyChatViewModel(application: Application) : ViewModel() {
             }
     }
 
-    fun fetchChatByAdvertisementID(currentUserID: String, advertisementID: String) {
+    fun fetchChatByAdvertisementID(currentUserID: String, otherUserID: String, advertisementID: String) {
         db
             .collection("UserProfile")
             .whereEqualTo("id", currentUserID)
@@ -91,7 +93,7 @@ class MyChatViewModel(application: Application) : ViewModel() {
             .get()
             .addOnSuccessListener { query ->
                 if (query.isEmpty) {
-                    this.createNewChat(advertisementID)
+                    this.createNewChat(advertisementID, currentUserID, otherUserID)
                 } else {
                     query.forEach { docSnap ->
                         this.fetchChat(docSnap.toString())
