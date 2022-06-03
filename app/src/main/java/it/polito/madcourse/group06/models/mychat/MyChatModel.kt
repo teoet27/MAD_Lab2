@@ -20,7 +20,7 @@ data class MyChatModel(
 
     @get:PropertyName("chat_content")
     @set:PropertyName("chat_content")
-    var chatContent: List<MyMessage>,
+    var chatContent: ArrayList<MyMessage>,
 
     @get:PropertyName("adv_id")
     @set:PropertyName("adv_id")
