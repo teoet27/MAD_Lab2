@@ -73,5 +73,5 @@ data class UserProfile(
 
     @get:PropertyName("chats_id")
     @set:PropertyName("chats_id")
-    var listOfChatIDs: ArrayList<String>?
+    var listOfChatIDs: HashMap<String, String>? // advID to chatID
     )
