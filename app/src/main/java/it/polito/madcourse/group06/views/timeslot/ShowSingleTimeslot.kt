@@ -12,7 +12,6 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.TintableBackgroundView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -23,7 +22,6 @@ import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.MyChatViewModel
-import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.views.profile.ShowProfileOtherFragment
 
@@ -31,7 +29,6 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
 
     private val advViewModel: AdvertisementViewModel by activityViewModels()
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
-    private val sharedViewModel: SharedViewModel by activityViewModels()
     private val myChatViewModel by activityViewModels<MyChatViewModel>()
 
     private lateinit var advTitle: TextView
