@@ -87,7 +87,7 @@ class ShowListOfSkills : Fragment(R.layout.service_list) {
                 var listOfSkills =
                     listOfAdv
                         .asSequence()
-                        .filter { it.isAvailable }
+                        .filter { it.isAvailable() }
                         .map { it.listOfSkills }
                         .flatten()
                         .sortedBy { it.lowercase() }
@@ -113,7 +113,7 @@ class ShowListOfSkills : Fragment(R.layout.service_list) {
                 // Create notification badges for expired ads among my and active timeslots
                 listOfAdv.count { adv ->
                     // current user owns the ad
-                    (user.id == adv.accountID && adv.isToBeRated() && adv.rxUserId.isNullOrEmpty()) ||
+                    (user.id == adv.accountID && adv.isToBeRated() && !adv.rxUserId.isNullOrEmpty()) ||
                             // current user is the client of the ad
                             (user.id == adv.ratingUserId && adv.isToBeRated())
                 }

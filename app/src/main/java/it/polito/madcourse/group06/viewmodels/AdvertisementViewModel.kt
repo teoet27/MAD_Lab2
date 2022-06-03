@@ -26,8 +26,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     private var _singleAdvertisementPH = Advertisement(
         "", "", "", arrayListOf<String>(),
         "", "", "", "", 0.0,
-        "", "", 0.0, "",true,
-        null, null, null, 0.0, false
+        "", "", "", "", "", 0.0
     )
     private val _pvtAdvertisement = MutableLiveData<Advertisement>().also {
         it.value = _singleAdvertisementPH
@@ -64,22 +63,17 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             val startingTime = this.get("starting_time") as String
             val endingTime = this.get("ending_time") as String
             val duration = this.get("duration") as Double
-            val rating = this.get("rating") as Double
             val accountName = this.get("account_name") as String
             val accountID = this.get("accountID") as String
-            val comment = this.get("comment") as String
-            val isAvailable = this.get("is_available") as Boolean
             val rxUserId = this.get("rx_user_id") as String?
             val ratingUserId = this.get("rating_user_id") as String?
             val activeAt = this.get("active_at") as String?
             val activeFor = this.get("active_for") as Double
-            val isEnded = this.get("is_ended") as Boolean
             Advertisement(
                 id, title, description, listOfSkills ?: arrayListOf<String>(),
                 location, date, startingTime,
                 endingTime, duration, accountName,
-                accountID, rating, comment, isAvailable,
-                rxUserId, ratingUserId, activeAt, activeFor, isEnded
+                accountID, rxUserId, ratingUserId, activeAt, activeFor
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -109,14 +103,10 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "duration" to ad.advDuration,
                     "account_name" to ad.advAccount,
                     "accountID" to ad.accountID,
-                    "rating" to ad.rating,
-                    "comment" to ad.comment,
-                    "is_available" to ad.isAvailable,
                     "rx_user_id" to ad.rxUserId,
                     "rating_user_id" to ad.ratingUserId,
                     "active_at" to ad.activeAt,
                     "active_for" to ad.activeFor,
-                    "is_ended" to ad.isEnded
                 )
             )
             .addOnSuccessListener {
@@ -184,14 +174,10 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                         "duration" to ad.advDuration,
                         "account_name" to ad.advAccount,
                         "accountID" to ad.accountID,
-                        "rating" to ad.rating,
-                        "comment" to ad.comment,
-                        "is_available" to ad.isAvailable,
                         "rx_user_id" to ad.rxUserId,
                         "rating_user_id" to ad.ratingUserId,
                         "active_at" to ad.activeAt,
                         "active_for" to ad.activeFor,
-                        "is_ended" to ad.isEnded
                     )
                 )
                 .addOnSuccessListener {
@@ -228,14 +214,10 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                         "duration" to ad.advDuration,
                         "account_name" to ad.advAccount,
                         "accountID" to ad.accountID,
-                        "rating" to ad.rating,
-                        "comment" to ad.comment,
-                        "is_available" to ad.isAvailable,
                         "rx_user_id" to ad.rxUserId,
                         "rating_user_id" to ad.ratingUserId,
                         "active_at" to ad.activeAt,
                         "active_for" to ad.activeFor,
-                        "is_ended" to ad.isEnded
                     )
                 )
                 .addOnSuccessListener {
@@ -270,14 +252,10 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "duration" to ad.advDuration,
                     "account_name" to ad.advAccount,
                     "accountID" to ad.accountID,
-                    "rating" to ad.rating,
-                    "comment" to ad.comment,
-                    "is_available" to ad.isAvailable,
                     "rx_user_id" to ad.rxUserId,
                     "rating_user_id" to ad.ratingUserId,
                     "active_at" to ad.activeAt,
                     "active_for" to ad.activeFor,
-                    "is_ended" to ad.isEnded
                 )
             )
             .addOnSuccessListener {
@@ -343,8 +321,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                 this._singleAdvertisementPH = Advertisement(
                     "", "", "", arrayListOf<String>(),
                     "", "", "", "", 0.0,
-                    "", "", 0.0, "",true,
-                    null, null, null, 0.0, false
+                    "", "", "", "", "", 0.0
                 )
                 this._pvtAdvertisement.value = this._singleAdvertisementPH
             }

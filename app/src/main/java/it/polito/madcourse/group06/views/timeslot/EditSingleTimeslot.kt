@@ -37,8 +37,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     private val dumbAdvertisement: Advertisement = Advertisement(
         "", "", "", arrayListOf<String>(),
         "", "", "", "", 0.0,
-        "", "", 0.0, "",true,
-        null, null, null, 0.0, false
+        "", "",
+        null, null, null, 0.0
     )
 
     private lateinit var advTitle: TextView
@@ -150,15 +150,21 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                     var isPossible = true
                     var isDateAndTimeCorrect = true
                     val sdfDate = SimpleDateFormat("dd/MM/yyyy")
-                    val sdfTime = SimpleDateFormat("hh:mm")
+                    val sdfTime = SimpleDateFormat("HH:mm")
                     val currentDate = sdfDate.format(Date())
                     var currentTime = sdfTime.format(Date())
-                    val (x, isCurrentTimeDifference) = computeTimeDifference(currentTime, advStartingTime.text.toString())
-                    val (y, isCurrentDateDifference) = computeDateDifference(currentDate, chosenDate)
 
-                    if (!isCurrentDateDifference) {
-                        isDateAndTimeCorrect = false
-                    } else if (isCurrentTimeDifference) {
+                    // check on time and date
+                    val (_, isCurrentTimeDifference) =
+                        if(!advStartingTime.text.toString().isNullOrEmpty())
+                            computeTimeDifference(currentTime, advStartingTime.text.toString())
+                        else
+                            Pair(-1,true)
+                    val (_, isCurrentDateDifference) = computeDateDifference(currentDate, chosenDate)
+
+                    if (isCurrentDateDifference) {
+                        isDateAndTimeCorrect = true
+                    } else if (!isCurrentTimeDifference) {
                         isDateAndTimeCorrect = false
                     }
 
@@ -235,90 +241,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val (timeDifference, isTimeDifferenceOk) = computeTimeDifference(advStartingTime.text.toString(), advEndingTime.text.toString())
-                advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfTimeslots ->
-                    var isPossible = true
-                    var isDateAndTimeCorrect = true
-                    val sdfDate = SimpleDateFormat("dd/MM/yyyy")
-                    val sdfTime = SimpleDateFormat("hh:mm")
-                    val currentDate = sdfDate.format(Date())
-                    var currentTime = sdfTime.format(Date())
-                    val (x, isCurrentTimeDifference) = computeTimeDifference(currentTime, advStartingTime.text.toString())
-                    val (y, isCurrentDateDifference) = computeDateDifference(currentDate, chosenDate)
-
-                    if (!isCurrentDateDifference) {
-                        isDateAndTimeCorrect = false
-                    } else if (!isCurrentTimeDifference) {
-                        isDateAndTimeCorrect = false
-                    }
-
-                    val tmpList = listOfTimeslots.filter { it.accountID == accountID }
-                    for (adv in tmpList) {
-                        if (adv.id == dumbAdvertisement.id) {
-                            continue
-                        }
-                        if (adv.advDate != chosenDate) {
-                            continue
-                        }
-                        val newSTH = advStartingTime.text.toString().convertStringToArrayOfTime()[0]
-                        val newSTM = advStartingTime.text.toString().convertStringToArrayOfTime()[1]
-                        val staticSTH = adv.advStartingTime.convertStringToArrayOfTime()[0]
-                        val staticSTM = adv.advStartingTime.convertStringToArrayOfTime()[1]
-                        val newETH = advEndingTime.text.toString().convertStringToArrayOfTime()[0]
-                        val newETM = advEndingTime.text.toString().convertStringToArrayOfTime()[1]
-                        val staticETH = adv.advEndingTime.convertStringToArrayOfTime()[0]
-                        val staticETM = adv.advEndingTime.convertStringToArrayOfTime()[1]
-
-                        if (newETH * 60 + newETM >= staticSTH * 60 + staticSTM && newSTH * 60 + newSTM <= staticSTH * 60 + staticSTM) {
-                            isPossible = false
-                            Snackbar.make(
-                                requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_LONG
-                            ).show()
-                        } else if (newSTH * 60 + newSTM >= staticSTH * 60 + staticSTM && newETH * 60 + newETM <= staticETH * 60 + staticETM) {
-                            isPossible = false
-                            Snackbar.make(
-                                requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_LONG
-                            ).show()
-                        } else if (newSTH * 60 + newSTM <= staticETH * 60 + staticETM && newETH * 60 + newETM >= staticETH * 60 + staticETM) {
-                            isPossible = false
-                            Snackbar.make(
-                                requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_LONG
-                            ).show()
-                        }
-                    }
-
-                    if (!isDateAndTimeCorrect) {
-                        Snackbar.make(
-                            requireView(), "Error: you cannot create a timeslot back in time.", Snackbar.LENGTH_LONG
-                        ).show()
-                    } else if (isPossible) {
-                        if (!isTimeDifferenceOk && timeDifference < 0) {
-                            Snackbar.make(
-                                requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_LONG
-                            ).show()
-                        } else if (!isTimeDifferenceOk) {
-                            Snackbar.make(
-                                requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_LONG
-                            ).show()
-                        } else if (isAdvValid()) {
-                            dumbAdvertisement.advTitle = advTitle.text.toString()
-                            dumbAdvertisement.advLocation = advLocation.text.toString()
-                            dumbAdvertisement.advDescription = advDescription.text.toString()
-                            dumbAdvertisement.advDate = chosenDate
-                            dumbAdvertisement.advStartingTime = advStartingTime.text.toString()
-                            dumbAdvertisement.advEndingTime = advEndingTime.text.toString()
-                            dumbAdvertisement.advDuration = timeDifference
-                            dumbAdvertisement.listOfSkills = selectedSkillsList
-                            advertisementViewModel.editAdvertisement(dumbAdvertisement)
-                            sharedViewModel.updateSearchState()
-                            findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
-                        } else {
-                            Snackbar.make(
-                                requireView(), "Error: you need to provide at least a title, a starting and ending time, a skill, a location and a date. Try again.", Snackbar.LENGTH_LONG
-                            ).show()
-                        }
-                    }
-                }
+                confirmButton.performClick()
             }
         })
     }

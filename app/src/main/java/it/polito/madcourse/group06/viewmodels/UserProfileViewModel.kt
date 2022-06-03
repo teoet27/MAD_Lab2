@@ -33,7 +33,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     private var _singleUserProfilePH = UserProfile(
         "", "", "", "", "", "", "",
         "", null, 0.0, 0.0, 0.0,
-        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String,String>()
+        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String, String>()
     )
     private val _pvtUserProfile = MutableLiveData<UserProfile>().also { it.value = _singleUserProfilePH }
     val currentUser: LiveData<UserProfile> = this._pvtUserProfile
@@ -44,7 +44,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     private var _otherUserProfilePH = UserProfile(
         "", "", "", "", "", "",
         "", "", null, 0.0, 0.0, 0.0,
-        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String,String>()
+        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String, String>()
     )
     private val _pvtOtherUserProfile = MutableLiveData<UserProfile>().also { it.value = _otherUserProfilePH }
     val otherUser: LiveData<UserProfile> = this._pvtOtherUserProfile
@@ -113,6 +113,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
 
     // TODO: add title to comments
     fun commentAd(advTitle: String?, comment: String?, rating: Double, isServiceDone: Boolean) {
+        val commentBis = "${advTitle}#*#${comment ?: ""}"
         val updatedUser = _otherUserProfilePH.also { dumbUser ->
             dumbUser.n_ratings++
             dumbUser.rating_sum += rating
@@ -120,16 +121,16 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             if (isServiceDone && !comment.isNullOrEmpty()) {
                 // done
                 if (dumbUser.comments_services_done != null) {
-                    dumbUser.comments_services_done!!.add(comment)
+                    dumbUser.comments_services_done!!.add(commentBis)
                 } else {
-                    dumbUser.comments_services_done = arrayListOf(comment)
+                    dumbUser.comments_services_done = arrayListOf(commentBis)
                 }
             } else if (!isServiceDone && !comment.isNullOrEmpty()) {
                 // done
                 if (dumbUser.comments_services_rx != null) {
-                    dumbUser.comments_services_rx!!.add(comment)
+                    dumbUser.comments_services_rx!!.add(commentBis)
                 } else {
-                    dumbUser.comments_services_rx = arrayListOf(comment)
+                    dumbUser.comments_services_rx = arrayListOf(commentBis)
                 }
             }
         }

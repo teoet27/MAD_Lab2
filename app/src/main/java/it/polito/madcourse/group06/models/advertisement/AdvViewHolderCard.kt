@@ -48,7 +48,8 @@ class AdvViewHolderCard(private val v: View, private val userViewModel: UserProf
                  v.findViewById<Button>(R.id.rate_button).setOnClickListener {
                  RatingFragment().also {
                      it.arguments = bundleOf(
-                         "other_id" to adv.accountID,
+                         "rx_user_id" to adv.rxUserId,
+                         "adv_account_id" to adv.accountID,
                          "adv_title" to adv.advTitle,
                          "adv_id" to adv.id
                      )
