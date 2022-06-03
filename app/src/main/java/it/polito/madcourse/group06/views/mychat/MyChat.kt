@@ -43,6 +43,9 @@ class MyChat : Fragment() {
     private var chatMenuArrowStartingPosition = 0.0f
     private var isAnswerMenuOpen = false
 
+    /**
+     * Temporary list of MyMessages to test the front-end
+     */
     private val listOfMessages = mutableListOf<MyMessage>(
         MyMessage("0", "1", "yo wyd?", "31/05/2022 14:30", "0"),
         MyMessage("0", "1", "you still interested?", "31/05/2022 14:31", "0"),
@@ -169,6 +172,9 @@ class MyChat : Fragment() {
         })
     }
 
+    /**
+     * This permits having the right-to-left animation
+     */
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
         val anim = AnimationUtils.loadAnimation(requireActivity(), R.anim.slide_in_from_right)
         anim.setAnimationListener(object : Animation.AnimationListener {
