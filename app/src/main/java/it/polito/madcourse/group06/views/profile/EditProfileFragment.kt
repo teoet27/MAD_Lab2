@@ -53,8 +53,8 @@ class EditProfileFragment : Fragment() {
     private var credit: Double = 0.0
     private var rating_sum: Double = 0.0
     private var n_ratings: Double = 0.0
-    private var comments_services_rx = arrayListOf<String>()
-    private var comments_services_done = arrayListOf<String>()
+    private var comments_services_rx: ArrayList<String>? = arrayListOf<String>()
+    private var comments_services_done: ArrayList<String>?  = arrayListOf<String>()
     private var savedAdsIDs = arrayListOf<String>()
     private lateinit var imgProfilePicturePath: String
     private var userID: String = ""
@@ -114,8 +114,8 @@ class EditProfileFragment : Fragment() {
             this.n_ratings = userProfile.n_ratings
 
             // comments on services rx and done (not to be modified)
-            this.comments_services_rx = userProfile.comments_services_rx!!
-            this.comments_services_done = userProfile.comments_services_done!!
+            this.comments_services_rx = userProfile.comments_services_rx
+            this.comments_services_done = userProfile.comments_services_done
 
             // Image path
             this.imgProfilePicturePath = userProfile.imgPath!!
