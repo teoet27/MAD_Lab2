@@ -69,5 +69,9 @@ data class UserProfile(
 
     @get:PropertyName("saved_ads_ids")
     @set:PropertyName("saved_ads_ids")
-    var saved_ads_ids: ArrayList<String>?
-)
+    var saved_ads_ids: ArrayList<String>?,
+
+    @get:PropertyName("chats_id")
+    @set:PropertyName("chats_id")
+    var listOfChatIDs: ArrayList<String>?
+    )
