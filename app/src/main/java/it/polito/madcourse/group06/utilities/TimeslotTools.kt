@@ -119,7 +119,14 @@ fun timeStringToDoubleHour(time: String): Double {
 }
 
 fun timeDoubleHourToString(time: Double): String {
-    return String.format("%02d:%02d",floor(time).toInt(),round((time - floor(time)) * 60).toInt())
+    val h = floor(time).toInt()
+    val min = round((time - floor(time)) * 60).toInt()
+    return if (h == 0)
+        "${min} min"
+    else if (min == 0)
+        "${h} h"
+    else
+        "${h} h ${min} min"
 }
 
 class AdvFilter(
@@ -140,18 +147,18 @@ class AdvFilter(
     }
 }
 
-val TAB_SERVICES="Services"
-val TAB_ACTIVE="Active"
-val TAB_SAVED="Saved"
-val TAB_MINE="Mine"
-val ALL_SERVICES="All"
+val TAB_SERVICES = "Services"
+val TAB_ACTIVE = "Active"
+val TAB_SAVED = "Saved"
+val TAB_MINE = "Mine"
+val ALL_SERVICES = "All"
 val NOT_ACTIVE_NOT_SAVED = 0
 val ACTIVE = 2
 val SAVED = 1
 val ACTIVE_AND_SAVED = 3
 
 class SearchState(
-    var currentTab: String?=null,
+    var currentTab: String? = null,
     var selectedSkill: String? = null,
     var searchedWord: String? = null,
     var sortParameter: Int? = null,
@@ -162,32 +169,43 @@ class SearchState(
     var filter: AdvFilter? = null
 )
 
-fun hoursToCredit(hours:Double):Int{
+fun hoursToCredit(hours: Double): Int {
     return round(hours * 4).toInt()
 }
+
 //Useful extension functions
 fun Boolean.toInt() = if (this) 1 else 0
 
-fun Advertisement.isAvailable():Boolean{
+fun Advertisement.isAvailable(): Boolean {
     return this.rxUserId.isNullOrEmpty() && this.ratingUserId.isNullOrEmpty() && !this.isExpired()
 }
 
-fun Advertisement.isEnded():Boolean{
+fun Advertisement.isEnded(): Boolean {
     return this.rxUserId.isNullOrEmpty() && this.ratingUserId.isNullOrEmpty() && !this.activeAt.isNullOrEmpty()
 }
+
 fun Advertisement.isExpired(): Boolean {
-    return (timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())) >= timeStringToDoubleHour(advEndingTime)
-                && this.advDate == SimpleDateFormat("dd/MM/yyyy").format(Date())
-                || (computeDateDifference(SimpleDateFormat("dd/MM/yyyy").format(Date()), this.advDate).first < 0))
+    return (timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())) >= timeStringToDoubleHour(
+        advEndingTime
+    )
+            && this.advDate == SimpleDateFormat("dd/MM/yyyy").format(Date())
+            || (computeDateDifference(
+        SimpleDateFormat("dd/MM/yyyy").format(Date()),
+        this.advDate
+    ).first < 0))
 }
 
 fun Advertisement.isToBeRated(): Boolean {
     return if (!activeAt.isNullOrEmpty()) {
-        (timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())) >= timeStringToDoubleHour(activeAt!!) + activeFor
+        (timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())) >= timeStringToDoubleHour(
+            activeAt!!
+        ) + activeFor
                 && this.advDate == SimpleDateFormat("dd/MM/yyyy").format(Date())
-                || (computeDateDifference(SimpleDateFormat("dd/MM/yyyy").format(Date()), this.advDate).first < 0))
-    }
-    else {
+                || (computeDateDifference(
+            SimpleDateFormat("dd/MM/yyyy").format(Date()),
+            this.advDate
+        ).first < 0))
+    } else {
         false
     }
 }
