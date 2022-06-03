@@ -494,6 +494,35 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             .addOnFailureListener { error -> error.printStackTrace() }
     }
 
+    fun addChatToUser(user: UserProfile) {
+        db
+            .collection("UserProfile")
+            .document(user.id!!)
+            .update(
+                "id", user.id,
+                "nickname", user.nickname,
+                "fullname", user.fullName,
+                "qualification", user.qualification,
+                "description", user.description,
+                "email", user.email,
+                "phone_number", user.phoneNumber,
+                "location", user.location,
+                "skills", user.skills,
+                "credit", user.credit,
+                "rating_sum", user.rating_sum,
+                "n_ratings", user.n_ratings,
+                "comments_services_rx", user.comments_services_rx,
+                "comments_services_done", user.comments_services_done,
+                "img_path", user.imgPath,
+                "saved_ads_ids", user.saved_ads_ids,
+                "chats_id", user.listOfChatIDs
+            )
+            .addOnSuccessListener {
+                this._singleUserProfilePH = user
+                this._pvtUserProfile.value = this._singleUserProfilePH
+            }
+    }
+
     /**
      * Unsubscribe from the Listener Registration
      */
