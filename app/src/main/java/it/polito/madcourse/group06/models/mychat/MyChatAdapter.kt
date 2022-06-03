@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
-import it.polito.madcourse.group06.viewmodels.MyMessage
 
 class MyChatAdapter(listOfMessages: List<MyMessage>) : RecyclerView.Adapter<MyChatViewHolder>() {
     private val chat: MutableList<MyMessage> = listOfMessages.toMutableList()

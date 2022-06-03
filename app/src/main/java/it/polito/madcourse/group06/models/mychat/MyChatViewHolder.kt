@@ -9,7 +9,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
-import it.polito.madcourse.group06.viewmodels.MyMessage
 
 
 class MyChatViewHolder(private val v: View, private val isMyMessage: Boolean) : RecyclerView.ViewHolder(v) {

@@ -2,7 +2,6 @@ package it.polito.madcourse.group06.models.mychat
 
 import androidx.room.PrimaryKey
 import com.google.firebase.firestore.PropertyName
-import it.polito.madcourse.group06.viewmodels.MyMessage
 
 data class MyChatModel(
     @PrimaryKey(autoGenerate = true)
