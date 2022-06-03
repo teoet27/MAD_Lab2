@@ -16,4 +16,5 @@
     <color name="online_green">#2DBA0C</color>
     <color name="other_bubble">#DFDFDF</color>
     <color name="my_bubble">#005EA1</color>
+    <color name="my_bubble_end">#0086E6</color>
 </resources>

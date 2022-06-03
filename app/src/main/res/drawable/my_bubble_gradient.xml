@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="#FFFFFF"/>
+            <corners android:topLeftRadius="@dimen/radius_bubbles" android:topRightRadius="@dimen/radius_bubbles" android:bottomLeftRadius="@dimen/radius_bubbles"/>
+            <padding android:left="0dp" android:top="0dp" android:right="0dp" android:bottom="0dp" />
+            <gradient
+                android:startColor="@color/my_bubble"
+                android:endColor="@color/my_bubble_end"
+                android:type="linear"
+                android:angle="90"/>
+        </shape>
+    </item>
+</selector>
