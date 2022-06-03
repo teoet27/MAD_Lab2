@@ -8,5 +8,6 @@ data class MyMessage (
     var receiverID: String,
     var msg: String,
     var timestamp: String,
-    var advID: String
+    var advID: String,
+    // var isAPurpose: Boolean
 )

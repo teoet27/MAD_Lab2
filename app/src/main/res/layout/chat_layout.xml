@@ -60,11 +60,11 @@
                 android:id="@+id/linearLayout11"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/chatStatusID"
+                app:layout_constraintHorizontal_bias="0.2"
                 app:layout_constraintStart_toEndOf="@+id/chattingUserProfilePicture"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -110,15 +110,36 @@
                 app:srcCompat="@drawable/circular_mask"
                 app:tint="@color/white" />
 
+            <TextView
+                android:id="@+id/newPurposeButtonID"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="32dp"
+                android:background="@color/my_bubble"
+                android:gravity="center"
+                android:padding="6dp"
+                android:text="+"
+                android:textColor="@color/lightGray"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/linearLayout11"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/adv_card_bckgrnd" />
+
             <ImageView
                 android:id="@+id/chatStatusID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="26dp"
                 android:background="@drawable/ic_svg_circle"
                 android:backgroundTint="@color/online_green"
                 android:padding="10dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/linearLayout11"
@@ -134,14 +155,14 @@
         android:id="@+id/chatContentViewID"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/rounded_corners_down"
         android:backgroundTint="@color/white"
         android:paddingStart="16dp"
         android:paddingTop="24dp"
         android:paddingEnd="16dp"
         android:paddingBottom="18dp"
-        app:layout_constraintBottom_toTopOf="@+id/inputMessageBox"
+        app:layout_constraintBottom_toTopOf="@id/chatMenuArrowID"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chattingUserViewID"
@@ -159,13 +180,13 @@
         android:hint="@string/type_a_message"
         android:imeOptions="actionDone"
         android:inputType="textMultiLine"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
         android:maxLines="5"
-        android:textColor="@color/darkGray"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
         android:scrollbars="vertical"
+        android:textColor="@color/darkGray"
         android:textColorHint="#80333533"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/chatSendMessageButtonID"
@@ -206,17 +227,193 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <LinearLayout
+        android:id="@+id/myPurposeID"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/common_message_bubble"
+        android:backgroundTint="@color/my_bubble"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/inputMessageBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/purposeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center|center_horizontal|center_vertical"
+            android:layout_weight="1"
+            android:background="@drawable/my_message_bubble"
+            android:backgroundTint="@color/dark_prussian_blue"
+            android:padding="16dp"
+            android:text="New purpose"
+            android:textColor="@color/white"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:paddingRight="8dp">
+
+            <TextView
+                android:id="@+id/TV1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_location_on_black_24dp"
+                android:drawablePadding="4dp"
+                android:paddingStart="10dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="4dp"
+                android:text="Location:"
+                android:textColor="@color/white"
+                android:textSize="@dimen/message_font_size"
+                android:textStyle="bold"
+                app:drawableTint="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/myLocationTVID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/my_message_bubble"
+                android:backgroundTint="@color/dark_prussian_blue"
+                android:hint="What location do you prefer?"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="6dp"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="#A1A1A1"
+                android:textSize="@dimen/message_font_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp">
+
+            <TextView
+                android:id="@+id/TV2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_watch_later_black_24dp"
+                android:drawablePadding="4dp"
+                android:paddingStart="10dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="4dp"
+                android:text="Starting time:"
+                android:textColor="@color/white"
+                android:textSize="@dimen/message_font_size"
+                android:textStyle="bold"
+                app:drawableTint="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/myStartingDateTVID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/my_message_bubble"
+                android:backgroundTint="@color/dark_prussian_blue"
+                android:hint="What starting time would you prefer?"
+                android:inputType="time"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="6dp"
+                android:textColor="@color/white"
+                android:textColorHint="#A1A1A1"
+                android:textSize="@dimen/message_font_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/TV3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_timer_black_24dp"
+                android:drawablePadding="4dp"
+                android:paddingStart="10dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="4dp"
+                android:text="Duration:"
+                android:textColor="@color/white"
+                android:textSize="@dimen/message_font_size"
+                android:textStyle="bold"
+                app:drawableTint="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/myDurationTVID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/my_message_bubble"
+                android:backgroundTint="@color/dark_prussian_blue"
+                android:hint="What will the duration be?"
+                android:inputType="numberDecimal"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="6dp"
+                android:textColor="@color/white"
+                android:textColorHint="#A1A1A1"
+                android:textSize="@dimen/message_font_size"
+                tools:ignore="TouchTargetSizeCheck" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/sendPurposeButtonID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/rounded_corners_total"
+            android:backgroundTint="@color/dark_prussian_blue"
+            android:padding="16dp"
+            app:srcCompat="@drawable/ic_schedule_send_black_24dp"
+            app:tint="@color/lightGray" />
+
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/chatMenuArrowID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/chatAnswerContainerID"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_corners_total"
+        android:backgroundTint="@color/darkGray"
+        android:padding="3dp"
+        app:layout_constraintBottom_toTopOf="@+id/inputMessageBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24"
-        app:tint="@color/darkGray" />
+        app:srcCompat="@drawable/ic_add_black_24dp"
+        app:tint="@color/lightGray" />
 
     <LinearLayout
         android:id="@+id/chatAnswerContainerID"
@@ -226,7 +423,7 @@
         android:layout_marginRight="4dp"
         android:layout_marginBottom="-50dp"
         android:orientation="horizontal"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/chatContentViewID"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

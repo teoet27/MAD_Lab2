@@ -90,6 +90,9 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                     this.editButton.setImageResource(R.drawable.ic_edit_black_24dp)
                 } else {
                     userProfileViewModel.fetchUserProfileById(singleAdvertisement.accountID)
+                    userProfileViewModel.otherUser.observe(viewLifecycleOwner) {
+                        userProfileViewModel.setChattingUserProfile(it)
+                    }
                 }
 
                 this.advAccount.setOnClickListener {
@@ -141,7 +144,12 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                         ).show()
                     }
                 } else {
-                    /*chat*/
+                    /**
+                     * Call to a chat with this user
+                     */
+                    val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
+                    activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
+                    Navigation.findNavController(view).navigate(R.id.action_ShowListTimeslots_to_myChat)
                 }
             }
         }

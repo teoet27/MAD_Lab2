@@ -39,6 +39,17 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     val currentUser: LiveData<UserProfile> = this._pvtUserProfile
 
     /**
+     * [UserProfile] with which the current user is chatting
+     */
+    private var _chattingUserPH = UserProfile(
+        "", "", "", "", "", "", "",
+        "", null, 0.0, 0.0, 0.0,
+        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>()
+    )
+    private val _pvtChattingUser = MutableLiveData<UserProfile>().also { it.value = _chattingUserPH }
+    val chattingUser: LiveData<UserProfile> = this._pvtChattingUser
+
+    /**
      * Other [UserProfile]
      */
     private var _otherUserProfilePH = UserProfile(
@@ -492,6 +503,16 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 imageView.setImageBitmap(bitmapProfilePicture)
             }
             .addOnFailureListener { error -> error.printStackTrace() }
+    }
+
+    /**
+     * setChattingUserProfile sets the chattingUser in order to retrieve the information
+     * of the user with which the current user is chatting and get them in the MyChat fragment
+     * @param usr the user profile with which we are going to chat
+     */
+    fun setChattingUserProfile(usr: UserProfile) {
+        this._chattingUserPH = usr
+        this._pvtChattingUser.value = this._chattingUserPH
     }
 
     /**

@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_ShowListTimeslots_to_showProfileOtherFragment"
             app:destination="@id/showProfileOtherFragment" />
+        <action
+            android:id="@+id/action_ShowListTimeslots_to_myChat"
+            app:destination="@id/myChat" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -163,5 +166,8 @@
         <action
             android:id="@+id/action_myChat_to_ShowListOfServices"
             app:destination="@id/ShowListOfServices" />
+        <action
+            android:id="@+id/action_myChat_to_ShowListTimeslots"
+            app:destination="@id/ShowListTimeslots" />
     </fragment>
 </navigation>
