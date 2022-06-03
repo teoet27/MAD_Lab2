@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
@@ -16,9 +15,6 @@ import java.lang.Exception
 
 class MyChatViewModel(application: Application) : AndroidViewModel(application) {
     private val db = FirebaseFirestore.getInstance()
-    private val storage: FirebaseStorage = FirebaseStorage.getInstance()
-    private var listenerRegistration: ListenerRegistration
-    private val context = application
 
     /**
      * [UserProfile] with which the current user is chatting
@@ -37,13 +33,6 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
     private var _myChatPH = MyChatModel("", "", "", arrayListOf(), "-1")
     private val _pvtMyChat = MutableLiveData<MyChatModel>().also { it.value = _myChatPH }
     val myCurrentChat: LiveData<MyChatModel> = this._pvtMyChat
-
-    init {
-        listenerRegistration = db.collection("MyChat")
-            .addSnapshotListener { value, error ->
-
-            }
-    }
 
     /**
      * setChattingUserProfile sets the chattingUser in order to retrieve the information
@@ -65,7 +54,7 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
                     "chat_id" to chatID,
                     "user_id" to currentUserID,
                     "other_user_id" to otherUserID,
-                    "content" to mutableListOf<MyMessage>(),
+                    "chat_content" to mutableListOf<MyMessage>(),
                     "adv_id" to advID,
                 )
             )
@@ -73,32 +62,19 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
         this._pvtMyChat.value = this._myChatPH
     }
 
-    private fun fetchChat(chatID: String) {
-        db
-            .collection("Chat")
-            .whereEqualTo("id", chatID)
-            .get()
-            .addOnSuccessListener {
-                for (x in it) {
-                    this._myChatPH = x.toMyChatModel() ?: MyChatModel("", "", "", arrayListOf(), "")
-                    this._pvtMyChat.value = this._myChatPH
-                    break
-                }
-            }
-    }
-
     fun fetchChatByAdvertisementID(currentUserID: String, otherUserID: String, advertisementID: String) {
         db
             .collection("Chat")
-            .whereEqualTo("id", currentUserID)
-            .whereArrayContains("chats_id", advertisementID)
+            .whereEqualTo("user_id", currentUserID)
+            .whereEqualTo("adv_id", advertisementID)
             .get()
             .addOnSuccessListener { query ->
                 if (query.isEmpty) {
                     this.createNewChat(advertisementID, currentUserID, otherUserID)
                 } else {
-                    query.forEach { docSnap ->
-                        this.fetchChat(docSnap.toString())
+                    query.documents[0].also { docSnap ->
+                        this._myChatPH = docSnap.toMyChatModel() ?: MyChatModel("", "", "", arrayListOf(), "")
+                        this._pvtMyChat.value = this._myChatPH
                     }
                 }
             }
@@ -119,11 +95,29 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
 
     private fun DocumentSnapshot.toMyChatModel(): MyChatModel? {
         return try {
-            val id = this.get("id") as String
-            val content = this.get("nickname") as ArrayList<MyMessage>?
-            MyChatModel(id, "", "", content!!, "-1")
+            val advID = this.get("adv_id") as String
+            val chatContent: ArrayList<MyMessage>? = (this.get("chat_content") as ArrayList<HashMap<Any, Any>>)
+                .toMyMessageArray()
+            val chatID = this.get("chat_id") as String
+            val currentID = this.get("user_id") as String
+            val otherUserID = this.get("other_user_id") as String
+            MyChatModel(chatID, currentID, otherUserID, chatContent!!, advID)
         } catch (e: Exception) {
             null
         }
+    }
+
+    private fun ArrayList<HashMap<Any, Any>>.toMyMessageArray(): ArrayList<MyMessage> {
+        val out: ArrayList<MyMessage> = ArrayList()
+        for (value in this) {
+            val myMessage = MyMessage("", "", "", "", false)
+            myMessage.senderID = value["sender_id"] as String
+            myMessage.receiverID = value["receiver_id"] as String
+            myMessage.msg = value["msg"] as String
+            myMessage.timestamp = value["timestamp"] as String
+            myMessage.isAnOffer = value["is_an_offer"] as Boolean
+            out.add(myMessage)
+        }
+        return out
     }
 }

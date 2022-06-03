@@ -6,7 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 
-class MyChatAdapter(listOfMessages: List<MyMessage>) : RecyclerView.Adapter<MyChatViewHolder>() {
+class MyChatAdapter(
+    listOfMessages: List<MyMessage>,
+    private val currentUserID: String,
+    private val otherUserID: String
+) : RecyclerView.Adapter<MyChatViewHolder>() {
     private val chat: MutableList<MyMessage> = listOfMessages.toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyChatViewHolder {
@@ -54,12 +58,12 @@ class MyChatAdapter(listOfMessages: List<MyMessage>) : RecyclerView.Adapter<MyCh
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (chat[position].senderID == "0") {
+        return if (chat[position].senderID == currentUserID) {
             when {
                 // if this is the last one
                 position + 1 >= chat.size -> R.layout.my_message_layout
                 // if there is an incoming change
-                chat[position + 1].senderID == "1" -> R.layout.my_message_layout
+                chat[position + 1].senderID == otherUserID -> R.layout.my_message_layout
                 else -> R.layout.common_my_message_layout
             }
         } else {
@@ -67,7 +71,7 @@ class MyChatAdapter(listOfMessages: List<MyMessage>) : RecyclerView.Adapter<MyCh
                 // if this is the last one
                 position - 1 < 0 -> R.layout.other_message_layout
                 // if there is a previous change
-                chat[position - 1].senderID == "0" -> R.layout.other_message_layout
+                chat[position - 1].senderID == currentUserID -> R.layout.other_message_layout
                 else -> R.layout.common_other_message_layout
             }
         }

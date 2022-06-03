@@ -47,7 +47,6 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
     private var currentAccountID: String = ""
     private var otherAccountID: String = ""
     private var isMine = false
-    private lateinit var email: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

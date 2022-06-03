@@ -148,15 +148,7 @@ class MyChat : Fragment() {
                 /**
                  * Add the message to the adapter
                  */
-                chatAdapterCard.addMessage(
-                    MyMessage(
-                        "0", "1", this.inputMessageBox.text.toString(),
-                        SimpleDateFormat(
-                            "dd/MM/yyyy hh:mm",
-                            Locale.getDefault()
-                        ).format(Date()).toString(), false
-                    )
-                )
+                chatAdapterCard.addMessage(msg)
 
                 // Set the input message box to an empty textview
                 this.inputMessageBox.setText("")
@@ -243,7 +235,7 @@ class MyChat : Fragment() {
 
         myChatViewModel.myCurrentChat.observe(viewLifecycleOwner) { chat ->
             this.emptyChatMessage.isVisible = chat.chatContent.isEmpty()
-            chatAdapterCard = MyChatAdapter(chat.chatContent)
+            chatAdapterCard = MyChatAdapter(chat.chatContent, chat.userID, chat.otherUserID)
 
             val linearLayoutManager = LinearLayoutManager(this.context)
             linearLayoutManager.stackFromEnd = true
