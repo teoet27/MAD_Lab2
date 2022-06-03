@@ -33,7 +33,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     private var _singleUserProfilePH = UserProfile(
         "", "", "", "", "", "", "",
         "", null, 0.0, 0.0, 0.0,
-        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), ArrayList<String>()
+        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String,String>()
     )
     private val _pvtUserProfile = MutableLiveData<UserProfile>().also { it.value = _singleUserProfilePH }
     val currentUser: LiveData<UserProfile> = this._pvtUserProfile
@@ -44,7 +44,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     private var _otherUserProfilePH = UserProfile(
         "", "", "", "", "", "",
         "", "", null, 0.0, 0.0, 0.0,
-        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), ArrayList<String>()
+        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String,String>()
     )
     private val _pvtOtherUserProfile = MutableLiveData<UserProfile>().also { it.value = _otherUserProfilePH }
     val otherUser: LiveData<UserProfile> = this._pvtOtherUserProfile
@@ -190,7 +190,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             val comments_services_done = this.get("comments_services_done") as ArrayList<String>?
             val imgPath = this.get("img_path") as String
             val savedAdsIDs = this.get("saved_ads_ids") as ArrayList<String>?
-            val listOfChatIDs = this.get("chats_id") as ArrayList<String>?
+            val listOfChatIDs = this.get("chats_id") as HashMap<String,String>?
             UserProfile(
                 id, nickname, fullname, qualification,
                 description, email, phoneNumber, location, skills, credit,
@@ -221,7 +221,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 this._singleUserProfilePH = UserProfile(
                     null, null, null, null,
                     null, null, null, null, null, 0.0,
-                    0.0, 0.0, ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), ArrayList<String>()
+                    0.0, 0.0, ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String,String>()
                 )
                 this._pvtUserProfile.value = this._singleUserProfilePH
             }
@@ -246,7 +246,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 this._otherUserProfilePH = UserProfile(
                     null, null, null, null,
                     null, null, null, null, null, 0.0,
-                    0.0, 0.0, ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), ArrayList<String>()
+                    0.0, 0.0, ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String,String>()
                 )
                 this._pvtOtherUserProfile.value = this._otherUserProfilePH
             }
