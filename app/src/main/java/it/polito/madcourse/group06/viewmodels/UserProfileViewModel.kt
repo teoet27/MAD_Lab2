@@ -451,6 +451,16 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     /**
+     * setChattingUserProfile sets the chattingUser in order to retrieve the information
+     * of the user with which the current user is chatting and get them in the MyChat fragment
+     * @param usr the user profile with which we are going to chat
+     */
+    fun setChattingUserProfile(usr: UserProfile) {
+        this._chattingUserPH = usr
+        this._pvtChattingUser.value = this._chattingUserPH
+    }
+
+    /**
      * Unsubscribe from the Listener Registration
      */
     override fun onCleared() {
