@@ -186,7 +186,6 @@
                 android:drawablePadding="8dp"
                 android:gravity="center"
                 android:paddingRight="6dp"
-                android:text="Starts at"
                 android:textColor="@color/black"
                 app:drawableTint="@color/dark_prussian_blue"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -168,6 +168,9 @@ fun hoursToCredit(hours:Double):Int{
 //Useful extension functions
 fun Boolean.toInt() = if (this) 1 else 0
 
+fun Advertisement.isAvailable():Boolean{
+    return this.rxUserId.isNullOrEmpty() && this.ratingUserId.isNullOrEmpty() && !this.isExpired()
+}
 fun Advertisement.isExpired(): Boolean {
     return (timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())) >= timeStringToDoubleHour(advEndingTime)
                 && this.advDate == SimpleDateFormat("dd/MM/yyyy").format(Date())

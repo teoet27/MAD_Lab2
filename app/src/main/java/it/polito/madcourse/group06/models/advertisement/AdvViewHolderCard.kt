@@ -46,13 +46,23 @@ class AdvViewHolderCard(private val v: View,private val userViewModel:UserProfil
              v.findViewById<Button>(R.id.rate_button).setOnClickListener{
                  /*open rate fragment*/
              }
+
         if(viewType == R.layout.adv_active_item || viewType == R.layout.adv_active_item_saved){
             v.findViewById<TextView>(R.id.trade_credit).text = hoursToCredit(adv.activeFor).toString()
-            val timeDate = if (adv.advDate != SimpleDateFormat("dd/MM/yyyy").format(Date())) {
-                adv.activeAt + ", on " + adv.advDate
+            var timeDate=""
+            if (adv.advDate != SimpleDateFormat("dd/MM/yyyy").format(Date())) {
+                timeDate="Starts at ${adv.activeAt}, on ${adv.advDate}"
             }
             else {
-                adv.activeAt
+                if(adv.activeAt?.isLaterThanTime(SimpleDateFormat("HH:mm").format(Date()))==true)
+                    timeDate="Starts at ${adv.activeAt}"
+                else if(timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date()))
+                        >timeStringToDoubleHour(adv.activeAt!!)+adv.activeFor) {
+                    timeDate="Ended"//do stuff
+                }
+                else {
+                    timeDate="Started"
+                }
             }
             v.findViewById<TextView>(R.id.trade_starting_time).text = timeDate
         }
