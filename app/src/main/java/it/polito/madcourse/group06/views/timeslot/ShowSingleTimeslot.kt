@@ -21,6 +21,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.utilities.timeDoubleHourToString
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
@@ -110,7 +111,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
             this.advDate.text = singleAdvertisement.advDate
             this.advStartingTime.text = "Starting time: ${singleAdvertisement.advStartingTime}"
             this.advEndingTime.text = "Ending time: ${singleAdvertisement.advEndingTime}"
-            this.advDuration.text = "${singleAdvertisement.advDuration} hours"
+            this.advDuration.text = timeDoubleHourToString(singleAdvertisement.advDuration)
             if (singleAdvertisement.listOfSkills.size == 0) {
                 this.noSkillsProvidedLabel.isVisible = true
                 this.skillsChips.isVisible = false
