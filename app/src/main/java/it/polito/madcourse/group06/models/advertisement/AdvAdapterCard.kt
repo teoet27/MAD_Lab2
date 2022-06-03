@@ -67,7 +67,7 @@ class AdvAdapterCard(
     override fun getItemViewType(position: Int): Int {
         // case 1: adv was active, it needs to be rated
         return if (showedData[position].isToBeRated() && userID == showedData[position].accountID
-            && showedData[position].rxUserId.isNullOrEmpty()
+            && !showedData[position].rxUserId.isNullOrEmpty()
             || (userID == showedData[position].ratingUserId && showedData[position].isToBeRated()) ) {
             if (savedAdsIDs.contains(showedData[position].id))
                 R.layout.adv_to_rate_item_saved
