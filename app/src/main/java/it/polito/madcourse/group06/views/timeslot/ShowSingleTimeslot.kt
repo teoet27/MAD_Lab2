@@ -131,7 +131,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
 
             this.editButton.setOnClickListener {
                 if (isMine) {
-                    if (singleAdvertisement.rxUserId.isNullOrEmpty() && singleAdvertisement.ratingUserId.isNullOrBlank()) {
+                    if (singleAdvertisement.rxUserId.isNullOrEmpty() && singleAdvertisement.ratingUserId.isNullOrEmpty()) {
                         // timeslot can be modified as it is not active
                         val frag = activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
                         activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
