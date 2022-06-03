@@ -32,7 +32,7 @@ class MyChatViewModel(application: Application) : ViewModel() {
     /**
      * [MyChatModel] live data
      */
-    private var _myChatPH = MyChatModel("", mutableListOf(), "-1")
+    private var _myChatPH = MyChatModel("","", "", mutableListOf(), "-1")
     private val _pvtMyChat = MutableLiveData<MyChatModel>().also { it.value = _myChatPH }
     val myCurrentChat: LiveData<MyChatModel> = this._pvtMyChat
 
@@ -65,25 +65,24 @@ class MyChatViewModel(application: Application) : ViewModel() {
                     "adv_id" to advID,
                 )
             )
-        this._myChatPH = MyChatModel(chatID, mutableListOf(), advID)
+        this._myChatPH = MyChatModel(chatID, "", "", mutableListOf(), advID)
         this._pvtMyChat.value = this._myChatPH
     }
 
-    fun fetchChat(chatID: String) {
+    fun fetchChat(chatID: String, advID: String) {
         db
             .collection("Chat")
             .whereEqualTo("id", chatID)
             .get()
             .addOnSuccessListener {
-                for(x in it){
-                    this._myChatPH = x.toMyChatModel() ?: MyChatModel("", mutableListOf(), "-1")
+                for (x in it) {
+                    this._myChatPH = x.toMyChatModel() ?: MyChatModel("", "", "", mutableListOf(), advID)
                     this._pvtMyChat.value = this._myChatPH
                     break
                 }
             }
             .addOnFailureListener {
-                this._myChatPH = MyChatModel("", mutableListOf(), "-1")
-                this._pvtMyChat.value = this._myChatPH
+                this.createNewChat(advID)
             }
     }
 
@@ -91,7 +90,7 @@ class MyChatViewModel(application: Application) : ViewModel() {
         return try {
             val id = this.get("id") as String
             val content = this.get("nickname") as ArrayList<MyMessage>?
-            MyChatModel(id, content?.toList()!!, "-1")
+            MyChatModel(id, "", "", content?.toList()!!,  "-1")
         } catch (e: Exception) {
             null
         }
