@@ -33,6 +33,7 @@ import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import java.io.File
 import java.io.IOException
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class EditProfileFragment : Fragment() {
@@ -55,7 +56,9 @@ class EditProfileFragment : Fragment() {
     private var n_ratings: Double = 0.0
     private var comments_services_rx: ArrayList<String>? = arrayListOf<String>()
     private var comments_services_done: ArrayList<String>?  = arrayListOf<String>()
+    // TODO: retrieve the savedAdsIDs
     private var savedAdsIDs = arrayListOf<String>()
+    private lateinit var listOfChatIDs: HashMap<String, String>
     private lateinit var imgProfilePicturePath: String
     private var userID: String = ""
     private var skillList = arrayListOf<String>()
@@ -150,6 +153,7 @@ class EditProfileFragment : Fragment() {
             } else {
                 userProfileViewModel.retrieveProfilePicture(profilePictureOBJ, userProfile.imgPath!!)
             }
+            this.listOfChatIDs = userProfile.listOfChatIDs!!
         }
 
         // check this option to open onCreateOptionsMenu method
@@ -340,7 +344,8 @@ class EditProfileFragment : Fragment() {
                     this.comments_services_rx,
                     this.comments_services_done,
                     imgProfilePicturePath,
-                    this.savedAdsIDs
+                    this.savedAdsIDs,
+                    this.listOfChatIDs
                 )
             )
             advertisementViewModel.updateAdvAccountNameByAccountID(this.userID, editFullNameOBJ.text.toString())
