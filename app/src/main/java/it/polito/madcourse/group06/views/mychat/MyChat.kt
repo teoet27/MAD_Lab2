@@ -118,6 +118,10 @@ class MyChat : Fragment() {
                     )
                 )
                 this.inputMessageBox.setText("")
+                val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(this.context)
+                linearLayoutManager.stackFromEnd = true
+                this.recyclerView.layoutManager = linearLayoutManager
+                this.recyclerView.adapter = chatAdapterCard
             }
         }
 
@@ -161,7 +165,9 @@ class MyChat : Fragment() {
             activityTB.supportActionBar?.show()
         }
 
-        this.recyclerView.layoutManager = LinearLayoutManager(this.context)
+        val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(this.context)
+        linearLayoutManager.stackFromEnd = true
+        this.recyclerView.layoutManager = linearLayoutManager
         this.recyclerView.adapter = chatAdapterCard
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
@@ -178,16 +184,9 @@ class MyChat : Fragment() {
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
         val anim = AnimationUtils.loadAnimation(requireActivity(), R.anim.slide_in_from_right)
         anim.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation) {
-                // additional functionality
-            }
-
-            override fun onAnimationRepeat(animation: Animation) {
-                // additional functionality
-            }
-
+            override fun onAnimationStart(animation: Animation) {}
+            override fun onAnimationRepeat(animation: Animation) {}
             override fun onAnimationEnd(animation: Animation) {
-                // additional functionality
                 view?.findViewById<ConstraintLayout>(R.id.filterBackground)?.background = resources.getDrawable(R.drawable.semi_transparent_background)
             }
         })
