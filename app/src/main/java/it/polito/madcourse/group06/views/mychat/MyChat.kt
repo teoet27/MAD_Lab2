@@ -12,8 +12,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,10 +24,13 @@ import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.models.mychat.MyChatAdapter
 import it.polito.madcourse.group06.viewmodels.MyMessage
+import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MyChat : Fragment() {
+
+    private val userProfileViewModel by activityViewModels<UserProfileViewModel>()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var chatAdapterCard: MyChatAdapter
@@ -36,11 +42,14 @@ class MyChat : Fragment() {
     private lateinit var inputMessageBox: EditText
     private lateinit var sendMessageButton: ImageView
     private lateinit var backArrow: ImageView
-    private lateinit var chatAnswerContainer: LinearLayout
+    private lateinit var myPurposeContainer: LinearLayout
     private lateinit var chatAcceptButton: TextView
     private lateinit var chatRejectButton: TextView
     private lateinit var chatArrowUpButton: ImageView
-    private var chatMenuArrowStartingPosition = 0.0f
+    private var myID = ""
+    private var otherID = ""
+    private var chatMenuArrowStartingPositionY = 0.0f
+    private var chatMenuArrowStartingPositionX = 0.0f
     private var isAnswerMenuOpen = false
 
     /**
@@ -95,14 +104,18 @@ class MyChat : Fragment() {
         this.chatAcceptButton = view.findViewById(R.id.chatAcceptTextViewID)
         this.chatRejectButton = view.findViewById(R.id.chatRejectTextViewID)
         this.chatArrowUpButton = view.findViewById(R.id.chatMenuArrowID)
-        this.chatAnswerContainer = view.findViewById(R.id.chatAnswerContainerID)
+        this.myPurposeContainer = view.findViewById(R.id.myPurposeID)
 
-        this.chatAnswerContainer.alpha = 0f
+        this.myPurposeContainer.alpha = 0f
         this.emptyChatMessage.isVisible = this.listOfMessages.isEmpty()
-        this.chatMenuArrowStartingPosition = this.chatArrowUpButton.y
+        this.chatMenuArrowStartingPositionY = this.chatArrowUpButton.y
+        this.chatMenuArrowStartingPositionX = this.chatArrowUpButton.x
 
-        this.chatFullname.text = "Bill Gates"
-        this.chatNickname.text = "@contocancelli"
+        userProfileViewModel.chattingUser.observe(viewLifecycleOwner) {
+            this.chatFullname.text = it.fullName
+            this.chatNickname.text = "@${it.nickname}"
+            userProfileViewModel.retrieveProfilePicture(this.chattingUserProfilePicture, it.imgPath!!)
+        }
 
         chatAdapterCard = MyChatAdapter(listOfMessages)
 
@@ -127,35 +140,46 @@ class MyChat : Fragment() {
 
         this.chatArrowUpButton.setOnClickListener {
             if (!this.isAnswerMenuOpen) {
+                this.recyclerView.animate().apply {
+                    alpha(0.3f)
+                }
                 // should be opened
-                this.chatArrowUpButton.animate().apply {
-                    duration = 350
-                    rotationX(180f)
-                }.start()
-                this.chatAnswerContainer.animate().apply {
+                this.chatArrowUpButton.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24)
+                this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(),
+                    R.color.prussian_blue)
+                this.myPurposeContainer.isGone = false
+                this.myPurposeContainer.animate().apply {
                     duration = 350
                     alpha(1f)
-                    translationY(-120f)
+                    translationY(-25f)
                 }.start()
                 this.chatArrowUpButton.animate().apply {
                     duration = 350
-                    translationY(chatMenuArrowStartingPosition - 120f)
-                }
+                    translationY(chatMenuArrowStartingPositionY - 1000f)
+                    translationX(chatMenuArrowStartingPositionX - 400f)
+                }.start()
+                this.myPurposeContainer.
+                findViewById<ImageView>(R.id.sendPurposeButtonID)
+                    ?.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_from_right))
             } else {
-                // should be closed
-                this.chatArrowUpButton.animate().apply {
-                    duration = 350
-                    rotationX(0f)
-                }.start()
-                this.chatAnswerContainer.animate().apply {
-                    duration = 350
-                    alpha(0f)
-                    translationY(120f)
-                }.start()
-                this.chatArrowUpButton.animate().apply {
-                    duration = 350
-                    translationY(chatMenuArrowStartingPosition)
+                this.recyclerView.animate().apply {
+                    alpha(1f)
                 }
+                // should be closed
+                this.chatArrowUpButton.setImageResource(R.drawable.ic_add_black_24dp)
+                this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(requireContext(),
+                    R.color.darkGray)
+                this.myPurposeContainer.animate().apply {
+                    duration = 150
+                    alpha(0f)
+                    translationY(55f)
+                }.start()
+                this.myPurposeContainer.isGone = true
+                this.chatArrowUpButton.animate().apply {
+                    duration = 350
+                    translationY(chatMenuArrowStartingPositionY)
+                    translationX(chatMenuArrowStartingPositionX)
+                }.start()
             }
             this.isAnswerMenuOpen = !this.isAnswerMenuOpen
         }
