@@ -26,7 +26,7 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
     private var _chattingUserPH = UserProfile(
         "", "", "", "", "", "", "",
         "", null, 0.0, 0.0, 0.0,
-        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String, String>()
+        ArrayList(), ArrayList(), null, ArrayList(), HashMap()
     )
     private val _pvtChattingUser = MutableLiveData<UserProfile>().also { it.value = _chattingUserPH }
     val chattingUser: LiveData<UserProfile> = this._pvtChattingUser
@@ -56,7 +56,7 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     private fun createNewChat(advID: String, currentUserID: String, otherUserID: String) {
-        var chatID: String = ""
+        var chatID = ""
         db
             .collection("Chat")
             .document().also { chatID = it.id }
