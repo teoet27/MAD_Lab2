@@ -101,7 +101,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         }
 
         this.newAdvButton.setOnClickListener {
-            findNavController().navigate(R.id.ShowListOfServices)
+            findNavController().navigate(R.id.action_ShowListTimeslots_to_newTimeSlotDetailsFragment)
         }
 
         // Context menu for choosing sort parameter
