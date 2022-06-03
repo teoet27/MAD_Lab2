@@ -118,7 +118,10 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                         ).show()
                     }
                 } else {
-                    /*chat*/
+                    /**
+                     * Call to a chat with this user
+                     */
+
                 }
             }
         }
