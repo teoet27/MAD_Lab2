@@ -39,6 +39,17 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     val currentUser: LiveData<UserProfile> = this._pvtUserProfile
 
     /**
+     * [UserProfile] with which the current user is chatting
+     */
+    private var _chattingUserPH = UserProfile(
+        "", "", "", "", "", "", "",
+        "", null, 0.0, 0.0, 0.0,
+        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>()
+    )
+    private val _pvtChattingUser = MutableLiveData<UserProfile>().also { it.value = _chattingUserPH }
+    val chattingUser: LiveData<UserProfile> = this._pvtChattingUser
+
+    /**
      * Other [UserProfile]
      */
     private var _otherUserProfilePH = UserProfile(
