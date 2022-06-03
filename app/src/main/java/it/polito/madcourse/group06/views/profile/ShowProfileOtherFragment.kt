@@ -184,13 +184,6 @@ class ShowProfileOtherFragment : Fragment() {
         this.starsOBJ.isClickable = false
         this.starsOBJ.stepSize = 0.25F
 
-        // TODO: move this in ad fragment, but which one?
-        /*this.rateOBJ.setOnClickListener {
-            activity?.supportFragmentManager!!.beginTransaction()
-                .add(R.id.nav_host_fragment_content_main, RatingFragment(), "rating_fragment")
-                .commit()
-        }*/
-
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 sharedViewModel.updateSearchState()

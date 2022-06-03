@@ -1,27 +1,28 @@
 package it.polito.madcourse.group06.models.advertisement
 
-import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.activities.TBMainActivity
 import it.polito.madcourse.group06.utilities.*
-import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
-import org.w3c.dom.Text
+import it.polito.madcourse.group06.views.RatingFragment
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 /**
  * [AdvViewHolderCard] extends the ViewHolder of the [RecyclerView]
  * and provides the references to each component of the advertisement
  * card.
  */
-class AdvViewHolderCard(private val v: View,private val userViewModel:UserProfileViewModel,) : RecyclerView.ViewHolder(v) {
+class AdvViewHolderCard(private val v: View, private val userViewModel: UserProfileViewModel) : RecyclerView.ViewHolder(v) {
     private val title: TextView = v.findViewById(R.id.advCardTitle)
     private val location: TextView = v.findViewById(R.id.advCardLocation)
     private val duration: TextView = v.findViewById(R.id.advCardDuration)
@@ -44,7 +45,9 @@ class AdvViewHolderCard(private val v: View,private val userViewModel:UserProfil
         }
         if(viewType == R.layout.adv_to_rate_item || viewType == R.layout.adv_to_rate_item_saved)
              v.findViewById<Button>(R.id.rate_button).setOnClickListener{
-                 /*open rate fragment*/
+                 (v.context as TBMainActivity).supportFragmentManager.beginTransaction()
+                         .add(R.id.nav_host_fragment_content_main, RatingFragment(), "rating_fragment")
+                         .commit()
              }
 
         if(viewType == R.layout.adv_active_item || viewType == R.layout.adv_active_item_saved){
