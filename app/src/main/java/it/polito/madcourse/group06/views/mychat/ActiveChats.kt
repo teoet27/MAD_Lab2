@@ -39,6 +39,7 @@ class ActiveChats : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         this.recyclerView = view.findViewById(R.id.activeChatsRecyclerViewID)
+        this.noChatMessage = view.findViewById(R.id.noChatTVID)
         this.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         activeChatAdapter = ActiveChatAdapter(listOfActiveChats, myChatViewModel, findNavController())
