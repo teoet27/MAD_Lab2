@@ -56,6 +56,12 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
                     _chats.value = value!!.mapNotNull { elem ->
                         elem.toMyChatModel()
                     }
+                    for (c in _chats.value!!) {
+                        if (c.chatID == _pvtMyChat.value!!.chatID) {
+                            this._myChatPH = c
+                            this._pvtMyChat.value = this._myChatPH
+                        }
+                    }
                 }
             }
     }
@@ -136,7 +142,7 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
     private fun ArrayList<HashMap<Any, Any>>.toMyMessageArray(): ArrayList<MyMessage> {
         val out: ArrayList<MyMessage> = ArrayList()
         for (value in this) {
-            val myMessage = MyMessage("", "", "", "", "",0.0,"",false)
+            val myMessage = MyMessage("", "", "", "", "", 0.0, "", false)
             myMessage.senderID = value["sender_id"] as String
             myMessage.receiverID = value["receiver_id"] as String
             myMessage.msg = value["msg"] as String
