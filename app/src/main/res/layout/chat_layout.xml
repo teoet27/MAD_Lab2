@@ -238,7 +238,7 @@
         android:background="@drawable/common_message_bubble"
         android:backgroundTint="@color/my_bubble"
         android:orientation="vertical"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/inputMessageBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
