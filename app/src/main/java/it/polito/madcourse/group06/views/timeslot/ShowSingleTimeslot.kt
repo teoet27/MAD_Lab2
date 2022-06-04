@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -165,7 +166,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                         activity?.supportFragmentManager?.beginTransaction()?.remove(frag)
                             ?.commit()
                         Navigation.findNavController(view)
-                            .navigate(R.id.action_ShowListTimeslots_to_myChat)
+                            .navigate(R.id.action_ShowListTimeslots_to_myChat,bundleOf("advId" to singleAdvertisement.id))
                     }
                 }
             }

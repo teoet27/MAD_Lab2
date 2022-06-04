@@ -25,6 +25,8 @@ import it.polito.madcourse.group06.models.mychat.MyChatAdapter
 import it.polito.madcourse.group06.viewmodels.MyChatViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.models.mychat.MyMessage
+import it.polito.madcourse.group06.utilities.hoursToCredit
+import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
@@ -35,6 +37,7 @@ import kotlin.math.roundToInt
 class MyChat : Fragment() {
 
     private val myChatViewModel by activityViewModels<MyChatViewModel>()
+    private val advViewModel by activityViewModels<AdvertisementViewModel>()
     private val userProfileViewModel by activityViewModels<UserProfileViewModel>()
 
     private lateinit var recyclerView: RecyclerView
@@ -61,6 +64,7 @@ class MyChat : Fragment() {
     private var listOfMessages = arrayListOf<MyMessage>()
     private var currentID = ""
     private var otherID = ""
+    private var otherCredit = 0.0
     private var chatID = ""
     private var chatMenuArrowStartingPositionY = 0.0f
     private var chatMenuArrowStartingPositionX = 0.0f
@@ -98,6 +102,10 @@ class MyChat : Fragment() {
         this.chatMenuArrowStartingPositionY = this.chatArrowUpButton.y
         this.chatMenuArrowStartingPositionX = this.chatArrowUpButton.x
 
+        arguments?.getString("advId")?.also { advId->
+            advViewModel.fetchSingleAdvertisementById(advId)//TODO: necessario?
+        }
+
         userProfileViewModel.currentUser.observe(viewLifecycleOwner) {
             this.currentID = it.id!!
         }
@@ -106,6 +114,7 @@ class MyChat : Fragment() {
             this.chatNickname.text = "@${it.nickname}"
             userProfileViewModel.retrieveProfilePicture(this.chattingUserProfilePicture, it.imgPath!!)
             this.otherID = it.id!!
+            this.otherCredit = it.credit//TODO: vivi, si può fare?
         }
         myChatViewModel.myCurrentChat.observe(viewLifecycleOwner) {
             this.chatID = it.chatID
@@ -316,6 +325,32 @@ class MyChat : Fragment() {
         this.myLocation.setText("")
         this.myStartingTime.setText("")
         this.myDuration.setText("")
+    }
+
+    //TODO: per vivi, collegare il codice a questa funzione
+    private fun acceptProposal(){
+
+        advViewModel.advertisement.observe(viewLifecycleOwner){ adv->
+            hoursToCredit(durationTimeProposal).also { cost->
+                if (this.otherCredit >= cost) { //check whether sufficient credit
+
+                    // Time-credit Transaction
+                    userProfileViewModel.deductCredit(cost.toDouble())
+                    userProfileViewModel.addCredit(cost.toDouble())
+
+                    // Edit timeslot so as to get updated timeslot according to what has been agreed
+                    // in the active tab
+                    adv.apply {
+                        advDuration = durationTimeProposal
+                        advStartingTime =
+                            "${startingTimeHourProposal}:${startingTimeMinuteProposal}"
+                        advLocation = myLocation.text.toString()
+                    }.also { advViewModel.editAdvertisement(it)}
+
+                    advViewModel.activateAdvertisement(this.otherID)
+                }
+            }
+        }
     }
 
 
