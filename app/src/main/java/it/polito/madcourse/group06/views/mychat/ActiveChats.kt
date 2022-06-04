@@ -44,6 +44,7 @@ class ActiveChats : Fragment() {
                     userProfileViewModel.listOfUsers.observe(viewLifecycleOwner) { listOfUsers ->
                         for (chat in listOfChats) {
                             var chattingUser: UserProfile = UserProfile("", "", "", "", "", "", "", "", arrayListOf(), 0.0, 0.0, 0.0, arrayListOf(), arrayListOf(), "", arrayListOf(), hashMapOf())
+                            var found = false
                             if (chat.userID == currentUser.id!!) {
                                 for (adv in listOfAdvertisement) {
                                     for (user in listOfUsers) {
@@ -54,10 +55,15 @@ class ActiveChats : Fragment() {
                                             )
                                             if (adv.id!! == chat.advID && !listOfActiveChats.contains(activeChat)) {
                                                 chattingUser = user
+                                                found = true
                                                 listOfActiveChats.add(activeChat)
                                             }
+                                            if (found)
+                                                break
                                         }
                                     }
+                                    if (found)
+                                        break
                                 }
                             } else if (chat.otherUserID == currentUser.id!!) {
                                 for (adv in listOfAdvertisement) {
@@ -69,10 +75,15 @@ class ActiveChats : Fragment() {
                                             )
                                             if (adv.id!! == chat.advID && !listOfActiveChats.contains(activeChat)) {
                                                 chattingUser = user
+                                                found = true
                                                 listOfActiveChats.add(activeChat)
                                             }
+                                            if (found)
+                                                break
                                         }
                                     }
+                                    if (found)
+                                        break
                                 }
                             }
                             activeChatAdapter = ActiveChatAdapter(listOfActiveChats, myChatViewModel, findNavController(), chattingUser)

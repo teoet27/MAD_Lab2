@@ -263,7 +263,7 @@ class MyChat : Fragment() {
         }.start()
         this.chatArrowUpButton.animate().apply {
             duration = 350
-            translationY(chatMenuArrowStartingPositionY - 1000f)
+            translationY(chatMenuArrowStartingPositionY - 1110f)
             translationX(chatMenuArrowStartingPositionX - 400f)
         }.start()
         this.myPurposeContainer.findViewById<ImageView>(R.id.sendProposalButtonID)
