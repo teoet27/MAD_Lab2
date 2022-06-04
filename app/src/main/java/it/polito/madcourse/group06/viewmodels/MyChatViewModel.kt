@@ -1,6 +1,7 @@
 package it.polito.madcourse.group06.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -57,7 +58,7 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
                         elem.toMyChatModel()
                     }
                     for (c in _chats.value!!) {
-                        if (c.chatID == _pvtMyChat.value!!.chatID) {
+                        if (c.chatID == myCurrentChat.value!!.chatID) {
                             this._myChatPH = c
                             this._pvtMyChat.value = this._myChatPH
                         }
