@@ -48,6 +48,10 @@ class MyChat : Fragment() {
     private lateinit var chatAcceptButton: TextView
     private lateinit var chatRejectButton: TextView
     private lateinit var chatArrowUpButton: ImageView
+    private lateinit var myLocation: EditText
+    private lateinit var myStartingTime: EditText
+    private lateinit var myDuration: EditText
+    private lateinit var sendProposalButton: ImageView
     private var listOfMessages = arrayListOf<MyMessage>()
     private var currentID = ""
     private var otherID = ""
@@ -55,36 +59,6 @@ class MyChat : Fragment() {
     private var chatMenuArrowStartingPositionY = 0.0f
     private var chatMenuArrowStartingPositionX = 0.0f
     private var isAnswerMenuOpen = false
-
-    /**
-     * Temporary list of MyMessages to test the front-end
-     */
-    /*private val listOfMessages = mutableListOf<MyMessage>(
-        MyMessage("0", "1", "yo wyd?", "31/05/2022 14:30", "0"),
-        MyMessage("0", "1", "you still interested?", "31/05/2022 14:31", "0"),
-        MyMessage("1", "0", "sorry, i've been sleeping till now... :D", "31/05/2022 16:45", "0"),
-        MyMessage("1", "0", "can we still make this up?", "31/05/2022 16:47", "0"),
-        MyMessage("1", "0", "ayooo?", "01/06/2022 10:44", "0"),
-        MyMessage("0", "1", "stop playing bro .-.", "01/06/2022 10:46", "0"),
-        MyMessage("0", "1", "yo wyd?", "31/05/2022 14:30", "0"),
-        MyMessage("0", "1", "you still interested?", "31/05/2022 14:31", "0"),
-        MyMessage("1", "0", "sorry, i've been sleeping till now... :D", "31/05/2022 16:45", "0"),
-        MyMessage("1", "0", "can we still make this up?", "31/05/2022 16:47", "0"),
-        MyMessage("1", "0", "ayooo?", "01/06/2022 10:44", "0"),
-        MyMessage("0", "1", "stop playing bro .-.", "01/06/2022 10:46", "0"),
-        MyMessage("0", "1", "yo wyd?", "31/05/2022 14:30", "0"),
-        MyMessage("0", "1", "you still interested?", "31/05/2022 14:31", "0"),
-        MyMessage("1", "0", "sorry, i've been sleeping till now... :D", "31/05/2022 16:45", "0"),
-        MyMessage("1", "0", "can we still make this up?", "31/05/2022 16:47", "0"),
-        MyMessage("1", "0", "ayooo?", "01/06/2022 10:44", "0"),
-        MyMessage("0", "1", "stop playing bro .-.", "01/06/2022 10:46", "0"),
-        MyMessage("0", "1", "yo wyd?", "31/05/2022 14:30", "0"),
-        MyMessage("0", "1", "you still interested?", "31/05/2022 14:31", "0"),
-        MyMessage("1", "0", "sorry, i've been sleeping till now... :D", "31/05/2022 16:45", "0"),
-        MyMessage("1", "0", "can we still make this up?", "31/05/2022 16:47", "0"),
-        MyMessage("1", "0", "ayooo?", "01/06/2022 10:44", "0"),
-        MyMessage("0", "1", "stop playing bro .-.", "01/06/2022 10:46", "0"),
-    )*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -109,6 +83,10 @@ class MyChat : Fragment() {
         this.chatRejectButton = view.findViewById(R.id.chatRejectTextViewID)
         this.chatArrowUpButton = view.findViewById(R.id.chatMenuArrowID)
         this.myPurposeContainer = view.findViewById(R.id.myPurposeID)
+        this.myLocation = view.findViewById(R.id.myLocationTVID)
+        this.myStartingTime = view.findViewById(R.id.myStartingTimeTVID)
+        this.myDuration = view.findViewById(R.id.myDurationTVID)
+        this.sendProposalButton = view.findViewById(R.id.sendProposalButtonID)
 
         this.myPurposeContainer.alpha = 0f
         this.chatMenuArrowStartingPositionY = this.chatArrowUpButton.y
@@ -128,7 +106,6 @@ class MyChat : Fragment() {
             this.listOfMessages = it.chatContent
         }
 
-
         this.sendMessageButton.setOnClickListener {
             if (this.inputMessageBox.text.isNotEmpty()) {
                 /**
@@ -137,6 +114,7 @@ class MyChat : Fragment() {
                 val msg = MyMessage(
                     currentID, otherID,
                     this.inputMessageBox.text.toString(),
+                    "", "", 0.0,
                     SimpleDateFormat(
                         "dd/MM/yyyy hh:mm",
                         Locale.getDefault()
@@ -161,71 +139,52 @@ class MyChat : Fragment() {
             }
         }
 
+        this.sendProposalButton.setOnClickListener {
+            if (this.myLocation.text.toString().isNotEmpty() &&
+                this.myStartingTime.text.toString().isNotEmpty() &&
+                this.myDuration.text.toString().isNotEmpty() && isProposalValid()
+            ) {
+                val msg = MyMessage(
+                    currentID, otherID,
+                    "",
+                    this.myLocation.text.toString(),
+                    this.myStartingTime.text.toString(),
+                    this.myDuration.text.toString().toDouble(),
+                    SimpleDateFormat(
+                        "dd/MM/yyyy hh:mm",
+                        Locale.getDefault()
+                    ).format(Date()).toString(), true
+                )
+                this.listOfMessages.add(msg)
+                myChatViewModel.addNewMessage(this.chatID, this.listOfMessages)
+
+                /**
+                 * Add the message to the adapter
+                 */
+                chatAdapterCard.addMessage(msg)
+
+                // Set the input message box to an empty textview
+                this.inputMessageBox.setText("")
+
+                // Set the linear layout of the recycler view
+                val linearLayoutManager = LinearLayoutManager(this.context)
+                linearLayoutManager.stackFromEnd = true
+                this.recyclerView.layoutManager = linearLayoutManager
+                this.recyclerView.adapter = chatAdapterCard
+                closeProposal()
+                resetProposalFields()
+                this.isAnswerMenuOpen = !this.isAnswerMenuOpen
+            }
+        }
+
         this.chatArrowUpButton.setOnClickListener {
             if (!this.isAnswerMenuOpen) {
-                // should be opened
-                this.recyclerView.animate().apply {
-                    alpha(0.3f)
-                }.start()
-                this.inputMessageBox.isEnabled = false
-                this.sendMessageButton.isEnabled = false
-                this.inputMessageBox.animate().apply {
-                    alpha(0.3f)
-                }.start()
-                this.sendMessageButton.animate().apply {
-                    alpha(0.3f)
-                }.start()
-
-                this.chatArrowUpButton.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24)
-                this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(
-                    requireContext(),
-                    R.color.prussian_blue
-                )
-                this.myPurposeContainer.isGone = false
-                this.myPurposeContainer.animate().apply {
-                    duration = 350
-                    alpha(1f)
-                    translationY(-25f)
-                }.start()
-                this.chatArrowUpButton.animate().apply {
-                    duration = 350
-                    translationY(chatMenuArrowStartingPositionY - 1000f)
-                    translationX(chatMenuArrowStartingPositionX - 400f)
-                }.start()
-                this.myPurposeContainer.findViewById<ImageView>(R.id.sendPurposeButtonID)
-                    ?.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_from_right))
+                openNewProposal()
+                this.isAnswerMenuOpen = !this.isAnswerMenuOpen
             } else {
-                // should be closed
-                this.recyclerView.animate().apply {
-                    alpha(1f)
-                }.start()
-                this.inputMessageBox.isEnabled = true
-                this.sendMessageButton.isEnabled = true
-                this.inputMessageBox.animate().apply {
-                    alpha(1f)
-                }.start()
-                this.sendMessageButton.animate().apply {
-                    alpha(1f)
-                }.start()
-
-                this.chatArrowUpButton.setImageResource(R.drawable.ic_add_black_24dp)
-                this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(
-                    requireContext(),
-                    R.color.darkGray
-                )
-                this.myPurposeContainer.animate().apply {
-                    duration = 150
-                    alpha(0f)
-                    translationY(55f)
-                }.start()
-                this.myPurposeContainer.isGone = true
-                this.chatArrowUpButton.animate().apply {
-                    duration = 350
-                    translationY(chatMenuArrowStartingPositionY)
-                    translationX(chatMenuArrowStartingPositionX)
-                }.start()
+                closeProposal()
+                this.isAnswerMenuOpen = !this.isAnswerMenuOpen
             }
-            this.isAnswerMenuOpen = !this.isAnswerMenuOpen
         }
 
         this.backArrow.setOnClickListener {
@@ -266,4 +225,92 @@ class MyChat : Fragment() {
         return anim
     }
 
+    private fun openNewProposal() {
+        // should be opened
+        this.recyclerView.animate().apply {
+            alpha(0.3f)
+        }.start()
+        this.inputMessageBox.isEnabled = false
+        this.sendMessageButton.isEnabled = false
+        this.inputMessageBox.animate().apply {
+            alpha(0.3f)
+        }.start()
+        this.sendMessageButton.animate().apply {
+            alpha(0.3f)
+        }.start()
+
+        this.chatArrowUpButton.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24)
+        this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(
+            requireContext(),
+            R.color.prussian_blue
+        )
+        this.myPurposeContainer.isGone = false
+        this.myPurposeContainer.animate().apply {
+            duration = 350
+            alpha(1f)
+            translationY(-25f)
+        }.start()
+        this.chatArrowUpButton.animate().apply {
+            duration = 350
+            translationY(chatMenuArrowStartingPositionY - 1000f)
+            translationX(chatMenuArrowStartingPositionX - 400f)
+        }.start()
+        this.myPurposeContainer.findViewById<ImageView>(R.id.sendProposalButtonID)
+            ?.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_from_right))
+    }
+
+    private fun closeProposal() {
+        // should be closed
+        this.recyclerView.animate().apply {
+            alpha(1f)
+        }.start()
+        this.inputMessageBox.isEnabled = true
+        this.sendMessageButton.isEnabled = true
+        this.inputMessageBox.animate().apply {
+            alpha(1f)
+        }.start()
+        this.sendMessageButton.animate().apply {
+            alpha(1f)
+        }.start()
+
+        this.chatArrowUpButton.setImageResource(R.drawable.ic_add_black_24dp)
+        this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(
+            requireContext(),
+            R.color.darkGray
+        )
+        this.myPurposeContainer.animate().apply {
+            duration = 150
+            alpha(0f)
+            translationY(55f)
+        }.start()
+        this.myPurposeContainer.isGone = true
+        this.chatArrowUpButton.animate().apply {
+            duration = 350
+            translationY(chatMenuArrowStartingPositionY)
+            translationX(chatMenuArrowStartingPositionX)
+        }.start()
+    }
+
+    private fun resetProposalFields() {
+        this.myLocation.setText("")
+        this.myStartingTime.setText("")
+        this.myDuration.setText("")
+    }
+
+    /**
+     * TODO per matte
+     * serve una funzione che controlli che lo starting time sia congruo
+     * con l'offerta del timeslot e che la duration non sia maggiore
+     * nè di quella offerta nè di quella possibile
+     * Esempio:
+     * se c'è un timeslot dalle 10 alle 15, lo starting time deve essere ovviamente
+     * minore di 15 e maggiore di 10 e la duration deve essere sicuramente <= 5 ma
+     * anche congrua con lo starting time scelto, per cui se scelgo starting time = 12:00
+     * allora la duration dovrà essere <= 3.
+     * Nel caso, ritorni falso e mostri un toast di errore.
+     */
+    private fun isProposalValid(): Boolean {
+
+        return true
+    }
 }

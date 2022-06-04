@@ -17,6 +17,18 @@ data class MyMessage (
     @set:PropertyName("msg")
     var msg: String,
 
+    @get:PropertyName("location")
+    @set:PropertyName("location")
+    var location: String,
+
+    @get:PropertyName("starting_time")
+    @set:PropertyName("starting_time")
+    var startingTime: String,
+
+    @get:PropertyName("duration")
+    @set:PropertyName("duration")
+    var duration: Double,
+
     @get:PropertyName("timestamp")
     @set:PropertyName("timestamp")
     var timestamp: String,
