@@ -29,6 +29,7 @@ class ShowProfileFragment : Fragment() {
     private lateinit var skillsOBJ: TextView
     private lateinit var phoneOBJ: TextView
     private lateinit var profilePictureOBJ: ImageView
+    private lateinit var confirmedBadge: ImageView
     private lateinit var skillsChips: ChipGroup
 
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
@@ -53,10 +54,15 @@ class ShowProfileFragment : Fragment() {
         this.skillsOBJ = view.findViewById(R.id.skillsListID)
         this.phoneOBJ = view.findViewById(R.id.phone_show_ID)
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
+        this.confirmedBadge=view.findViewById(R.id.edit_camera_button)
         this.skillsChips = view.findViewById(R.id.skill_chips_group)
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
             Log.e("profile", userProfile.toString())
+
+            // Show confirmed badge only if the user has been rated by others (i.e. he's an active user)
+            this.confirmedBadge.visibility=if(userProfile.comments_services_done.isNullOrEmpty()) View.GONE else View.VISIBLE
+
             // Fullname
             this.fullnameOBJ.text = userProfile.fullName
 

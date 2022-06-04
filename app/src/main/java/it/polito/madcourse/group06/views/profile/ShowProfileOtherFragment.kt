@@ -40,6 +40,7 @@ class ShowProfileOtherFragment : Fragment() {
     private var commentsDone: ArrayList<String>? = ArrayList<String>()
     private var commentsRx: ArrayList<String>? = ArrayList<String>()
     private lateinit var showMoreComments: TextView
+    private lateinit var confirmedBadge: ImageView
     private lateinit var skillsChips: ChipGroup
 
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
@@ -75,11 +76,16 @@ class ShowProfileOtherFragment : Fragment() {
         this.sentenceCommentDone = view.findViewById(R.id.comments_other_done)
         this.sentenceCommentRx = view.findViewById(R.id.comment_other_rx)
         this.showMoreComments = view.findViewById(R.id.show_more_comments)
+        this.confirmedBadge=view.findViewById(R.id.edit_camera_button_other)
         this.skillsChips = view.findViewById(R.id.skill_chips_group_other)
 
         (requireActivity() as TBMainActivity).supportActionBar?.title="User Profile"
 
         userProfileViewModel.otherUser.observe(this.viewLifecycleOwner) { userProfile ->
+
+            // Show confirmed badge only if the user has been rated by others (i.e. he's an active user)
+            this.confirmedBadge.visibility=if(userProfile.comments_services_done.isNullOrEmpty()) View.GONE else View.VISIBLE
+
             // Fullname
             this.fullnameOBJ.text = userProfile.fullName
 
