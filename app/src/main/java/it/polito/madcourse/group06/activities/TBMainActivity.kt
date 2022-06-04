@@ -70,7 +70,7 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
             setOf(
                 R.id.ShowListTimeslots,
                 R.id.ShowListOfServices,
-                R.id.showProfileFragment,
+                R.id.showMyProfileFragment,
                 R.id.newProfileFragment
             ), drawerLayout
         )
@@ -117,7 +117,7 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
                     true
                 }
                 R.id.ShowProfileMenuItem -> {
-                    navController.navigate(R.id.showProfileFragment)
+                    navController.navigate(R.id.showMyProfileFragment)
                     true
                 }
                 R.id.settingID -> {

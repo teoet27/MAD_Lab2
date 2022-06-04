@@ -19,7 +19,7 @@ import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 
 
-class ShowProfileFragment : Fragment() {
+class ShowMyProfileFragment : Fragment() {
     private lateinit var fullnameOBJ: TextView
     private lateinit var nicknameOBJ: TextView
     private lateinit var qualificationOBJ: TextView
@@ -31,6 +31,7 @@ class ShowProfileFragment : Fragment() {
     private lateinit var profilePictureOBJ: ImageView
     private lateinit var confirmedBadge: ImageView
     private lateinit var skillsChips: ChipGroup
+    private lateinit var credit: TextView
 
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
 
@@ -56,6 +57,7 @@ class ShowProfileFragment : Fragment() {
         this.profilePictureOBJ = view.findViewById(R.id.profilePictureID)
         this.confirmedBadge=view.findViewById(R.id.edit_camera_button)
         this.skillsChips = view.findViewById(R.id.skill_chips_group)
+        this.credit = view.findViewById(R.id.profileCredit)
 
         userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { userProfile ->
             Log.e("profile", userProfile.toString())
@@ -93,7 +95,7 @@ class ShowProfileFragment : Fragment() {
                     this.skillsChips.addChip(requireContext(), sk)
                     this.skillsChips.setOnCheckedChangeListener { chipGroup, checkedId ->
                         val selectedService = chipGroup.findViewById<Chip>(checkedId)?.text
-                        Toast.makeText(chipGroup.context, selectedService ?: "No Choice", Toast.LENGTH_LONG).show()
+                        Toast.makeText(chipGroup.context, selectedService ?: "Please select a skill.", Toast.LENGTH_LONG).show()
                     }
                 }
             }
@@ -109,6 +111,9 @@ class ShowProfileFragment : Fragment() {
             } else {
                 userProfileViewModel.retrieveProfilePicture(profilePictureOBJ, userProfile.imgPath!!)
             }
+
+            // Credit
+            this.credit.text = userProfile.credit.toInt().toString()
         }
 
         // Check this option to open onCreateOptionsMenu method
@@ -116,7 +121,7 @@ class ShowProfileFragment : Fragment() {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_showProfileFragment_to_ShowListOfServices)
+                findNavController().navigate(R.id.action_showMyProfileFragment_to_ShowListOfServices)
             }
         })
 
@@ -166,7 +171,7 @@ class ShowProfileFragment : Fragment() {
                 Snackbar.make(
                     requireView(), "Edit mode.", Snackbar.LENGTH_LONG
                 ).show()
-                findNavController().navigate(R.id.action_showProfileFragment_to_editProfileFragment)
+                findNavController().navigate(R.id.action_showMyProfileFragment_to_editProfileFragment)
             }
         }
         return super.onOptionsItemSelected(item)

@@ -163,7 +163,7 @@ class EditProfileFragment : Fragment() {
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (saveData())
-                    findNavController().navigate(R.id.action_editProfileFragment_to_showProfileFragment)
+                    findNavController().navigate(R.id.action_editProfileFragment_to_showMyProfileFragment)
             }
         })
     }
@@ -498,7 +498,7 @@ class EditProfileFragment : Fragment() {
         when (item.itemId) {
             R.id.complete_user_registration -> {
                 if (saveData())
-                    findNavController().navigate(R.id.action_editProfileFragment_to_showProfileFragment)
+                    findNavController().navigate(R.id.action_editProfileFragment_to_showMyProfileFragment)
             }
         }
         return super.onOptionsItemSelected(item)

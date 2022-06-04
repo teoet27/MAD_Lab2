@@ -9,9 +9,6 @@
         android:id="@+id/ShowListTimeslots"
         android:name="it.polito.madcourse.group06.views.timeslot.ShowListOfTimeslots">
         <action
-            android:id="@+id/action_frag5ShowListTimeslots_to_showProfileFragment"
-            app:destination="@id/showProfileFragment" />
-        <action
             android:id="@+id/action_ShowListTimeslots_to_newTimeSlotDetailsFragment"
             app:destination="@id/newTimeSlotDetailsFragment" />
         <action
@@ -32,25 +29,17 @@
         <action
             android:id="@+id/action_ShowListTimeslots_to_myChat"
             app:destination="@id/myChat" />
+        <action
+            android:id="@+id/action_ShowListTimeslots_to_showMyProfileFragment"
+            app:destination="@id/showMyProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="it.polito.madcourse.group06.views.profile.EditProfileFragment"
         android:label="Edit your profile" >
         <action
-            android:id="@+id/action_editProfileFragment_to_showProfileFragment"
-            app:destination="@id/showProfileFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/showProfileFragment"
-        android:name="it.polito.madcourse.group06.views.profile.ShowProfileFragment"
-        android:label="Your profile" >
-        <action
-            android:id="@+id/action_showProfileFragment_to_editProfileFragment"
-            app:destination="@id/editProfileFragment" />
-        <action
-            android:id="@+id/action_showProfileFragment_to_ShowListOfServices"
-            app:destination="@id/ShowListOfServices" />
+            android:id="@+id/action_editProfileFragment_to_showMyProfileFragment"
+            app:destination="@id/showMyProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/newTimeSlotDetailsFragment"
@@ -184,5 +173,16 @@
         <action
             android:id="@+id/action_activeChats_to_myChat"
             app:destination="@id/myChat" />
+    </fragment>
+    <fragment
+        android:id="@+id/showMyProfileFragment"
+        android:name="it.polito.madcourse.group06.views.profile.ShowMyProfileFragment"
+        android:label="ShowMyProfileFragment" >
+        <action
+            android:id="@+id/action_showMyProfileFragment_to_ShowListOfServices"
+            app:destination="@id/ShowListOfServices" />
+        <action
+            android:id="@+id/action_showMyProfileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
     </fragment>
 </navigation>
