@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/myMainContainerPurposeID"
+    android:id="@+id/otherMainContainerProposalID"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="start"
@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/myMessageContainerPurposeID"
+        android:id="@+id/otherMessageContainerProposalID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
@@ -75,7 +75,7 @@
                 app:drawableTint="@color/darkGray" />
 
             <TextView
-                android:id="@+id/otherStartingDateTVID"
+                android:id="@+id/otherStartingTimeTVID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="10dp"
@@ -167,7 +167,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/otherPurposeTimestampID"
+        android:id="@+id/otherProposalTimestampID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"

@@ -14,6 +14,9 @@ import it.polito.madcourse.group06.R
 class MyChatViewHolder(private val v: View, private val isMyMessage: Boolean) : RecyclerView.ViewHolder(v) {
     private lateinit var msgContent: TextView
     private lateinit var msgTimestamp: TextView
+    private lateinit var msgLocation: TextView
+    private lateinit var msgStartingTime: TextView
+    private lateinit var msgDuration: TextView
     private var startingHeight: Int = 0
     private var isMsgTimestampShown = false
 
@@ -35,6 +38,20 @@ class MyChatViewHolder(private val v: View, private val isMyMessage: Boolean) : 
                 this.msgTimestamp.text = msg.timestamp
                 this.msgTimestamp.translationY = 45f
                 this.msgContent.text = msg.msg
+            } else if(itemViewType == R.layout.my_proposal_item) {
+                this.v.findViewById<LinearLayout>(R.id.myMainContainerProposalID).gravity = Gravity.START
+                this.msgTimestamp = this.v.findViewById(R.id.myProposalTimestampID)
+                this.msgTimestamp.alpha = 0f
+
+                this.msgLocation = this.v.findViewById(R.id.myLocationTVID)
+                this.msgLocation.text = msg.location
+                this.msgStartingTime = this.v.findViewById(R.id.myStartingTimeTVID)
+                this.msgStartingTime.text = msg.startingTime
+                this.msgDuration = this.v.findViewById(R.id.myDurationTVID)
+                this.msgDuration.text = msg.duration.toString()
+
+                this.msgTimestamp.text = msg.timestamp
+                this.msgTimestamp.translationY = 45f
             }
         } else {
             if (itemViewType == R.layout.other_message_layout) {
@@ -53,6 +70,20 @@ class MyChatViewHolder(private val v: View, private val isMyMessage: Boolean) : 
                 this.msgTimestamp.text = msg.timestamp
                 this.msgTimestamp.translationY = 45f
                 this.msgContent.text = msg.msg
+            } else if(itemViewType == R.layout.other_proposal_item) {
+                this.v.findViewById<LinearLayout>(R.id.otherMainContainerProposalID).gravity = Gravity.START
+                this.msgTimestamp = this.v.findViewById(R.id.otherProposalTimestampID)
+                this.msgTimestamp.alpha = 0f
+
+                this.msgLocation = this.v.findViewById(R.id.otherLocationTVID)
+                this.msgLocation.text = msg.location
+                this.msgStartingTime = this.v.findViewById(R.id.otherStartingTimeTVID)
+                this.msgStartingTime.text = msg.startingTime
+                this.msgDuration = this.v.findViewById(R.id.otherDurationTVID)
+                this.msgDuration.text = msg.duration.toString()
+
+                this.msgTimestamp.text = msg.timestamp
+                this.msgTimestamp.translationY = 45f
             }
         }
     }

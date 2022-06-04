@@ -37,6 +37,16 @@ class MyChatAdapter(
                     .inflate(R.layout.common_other_message_layout, parent, false)
                 isMyMessage = false
             }
+            R.layout.my_proposal_item -> {
+                vg = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.my_proposal_item, parent, false)
+                isMyMessage = true
+            }
+            R.layout.other_proposal_item -> {
+                vg = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.other_proposal_item, parent, false)
+                isMyMessage = false
+            }
             else -> {
                 vg = LayoutInflater.from(parent.context)
                     .inflate(R.layout.my_message_layout, parent, false)
@@ -60,6 +70,8 @@ class MyChatAdapter(
     override fun getItemViewType(position: Int): Int {
         return if (chat[position].senderID == currentUserID) {
             when {
+                // special view for the proposal message
+                chat[position].isAnOffer -> R.layout.my_proposal_item
                 // if this is the last one
                 position + 1 >= chat.size -> R.layout.my_message_layout
                 // if there is an incoming change
@@ -68,6 +80,8 @@ class MyChatAdapter(
             }
         } else {
             when {
+                // special view for the proposal message
+                chat[position].isAnOffer -> R.layout.other_proposal_item
                 // if this is the last one
                 position - 1 < 0 -> R.layout.other_message_layout
                 // if there is a previous change

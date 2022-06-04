@@ -5,7 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 
-class ActiveChatAdapter(private val listOfChat: ArrayList<ActiveChat>) : RecyclerView.Adapter<ActiveChatViewHolder>() {
+class ActiveChatAdapter(_listOfChat: ArrayList<ActiveChat>) : RecyclerView.Adapter<ActiveChatViewHolder>() {
+    private val listOfChat: ArrayList<ActiveChat> = _listOfChat
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActiveChatViewHolder {
         val vg = LayoutInflater
             .from(parent.context)
@@ -22,7 +23,7 @@ class ActiveChatAdapter(private val listOfChat: ArrayList<ActiveChat>) : Recycle
     }
 
     fun addActiveChat(activeChat: ActiveChat) {
-        listOfChat.add(activeChat)
+        listOfChat.add(listOfChat.size, activeChat)
         notifyItemInserted(listOfChat.size - 1)
     }
 }
