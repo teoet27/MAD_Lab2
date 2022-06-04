@@ -21,12 +21,16 @@ import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.Advertisement
+import it.polito.madcourse.group06.utilities.timeDoubleHourToString
+import it.polito.madcourse.group06.utilities.timeStringToDoubleHour
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.floor
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
@@ -39,6 +43,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private lateinit var newDate: TextView
     private lateinit var newStartingTime: TextView
     private lateinit var newEndingTime: TextView
+    private lateinit var newDuration: TextView
     private lateinit var newDescription: EditText
     private lateinit var closeButton: Button
     private lateinit var confirmButton: Button
@@ -54,6 +59,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private var newSkillTitleLabel: String = ""
     private lateinit var skillList: ArrayList<String>
     private val selectedSkillsList: ArrayList<String> = arrayListOf()
+    private var timeDuration=0.0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,6 +69,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         this.newDate = view.findViewById(R.id.newDate)
         this.newStartingTime = view.findViewById(R.id.newStartingTime)
         this.newEndingTime = view.findViewById(R.id.newEndingTime)
+        this.newDuration = view.findViewById(R.id.newDuration)
         this.newDescription = view.findViewById(R.id.newDescription)
         this.closeButton = view.findViewById(R.id.closeButton)
         this.confirmButton = view.findViewById(R.id.confirmButton)
@@ -82,6 +89,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
         this.newStartingTime.setOnClickListener { popTimePickerStarting(this.newStartingTime) }
         this.newEndingTime.setOnClickListener { popTimePickerEnding(this.newEndingTime) }
+        this.newDuration.setOnClickListener { popTimePickerDuration(this.newDuration) }
 
         val today = Calendar.getInstance()
         var chosenDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
@@ -187,7 +195,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                                 chosenDate,
                                 newStartingTime.text.toString(),
                                 newEndingTime.text.toString(),
-                                timeDifference,
+                                timeDuration,
                                 accountName,
                                 accountID,
                                 null,
@@ -372,6 +380,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         return !(newTitle.text.toString().isNullOrEmpty() ||
                 newStartingTime.text.toString().isNullOrEmpty() ||
                 newEndingTime.text.toString().isNullOrEmpty() ||
+                newDuration.text.toString().isNullOrEmpty() ||
                 newLocation.text.toString().isNullOrEmpty() ||
                 newDate.text.toString().isNullOrEmpty())
     }
@@ -411,6 +420,24 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     }
 
     /**
+     * popTimePickerDuration is the callback to launch the TimePicker for inserting the duration
+     *
+     * @param timeBox reference to the TextView of the duration
+     */
+    private fun popTimePickerDuration(timeBox: TextView) {
+        val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
+            computeTimeDifference(newStartingTime.text.toString(),newEndingTime.text.toString()).first.also{maxDuration->
+                timeDuration= min((selectedHour.toDouble()+selectedMinute.toDouble()/60),if(maxDuration>0) maxDuration else 25.0)
+            }
+            timeBox.text = String.format(Locale.getDefault(), "%d h %d min", floor(timeDuration).toInt(), ((timeDuration-floor(timeDuration))*60).toInt())
+        }
+        val timePickerDialog: TimePickerDialog = TimePickerDialog(this.context, onTimeSetListener,
+            floor(timeDuration).toInt(), ((timeDuration-floor(timeDuration))*60).toInt(), true)
+        timePickerDialog.setTitle("Select Duration")
+        timePickerDialog.show()
+    }
+
+    /**
      * computeTimeDifference is a method which return the time difference from two "time-strings" and whether
      * they are acceptable or not.
      *
@@ -445,6 +472,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                 this.newLocation.text.toString().isNullOrEmpty() &&
                 this.newStartingTime.text.toString().isNullOrEmpty() &&
                 this.newEndingTime.text.toString().isNullOrEmpty() &&
+                this.newDuration.text.toString().isNullOrEmpty() &&
                 this.newDescription.text.toString().isNullOrEmpty()
     }
     private fun Boolean.toInt() = if (this) 1 else 0
