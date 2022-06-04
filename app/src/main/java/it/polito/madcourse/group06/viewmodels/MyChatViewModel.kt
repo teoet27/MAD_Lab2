@@ -136,7 +136,7 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
     private fun ArrayList<HashMap<Any, Any>>.toMyMessageArray(): ArrayList<MyMessage> {
         val out: ArrayList<MyMessage> = ArrayList()
         for (value in this) {
-            val myMessage = MyMessage("", "", "", "", false)
+            val myMessage = MyMessage("", "", "", "", "",0.0,"",false)
             myMessage.senderID = value["sender_id"] as String
             myMessage.receiverID = value["receiver_id"] as String
             myMessage.msg = value["msg"] as String

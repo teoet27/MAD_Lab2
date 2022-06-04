@@ -56,36 +56,6 @@ class MyChat : Fragment() {
     private var chatMenuArrowStartingPositionX = 0.0f
     private var isAnswerMenuOpen = false
 
-    /**
-     * Temporary list of MyMessages to test the front-end
-     */
-    /*private val listOfMessages = mutableListOf<MyMessage>(
-        MyMessage("0", "1", "yo wyd?", "31/05/2022 14:30", "0"),
-        MyMessage("0", "1", "you still interested?", "31/05/2022 14:31", "0"),
-        MyMessage("1", "0", "sorry, i've been sleeping till now... :D", "31/05/2022 16:45", "0"),
-        MyMessage("1", "0", "can we still make this up?", "31/05/2022 16:47", "0"),
-        MyMessage("1", "0", "ayooo?", "01/06/2022 10:44", "0"),
-        MyMessage("0", "1", "stop playing bro .-.", "01/06/2022 10:46", "0"),
-        MyMessage("0", "1", "yo wyd?", "31/05/2022 14:30", "0"),
-        MyMessage("0", "1", "you still interested?", "31/05/2022 14:31", "0"),
-        MyMessage("1", "0", "sorry, i've been sleeping till now... :D", "31/05/2022 16:45", "0"),
-        MyMessage("1", "0", "can we still make this up?", "31/05/2022 16:47", "0"),
-        MyMessage("1", "0", "ayooo?", "01/06/2022 10:44", "0"),
-        MyMessage("0", "1", "stop playing bro .-.", "01/06/2022 10:46", "0"),
-        MyMessage("0", "1", "yo wyd?", "31/05/2022 14:30", "0"),
-        MyMessage("0", "1", "you still interested?", "31/05/2022 14:31", "0"),
-        MyMessage("1", "0", "sorry, i've been sleeping till now... :D", "31/05/2022 16:45", "0"),
-        MyMessage("1", "0", "can we still make this up?", "31/05/2022 16:47", "0"),
-        MyMessage("1", "0", "ayooo?", "01/06/2022 10:44", "0"),
-        MyMessage("0", "1", "stop playing bro .-.", "01/06/2022 10:46", "0"),
-        MyMessage("0", "1", "yo wyd?", "31/05/2022 14:30", "0"),
-        MyMessage("0", "1", "you still interested?", "31/05/2022 14:31", "0"),
-        MyMessage("1", "0", "sorry, i've been sleeping till now... :D", "31/05/2022 16:45", "0"),
-        MyMessage("1", "0", "can we still make this up?", "31/05/2022 16:47", "0"),
-        MyMessage("1", "0", "ayooo?", "01/06/2022 10:44", "0"),
-        MyMessage("0", "1", "stop playing bro .-.", "01/06/2022 10:46", "0"),
-    )*/
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -128,7 +98,6 @@ class MyChat : Fragment() {
             this.listOfMessages = it.chatContent
         }
 
-
         this.sendMessageButton.setOnClickListener {
             if (this.inputMessageBox.text.isNotEmpty()) {
                 /**
@@ -140,7 +109,7 @@ class MyChat : Fragment() {
                     SimpleDateFormat(
                         "dd/MM/yyyy hh:mm",
                         Locale.getDefault()
-                    ).format(Date()).toString(), false
+                    ).format(Date()).toString(), "",0.0,"", false
                 )
                 this.listOfMessages.add(msg)
                 myChatViewModel.addNewMessage(this.chatID, this.listOfMessages)
@@ -160,6 +129,8 @@ class MyChat : Fragment() {
                 this.recyclerView.adapter = chatAdapterCard
             }
         }
+
+
 
         this.chatArrowUpButton.setOnClickListener {
             if (!this.isAnswerMenuOpen) {
@@ -192,7 +163,7 @@ class MyChat : Fragment() {
                     translationY(chatMenuArrowStartingPositionY - 1000f)
                     translationX(chatMenuArrowStartingPositionX - 400f)
                 }.start()
-                this.myPurposeContainer.findViewById<ImageView>(R.id.sendPurposeButtonID)
+                this.myPurposeContainer.findViewById<ImageView>(R.id.sendProposalButtonID)
                     ?.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_from_right))
             } else {
                 // should be closed
