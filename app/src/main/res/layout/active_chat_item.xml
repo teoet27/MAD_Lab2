@@ -3,27 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="2dp"
+    android:layout_marginBottom="8dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/rounded_corners"
-        android:backgroundTint="@color/my_bubble">
+        android:background="@drawable/rounded_corners_land"
+        android:backgroundTint="@color/lightGray"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
 
         <TextView
             android:id="@+id/activeAdvTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="6dp"
             android:layout_weight="5"
+            android:drawableLeft="@drawable/ic_description_black_24dp"
+            android:drawablePadding="4dp"
             android:text="Advertisement title"
             android:textAlignment="viewStart"
-            android:textColor="@color/lightGray"
-            android:textSize="20sp" />
+            android:textColor="@color/darkGray"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:drawableTint="@color/darkGray" />
 
         <ImageView
             android:id="@+id/goToChatButton"
@@ -34,7 +40,7 @@
             android:layout_marginBottom="4dp"
             android:background="@drawable/ic_svg_circle"
             android:backgroundTint="@color/my_bubble"
-            android:padding="6dp"
+            android:padding="8dp"
             app:srcCompat="@drawable/ic_baseline_chat_24"
             app:tint="#FFFFFF" />
     </LinearLayout>
@@ -43,13 +49,17 @@
         android:id="@+id/activeAccountFullname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corners_down"
-        android:backgroundTint="@color/ic_launcher_background"
+        android:background="@drawable/rounded_corners_land"
+        android:backgroundTint="@color/lightGray"
+        android:drawableLeft="@drawable/ic_account_circle_black_24dp"
+        android:drawablePadding="4dp"
+        android:fontFamily="sans-serif-light"
         android:paddingStart="24dp"
-        android:paddingTop="4dp"
+        android:paddingEnd="24dp"
         android:paddingBottom="8dp"
         android:text="by Name Surname"
         android:textAlignment="viewStart"
-        android:textColor="@color/lightGray" />
+        android:textColor="@color/darkGray"
+        app:drawableTint="@color/darkGray" />
 
 </LinearLayout>
