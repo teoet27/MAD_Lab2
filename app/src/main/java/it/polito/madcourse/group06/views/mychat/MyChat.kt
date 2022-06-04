@@ -1,5 +1,6 @@
 package it.polito.madcourse.group06.views.mychat
 
+import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -26,8 +27,12 @@ import it.polito.madcourse.group06.models.mychat.MyChatAdapter
 import it.polito.madcourse.group06.viewmodels.MyChatViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.models.mychat.MyMessage
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.floor
+import kotlin.math.min
+import kotlin.math.roundToInt
 
 class MyChat : Fragment() {
 
@@ -49,9 +54,12 @@ class MyChat : Fragment() {
     private lateinit var chatRejectButton: TextView
     private lateinit var chatArrowUpButton: ImageView
     private lateinit var myLocation: EditText
-    private lateinit var myStartingTime: EditText
-    private lateinit var myDuration: EditText
+    private lateinit var myStartingTime: TextView
+    private lateinit var myDuration: TextView
     private lateinit var sendProposalButton: ImageView
+    private var startingTimeHourProposal=0
+    private var startingTimeMinuteProposal=0
+    private var durationTimeProposal=0.0
     private var listOfMessages = arrayListOf<MyMessage>()
     private var currentID = ""
     private var otherID = ""
@@ -139,6 +147,9 @@ class MyChat : Fragment() {
             }
         }
 
+        this.myStartingTime.setOnClickListener{popTimePickerStarting(this.myStartingTime)}
+        this.myDuration.setOnClickListener {popTimePickerDuration(this.myDuration)}
+
         this.sendProposalButton.setOnClickListener {
             if (this.myLocation.text.toString().isNotEmpty() &&
                 this.myStartingTime.text.toString().isNotEmpty() &&
@@ -149,7 +160,7 @@ class MyChat : Fragment() {
                     "",
                     this.myLocation.text.toString(),
                     this.myStartingTime.text.toString(),
-                    this.myDuration.text.toString().toDouble(),
+                    this.durationTimeProposal,
                     SimpleDateFormat(
                         "dd/MM/yyyy hh:mm",
                         Locale.getDefault()
@@ -297,20 +308,62 @@ class MyChat : Fragment() {
         this.myDuration.setText("")
     }
 
-    /**
-     * TODO per matte
-     * serve una funzione che controlli che lo starting time sia congruo
-     * con l'offerta del timeslot e che la duration non sia maggiore
-     * nè di quella offerta nè di quella possibile
-     * Esempio:
-     * se c'è un timeslot dalle 10 alle 15, lo starting time deve essere ovviamente
-     * minore di 15 e maggiore di 10 e la duration deve essere sicuramente <= 5 ma
-     * anche congrua con lo starting time scelto, per cui se scelgo starting time = 12:00
-     * allora la duration dovrà essere <= 3.
-     * Nel caso, ritorni falso e mostri un toast di errore.
-     */
-    private fun isProposalValid(startingTime: String, duration: Double): Boolean {
 
-        return true
+    /**
+     * popTimePickerStarting is the callback to launch the TimePicker for inserting the starting time
+     *
+     * @param timeBox reference to the TextView of the starting time
+     */
+    private fun popTimePickerStarting(timeBox: TextView) {
+        val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
+            startingTimeHourProposal=selectedHour
+            startingTimeMinuteProposal=selectedMinute
+            timeBox.text = String.format(Locale.getDefault(), "%02d:%02d", startingTimeHourProposal, startingTimeMinuteProposal)
+        }
+        val timePickerDialog = TimePickerDialog(this.context, onTimeSetListener, startingTimeHourProposal, startingTimeMinuteProposal, true)
+        timePickerDialog.setTitle("Select time")
+        timePickerDialog.show()
+    }
+
+    /**
+     * popTimePickerDuration is the callback to launch the TimePicker for inserting the duration
+     *
+     * @param timeBox reference to the TextView of the duration
+     */
+    private fun popTimePickerDuration(timeBox: TextView) {
+        val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
+            durationTimeProposal= selectedHour.toDouble()+selectedMinute.toDouble()/60
+            timeBox.text = String.format(Locale.getDefault(), "%d h %d min", selectedHour,selectedMinute)
+        }
+        val timePickerDialog: TimePickerDialog = TimePickerDialog(this.context, onTimeSetListener,
+            floor(durationTimeProposal).toInt(), ((durationTimeProposal- floor(durationTimeProposal))*60).toInt(), true)
+        timePickerDialog.setTitle("Select Duration")
+        timePickerDialog.show()
+    }
+
+    /**
+     * computeTimeDifference is a method which return the time difference from two "time-strings" and whether
+     * they are acceptable or not.
+     *
+     * @param startingTime the starting time
+     * @param endingTime the ending time
+     * @return a Pair<Float, Boolean> where it's specified the time difference and its acceptability
+     */
+    private fun computeTimeDifference(startingTime: String, endingTime: String): Pair<Double, Boolean> {
+        var timeDifference: Double = 0.0
+        if (startingTime.isNullOrEmpty() || endingTime.isNullOrEmpty()) {
+            return Pair(-1.0, false)
+        }
+        val startingHour = startingTime.split(":")[0].toInt()
+        val startingMinute = startingTime.split(":")[1].toInt()
+        val endingHour = endingTime.split(":")[0].toInt()
+        val endingMinute = endingTime.split(":")[1].toInt()
+
+        timeDifference += (endingHour - startingHour) + ((endingMinute - startingMinute) / 60.0)
+
+        return Pair(
+            (timeDifference * 100.0).roundToInt() / 100.0,
+            (timeDifference * 100.0).roundToInt() / 100.0 >= 0
+        )
     }
 }
