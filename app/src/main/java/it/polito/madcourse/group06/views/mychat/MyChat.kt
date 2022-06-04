@@ -58,9 +58,9 @@ class MyChat : Fragment() {
     private lateinit var myStartingTime: TextView
     private lateinit var myDuration: TextView
     private lateinit var sendProposalButton: ImageView
-    private var startingTimeHourProposal=0
-    private var startingTimeMinuteProposal=0
-    private var durationTimeProposal=0.0
+    private var startingTimeHourProposal = 0
+    private var startingTimeMinuteProposal = 0
+    private var durationTimeProposal = 0.0
     private var listOfMessages = arrayListOf<MyMessage>()
     private var currentID = ""
     private var otherID = ""
@@ -148,8 +148,8 @@ class MyChat : Fragment() {
             }
         }
 
-        this.myStartingTime.setOnClickListener{popTimePickerStarting(this.myStartingTime)}
-        this.myDuration.setOnClickListener {popTimePickerDuration(this.myDuration)}
+        this.myStartingTime.setOnClickListener { popTimePickerStarting(this.myStartingTime) }
+        this.myDuration.setOnClickListener { popTimePickerDuration(this.myDuration) }
 
         this.sendProposalButton.setOnClickListener {
             if (this.myLocation.text.toString().isNotEmpty() &&
@@ -244,6 +244,10 @@ class MyChat : Fragment() {
         }.start()
         this.inputMessageBox.isEnabled = false
         this.sendMessageButton.isEnabled = false
+        this.myLocation.isEnabled = true
+        this.myStartingTime.isEnabled = true
+        this.myDuration.isEnabled = true
+        this.sendProposalButton.isEnabled = true
         this.inputMessageBox.animate().apply {
             alpha(0.3f)
         }.start()
@@ -266,8 +270,11 @@ class MyChat : Fragment() {
             duration = 250
             rotationX(180f)
         }.start()
-        this.myPurposeContainer.findViewById<ImageView>(R.id.sendProposalButtonID)
-            ?.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_from_right))
+        this.sendProposalButton.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_from_right))
+        this.myLocation.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_up))
+        this.myStartingTime.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_up))
+        this.myDuration.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_up))
+
     }
 
     private fun closeProposal() {
@@ -277,6 +284,10 @@ class MyChat : Fragment() {
         }.start()
         this.inputMessageBox.isEnabled = true
         this.sendMessageButton.isEnabled = true
+        this.myLocation.isEnabled = false
+        this.myStartingTime.isEnabled = false
+        this.myDuration.isEnabled = false
+        this.sendProposalButton.isEnabled = false
         this.inputMessageBox.animate().apply {
             alpha(1f)
         }.start()
@@ -290,11 +301,12 @@ class MyChat : Fragment() {
             R.color.darkGray
         )
         this.myPurposeContainer.animate().apply {
-            duration = 150
+            duration = 250
             alpha(0f)
             translationY(55f)
+        }.withEndAction {
+            this.myPurposeContainer.isGone = true
         }.start()
-        this.myPurposeContainer.isGone = true
         this.chatArrowUpButton.animate().apply {
             duration = 250
             rotationX(0f)
@@ -315,8 +327,8 @@ class MyChat : Fragment() {
      */
     private fun popTimePickerStarting(timeBox: TextView) {
         val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
-            startingTimeHourProposal=selectedHour
-            startingTimeMinuteProposal=selectedMinute
+            startingTimeHourProposal = selectedHour
+            startingTimeMinuteProposal = selectedMinute
             timeBox.text = String.format(Locale.getDefault(), "%02d:%02d", startingTimeHourProposal, startingTimeMinuteProposal)
         }
         val timePickerDialog = TimePickerDialog(this.context, onTimeSetListener, startingTimeHourProposal, startingTimeMinuteProposal, true)
@@ -331,11 +343,13 @@ class MyChat : Fragment() {
      */
     private fun popTimePickerDuration(timeBox: TextView) {
         val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
-            durationTimeProposal= selectedHour.toDouble()+selectedMinute.toDouble()/60
-            timeBox.text = String.format(Locale.getDefault(), "%d h %d min", selectedHour,selectedMinute)
+            durationTimeProposal = selectedHour.toDouble() + selectedMinute.toDouble() / 60
+            timeBox.text = String.format(Locale.getDefault(), "%d h %d min", selectedHour, selectedMinute)
         }
-        val timePickerDialog: TimePickerDialog = TimePickerDialog(this.context, onTimeSetListener,
-            floor(durationTimeProposal).toInt(), ((durationTimeProposal- floor(durationTimeProposal))*60).toInt(), true)
+        val timePickerDialog: TimePickerDialog = TimePickerDialog(
+            this.context, onTimeSetListener,
+            floor(durationTimeProposal).toInt(), ((durationTimeProposal - floor(durationTimeProposal)) * 60).toInt(), true
+        )
         timePickerDialog.setTitle("Select Duration")
         timePickerDialog.show()
     }
