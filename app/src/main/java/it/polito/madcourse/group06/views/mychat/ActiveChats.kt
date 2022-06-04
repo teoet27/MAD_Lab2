@@ -43,7 +43,10 @@ class ActiveChats : Fragment() {
                 myChatViewModel.listOfChats.observe(viewLifecycleOwner) { listOfChats ->
                     userProfileViewModel.listOfUsers.observe(viewLifecycleOwner) { listOfUsers ->
                         for (chat in listOfChats) {
-                            var chattingUser: UserProfile = UserProfile("", "", "", "", "", "", "", "", arrayListOf(), 0.0, 0.0, 0.0, arrayListOf(), arrayListOf(), "", arrayListOf(), hashMapOf())
+                            var chattingUser = UserProfile("", "", "", "",
+                                "", "", "", "", arrayListOf(),
+                                0.0, 0.0, 0.0, arrayListOf(), arrayListOf(),
+                                "", arrayListOf(), hashMapOf())
                             var found = false
                             if (chat.userID == currentUser.id!!) {
                                 for (adv in listOfAdvertisement) {
@@ -58,9 +61,9 @@ class ActiveChats : Fragment() {
                                                 found = true
                                                 listOfActiveChats.add(activeChat)
                                             }
-                                            if (found)
-                                                break
                                         }
+                                        if (found)
+                                            break
                                     }
                                     if (found)
                                         break
@@ -78,9 +81,9 @@ class ActiveChats : Fragment() {
                                                 found = true
                                                 listOfActiveChats.add(activeChat)
                                             }
-                                            if (found)
-                                                break
                                         }
+                                        if (found)
+                                            break
                                     }
                                     if (found)
                                         break
