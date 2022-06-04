@@ -159,7 +159,6 @@
         android:background="@drawable/rounded_corners_down"
         android:backgroundTint="@color/white"
         android:paddingStart="16dp"
-        android:paddingTop="24dp"
         android:paddingEnd="16dp"
         android:paddingBottom="18dp"
         app:layout_constraintBottom_toTopOf="@id/chatMenuArrowID"
