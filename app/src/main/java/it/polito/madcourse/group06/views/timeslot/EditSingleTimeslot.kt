@@ -37,7 +37,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
     private val dumbAdvertisement: Advertisement = Advertisement(
-        "", "", "", arrayListOf<String>(),
+        "", "", "", "",arrayListOf<String>(),
         "", "", "", "", 0.0,
         "", "",
         null, null, null, 0.0
@@ -49,6 +49,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     private lateinit var advEndingTime: TextView
     private lateinit var advDurationTime: TextView
     private lateinit var advDescription: TextView
+    private lateinit var advRestrictions: TextView
     private lateinit var deleteButton: ImageView
     private lateinit var datePicker: DatePicker
     private lateinit var chosenDate: String
@@ -71,6 +72,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
         this.advTitle = view.findViewById(R.id.editTitle)
         this.advLocation = view.findViewById(R.id.editLocation)
         this.advDescription = view.findViewById(R.id.editDescription)
+        this.advRestrictions = view.findViewById(R.id.editRestrictions)
         this.advStartingTime = view.findViewById(R.id.editStartingTime)
         this.advEndingTime = view.findViewById(R.id.editEndingTime)
         this.advDurationTime = view.findViewById(R.id.editDuration)
@@ -125,6 +127,10 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
 
             // Description
             this.advDescription.text = singleAdvertisement.advDescription
+
+            // Restrictions
+            this.advRestrictions.text = singleAdvertisement.advRestrictions
+
 
             // Delete Button
             this.deleteButton.setOnClickListener {
@@ -230,6 +236,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             dumbAdvertisement.advTitle = advTitle.text.toString()
                             dumbAdvertisement.advLocation = advLocation.text.toString()
                             dumbAdvertisement.advDescription = advDescription.text.toString()
+                            dumbAdvertisement.advRestrictions = advRestrictions.text.toString()
                             dumbAdvertisement.advDate = chosenDate
                             dumbAdvertisement.advStartingTime = advStartingTime.text.toString()
                             dumbAdvertisement.advEndingTime = advEndingTime.text.toString()

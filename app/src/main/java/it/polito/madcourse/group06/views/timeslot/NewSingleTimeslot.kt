@@ -45,6 +45,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private lateinit var newEndingTime: TextView
     private lateinit var newDuration: TextView
     private lateinit var newDescription: EditText
+    private lateinit var newRestrictions: EditText
     private lateinit var closeButton: Button
     private lateinit var confirmButton: Button
     private lateinit var datePicker: DatePicker
@@ -71,6 +72,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         this.newEndingTime = view.findViewById(R.id.newEndingTime)
         this.newDuration = view.findViewById(R.id.newDuration)
         this.newDescription = view.findViewById(R.id.newDescription)
+        this.newRestrictions = view.findViewById(R.id.newRestrictions)
         this.closeButton = view.findViewById(R.id.closeButton)
         this.confirmButton = view.findViewById(R.id.confirmButton)
         this.datePicker = view.findViewById(R.id.newDatePicker)
@@ -190,6 +192,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                                 "",
                                 newTitle.text.toString(),
                                 newDescription.text.toString(),
+                                newRestrictions.text.toString(),
                                 selectedSkillsList,
                                 newLocation.text.toString(),
                                 chosenDate,
@@ -473,6 +476,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                 this.newStartingTime.text.toString().isNullOrEmpty() &&
                 this.newEndingTime.text.toString().isNullOrEmpty() &&
                 this.newDuration.text.toString().isNullOrEmpty() &&
+                this.newRestrictions.text.toString().isNullOrEmpty() &&
                 this.newDescription.text.toString().isNullOrEmpty()
     }
     private fun Boolean.toInt() = if (this) 1 else 0

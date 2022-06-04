@@ -37,6 +37,10 @@ data class Advertisement(
     @set:PropertyName("description")
     var advDescription: String,
 
+    @get:PropertyName("restrictions")
+    @set:PropertyName("restrictions")
+    var advRestrictions: String,
+
     @get:PropertyName("list_of_skills")
     @set:PropertyName("list_of_skills")
     var listOfSkills: ArrayList<String>,
