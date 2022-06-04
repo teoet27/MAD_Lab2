@@ -38,6 +38,8 @@ class ActiveChats : Fragment() {
         this.recyclerView = view.findViewById(R.id.activeChatsRecyclerViewID)
         this.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        activeChatAdapter = ActiveChatAdapter(listOfActiveChats, myChatViewModel, findNavController())
+
         userProfileViewModel.currentUser.observe(viewLifecycleOwner) { currentUser ->
             advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdvertisement ->
                 myChatViewModel.listOfChats.observe(viewLifecycleOwner) { listOfChats ->
