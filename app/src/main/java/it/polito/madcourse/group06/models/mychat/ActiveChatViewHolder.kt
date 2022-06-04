@@ -12,7 +12,7 @@ class ActiveChatViewHolder(v: View): RecyclerView.ViewHolder(v) {
     private val advOwner: TextView = v.findViewById(R.id.activeAccountFullname)
     private val goToChatButton: ImageView = v.findViewById(R.id.goToChatButton)
 
-    fun bind(advName: String, advOwner: String, chatID: String,
+    fun bind(advName: String, advOwner: String,
              goToChatCallback: ()->Unit) {
         this.advName.text = advName
         this.advOwner.text = advOwner

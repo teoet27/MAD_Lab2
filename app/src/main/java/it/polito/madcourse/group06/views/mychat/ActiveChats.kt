@@ -43,10 +43,6 @@ class ActiveChats : Fragment() {
                 myChatViewModel.listOfChats.observe(viewLifecycleOwner) { listOfChats ->
                     userProfileViewModel.listOfUsers.observe(viewLifecycleOwner) { listOfUsers ->
                         for (chat in listOfChats) {
-                            var chattingUser = UserProfile("", "", "", "",
-                                "", "", "", "", arrayListOf(),
-                                0.0, 0.0, 0.0, arrayListOf(), arrayListOf(),
-                                "", arrayListOf(), hashMapOf())
                             var found = false
                             if (chat.userID == currentUser.id!!) {
                                 for (adv in listOfAdvertisement) {
@@ -54,10 +50,9 @@ class ActiveChats : Fragment() {
                                         if (user.id!! == chat.otherUserID) {
                                             val activeChat = ActiveChat(
                                                 adv.advTitle, adv.id!!, user.fullName!!, chat.chatID,
-                                                chat.userID, chat.otherUserID
+                                                chat.userID, chat.otherUserID, user
                                             )
                                             if (adv.id!! == chat.advID && !listOfActiveChats.contains(activeChat)) {
-                                                chattingUser = user
                                                 found = true
                                                 listOfActiveChats.add(activeChat)
                                             }
@@ -74,10 +69,9 @@ class ActiveChats : Fragment() {
                                         if (user.id!! == chat.userID) {
                                             val activeChat = ActiveChat(
                                                 adv.advTitle, adv.id!!, user.fullName!!, chat.chatID,
-                                                chat.userID, chat.otherUserID
+                                                chat.userID, chat.otherUserID, user
                                             )
                                             if (adv.id!! == chat.advID && !listOfActiveChats.contains(activeChat)) {
-                                                chattingUser = user
                                                 found = true
                                                 listOfActiveChats.add(activeChat)
                                             }
@@ -89,7 +83,7 @@ class ActiveChats : Fragment() {
                                         break
                                 }
                             }
-                            activeChatAdapter = ActiveChatAdapter(listOfActiveChats, myChatViewModel, findNavController(), chattingUser)
+                            activeChatAdapter = ActiveChatAdapter(listOfActiveChats, myChatViewModel, findNavController())
                         }
                         listOfActiveChats = arrayListOf()
                         this.recyclerView.adapter = activeChatAdapter

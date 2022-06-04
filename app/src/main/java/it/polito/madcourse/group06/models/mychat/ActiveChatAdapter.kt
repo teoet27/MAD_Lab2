@@ -11,8 +11,7 @@ import it.polito.madcourse.group06.viewmodels.MyChatViewModel
 class ActiveChatAdapter(
     _listOfChat: ArrayList<ActiveChat>,
     private val myChatViewModel: MyChatViewModel,
-    private val navigation: NavController,
-    private val chattingUser: UserProfile
+    private val navigation: NavController
 ) : RecyclerView.Adapter<ActiveChatViewHolder>() {
     private val listOfChat: ArrayList<ActiveChat> = _listOfChat
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActiveChatViewHolder {
@@ -23,8 +22,8 @@ class ActiveChatAdapter(
     }
 
     override fun onBindViewHolder(holder: ActiveChatViewHolder, position: Int) {
-        holder.bind(listOfChat[position].advTitle, listOfChat[position].userFullname, listOfChat[position].chatID) {
-            myChatViewModel.setChattingUserProfile(chattingUser)
+        holder.bind(listOfChat[position].advTitle, listOfChat[position].userFullname) {
+            myChatViewModel.setChattingUserProfile(listOfChat[position].otherUserObj)
             myChatViewModel.fetchChatByAdvertisementID(
                 listOfChat[position].userID,
                 listOfChat[position].otherUserID,
