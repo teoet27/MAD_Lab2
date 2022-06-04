@@ -191,10 +191,11 @@ class ShowProfileOtherFragment : Fragment() {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                sharedViewModel.updateSearchState()
-                val frag = activity?.supportFragmentManager!!.findFragmentByTag("other_user_profile")
-                activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
-                (requireActivity() as TBMainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
+                activity?.supportFragmentManager!!.findFragmentByTag("other_user_profile")?.also { frag ->
+                    sharedViewModel.updateSearchState()
+                    activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
+                    (requireActivity() as TBMainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
+                }
             }
         })
 
@@ -215,7 +216,7 @@ class ShowProfileOtherFragment : Fragment() {
                 sharedViewModel.updateSearchState()
                 (requireActivity() as TBMainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
                 activity?.supportFragmentManager!!.findFragmentByTag("other_user_profile")?.also {frag->
-                    activity?.supportFragmentManager?.beginTransaction()?.remove(frag!!)?.commit()
+                    activity?.supportFragmentManager?.beginTransaction()?.remove(frag)?.commit()
                 }
                 return true
             }

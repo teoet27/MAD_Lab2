@@ -39,7 +39,7 @@ class GoogleLoginActivity : AppCompatActivity() {
             val alreadyLoggedIntent = Intent(this, TBMainActivity::class.java)
             alreadyLoggedIntent.putExtra("id", currentUser?.uid!!)
             alreadyLoggedIntent.putExtra("fullname", currentUser?.displayName!!)
-            alreadyLoggedIntent.putExtra("email", currentUser?.email!!)
+            alreadyLoggedIntent.putExtra("email", currentUser.email!!)
             startActivity(alreadyLoggedIntent)
             finish()
         }

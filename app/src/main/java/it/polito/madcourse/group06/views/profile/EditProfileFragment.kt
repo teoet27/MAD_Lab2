@@ -153,7 +153,8 @@ class EditProfileFragment : Fragment() {
             } else {
                 userProfileViewModel.retrieveProfilePicture(profilePictureOBJ, userProfile.imgPath!!)
             }
-            this.listOfChatIDs = userProfile.listOfChatIDs!!
+            if(!userProfile.listOfChatIDs.isNullOrEmpty())
+                this.listOfChatIDs = userProfile.listOfChatIDs!!
         }
 
         // check this option to open onCreateOptionsMenu method
