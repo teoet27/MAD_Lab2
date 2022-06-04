@@ -27,6 +27,8 @@ import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.floor
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
@@ -45,6 +47,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     private lateinit var advLocation: TextView
     private lateinit var advStartingTime: TextView
     private lateinit var advEndingTime: TextView
+    private lateinit var advDurationTime: TextView
     private lateinit var advDescription: TextView
     private lateinit var deleteButton: ImageView
     private lateinit var datePicker: DatePicker
@@ -59,6 +62,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     private var timeEndingHour: Int = 0
     private var timeEndingMinute: Int = 0
     private var selectedSkillsList: ArrayList<String> = arrayListOf()
+    private var timeDuration=0.0
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,6 +73,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
         this.advDescription = view.findViewById(R.id.editDescription)
         this.advStartingTime = view.findViewById(R.id.editStartingTime)
         this.advEndingTime = view.findViewById(R.id.editEndingTime)
+        this.advDurationTime = view.findViewById(R.id.editDuration)
         this.deleteButton = view.findViewById(R.id.deleteButton)
         this.datePicker = view.findViewById(R.id.editDatePicker)
         this.skillsChips = view.findViewById(R.id.editTimeslotSkillChipGroup)
@@ -97,6 +102,11 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
             // Ending Time
             this.advEndingTime.text = singleAdvertisement.advEndingTime
             this.advEndingTime.setOnClickListener { popTimePickerEnding(this.advEndingTime) }
+
+            // Duration
+            this.advDurationTime.text = singleAdvertisement.advDuration.toString()
+            this.advDurationTime.setOnClickListener{ popTimePickerDuration(this.advDurationTime) }
+
 
             // Date
             val loadedDate = Calendar.getInstance()
@@ -223,7 +233,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             dumbAdvertisement.advDate = chosenDate
                             dumbAdvertisement.advStartingTime = advStartingTime.text.toString()
                             dumbAdvertisement.advEndingTime = advEndingTime.text.toString()
-                            dumbAdvertisement.advDuration = timeDifference
+                            dumbAdvertisement.advDuration = timeDuration
                             dumbAdvertisement.listOfSkills = selectedSkillsList
                             advertisementViewModel.editAdvertisement(dumbAdvertisement)
                             sharedViewModel.updateSearchState()
@@ -402,6 +412,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
         return !(advTitle.text.toString().isNullOrEmpty() ||
                 advStartingTime.text.toString().isNullOrEmpty() ||
                 advEndingTime.text.toString().isNullOrEmpty() ||
+                advDurationTime.text.toString().isNullOrEmpty() ||
                 advLocation.text.toString().isNullOrEmpty() ||
                 selectedSkillsList.isNullOrEmpty() ||
                 chosenDate.isNullOrEmpty())
@@ -436,6 +447,24 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
 
         val timePickerDialog: TimePickerDialog = TimePickerDialog(this.context, onTimeSetListener, timeEndingHour, timeEndingMinute, true)
         timePickerDialog.setTitle("Select time")
+        timePickerDialog.show()
+    }
+
+    /**
+     * popTimePickerDuration is the callback to launch the TimePicker for inserting the duration
+     *
+     * @param timeBox reference to the TextView of the duration
+     */
+    private fun popTimePickerDuration(timeBox: TextView) {
+        val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
+            computeTimeDifference(advStartingTime.text.toString(),advEndingTime.text.toString()).first.also{maxDuration->
+                timeDuration= min((selectedHour.toDouble()+selectedMinute.toDouble()/60), if(maxDuration>0) maxDuration else 25.0)
+            }
+            timeBox.text = String.format(Locale.getDefault(), "%d h %d min", floor(timeDuration).toInt(), ((timeDuration-floor(timeDuration))*60).toInt())
+        }
+        val timePickerDialog: TimePickerDialog = TimePickerDialog(this.context, onTimeSetListener,
+            floor(timeDuration).toInt(), ((timeDuration- floor(timeDuration) *60).toInt()), true)
+        timePickerDialog.setTitle("Select Duration")
         timePickerDialog.show()
     }
 
