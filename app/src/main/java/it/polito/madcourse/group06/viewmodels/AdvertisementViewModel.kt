@@ -24,7 +24,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      * Single [Advertisement]
      */
     private var _singleAdvertisementPH = Advertisement(
-        "", "", "", arrayListOf<String>(),
+        "", "", "","", arrayListOf<String>(),
         "", "", "", "", 0.0,
         "", "", "", "", "", 0.0
     )
@@ -57,6 +57,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             val id = this.get("id") as String
             val title = this.get("title") as String
             val description = this.get("description") as String
+            val restrictions = this.get("restrictions") as String
             val listOfSkills = this.get("list_of_skills") as ArrayList<String>?
             val location = this.get("location") as String
             val date = this.get("date") as String
@@ -70,7 +71,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             val activeAt = this.get("active_at") as String?
             val activeFor = this.get("active_for") as Double
             Advertisement(
-                id, title, description, listOfSkills ?: arrayListOf<String>(),
+                id, title, description, restrictions,listOfSkills ?: arrayListOf<String>(),
                 location, date, startingTime,
                 endingTime, duration, accountName,
                 accountID, rxUserId, ratingUserId, activeAt, activeFor
@@ -95,6 +96,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "id" to advID,
                     "title" to ad.advTitle,
                     "description" to ad.advDescription,
+                    "restrictions" to ad.advRestrictions,
                     "list_of_skills" to ad.listOfSkills,
                     "location" to ad.advLocation,
                     "date" to ad.advDate,
@@ -166,6 +168,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                         "id" to ad.id,
                         "title" to ad.advTitle,
                         "description" to ad.advDescription,
+                        "restrictions" to ad.advRestrictions,
                         "list_of_skills" to ad.listOfSkills,
                         "location" to ad.advLocation,
                         "date" to ad.advDate,
@@ -206,6 +209,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                         "id" to ad.id,
                         "title" to ad.advTitle,
                         "description" to ad.advDescription,
+                        "restrictions" to ad.advRestrictions,
                         "list_of_skills" to ad.listOfSkills,
                         "location" to ad.advLocation,
                         "date" to ad.advDate,
@@ -244,6 +248,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "id" to ad.id,
                     "title" to ad.advTitle,
                     "description" to ad.advDescription,
+                    "restrictions" to ad.advRestrictions,
                     "list_of_skills" to ad.listOfSkills,
                     "location" to ad.advLocation,
                     "date" to ad.advDate,
@@ -319,7 +324,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             }
             .addOnFailureListener {
                 this._singleAdvertisementPH = Advertisement(
-                    "", "", "", arrayListOf<String>(),
+                    "", "", "","", arrayListOf<String>(),
                     "", "", "", "", 0.0,
                     "", "", "", "", "", 0.0
                 )

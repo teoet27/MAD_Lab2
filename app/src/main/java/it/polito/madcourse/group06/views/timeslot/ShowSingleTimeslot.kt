@@ -40,6 +40,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
     private lateinit var advEndingTime: TextView
     private lateinit var advDuration: TextView
     private lateinit var advDescription: TextView
+    private lateinit var advRestrictions: TextView
     private lateinit var editButton: ImageView
     private lateinit var skillsChips: ChipGroup
     private lateinit var noSkillsProvidedLabel: TextView
@@ -59,6 +60,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
         this.advEndingTime = view.findViewById(R.id.advEndingTime)
         this.advDuration = view.findViewById(R.id.advDuration)
         this.advDescription = view.findViewById(R.id.advDescription)
+        this.advRestrictions = view.findViewById(R.id.showRestrictions)
         this.editButton = view.findViewById(R.id.moreButtonID)
         this.skillsChips = view.findViewById(R.id.showTimeslotSkills)
         this.noSkillsProvidedLabel = view.findViewById(R.id.noSkillsProvidedLabel)
@@ -130,6 +132,12 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                 this.advDescription.text = "No description provided"
             } else {
                 this.advDescription.text = singleAdvertisement.advDescription
+            }
+
+            if (singleAdvertisement.advRestrictions.isEmpty()) {
+                this.advRestrictions.text = "No restrictions"
+            } else {
+                this.advRestrictions.text = singleAdvertisement.advRestrictions
             }
 
             this.editButton.setOnClickListener {
