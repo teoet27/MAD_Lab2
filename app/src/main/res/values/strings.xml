@@ -118,4 +118,10 @@
     <string name="sentence_comments_done">Reviews by people who borrowed my time:</string>
     <string name="sentence_comments_rx">Reviews by people whose time I borrowed:</string>
     <string name="show_more">Show more...</string>
+    <string name="restrictions">Restrictions</string>
+    <string name="describe_accurately_what_you_offer">Describe accurately what you offer.</string>
+    <string name="duration_of_your_service">Duration of your service</string>
+    <string name="ending_time_of_availability">Ending time of availability</string>
+    <string name="starting_time_of_availability">Starting time of availability</string>
+    <string name="add_restrictions_to_your_timeslot">Add restrictions to your timeslot...</string>
 </resources>
