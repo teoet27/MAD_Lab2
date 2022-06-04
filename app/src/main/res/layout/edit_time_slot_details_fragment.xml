@@ -103,7 +103,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-                android:hint="Describe accurately what you offer."
+                android:hint="@string/describe_accurately_what_you_offer"
                 android:minHeight="48dp"
                 android:textColor="@color/prussian_blue"
                 android:textSize="20sp" />
@@ -132,6 +132,30 @@
                     android:layout_height="wrap_content"
                     android:text="+" />
             </com.google.android.material.chip.ChipGroup>
+
+            <TextView
+                android:id="@+id/ads_editRestrictionsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/restrictions"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editRestrictions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/add_restrictions_to_your_timeslot"
+                android:minHeight="48dp"
+                android:textColor="@color/prussian_blue"
+                android:textSize="20sp" />
 
             <ImageView
                 android:id="@+id/imageView14"
@@ -167,7 +191,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="16dp"
                 android:drawablePadding="5dp"
-                android:hint="Starting time"
+                android:hint="@string/starting_time_of_availability"
                 android:inputType="none"
                 android:minHeight="48dp"
                 android:textColor="@color/prussian_blue"
@@ -183,7 +207,23 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="16dp"
                 android:drawablePadding="5dp"
-                android:hint="Ending time"
+                android:hint="@string/ending_time_of_availability"
+                android:inputType="none"
+                android:minHeight="48dp"
+                android:textColor="@color/prussian_blue"
+                android:textSize="20sp"
+                app:drawableStartCompat="@drawable/ic_watch_later_black_24dp"
+                app:drawableTint="#454749" />
+
+            <TextView
+                android:id="@+id/editDuration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:drawablePadding="5dp"
+                android:hint="@string/duration_of_your_service"
                 android:inputType="none"
                 android:minHeight="48dp"
                 android:textColor="@color/prussian_blue"
