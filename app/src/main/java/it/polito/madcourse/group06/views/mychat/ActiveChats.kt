@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +23,7 @@ import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 class ActiveChats : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var activeChatAdapter: ActiveChatAdapter
+    private lateinit var noChatMessage: TextView
     private var listOfActiveChats: ArrayList<ActiveChat> = arrayListOf()
     private val myChatViewModel: MyChatViewModel by activityViewModels()
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
@@ -40,10 +43,12 @@ class ActiveChats : Fragment() {
 
         activeChatAdapter = ActiveChatAdapter(listOfActiveChats, myChatViewModel, findNavController())
 
+
         userProfileViewModel.currentUser.observe(viewLifecycleOwner) { currentUser ->
             advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdvertisement ->
                 myChatViewModel.listOfChats.observe(viewLifecycleOwner) { listOfChats ->
                     userProfileViewModel.listOfUsers.observe(viewLifecycleOwner) { listOfUsers ->
+                        this.noChatMessage.isVisible = this.listOfActiveChats.isEmpty()
                         for (chat in listOfChats) {
                             var found = false
                             if (chat.userID == currentUser.id!!) {
