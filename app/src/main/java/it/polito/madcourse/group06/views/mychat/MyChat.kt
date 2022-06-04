@@ -142,7 +142,7 @@ class MyChat : Fragment() {
         this.sendProposalButton.setOnClickListener {
             if (this.myLocation.text.toString().isNotEmpty() &&
                 this.myStartingTime.text.toString().isNotEmpty() &&
-                this.myDuration.text.toString().isNotEmpty() && isProposalValid()
+                this.myDuration.text.toString().isNotEmpty() /*&& isProposalValid()*/
             ) {
                 val msg = MyMessage(
                     currentID, otherID,
@@ -309,7 +309,7 @@ class MyChat : Fragment() {
      * allora la duration dovrà essere <= 3.
      * Nel caso, ritorni falso e mostri un toast di errore.
      */
-    private fun isProposalValid(): Boolean {
+    private fun isProposalValid(startingTime: String, duration: Double): Boolean {
 
         return true
     }
