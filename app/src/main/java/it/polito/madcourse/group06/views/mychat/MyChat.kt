@@ -251,7 +251,7 @@ class MyChat : Fragment() {
             alpha(0.3f)
         }.start()
 
-        this.chatArrowUpButton.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24)
+        this.chatArrowUpButton.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24)
         this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(
             requireContext(),
             R.color.prussian_blue
@@ -263,9 +263,8 @@ class MyChat : Fragment() {
             translationY(-25f)
         }.start()
         this.chatArrowUpButton.animate().apply {
-            duration = 350
-            translationY(chatMenuArrowStartingPositionY - 1110f)
-            translationX(chatMenuArrowStartingPositionX - 400f)
+            duration = 250
+            rotationX(180f)
         }.start()
         this.myPurposeContainer.findViewById<ImageView>(R.id.sendProposalButtonID)
             ?.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_from_right))
@@ -297,9 +296,8 @@ class MyChat : Fragment() {
         }.start()
         this.myPurposeContainer.isGone = true
         this.chatArrowUpButton.animate().apply {
-            duration = 350
-            translationY(chatMenuArrowStartingPositionY)
-            translationX(chatMenuArrowStartingPositionX)
+            duration = 250
+            rotationX(0f)
         }.start()
     }
 
