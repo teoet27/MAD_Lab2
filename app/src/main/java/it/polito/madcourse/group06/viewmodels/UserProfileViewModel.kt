@@ -111,7 +111,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             }
     }
 
-    // TODO: add title to comments
+
     fun commentAd(advTitle: String?, comment: String?, rating: Double, isServiceDone: Boolean) {
         val commentBis = "${advTitle}#*#${comment ?: ""}"
         val updatedUser = _otherUserProfilePH.also { dumbUser ->
@@ -166,7 +166,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             }
     }
 
-    fun deductCredit(cost:Double){
+    fun deductCreditFromOtherUser(cost:Double){
         val updatedUser = _otherUserProfilePH.also { dumbUser ->
             dumbUser.credit-=cost
         }
@@ -201,14 +201,14 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
             }
     }
-    fun addCredit(cost:Double){
+    fun addCreditToCurrentUser(cost:Double){
         val updatedUser = _singleUserProfilePH.also { dumbUser ->
             dumbUser.credit+=cost
         }
 
         db
             .collection("UserProfile")
-            .document(this._otherUserProfilePH.id!!)
+            .document(this._singleUserProfilePH.id!!)
             .update(
                 "id", updatedUser.id,
                 "nickname", updatedUser.nickname,
@@ -229,8 +229,8 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             )
             .addOnSuccessListener {
                 Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
-                this._otherUserProfilePH = updatedUser
-                this._pvtOtherUserProfile.value = this._otherUserProfilePH
+                this._singleUserProfilePH = updatedUser
+                this._pvtUserProfile.value = this._singleUserProfilePH
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()

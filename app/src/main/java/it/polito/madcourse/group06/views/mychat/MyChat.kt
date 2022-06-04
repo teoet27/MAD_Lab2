@@ -2,7 +2,6 @@ package it.polito.madcourse.group06.views.mychat
 
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,11 +26,9 @@ import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.models.mychat.MyMessage
 import it.polito.madcourse.group06.utilities.hoursToCredit
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
-import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.floor
-import kotlin.math.min
 import kotlin.math.roundToInt
 
 class MyChat : Fragment() {
@@ -332,11 +329,11 @@ class MyChat : Fragment() {
 
         advViewModel.advertisement.observe(viewLifecycleOwner){ adv->
             hoursToCredit(durationTimeProposal).also { cost->
-                if (this.otherCredit >= cost) { //check whether sufficient credit
+                if (this.otherCredit >= cost) {
 
                     // Time-credit Transaction
-                    userProfileViewModel.deductCredit(cost.toDouble())
-                    userProfileViewModel.addCredit(cost.toDouble())
+                    userProfileViewModel.deductCreditFromOtherUser(cost.toDouble())
+                    userProfileViewModel.addCreditToCurrentUser(cost.toDouble())
 
                     // Edit timeslot so as to get updated timeslot according to what has been agreed
                     // in the active tab
@@ -348,6 +345,8 @@ class MyChat : Fragment() {
                     }.also { advViewModel.editAdvertisement(it)}
 
                     advViewModel.activateAdvertisement(this.otherID)
+                }else{
+                    /*TODO: Insufficient credit*/
                 }
             }
         }
