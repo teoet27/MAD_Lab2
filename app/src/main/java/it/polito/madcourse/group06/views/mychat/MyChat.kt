@@ -2,6 +2,7 @@ package it.polito.madcourse.group06.views.mychat
 
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -205,7 +206,7 @@ class MyChat : Fragment() {
 
         myChatViewModel.myCurrentChat.observe(viewLifecycleOwner) { chat ->
             this.emptyChatMessage.isVisible = chat.chatContent.isEmpty()
-            chatAdapterCard = MyChatAdapter(chat.chatContent, chat.userID, chat.otherUserID)
+            chatAdapterCard = MyChatAdapter(chat.chatContent, currentID, otherID)
 
             val linearLayoutManager = LinearLayoutManager(this.context)
             linearLayoutManager.stackFromEnd = true
