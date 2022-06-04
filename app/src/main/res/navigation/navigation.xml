@@ -181,5 +181,8 @@
         <action
             android:id="@+id/action_activeChats_to_ShowListOfServices"
             app:destination="@id/ShowListOfServices" />
+        <action
+            android:id="@+id/action_activeChats_to_myChat"
+            app:destination="@id/myChat" />
     </fragment>
 </navigation>
