@@ -59,7 +59,7 @@
         android:text="Pending"
         android:textColor="@color/lightGray"
         android:textSize="10sp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:drawableTint="@color/lightGray" />
 
     <LinearLayout
