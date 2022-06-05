@@ -1,7 +1,10 @@
 package it.polito.madcourse.group06.utilities
 
+import android.icu.util.Calendar
 import it.polito.madcourse.group06.models.advertisement.Advertisement
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.math.floor
 import kotlin.math.round
@@ -209,3 +212,53 @@ fun Advertisement.isToBeRated(): Boolean {
         false
     }
 }
+
+fun dateListToString(date: String): String {
+    val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Date())
+    computeDateDifference(currentDate, date).first.also { distance ->
+        return if (distance == 0.0)
+            "Today"
+        else if (distance == 1.0)
+            "Tomorrow"
+        else if (distance < 7) {
+            "On ${intToDayOfWeek((Calendar.DAY_OF_WEEK - 1 + distance.toInt()) % 7 + 1)}"
+        } else {
+            val todayList = currentDate.split("/")
+            val dateList = date.split("/")
+            if ((todayList[1].toInt() < dateList[1].toInt()) && (todayList[2].toInt() == dateList[2].toInt()))
+                "On ${dateList[0]} ${intToMonth(dateList[1].toInt())}"
+            else
+                "On ${dateList[0]} ${intToMonth(dateList[1].toInt())} ${dateList[2]}"
+        }
+    }
+}
+
+fun intToDayOfWeek(n: Int): String {
+    return when (n) {
+        1 -> "Monday"
+        2 -> "Tuesday"
+        3 -> "Wednesday"
+        4 -> "Thursday"
+        5 -> "Friday"
+        6 -> "Saturday"
+        else -> "Sunday"
+    }
+}
+
+fun intToMonth(n: Int): String {
+    return when (n) {
+        1 -> "January"
+        2 -> "February"
+        3 -> "March"
+        4 -> "April"
+        5 -> "May"
+        6 -> "June"
+        7 -> "July"
+        8 -> "August"
+        9 -> "September"
+        10 -> "October"
+        11 -> "November"
+        else -> "December"
+    }
+}
+

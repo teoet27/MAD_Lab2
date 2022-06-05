@@ -243,3 +243,5 @@ private fun rotateImage(img: Bitmap, degree: Int): Bitmap? {
     img.recycle()
     return rotatedImg
 }
+
+
