@@ -138,6 +138,7 @@ class MyChatViewHolder(
             Handler().postDelayed({
                 this.isMsgTimestampShown = false
                 collapseMessageView(this.v, 200, startingHeight)
+                this.msgTimestamp.alpha = 0f
             }, 2000)
         } else {
             this.isMsgTimestampShown = false
