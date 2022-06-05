@@ -338,10 +338,9 @@ class MyChat : Fragment() {
                     // Edit timeslot so as to get updated timeslot according to what has been agreed
                     // in the active tab
                     adv.apply {
-                        advDuration = durationTimeProposal
-                        advStartingTime =
-                            "${startingTimeHourProposal}:${startingTimeMinuteProposal}"
-                        advLocation = myLocation.text.toString()
+                        advLocation = myLocation.text.toString() //TODO: Maybe it is more correct to add another variable "activeLocation"
+                        activeAt =  "${startingTimeHourProposal}:${startingTimeMinuteProposal}"
+                        activeFor= durationTimeProposal
                     }.also { advViewModel.editAdvertisement(it)}
 
                     advViewModel.activateAdvertisement(this.otherID)

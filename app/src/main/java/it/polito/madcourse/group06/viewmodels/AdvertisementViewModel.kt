@@ -160,6 +160,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     fun activateAdvertisement(rxUserId:String) {
         this._singleAdvertisementPH.also{ad->
             ad.rxUserId=rxUserId
+            ad.ratingUserId=rxUserId
+
             db
                 .collection("Advertisement")
                 .document(ad.id!!)
