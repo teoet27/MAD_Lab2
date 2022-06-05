@@ -24,7 +24,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      * Single [Advertisement]
      */
     private var _singleAdvertisementPH = Advertisement(
-        "", "", "","", arrayListOf<String>(),
+        "", "", "", "", arrayListOf<String>(),
         "", "", "", "", 0.0,
         "", "", "", "", "", 0.0, ""
     )
@@ -72,7 +72,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             val activeFor = this.get("active_for") as Double
             val activeLocation = this.get("active_location") as String
             Advertisement(
-                id, title, description, restrictions,listOfSkills ?: arrayListOf<String>(),
+                id, title, description, restrictions, listOfSkills ?: arrayListOf<String>(),
                 location, date, startingTime,
                 endingTime, duration, accountName,
                 accountID, rxUserId, ratingUserId, activeAt, activeFor, activeLocation
@@ -158,10 +158,10 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      * Activate an [Advertisement] with the account ID of the requesting account
      * @param rxUserId the requesting account ID
      */
-    fun activateAdvertisement(rxUserId:String) {
-        this._singleAdvertisementPH.also{ad->
-            ad.rxUserId=rxUserId
-            ad.ratingUserId=rxUserId
+    fun activateAdvertisement(rxUserId: String) {
+        this._singleAdvertisementPH.also { ad ->
+            ad.rxUserId = rxUserId
+            ad.ratingUserId = rxUserId
 
             db
                 .collection("Advertisement")
@@ -198,7 +198,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     }
 
     fun deactivateAd(isServiceDone: Boolean) {
-        this._singleAdvertisementPH.also{ad->
+        this._singleAdvertisementPH.also { ad ->
             if (isServiceDone) {
                 ad.rxUserId = null
             } else {
@@ -327,7 +327,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             }
             .addOnFailureListener {
                 this._singleAdvertisementPH = Advertisement(
-                    "", "", "","", arrayListOf<String>(),
+                    "", "", "", "", arrayListOf<String>(),
                     "", "", "", "", 0.0,
                     "", "", "", "", "", 0.0, ""
                 )
