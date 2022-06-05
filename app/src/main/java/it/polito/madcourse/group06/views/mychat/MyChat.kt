@@ -321,8 +321,8 @@ class MyChat : Fragment() {
 
     private fun resetProposalFields() {
         this.myLocation.setText("")
-        this.myStartingTime.setText("")
-        this.myDuration.setText("")
+        this.myStartingTime.text = ""
+        this.myDuration.text = ""
     }
 
     //TODO: per vivi, collegare il codice a questa funzione
