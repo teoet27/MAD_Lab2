@@ -327,7 +327,7 @@ class MyChat : Fragment() {
 
     //TODO: per vivi, collegare il codice a questa funzione
     private fun acceptProposal() {
-        hoursToCredit(durationTimeProposal).also { cost ->
+        /*hoursToCredit(durationTimeProposal).also { cost ->
             if (this.otherCredit >= cost) {
                 myChatViewModel.deductCreditFromChattingUser(cost.toDouble())
                 userProfileViewModel.addCreditToCurrentUser(cost.toDouble())
@@ -337,7 +337,7 @@ class MyChat : Fragment() {
                     "No enough credits!",
                     Toast.LENGTH_LONG).show()
             }
-        }
+        }*/
 
         /**
          * UI/UX feedback
