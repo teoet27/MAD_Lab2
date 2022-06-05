@@ -339,20 +339,8 @@ class MyChat : Fragment() {
                 // TODO: implement
             }
         }*/
-        this.chatArrowUpButton.setOnClickListener {
-            Toast.makeText(requireContext(), "Congratulations! You and ${this.chatFullname.text} have reached an agreement!", Toast.LENGTH_LONG).show()
-        }
-        this.chatArrowUpButton.animate().apply {
-            duration = 500
-            rotationX(360f)
-            alpha(0.5f)
-        }.start()
-        this.chatArrowUpButton.setImageResource(R.drawable.ic_done_black_24dp)
-        this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(
-            requireContext(),
-            R.color.accept_color
-        )
 
+        switchToDoneMode()
     }
 
     private fun rejectProposal() {
@@ -370,6 +358,21 @@ class MyChat : Fragment() {
         // TODO: all the other proposal must be deactivated
     }
 
+    private fun switchToDoneMode() {
+        this.chatArrowUpButton.setOnClickListener {
+            Toast.makeText(requireContext(), "Congratulations! You and ${this.chatFullname.text} have reached an agreement!", Toast.LENGTH_LONG).show()
+        }
+        this.chatArrowUpButton.animate().apply {
+            duration = 500
+            rotationX(360f)
+            alpha(0.5f)
+        }.start()
+        this.chatArrowUpButton.setImageResource(R.drawable.ic_done_black_24dp)
+        this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(
+            requireContext(),
+            R.color.accept_color
+        )
+    }
 
     /**
      * popTimePickerStarting is the callback to launch the TimePicker for inserting the starting time
