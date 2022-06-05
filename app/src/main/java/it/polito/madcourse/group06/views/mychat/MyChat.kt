@@ -34,7 +34,7 @@ import kotlin.math.roundToInt
 class MyChat : Fragment() {
 
     private val myChatViewModel by activityViewModels<MyChatViewModel>()
-    private val advViewModel by activityViewModels<AdvertisementViewModel>()
+    private val advertisementViewModel by activityViewModels<AdvertisementViewModel>()
     private val userProfileViewModel by activityViewModels<UserProfileViewModel>()
 
     private lateinit var recyclerView: RecyclerView
@@ -99,8 +99,8 @@ class MyChat : Fragment() {
         this.chatMenuArrowStartingPositionY = this.chatArrowUpButton.y
         this.chatMenuArrowStartingPositionX = this.chatArrowUpButton.x
 
-        arguments?.getString("advId")?.also { advId->
-            advViewModel.fetchSingleAdvertisementById(advId)//TODO: necessario?
+        arguments?.getString("advId")?.also { advId ->
+            advertisementViewModel.fetchSingleAdvertisementById(advId)//TODO: necessario?
         }
 
         userProfileViewModel.currentUser.observe(viewLifecycleOwner) {
@@ -111,7 +111,7 @@ class MyChat : Fragment() {
             this.chatNickname.text = "@${it.nickname}"
             userProfileViewModel.retrieveProfilePicture(this.chattingUserProfilePicture, it.imgPath!!)
             this.otherID = it.id!!
-            this.otherCredit = it.credit//TODO: vivi, si può fare?
+            this.otherCredit = it.credit
         }
         myChatViewModel.myCurrentChat.observe(viewLifecycleOwner) {
             this.chatID = it.chatID
@@ -325,30 +325,34 @@ class MyChat : Fragment() {
     }
 
     //TODO: per vivi, collegare il codice a questa funzione
-    private fun acceptProposal(){
-
-        advViewModel.advertisement.observe(viewLifecycleOwner){ adv->
-            hoursToCredit(durationTimeProposal).also { cost->
-                if (this.otherCredit >= cost) {
-
-                    // Time-credit Transaction
-                    userProfileViewModel.deductCreditFromOtherUser(cost.toDouble())
-                    userProfileViewModel.addCreditToCurrentUser(cost.toDouble())
-
-                    // Edit timeslot so as to get updated timeslot according to what has been agreed
-                    // in the active tab
-                    adv.apply {
-                        advLocation = myLocation.text.toString() //TODO: Maybe it is more correct to add another variable "activeLocation"
-                        activeAt =  "${startingTimeHourProposal}:${startingTimeMinuteProposal}"
-                        activeFor= durationTimeProposal
-                    }.also { advViewModel.editAdvertisement(it)}
-
-                    advViewModel.activateAdvertisement(this.otherID)
-                }else{
-                    /*TODO: Insufficient credit*/
-                }
+    private fun acceptProposal() {
+        hoursToCredit(durationTimeProposal).also { cost ->
+            if (this.otherCredit >= cost) {
+                myChatViewModel.deductCreditFromChattingUser(cost.toDouble())
+                userProfileViewModel.addCreditToCurrentUser(cost.toDouble())
+                activateTimeslot()
+            } else {
+                /**
+                 * Show a dialog window to alert about not having enough money
+                 */
+                // TODO: implement
             }
         }
+    }
+
+    private fun rejectProposal() {
+        // TODO: implements
+    }
+
+    private fun activateTimeslot() {
+        // TODO: checks
+        advertisementViewModel.activateAdvertisement(
+            this.currentID,
+            "${this.startingTimeHourProposal}:${this.startingTimeMinuteProposal}",
+            this.durationTimeProposal,
+            this.myLocation.text.toString()
+        )
+        // TODO: all the other proposal must be deactivated
     }
 
 
