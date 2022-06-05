@@ -11,79 +11,98 @@ import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 
 
-class MyChatViewHolder(private val v: View, private val isMyMessage: Boolean) : RecyclerView.ViewHolder(v) {
+class MyChatViewHolder(
+    private val v: View,
+    private val isMyMessage: Boolean
+) : RecyclerView.ViewHolder(v) {
     private lateinit var msgContent: TextView
     private lateinit var msgTimestamp: TextView
     private lateinit var msgLocation: TextView
     private lateinit var msgStartingTime: TextView
     private lateinit var msgDuration: TextView
+    private var rejectButton: TextView? = this.v.findViewById(R.id.chatRejectID)
+    private var acceptButton: TextView? = this.v.findViewById(R.id.chatAcceptID)
     private var startingHeight: Int = 0
     private var isMsgTimestampShown = false
 
-    fun bind(msg: MyMessage, itemViewType: Int) {
+    fun bind(msg: MyMessage, itemViewType: Int, acceptCallback: (() -> Unit), rejectCallback: (() -> Unit), ) {
         if (isMyMessage) {
-            if (itemViewType == R.layout.my_message_layout) {
-                this.v.findViewById<LinearLayout>(R.id.myMainContainerID).gravity = Gravity.START
-                this.msgTimestamp = this.v.findViewById(R.id.myTimestampID)
-                this.msgTimestamp.alpha = 0f
-                this.msgContent = this.v.findViewById(R.id.myMessageTextViewID)
-                this.msgTimestamp.text = msg.timestamp
-                this.msgTimestamp.translationY = 45f
-                this.msgContent.text = msg.msg
-            } else if (itemViewType == R.layout.common_my_message_layout) {
-                this.v.findViewById<LinearLayout>(R.id.myCommonMainContainerID).gravity = Gravity.START
-                this.msgTimestamp = this.v.findViewById(R.id.myCommonTimestampID)
-                this.msgTimestamp.alpha = 0f
-                this.msgContent = this.v.findViewById(R.id.myCommonMessageTextViewID)
-                this.msgTimestamp.text = msg.timestamp
-                this.msgTimestamp.translationY = 45f
-                this.msgContent.text = msg.msg
-            } else if(itemViewType == R.layout.my_proposal_item) {
-                this.v.findViewById<LinearLayout>(R.id.myMainContainerProposalID).gravity = Gravity.START
-                this.msgTimestamp = this.v.findViewById(R.id.myProposalTimestampID)
-                this.msgTimestamp.alpha = 0f
+            when (itemViewType) {
+                R.layout.my_message_layout -> {
+                    this.v.findViewById<LinearLayout>(R.id.myMainContainerID).gravity = Gravity.START
+                    this.msgTimestamp = this.v.findViewById(R.id.myTimestampID)
+                    this.msgTimestamp.alpha = 0f
+                    this.msgContent = this.v.findViewById(R.id.myMessageTextViewID)
+                    this.msgTimestamp.text = msg.timestamp
+                    this.msgTimestamp.translationY = 45f
+                    this.msgContent.text = msg.msg
+                }
+                R.layout.common_my_message_layout -> {
+                    this.v.findViewById<LinearLayout>(R.id.myCommonMainContainerID).gravity = Gravity.START
+                    this.msgTimestamp = this.v.findViewById(R.id.myCommonTimestampID)
+                    this.msgTimestamp.alpha = 0f
+                    this.msgContent = this.v.findViewById(R.id.myCommonMessageTextViewID)
+                    this.msgTimestamp.text = msg.timestamp
+                    this.msgTimestamp.translationY = 45f
+                    this.msgContent.text = msg.msg
+                }
+                R.layout.my_proposal_item -> {
+                    this.v.findViewById<LinearLayout>(R.id.myMainContainerProposalID).gravity = Gravity.START
+                    this.msgTimestamp = this.v.findViewById(R.id.myProposalTimestampID)
+                    this.msgTimestamp.alpha = 0f
 
-                this.msgLocation = this.v.findViewById(R.id.myLocationTVID)
-                this.msgLocation.text = msg.location
-                this.msgStartingTime = this.v.findViewById(R.id.myStartingTimeTVID)
-                this.msgStartingTime.text = msg.startingTime
-                this.msgDuration = this.v.findViewById(R.id.myDurationTVID)
-                this.msgDuration.text = msg.duration.toString()
+                    this.msgLocation = this.v.findViewById(R.id.myLocationTVID)
+                    this.msgLocation.text = msg.location
+                    this.msgStartingTime = this.v.findViewById(R.id.myStartingTimeTVID)
+                    this.msgStartingTime.text = msg.startingTime
+                    this.msgDuration = this.v.findViewById(R.id.myDurationTVID)
+                    this.msgDuration.text = msg.duration.toString()
 
-                this.msgTimestamp.text = msg.timestamp
-                this.msgTimestamp.translationY = 45f
+                    this.msgTimestamp.text = msg.timestamp
+                    this.msgTimestamp.translationY = 45f
+                }
             }
         } else {
-            if (itemViewType == R.layout.other_message_layout) {
-                this.v.findViewById<LinearLayout>(R.id.otherMainContainerID).gravity = Gravity.END
-                this.msgTimestamp = this.v.findViewById(R.id.otherTimestampID)
-                this.msgTimestamp.alpha = 0f
-                this.msgContent = this.v.findViewById(R.id.otherMessageTextViewID)
-                this.msgTimestamp.text = msg.timestamp
-                this.msgTimestamp.translationY = 45f
-                this.msgContent.text = msg.msg
-            } else if (itemViewType == R.layout.common_other_message_layout) {
-                this.v.findViewById<LinearLayout>(R.id.otherCommonMainContainerID).gravity = Gravity.END
-                this.msgTimestamp = this.v.findViewById(R.id.otherCommonTimestampID)
-                this.msgTimestamp.alpha = 0f
-                this.msgContent = this.v.findViewById(R.id.otherCommonMessageTextViewID)
-                this.msgTimestamp.text = msg.timestamp
-                this.msgTimestamp.translationY = 45f
-                this.msgContent.text = msg.msg
-            } else if(itemViewType == R.layout.other_proposal_item) {
-                this.v.findViewById<LinearLayout>(R.id.otherMainContainerProposalID).gravity = Gravity.START
-                this.msgTimestamp = this.v.findViewById(R.id.otherProposalTimestampID)
-                this.msgTimestamp.alpha = 0f
+            when (itemViewType) {
+                R.layout.other_message_layout -> {
+                    this.v.findViewById<LinearLayout>(R.id.otherMainContainerID).gravity = Gravity.END
+                    this.msgTimestamp = this.v.findViewById(R.id.otherTimestampID)
+                    this.msgTimestamp.alpha = 0f
+                    this.msgContent = this.v.findViewById(R.id.otherMessageTextViewID)
+                    this.msgTimestamp.text = msg.timestamp
+                    this.msgTimestamp.translationY = 45f
+                    this.msgContent.text = msg.msg
+                }
+                R.layout.common_other_message_layout -> {
+                    this.v.findViewById<LinearLayout>(R.id.otherCommonMainContainerID).gravity = Gravity.END
+                    this.msgTimestamp = this.v.findViewById(R.id.otherCommonTimestampID)
+                    this.msgTimestamp.alpha = 0f
+                    this.msgContent = this.v.findViewById(R.id.otherCommonMessageTextViewID)
+                    this.msgTimestamp.text = msg.timestamp
+                    this.msgTimestamp.translationY = 45f
+                    this.msgContent.text = msg.msg
+                }
+                R.layout.other_proposal_item -> {
+                    /**
+                     * Accept and reject buttons setting
+                     */
+                    this.acceptButton?.setOnClickListener { acceptCallback() }
+                    this.rejectButton?.setOnClickListener { rejectCallback() }
 
-                this.msgLocation = this.v.findViewById(R.id.otherLocationTVID)
-                this.msgLocation.text = msg.location
-                this.msgStartingTime = this.v.findViewById(R.id.otherStartingTimeTVID)
-                this.msgStartingTime.text = msg.startingTime
-                this.msgDuration = this.v.findViewById(R.id.otherDurationTVID)
-                this.msgDuration.text = msg.duration.toString()
+                    this.v.findViewById<LinearLayout>(R.id.otherMainContainerProposalID).gravity = Gravity.START
+                    this.msgTimestamp = this.v.findViewById(R.id.otherProposalTimestampID)
+                    this.msgTimestamp.alpha = 0f
 
-                this.msgTimestamp.text = msg.timestamp
-                this.msgTimestamp.translationY = 45f
+                    this.msgLocation = this.v.findViewById(R.id.otherLocationTVID)
+                    this.msgLocation.text = msg.location
+                    this.msgStartingTime = this.v.findViewById(R.id.otherStartingTimeTVID)
+                    this.msgStartingTime.text = msg.startingTime
+                    this.msgDuration = this.v.findViewById(R.id.otherDurationTVID)
+                    this.msgDuration.text = msg.duration.toString()
+
+                    this.msgTimestamp.text = msg.timestamp
+                    this.msgTimestamp.translationY = 45f
+                }
             }
         }
     }

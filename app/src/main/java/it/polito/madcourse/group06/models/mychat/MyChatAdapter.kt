@@ -5,11 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.viewmodels.MyChatViewModel
 
 class MyChatAdapter(
     listOfMessages: List<MyMessage>,
     private val currentUserID: String,
-    private val otherUserID: String
+    private val otherUserID: String,
+    private val acceptCallback: (() -> Unit),
+    private val rejectCallback: (() -> Unit),
 ) : RecyclerView.Adapter<MyChatViewHolder>() {
     private val chat: MutableList<MyMessage> = listOfMessages.toMutableList()
 
@@ -57,7 +60,7 @@ class MyChatAdapter(
     }
 
     override fun onBindViewHolder(holder: MyChatViewHolder, position: Int) {
-        holder.bind(chat[position], getItemViewType(position))
+        holder.bind(chat[position], getItemViewType(position), acceptCallback, rejectCallback)
         holder.itemView.setOnClickListener {
             holder.setTimestampVisibility()
         }

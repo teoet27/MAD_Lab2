@@ -211,7 +211,7 @@ class MyChat : Fragment() {
 
         myChatViewModel.myCurrentChat.observe(viewLifecycleOwner) { chat ->
             this.emptyChatMessage.isVisible = chat.chatContent.isEmpty()
-            chatAdapterCard = MyChatAdapter(chat.chatContent, currentID, otherID)
+            chatAdapterCard = MyChatAdapter(chat.chatContent, currentID, otherID, { acceptProposal() }, { rejectProposal() })
 
             val linearLayoutManager = LinearLayoutManager(this.context)
             linearLayoutManager.stackFromEnd = true
@@ -326,18 +326,18 @@ class MyChat : Fragment() {
 
     //TODO: per vivi, collegare il codice a questa funzione
     private fun acceptProposal() {
-        hoursToCredit(durationTimeProposal).also { cost ->
+        /*hoursToCredit(durationTimeProposal).also { cost ->
             if (this.otherCredit >= cost) {
                 myChatViewModel.deductCreditFromChattingUser(cost.toDouble())
                 userProfileViewModel.addCreditToCurrentUser(cost.toDouble())
                 activateTimeslot()
             } else {
-                /**
+                *//**
                  * Show a dialog window to alert about not having enough money
-                 */
+                 *//*
                 // TODO: implement
             }
-        }
+        }*/
     }
 
     private fun rejectProposal() {
