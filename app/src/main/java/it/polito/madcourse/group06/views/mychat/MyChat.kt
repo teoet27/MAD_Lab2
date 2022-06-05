@@ -1,6 +1,7 @@
 package it.polito.madcourse.group06.views.mychat
 
 import android.app.TimePickerDialog
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -320,8 +321,8 @@ class MyChat : Fragment() {
 
     private fun resetProposalFields() {
         this.myLocation.setText("")
-        this.myStartingTime.setText("")
-        this.myDuration.setText("")
+        this.myStartingTime.text = ""
+        this.myDuration.text = ""
     }
 
     //TODO: per vivi, collegare il codice a questa funzione
@@ -332,12 +333,16 @@ class MyChat : Fragment() {
                 userProfileViewModel.addCreditToCurrentUser(cost.toDouble())
                 activateTimeslot()
             } else {
-                *//**
-                 * Show a dialog window to alert about not having enough money
-                 *//*
-                // TODO: implement
+                Toast.makeText(requireContext(),
+                    "No enough credits!",
+                    Toast.LENGTH_LONG).show()
             }
         }*/
+
+        /**
+         * UI/UX feedback
+         */
+        switchToDoneMode()
     }
 
     private fun rejectProposal() {
@@ -355,6 +360,24 @@ class MyChat : Fragment() {
         // TODO: all the other proposal must be deactivated
     }
 
+    /**
+     * A function to provide feedback to the user after a proposal has been accepted
+     */
+    private fun switchToDoneMode() {
+        this.chatArrowUpButton.setOnClickListener {
+            Toast.makeText(requireContext(), "Congratulations! You and ${this.chatFullname.text} have reached an agreement!", Toast.LENGTH_LONG).show()
+        }
+        this.chatArrowUpButton.animate().apply {
+            duration = 500
+            rotationX(360f)
+            alpha(0.5f)
+        }.start()
+        this.chatArrowUpButton.setImageResource(R.drawable.ic_done_black_24dp)
+        this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(
+            requireContext(),
+            R.color.accept_color
+        )
+    }
 
     /**
      * popTimePickerStarting is the callback to launch the TimePicker for inserting the starting time
