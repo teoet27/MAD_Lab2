@@ -158,10 +158,13 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      * Activate an [Advertisement] with the account ID of the requesting account
      * @param rxUserId the requesting account ID
      */
-    fun activateAdvertisement(rxUserId: String) {
-        this._singleAdvertisementPH.also { ad ->
-            ad.rxUserId = rxUserId
+    fun activateAdvertisement(rxUserId: String, activeAt: String, activeFor: Double, activeLocation: String) {
+        this._pvtAdvertisement.value.also { ad ->
+            ad!!.rxUserId = rxUserId
             ad.ratingUserId = rxUserId
+            ad.activeAt = activeAt
+            ad.activeFor = activeFor
+            ad.activeLocation = activeLocation
 
             db
                 .collection("Advertisement")
@@ -184,12 +187,11 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                         "rating_user_id" to ad.ratingUserId,
                         "active_at" to ad.activeAt,
                         "active_for" to ad.activeFor,
+                        "activate_location" to ad.activeLocation
                     )
                 )
                 .addOnSuccessListener {
                     Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
-                    this._singleAdvertisementPH = ad
-                    this._pvtAdvertisement.value = this._singleAdvertisementPH
                 }
                 .addOnFailureListener {
                     Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
