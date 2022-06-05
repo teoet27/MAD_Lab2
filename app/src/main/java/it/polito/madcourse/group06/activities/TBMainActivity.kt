@@ -145,10 +145,13 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
         val fullnameHeader = navView.getHeaderView(0).findViewById<TextView>(R.id.fullname_header)
         val nicknameHeader = navView.getHeaderView(0).findViewById<TextView>(R.id.nickname_header)
         val pictureHeader = navView.getHeaderView(0).findViewById<ImageView>(R.id.picture_header)
+        val creditHeader = navView.getHeaderView(0).findViewById<TextView>(R.id.profileCreditDrawer)
 
         userProfileViewModel.currentUser.observe(this) { user ->
             fullnameHeader.text = user.fullName
             nicknameHeader.text = "@${user.nickname}"
+            creditHeader.text="${user.credit.toInt()}"
+
             // Profile Picture
             if (user.imgPath.isNullOrEmpty()) {
                 userProfileViewModel.retrieveStaticProfilePicture(pictureHeader)
