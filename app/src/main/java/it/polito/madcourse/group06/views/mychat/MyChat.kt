@@ -327,19 +327,21 @@ class MyChat : Fragment() {
 
     //TODO: per vivi, collegare il codice a questa funzione
     private fun acceptProposal() {
-        /*hoursToCredit(durationTimeProposal).also { cost ->
+        hoursToCredit(durationTimeProposal).also { cost ->
             if (this.otherCredit >= cost) {
                 myChatViewModel.deductCreditFromChattingUser(cost.toDouble())
                 userProfileViewModel.addCreditToCurrentUser(cost.toDouble())
                 activateTimeslot()
             } else {
-                *//**
-                 * Show a dialog window to alert about not having enough money
-                 *//*
-                // TODO: implement
+                Toast.makeText(requireContext(),
+                    "No enough credits!",
+                    Toast.LENGTH_LONG).show()
             }
-        }*/
+        }
 
+        /**
+         * UI/UX feedback
+         */
         switchToDoneMode()
     }
 
@@ -358,6 +360,9 @@ class MyChat : Fragment() {
         // TODO: all the other proposal must be deactivated
     }
 
+    /**
+     * A function to provide feedback to the user after a proposal has been accepted
+     */
     private fun switchToDoneMode() {
         this.chatArrowUpButton.setOnClickListener {
             Toast.makeText(requireContext(), "Congratulations! You and ${this.chatFullname.text} have reached an agreement!", Toast.LENGTH_LONG).show()
