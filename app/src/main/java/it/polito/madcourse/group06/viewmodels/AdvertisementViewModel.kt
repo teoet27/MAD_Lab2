@@ -110,6 +110,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "rating_user_id" to ad.ratingUserId,
                     "active_at" to ad.activeAt,
                     "active_for" to ad.activeFor,
+                    "active_location" to ad.activeLocation,
                 )
             )
             .addOnSuccessListener {
@@ -227,6 +228,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                         "rating_user_id" to ad.ratingUserId,
                         "active_at" to ad.activeAt,
                         "active_for" to ad.activeFor,
+                        "active_location" to ad.activeLocation
                     )
                 )
                 .addOnSuccessListener {
@@ -266,7 +268,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "rating_user_id" to ad.ratingUserId,
                     "active_at" to ad.activeAt,
                     "active_for" to ad.activeFor,
-                )
+                    "active_location" to ad.activeLocation)
             )
             .addOnSuccessListener {
                 Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
