@@ -7,6 +7,7 @@ import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
 
@@ -22,6 +23,11 @@ class MyChatViewHolder(
     private lateinit var msgDuration: TextView
     private var rejectButton: TextView? = this.v.findViewById(R.id.chatRejectID)
     private var acceptButton: TextView? = this.v.findViewById(R.id.chatAcceptID)
+    private var pendingState: TextView? = this.v.findViewById(R.id.otherProposalResultPending)
+    private var acceptedState: TextView? = this.v.findViewById(R.id.otherProposalResultAccepted)
+    private var rejectedState: TextView? = this.v.findViewById(R.id.otherProposalResultRejected)
+
+
     private var startingHeight: Int = 0
     private var isMsgTimestampShown = false
 
@@ -86,8 +92,20 @@ class MyChatViewHolder(
                     /**
                      * Accept and reject buttons setting
                      */
-                    this.acceptButton?.setOnClickListener { acceptCallback() }
-                    this.rejectButton?.setOnClickListener { rejectCallback() }
+                    this.acceptButton?.setOnClickListener {
+                        acceptCallback()
+                        this.pendingState?.isGone = true
+                        this.acceptedState?.isGone = false
+                        this.acceptButton?.isGone = true
+                        this.rejectButton?.isGone = true
+                    }
+                    this.rejectButton?.setOnClickListener {
+                        rejectCallback()
+                        this.pendingState?.isGone = true
+                        this.rejectedState?.isGone = false
+                        this.acceptButton?.isGone = true
+                        this.rejectButton?.isGone = true
+                    }
 
                     this.v.findViewById<LinearLayout>(R.id.otherMainContainerProposalID).gravity = Gravity.START
                     this.msgTimestamp = this.v.findViewById(R.id.otherProposalTimestampID)
