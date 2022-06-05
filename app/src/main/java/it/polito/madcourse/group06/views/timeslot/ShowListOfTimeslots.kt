@@ -86,7 +86,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                     true
                 }
                 else -> {
-                    sharedViewModel.homeTabPressed()
                     sharedViewModel.resetSearchState(currentTab = TAB_SERVICES)
                     true
                 }
@@ -215,6 +214,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                         }
 
                         else -> {
+                            sharedViewModel.homeTabPressed()
                             ss.selectedSkill?.let {
                                 bottomNavView.menu.getItem(0).apply {
                                     setIcon(R.drawable.ic_baseline_arrow_back_ios_24)
