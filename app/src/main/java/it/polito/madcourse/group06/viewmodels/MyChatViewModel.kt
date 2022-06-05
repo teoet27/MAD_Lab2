@@ -2,6 +2,7 @@ package it.polito.madcourse.group06.viewmodels
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -155,5 +156,42 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
             out.add(myMessage)
         }
         return out
+    }
+
+    fun deductCreditFromChattingUser(cost: Double) {
+        val updatedUser = _pvtChattingUser.value.also { dumbUser ->
+            dumbUser!!.credit -= cost
+        }
+        db
+            .collection("UserProfile")
+            .document(this._chattingUserPH.id!!)
+            .update(
+                "id", updatedUser!!.id,
+                "nickname", updatedUser.nickname,
+                "fullname", updatedUser.fullName,
+                "qualification", updatedUser.qualification,
+                "description", updatedUser.description,
+                "email", updatedUser.email,
+                "phone_number", updatedUser.phoneNumber,
+                "location", updatedUser.location,
+                "skills", updatedUser.skills,
+                "credit", updatedUser.credit,
+                "rating_sum", updatedUser.rating_sum,
+                "n_ratings", updatedUser.n_ratings,
+                "comments_services_rx", updatedUser.comments_services_rx,
+                "comments_services_done", updatedUser.comments_services_done,
+                "img_path", updatedUser.imgPath,
+                "saved_ads_ids", updatedUser.saved_ads_ids
+            )
+            .addOnSuccessListener {
+                Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    fun deactivateProposal(chatID: String, position: Int) {
+        // TODO: implement method
     }
 }

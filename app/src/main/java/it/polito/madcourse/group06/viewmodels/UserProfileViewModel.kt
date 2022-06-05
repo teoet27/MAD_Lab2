@@ -166,7 +166,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             }
     }
 
-    fun deductCreditFromOtherUser(cost:Double){
+    /*fun deductCreditFromOtherUser(cost:Double){
         val updatedUser = _otherUserProfilePH.also { dumbUser ->
             dumbUser.credit-=cost
         }
@@ -200,7 +200,8 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             .addOnFailureListener {
                 Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
             }
-    }
+    }*/
+
     fun addCreditToCurrentUser(cost:Double){
         val updatedUser = _singleUserProfilePH.also { dumbUser ->
             dumbUser.credit+=cost
