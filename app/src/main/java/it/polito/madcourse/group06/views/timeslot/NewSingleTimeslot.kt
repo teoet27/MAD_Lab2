@@ -204,7 +204,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                                 null,
                                 null,
                                 null,
-                                0.0
+                                0.0,
+                                ""
                             )
                         )
                         userProfileViewModel.updateSkillList(skillList)

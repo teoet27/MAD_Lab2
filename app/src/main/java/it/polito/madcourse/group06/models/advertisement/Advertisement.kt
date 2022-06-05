@@ -87,6 +87,10 @@ data class Advertisement(
 
     @get:PropertyName("active_for")
     @set:PropertyName("active_for")
-    var activeFor: Double
+    var activeFor: Double,
+
+    @get:PropertyName("active_location")
+    @set:PropertyName("active_location")
+    var activeLocation: String
 )
 

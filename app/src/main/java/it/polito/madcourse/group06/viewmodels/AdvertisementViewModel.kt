@@ -26,7 +26,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
     private var _singleAdvertisementPH = Advertisement(
         "", "", "","", arrayListOf<String>(),
         "", "", "", "", 0.0,
-        "", "", "", "", "", 0.0
+        "", "", "", "", "", 0.0, ""
     )
     private val _pvtAdvertisement = MutableLiveData<Advertisement>().also {
         it.value = _singleAdvertisementPH
@@ -70,11 +70,12 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             val ratingUserId = this.get("rating_user_id") as String?
             val activeAt = this.get("active_at") as String?
             val activeFor = this.get("active_for") as Double
+            val activeLocation = this.get("active_location") as String
             Advertisement(
                 id, title, description, restrictions,listOfSkills ?: arrayListOf<String>(),
                 location, date, startingTime,
                 endingTime, duration, accountName,
-                accountID, rxUserId, ratingUserId, activeAt, activeFor
+                accountID, rxUserId, ratingUserId, activeAt, activeFor, activeLocation
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -328,7 +329,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                 this._singleAdvertisementPH = Advertisement(
                     "", "", "","", arrayListOf<String>(),
                     "", "", "", "", 0.0,
-                    "", "", "", "", "", 0.0
+                    "", "", "", "", "", 0.0, ""
                 )
                 this._pvtAdvertisement.value = this._singleAdvertisementPH
             }

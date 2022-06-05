@@ -12,7 +12,6 @@ import android.view.View
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -41,7 +40,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
         "", "", "", "",arrayListOf<String>(),
         "", "", "", "", 0.0,
         "", "",
-        null, null, null, 0.0
+        null, null, null, 0.0, ""
     )
 
     private lateinit var advTitle: TextView
