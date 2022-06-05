@@ -8,6 +8,60 @@
     android:layout_marginBottom="@dimen/distance_between_messages"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/otherProposalResultAccepted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/accept_color"
+        android:drawableStart="@drawable/ic_baseline_sentiment_satisfied_alt_24"
+        android:drawablePadding="6dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="Accepted!"
+        android:textColor="@color/lightGray"
+        android:textSize="10sp"
+        android:visibility="gone"
+        app:drawableTint="@color/lightGray" />
+
+    <TextView
+        android:id="@+id/otherProposalResultRejected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/reject_color"
+        android:drawableStart="@drawable/ic_baseline_sentiment_very_dissatisfied_24"
+        android:drawablePadding="6dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="Rejected."
+        android:textColor="@color/lightGray"
+        android:textSize="10sp"
+        android:visibility="gone"
+        app:drawableTint="@color/lightGray" />
+
+    <TextView
+        android:id="@+id/otherProposalResultPending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/darkGray"
+        android:drawableStart="@drawable/ic_baseline_more_horiz_24"
+        android:drawablePadding="6dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="Pending"
+        android:textColor="@color/lightGray"
+        android:textSize="10sp"
+        android:visibility="gone"
+        app:drawableTint="@color/lightGray" />
+
     <LinearLayout
         android:id="@+id/otherMessageContainerProposalID"
         android:layout_width="wrap_content"
