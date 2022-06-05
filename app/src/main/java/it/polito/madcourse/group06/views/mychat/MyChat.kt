@@ -1,6 +1,7 @@
 package it.polito.madcourse.group06.views.mychat
 
 import android.app.TimePickerDialog
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -338,6 +339,20 @@ class MyChat : Fragment() {
                 // TODO: implement
             }
         }*/
+        this.chatArrowUpButton.setOnClickListener {
+            Toast.makeText(requireContext(), "Congratulations! You and ${this.chatFullname.text} have reached an agreement!", Toast.LENGTH_LONG).show()
+        }
+        this.chatArrowUpButton.animate().apply {
+            duration = 500
+            rotationX(360f)
+            alpha(0.5f)
+        }.start()
+        this.chatArrowUpButton.setImageResource(R.drawable.ic_done_black_24dp)
+        this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(
+            requireContext(),
+            R.color.accept_color
+        )
+
     }
 
     private fun rejectProposal() {
