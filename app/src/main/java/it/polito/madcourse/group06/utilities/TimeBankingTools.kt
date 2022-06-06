@@ -129,7 +129,8 @@ private fun rotateImageIfRequired(context: Context, img: Bitmap, selectedImage: 
         ExifInterface(input!!)
     else
         ExifInterface(selectedImage.path!!)
-    val orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+    val orientation =
+        ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
     return when (orientation) {
         ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(img, 90)
         ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(img, 180)
@@ -358,22 +359,24 @@ fun Advertisement.isEnded(): Boolean {
 }
 
 fun Advertisement.isExpired(): Boolean {
-    return ((timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())) >= timeStringToDoubleHour(advEndingTime)
-            && this.advDate == SimpleDateFormat("dd/MM/yyyy").format(Date()))
-            || (computeDateDifference(SimpleDateFormat("dd/MM/yyyy").format(Date()), this.advDate).first < 0))
+    timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())).also { now ->
+        SimpleDateFormat("dd/MM/yyyy").format(Date()).also { today ->
+            return (now >= timeStringToDoubleHour(advEndingTime)
+                    && computeDateDifference(today,this.advDate).first == 0.0
+                    || (computeDateDifference(today,this.advDate).first < 0))
+        }
+    }
 }
 
 fun Advertisement.isToBeRated(): Boolean {
-    return if (!activeAt.isNullOrEmpty()) {
-        (timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())) >= timeStringToDoubleHour(
-            activeAt!!
-        ) + activeFor
-                && this.advDate == SimpleDateFormat("dd/MM/yyyy").format(Date())
-                || (computeDateDifference(
-            SimpleDateFormat("dd/MM/yyyy").format(Date()),
-            this.advDate
-        ).first < 0))
-    } else {
-        false
+    timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())).also { now ->
+        SimpleDateFormat("dd/MM/yyyy").format(Date()).also { today ->
+            return if (!activeAt.isNullOrEmpty()) {
+                now >= timeStringToDoubleHour(activeAt!!) + activeFor && computeDateDifference(today,this.advDate).first == 0.0
+                || (computeDateDifference(today,this.advDate).first < 0)
+            } else {
+                false
+            }
+        }
     }
 }
