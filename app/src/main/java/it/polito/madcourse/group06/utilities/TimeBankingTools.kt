@@ -386,7 +386,7 @@ fun Advertisement.isToBeRated(): Boolean {
     }
 }
 
-fun timeslotFormCheck(
+fun checkTimeslotForm(
     view: View,
     title: String?,
     description: String?,
@@ -397,104 +397,71 @@ fun timeslotFormCheck(
     date: String?
 ): Boolean {
 
-    //All fields are not empty
-    if (!title.isNullOrEmpty() && !description.isNullOrEmpty() &&
-        !location.isNullOrEmpty() && !startingTime.isNullOrEmpty() &&
-        !endingTime.isNullOrEmpty() && !date.isNullOrEmpty() && duration != null)
-        return true
-
     //title check
     if (title.isNullOrEmpty()) {
-        Snackbar.make(
-            view,
-            "Error: you must provide a title to your advertisement.",
-            Snackbar.LENGTH_SHORT
-        ).show()
+        Snackbar.make(view, "Error: you must provide a title to your advertisement.", Snackbar.LENGTH_SHORT).show()
         return false
     }
 
     //description check
-    if (description.isNullOrEmpty()){
-        Snackbar.make(
-            view,
-            "Error: you must provide a description to your advertisement.",
-            Snackbar.LENGTH_SHORT
-        ).show()
+    if (description.isNullOrEmpty()) {
+        Snackbar.make(view, "Error: you must provide a description to your advertisement.", Snackbar.LENGTH_SHORT).show()
         return false
     }
 
     //location check
-    if (location.isNullOrEmpty()){
-        Snackbar.make(
-            view,
-            "Error: you must provide a location for your service.",
-            Snackbar.LENGTH_SHORT
-        ).show()
+    if (location.isNullOrEmpty()) {
+        Snackbar.make(view, "Error: you must provide a location for your service.", Snackbar.LENGTH_SHORT).show()
         return false
     }
 
     //starting time check
-    if (startingTime.isNullOrEmpty()){
-        Snackbar.make(
-            view,
-            "Error: you must provide a starting availability time.",
-            Snackbar.LENGTH_SHORT
-        ).show()
+    if (startingTime.isNullOrEmpty()) {
+        Snackbar.make(view, "Error: you must provide a starting availability time.", Snackbar.LENGTH_SHORT).show()
         return false
     }
 
     //ending time check
-    if (endingTime.isNullOrEmpty()){
-        Snackbar.make(
-            view,
-            "Error: you must provide an ending availability time.",
-            Snackbar.LENGTH_SHORT
-        ).show()
-        return false
-    }else if(endingTime!=null && computeTimeDifference(startingTime,endingTime).first<=0){
-        Snackbar.make(
-            view,
-            "Error: please, provide a valid ending time!",
-            Snackbar.LENGTH_SHORT
-        ).show()
-        return false
-    }
-
-    //duration check
-    if(duration==null){
-        Snackbar.make(
-            view,
-            "Error: you must provide a valid duration for your timeslot.",
-            Snackbar.LENGTH_SHORT
-        ).show()
-    }
-    else if (duration<=0){
-        Snackbar.make(
-            view,
-            "Error: you must provide a valid duration for your timeslot.",
-            Snackbar.LENGTH_SHORT
-        ).show()
+    if (endingTime.isNullOrEmpty()) {
+        Snackbar.make(view, "Error: you must provide an ending availability time.", Snackbar.LENGTH_SHORT).show()
         return false
     }
 
     //date check
-    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()).also { today->
-        if (date != null && computeDateDifference(today, date).first <= 0) {
-            Snackbar.make(
-                view,
-                "Error: you can not create timeslots back in time!",
-                Snackbar.LENGTH_SHORT
-            ).show()
-            return false
+    if (date.isNullOrEmpty()) {
+        Snackbar.make(view, "Error: you must provide a date for your timeslot!", Snackbar.LENGTH_SHORT).show()
+        return false
+    } else {
+        SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()).also { today ->
+            if (computeDateDifference(today, date).first < 0.0) {
+                Snackbar.make(view, "Error: you can not create timeslots back in time!", Snackbar.LENGTH_SHORT).show()
+                return false
+            } else if (computeDateDifference(today, date).first == 0.0) {
+                SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date()).also { now ->
+                    if (computeTimeDifference(now, startingTime).first < 0.0) {
+                        Snackbar.make(view, "Error: you can not create timeslots back in time!", Snackbar.LENGTH_SHORT).show()
+                        return false
+                    }
+                }
+            }
+            if (computeTimeDifference(startingTime, endingTime).first < 0.0) {
+                Snackbar.make(view, "Error: you can not create timeslots back in time!", Snackbar.LENGTH_SHORT).show()
+                return false
+            }
         }
     }
+
+    //duration check
+    if (duration == null) {
+        Snackbar.make(view, "Error: you must provide a valid duration for your timeslot.", Snackbar.LENGTH_SHORT).show()
+        return false
+    } else if (duration <= 0) {
+        Snackbar.make(view, "Error: you must provide a valid duration for your timeslot.", Snackbar.LENGTH_SHORT).show()
+        return false
+    }else if(computeTimeDifference(startingTime,endingTime).first-duration<0){
+        Snackbar.make(view, "Error: please provide a duration compatible with the availability time range.", Snackbar.LENGTH_SHORT).show()
+        return false
+    }
+
     return true
 }
-
-/**
- * isAdvValid is a method which redurturns whether it's possible to actually insert a new
- * advertisement. The criteria is that an advertisement should at least have a title, a location,
- * a date and a duration.
- *
- * @return whether it's possible to actually create an advertisement or not
- */
