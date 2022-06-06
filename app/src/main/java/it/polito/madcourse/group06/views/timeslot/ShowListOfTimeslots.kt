@@ -71,21 +71,26 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
         // set up bottom nav bar
         bottomNavView.background = null
         bottomNavView.menu.getItem(2).isEnabled = false
+        sharedViewModel.homeTabPressed()
         bottomNavView.setOnItemSelectedListener { it ->
             when (it.title) {
                 TAB_ACTIVE -> {
+                    sharedViewModel.homeTabPressed(false)
                     sharedViewModel.resetSearchState(currentTab = TAB_ACTIVE, activeAdsFlag = true)
                     true
                 }
                 TAB_SAVED -> {
+                    sharedViewModel.homeTabPressed(false)
                     sharedViewModel.resetSearchState(currentTab = TAB_SAVED, savedAdsFlag = true)
                     true
                 }
                 TAB_MINE -> {
+                    sharedViewModel.homeTabPressed(false)
                     sharedViewModel.resetSearchState(currentTab = TAB_MINE, myAdsFlag = true)
                     true
                 }
                 else -> {
+                    sharedViewModel.homeTabPressed()
                     sharedViewModel.resetSearchState(currentTab = TAB_SERVICES)
                     true
                 }
@@ -187,7 +192,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                             } ?: bottomNavView.menu.getItem(0)
                                 .setIcon(R.drawable.ic_baseline_home_24)
                             bottomNavView.menu.getItem(1).isChecked = true
-                            sharedViewModel.homeTabPressed(false)
                         }
                         TAB_SAVED -> {
                             setActionBarTitle("Saved Timeslots")
@@ -197,7 +201,6 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                             } ?: bottomNavView.menu.getItem(0)
                                 .setIcon(R.drawable.ic_baseline_home_24)
                             bottomNavView.menu.getItem(3).isChecked = true
-                            sharedViewModel.homeTabPressed(false)
 
                         }
                         TAB_MINE -> {
@@ -209,12 +212,10 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                                 .setIcon(R.drawable.ic_baseline_home_24)
                             bottomNavView.menu.getItem(4).isChecked = true
                             if(myExpiredAdsCnt>0)this.updateAdHint.visibility=View.VISIBLE
-                            sharedViewModel.homeTabPressed(false)
 
                         }
 
                         else -> {
-                            sharedViewModel.homeTabPressed()
                             ss.selectedSkill?.let {
                                 bottomNavView.menu.getItem(0).apply {
                                     setIcon(R.drawable.ic_baseline_arrow_back_ios_24)
