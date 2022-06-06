@@ -36,7 +36,7 @@
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="it.polito.madcourse.group06.views.profile.EditProfileFragment"
-        android:label="Edit your profile" >
+        android:label="Edit profile" >
         <action
             android:id="@+id/action_editProfileFragment_to_showMyProfileFragment"
             app:destination="@id/showMyProfileFragment" />
@@ -177,7 +177,7 @@
     <fragment
         android:id="@+id/showMyProfileFragment"
         android:name="it.polito.madcourse.group06.views.profile.ShowMyProfileFragment"
-        android:label="ShowMyProfileFragment" >
+        android:label="My Profile" >
         <action
             android:id="@+id/action_showMyProfileFragment_to_ShowListOfServices"
             app:destination="@id/ShowListOfServices" />
