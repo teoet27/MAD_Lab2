@@ -58,17 +58,17 @@ class ShowListOfSkills : Fragment(R.layout.service_list) {
             when (it.title) {
                 TAB_ACTIVE -> {
                     findNavController().navigate(R.id.ShowListTimeslots)
-                    sharedViewModel.resetSearchState(currentTab = TAB_ACTIVE, activeAdsFlag = true)
+                    sharedViewModel.resetSearchState(resetSelectedSkill=true,currentTab = TAB_ACTIVE, activeAdsFlag = true)
                     true
                 }
                 TAB_SAVED -> {
                     findNavController().navigate(R.id.ShowListTimeslots)
-                    sharedViewModel.resetSearchState(currentTab = TAB_SAVED, savedAdsFlag = true)
+                    sharedViewModel.resetSearchState(resetSelectedSkill=true,currentTab = TAB_SAVED, savedAdsFlag = true)
                     true
                 }
                 TAB_MINE -> {
                     findNavController().navigate(R.id.ShowListTimeslots)
-                    sharedViewModel.resetSearchState(currentTab = TAB_MINE, myAdsFlag = true)
+                    sharedViewModel.resetSearchState(resetSelectedSkill=true,currentTab = TAB_MINE, myAdsFlag = true)
                     true
                 }
                 else -> {

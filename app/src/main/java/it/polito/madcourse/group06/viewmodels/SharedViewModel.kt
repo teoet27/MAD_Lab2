@@ -68,7 +68,7 @@ class SharedViewModel : ViewModel() {
     // reset search state and initialize if you want some parameter
     fun resetSearchState(
         currentTab: String? = null,
-        selectedSkill: String? = null,
+        resetSelectedSkill: Boolean = false,
         searchedWord: String? = null,
         sortParameter: Int? = 0,
         sortUpFlag: Boolean? = true,
@@ -79,7 +79,7 @@ class SharedViewModel : ViewModel() {
     ) {
         _searchState = SearchState(
             currentTab,
-            _searchState.selectedSkill,
+            if(resetSelectedSkill) null else _searchState.selectedSkill,
             searchedWord,
             sortParameter,
             sortUpFlag,
