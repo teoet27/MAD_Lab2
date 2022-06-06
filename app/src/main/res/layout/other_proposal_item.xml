@@ -17,12 +17,12 @@
         android:background="@drawable/rounded_corners"
         android:backgroundTint="@color/accept_color"
         android:drawableStart="@drawable/ic_baseline_sentiment_satisfied_alt_24"
-        android:drawablePadding="6dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
+        android:drawablePadding="10dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         android:text="Accepted!"
         android:textColor="@color/lightGray"
-        android:textSize="10sp"
+        android:textSize="14sp"
         android:visibility="gone"
         app:drawableTint="@color/lightGray" />
 
@@ -35,12 +35,12 @@
         android:background="@drawable/rounded_corners"
         android:backgroundTint="@color/reject_color"
         android:drawableStart="@drawable/ic_baseline_sentiment_very_dissatisfied_24"
-        android:drawablePadding="6dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
+        android:drawablePadding="10dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         android:text="Rejected."
         android:textColor="@color/lightGray"
-        android:textSize="10sp"
+        android:textSize="14sp"
         android:visibility="gone"
         app:drawableTint="@color/lightGray" />
 
@@ -53,12 +53,12 @@
         android:background="@drawable/rounded_corners"
         android:backgroundTint="@color/darkGray"
         android:drawableStart="@drawable/ic_baseline_more_horiz_24"
-        android:drawablePadding="6dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
+        android:drawablePadding="10dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         android:text="Pending"
         android:textColor="@color/lightGray"
-        android:textSize="10sp"
+        android:textSize="14sp"
         android:visibility="visible"
         app:drawableTint="@color/lightGray" />
 
@@ -200,7 +200,7 @@
                 android:text="Reject"
                 android:textAlignment="gravity"
                 android:textColor="#FFFFFF"
-                android:textSize="16sp"
+                android:textSize="17dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -214,7 +214,7 @@
                 android:text="Accept"
                 android:textAlignment="gravity"
                 android:textColor="#FFFFFF"
-                android:textSize="16sp"
+                android:textSize="17dp"
                 android:textStyle="bold" />
         </LinearLayout>
 
