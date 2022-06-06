@@ -334,13 +334,13 @@ class MyChat : Fragment() {
     //TODO: per vivi, collegare il codice a questa funzione
     private fun acceptProposal(duration: Double, messageID: Int, messageState: Long) {
         val cost = hoursToCredit(duration)
+        activateTimeslot()
         if (!this.isCurrentUserTheOwner) {
             if (this.myCredit >= cost) {
                 myChatViewModel.addCreditToChattingUser(cost.toDouble())
                 userProfileViewModel.deductCreditToCurrentUser(cost.toDouble())
                 myChatViewModel.setProposalState(messageID, messageState)
                 myChatViewModel.concludeChat()
-                activateTimeslot()
                 switchToDoneMode()
             } else {
                 Toast.makeText(
@@ -353,7 +353,6 @@ class MyChat : Fragment() {
             if (this.otherCredit >= cost) {
                 myChatViewModel.deductCreditFromChattingUser(cost.toDouble())
                 userProfileViewModel.addCreditToCurrentUser(cost.toDouble())
-                activateTimeslot()
                 switchToDoneMode()
             } else {
                 Toast.makeText(
@@ -372,7 +371,7 @@ class MyChat : Fragment() {
 
     private fun activateTimeslot() {
         advertisementViewModel.activateAdvertisement(
-            this.currentID,
+            if(this.isCurrentUserTheOwner) this.otherID else this.currentID,
             "${this.startingTimeHourProposal}:${this.startingTimeMinuteProposal}",
             this.durationTimeProposal,
             this.myLocation.text.toString()
