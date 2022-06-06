@@ -200,12 +200,6 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                         "activate_location" to ad.activeLocation
                     )
                 )
-                .addOnSuccessListener {
-                    Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
-                }
         }
     }
 
