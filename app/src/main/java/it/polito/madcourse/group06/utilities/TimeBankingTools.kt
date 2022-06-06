@@ -8,6 +8,8 @@ import android.icu.util.Calendar
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
+import android.view.View
+import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.models.advertisement.Advertisement
 import java.io.File
 import java.io.IOException
@@ -362,8 +364,8 @@ fun Advertisement.isExpired(): Boolean {
     timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())).also { now ->
         SimpleDateFormat("dd/MM/yyyy").format(Date()).also { today ->
             return (now >= timeStringToDoubleHour(advEndingTime)
-                    && computeDateDifference(today,this.advDate).first == 0.0
-                    || (computeDateDifference(today,this.advDate).first < 0))
+                    && computeDateDifference(today, this.advDate).first == 0.0
+                    || (computeDateDifference(today, this.advDate).first < 0))
         }
     }
 }
@@ -372,11 +374,127 @@ fun Advertisement.isToBeRated(): Boolean {
     timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())).also { now ->
         SimpleDateFormat("dd/MM/yyyy").format(Date()).also { today ->
             return if (!activeAt.isNullOrEmpty()) {
-                now >= timeStringToDoubleHour(activeAt!!) + activeFor && computeDateDifference(today,this.advDate).first == 0.0
-                || (computeDateDifference(today,this.advDate).first < 0)
+                now >= timeStringToDoubleHour(activeAt!!) + activeFor && computeDateDifference(
+                    today,
+                    this.advDate
+                ).first == 0.0
+                        || (computeDateDifference(today, this.advDate).first < 0)
             } else {
                 false
             }
         }
     }
 }
+
+fun timeslotFormCheck(
+    view: View,
+    title: String?,
+    description: String?,
+    location: String?,
+    startingTime: String?,
+    endingTime: String?,
+    duration: Double?,
+    date: String?
+): Boolean {
+
+    //All fields are not empty
+    if (!title.isNullOrEmpty() && !description.isNullOrEmpty() &&
+        !location.isNullOrEmpty() && !startingTime.isNullOrEmpty() &&
+        !endingTime.isNullOrEmpty() && !date.isNullOrEmpty() && duration != null)
+        return true
+
+    //title check
+    if (title.isNullOrEmpty()) {
+        Snackbar.make(
+            view,
+            "Error: you must provide a title to your advertisement.",
+            Snackbar.LENGTH_SHORT
+        ).show()
+        return false
+    }
+
+    //description check
+    if (description.isNullOrEmpty()){
+        Snackbar.make(
+            view,
+            "Error: you must provide a description to your advertisement.",
+            Snackbar.LENGTH_SHORT
+        ).show()
+        return false
+    }
+
+    //location check
+    if (location.isNullOrEmpty()){
+        Snackbar.make(
+            view,
+            "Error: you must provide a location for your service.",
+            Snackbar.LENGTH_SHORT
+        ).show()
+        return false
+    }
+
+    //starting time check
+    if (startingTime.isNullOrEmpty()){
+        Snackbar.make(
+            view,
+            "Error: you must provide a starting availability time.",
+            Snackbar.LENGTH_SHORT
+        ).show()
+        return false
+    }
+
+    //ending time check
+    if (endingTime.isNullOrEmpty()){
+        Snackbar.make(
+            view,
+            "Error: you must provide an ending availability time.",
+            Snackbar.LENGTH_SHORT
+        ).show()
+        return false
+    }else if(endingTime!=null && computeTimeDifference(startingTime,endingTime).first<=0){
+        Snackbar.make(
+            view,
+            "Error: please, provide a valid ending time!",
+            Snackbar.LENGTH_SHORT
+        ).show()
+        return false
+    }
+
+    //duration check
+    if(duration==null){
+        Snackbar.make(
+            view,
+            "Error: you must provide a valid duration for your timeslot.",
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+    else if (duration<=0){
+        Snackbar.make(
+            view,
+            "Error: you must provide a valid duration for your timeslot.",
+            Snackbar.LENGTH_SHORT
+        ).show()
+        return false
+    }
+
+    //date check
+    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()).also { today->
+        if (date != null && computeDateDifference(today, date).first <= 0) {
+            Snackbar.make(
+                view,
+                "Error: you can not create timeslots back in time!",
+                Snackbar.LENGTH_SHORT
+            ).show()
+            return false
+        }
+    }
+    return true
+}
+
+/**
+ * isAdvValid is a method which redurturns whether it's possible to actually insert a new
+ * advertisement. The criteria is that an advertisement should at least have a title, a location,
+ * a date and a duration.
+ *
+ * @return whether it's possible to actually create an advertisement or not
+ */
