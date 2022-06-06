@@ -1,4 +1,4 @@
-package it.polito.madcourse.group06.models.mychat
+package it.polito.madcourse.group06.models.activechat
 
 import it.polito.madcourse.group06.models.userprofile.UserProfile
 

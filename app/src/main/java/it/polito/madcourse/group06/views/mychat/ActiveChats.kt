@@ -13,9 +13,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
-import it.polito.madcourse.group06.models.mychat.ActiveChat
-import it.polito.madcourse.group06.models.mychat.ActiveChatAdapter
-import it.polito.madcourse.group06.models.userprofile.UserProfile
+import it.polito.madcourse.group06.models.activechat.ActiveChat
+import it.polito.madcourse.group06.models.activechat.ActiveChatAdapter
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.MyChatViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
