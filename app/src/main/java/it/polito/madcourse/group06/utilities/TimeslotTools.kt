@@ -188,14 +188,9 @@ fun Advertisement.isEnded(): Boolean {
 }
 
 fun Advertisement.isExpired(): Boolean {
-    return (timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())) >= timeStringToDoubleHour(
-        advEndingTime
-    )
-            && this.advDate == SimpleDateFormat("dd/MM/yyyy").format(Date())
-            || (computeDateDifference(
-        SimpleDateFormat("dd/MM/yyyy").format(Date()),
-        this.advDate
-    ).first < 0))
+    return ((timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())) >= timeStringToDoubleHour(advEndingTime)
+            && this.advDate == SimpleDateFormat("dd/MM/yyyy").format(Date()))
+            || (computeDateDifference(SimpleDateFormat("dd/MM/yyyy").format(Date()), this.advDate).first < 0))
 }
 
 fun Advertisement.isToBeRated(): Boolean {
