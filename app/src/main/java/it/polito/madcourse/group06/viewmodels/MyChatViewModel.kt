@@ -86,7 +86,7 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
                     "other_user_id" to otherUserID,
                     "chat_content" to mutableListOf<MyMessage>(),
                     "adv_id" to advID,
-                    "progress" to false
+                    "has_ended" to false
                 )
             )
         this._myChatPH = MyChatModel(chatID, currentUserID, otherUserID, arrayListOf(), advID, false)
