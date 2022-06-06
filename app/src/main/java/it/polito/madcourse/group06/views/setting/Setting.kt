@@ -1,5 +1,6 @@
 package it.polito.madcourse.group06.views.setting
 
+import android.app.ActionBar
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -63,13 +64,14 @@ class Setting : Fragment() {
         userProfileViewModel.currentUser.observe(viewLifecycleOwner) { user ->
             builder.setTitle("Delete your account")
 
-            description.text = "Type your nickname here in order to confirm your will in deleting your account."
+            description.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
+            description.text = "Type ${user.nickname} to continue."
             description.inputType = InputType.TYPE_CLASS_TEXT
-            description.gravity = Gravity.LEFT
+            description.gravity = Gravity.START
 
             input.hint = "${user.nickname}"
             input.inputType = InputType.TYPE_CLASS_TEXT
-            input.gravity = Gravity.LEFT
+            input.gravity = Gravity.START
 
             linearLayout.orientation = LinearLayout.VERTICAL
             linearLayout.setPadding(64, 0, 64, 0)

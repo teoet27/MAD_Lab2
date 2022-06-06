@@ -21,17 +21,19 @@ class MyChatViewHolder(
     private lateinit var msgLocation: TextView
     private lateinit var msgStartingTime: TextView
     private lateinit var msgDuration: TextView
+    private var msgState: Long = 0
     private var rejectButton: TextView? = this.v.findViewById(R.id.chatRejectID)
     private var acceptButton: TextView? = this.v.findViewById(R.id.chatAcceptID)
     private var pendingState: TextView? = this.v.findViewById(R.id.otherProposalResultPending)
     private var acceptedState: TextView? = this.v.findViewById(R.id.otherProposalResultAccepted)
     private var rejectedState: TextView? = this.v.findViewById(R.id.otherProposalResultRejected)
-
+    private var notAvailableState: TextView? = this.v.findViewById(R.id.otherProposalResultNoMoreAvailable)
 
     private var startingHeight: Int = 0
     private var isMsgTimestampShown = false
 
-    fun bind(msg: MyMessage, itemViewType: Int, acceptCallback: (() -> Unit), rejectCallback: (() -> Unit), ) {
+    fun bind(msg: MyMessage, itemViewType: Int, acceptCallback: ((Double, Int, Long) -> Unit), rejectCallback: ((Int, Long) -> Unit), propState: Long) {
+        this.msgState = propState
         if (isMyMessage) {
             when (itemViewType) {
                 R.layout.my_message_layout -> {
@@ -56,6 +58,40 @@ class MyChatViewHolder(
                     this.v.findViewById<LinearLayout>(R.id.myMainContainerProposalID).gravity = Gravity.START
                     this.msgTimestamp = this.v.findViewById(R.id.myProposalTimestampID)
                     this.msgTimestamp.alpha = 0f
+                    when(this.msgState) {
+                        (-1).toLong() -> { // REJECTED
+                            this.pendingState?.isGone = true
+                            this.acceptedState?.isGone = true
+                            this.rejectedState?.isGone = false
+                            this.notAvailableState?.isGone = true
+                            this.acceptButton?.isGone = true
+                            this.rejectButton?.isGone = true
+                        }
+                        (0).toLong() -> { // PENDING
+                            this.pendingState?.isGone = false
+                            this.acceptedState?.isGone = true
+                            this.rejectedState?.isGone = true
+                            this.notAvailableState?.isGone = true
+                            this.acceptButton?.isGone = false
+                            this.rejectButton?.isGone = false
+                        }
+                        (1).toLong() -> { // ACCEPTED
+                            this.pendingState?.isGone = true
+                            this.acceptedState?.isGone = false
+                            this.rejectedState?.isGone = true
+                            this.notAvailableState?.isGone = true
+                            this.acceptButton?.isGone = true
+                            this.rejectButton?.isGone = true
+                        }
+                        (2).toLong() -> { // NOT AVAILABLE
+                            this.pendingState?.isGone = true
+                            this.acceptedState?.isGone = true
+                            this.rejectedState?.isGone = true
+                            this.notAvailableState?.isGone = false
+                            this.acceptButton?.isGone = true
+                            this.rejectButton?.isGone = true
+                        }
+                    }
 
                     this.msgLocation = this.v.findViewById(R.id.myLocationTVID)
                     this.msgLocation.text = msg.location
@@ -89,27 +125,44 @@ class MyChatViewHolder(
                     this.msgContent.text = msg.msg
                 }
                 R.layout.other_proposal_item -> {
-                    /**
-                     * Accept and reject buttons setting
-                     */
-                    this.acceptButton?.setOnClickListener {
-                        acceptCallback()
-                        this.pendingState?.isGone = true
-                        this.acceptedState?.isGone = false
-                        this.acceptButton?.isGone = true
-                        this.rejectButton?.isGone = true
-                    }
-                    this.rejectButton?.setOnClickListener {
-                        rejectCallback()
-                        this.pendingState?.isGone = true
-                        this.rejectedState?.isGone = false
-                        this.acceptButton?.isGone = true
-                        this.rejectButton?.isGone = true
-                    }
-
                     this.v.findViewById<LinearLayout>(R.id.otherMainContainerProposalID).gravity = Gravity.START
                     this.msgTimestamp = this.v.findViewById(R.id.otherProposalTimestampID)
                     this.msgTimestamp.alpha = 0f
+
+                    when(this.msgState) {
+                        (-1).toLong() -> { // REJECTED
+                            this.pendingState?.isGone = true
+                            this.acceptedState?.isGone = true
+                            this.rejectedState?.isGone = false
+                            this.notAvailableState?.isGone = true
+                            this.acceptButton?.isGone = true
+                            this.rejectButton?.isGone = true
+                        }
+                        (0).toLong() -> { // PENDING
+                            this.pendingState?.isGone = false
+                            this.acceptedState?.isGone = true
+                            this.rejectedState?.isGone = true
+                            this.notAvailableState?.isGone = true
+                            this.acceptButton?.isGone = false
+                            this.rejectButton?.isGone = false
+                        }
+                        (1).toLong() -> { // ACCEPTED
+                            this.pendingState?.isGone = true
+                            this.acceptedState?.isGone = false
+                            this.rejectedState?.isGone = true
+                            this.notAvailableState?.isGone = true
+                            this.acceptButton?.isGone = true
+                            this.rejectButton?.isGone = true
+                        }
+                        (2).toLong() -> { // NOT AVAILABLE
+                            this.pendingState?.isGone = true
+                            this.acceptedState?.isGone = true
+                            this.rejectedState?.isGone = true
+                            this.notAvailableState?.isGone = false
+                            this.acceptButton?.isGone = true
+                            this.rejectButton?.isGone = true
+                        }
+                    }
 
                     this.msgLocation = this.v.findViewById(R.id.otherLocationTVID)
                     this.msgLocation.text = msg.location
@@ -120,6 +173,29 @@ class MyChatViewHolder(
 
                     this.msgTimestamp.text = msg.timestamp
                     this.msgTimestamp.translationY = 45f
+
+                    /**
+                     * Accept and reject buttons setting
+                     */
+                    this.acceptButton?.setOnClickListener {
+                        acceptCallback(this.msgDuration.text.toString().split(":")[0].toDouble()
+                                + this.msgDuration.text.toString().split(":")[0].toDouble() / 60.0, this.position, 1)
+                        this.pendingState?.isGone = true
+                        this.acceptedState?.isGone = false
+                        this.rejectedState?.isGone = true
+                        this.notAvailableState?.isGone = true
+                        this.acceptButton?.isGone = true
+                        this.rejectButton?.isGone = true
+                    }
+                    this.rejectButton?.setOnClickListener {
+                        rejectCallback(this.position, -1)
+                        this.pendingState?.isGone = true
+                        this.acceptedState?.isGone = true
+                        this.rejectedState?.isGone = false
+                        this.notAvailableState?.isGone = true
+                        this.acceptButton?.isGone = true
+                        this.rejectButton?.isGone = true
+                    }
                 }
             }
         }

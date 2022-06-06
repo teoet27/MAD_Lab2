@@ -161,6 +161,9 @@
         <action
             android:id="@+id/action_myChat_to_ShowListTimeslots"
             app:destination="@id/ShowListTimeslots" />
+        <action
+            android:id="@+id/action_myChat_to_activeChats"
+            app:destination="@id/activeChats" />
     </fragment>
     <fragment
         android:id="@+id/activeChats"

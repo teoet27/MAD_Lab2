@@ -11,8 +11,8 @@ class MyChatAdapter(
     listOfMessages: List<MyMessage>,
     private val currentUserID: String,
     private val otherUserID: String,
-    private val acceptCallback: (() -> Unit),
-    private val rejectCallback: (() -> Unit),
+    private val acceptCallback: (Double, Int, Long) -> Unit,
+    private val rejectCallback: (Int, Long) -> Unit,
 ) : RecyclerView.Adapter<MyChatViewHolder>() {
     private val chat: MutableList<MyMessage> = listOfMessages.toMutableList()
 
@@ -60,7 +60,11 @@ class MyChatAdapter(
     }
 
     override fun onBindViewHolder(holder: MyChatViewHolder, position: Int) {
-        holder.bind(chat[position], getItemViewType(position), acceptCallback, rejectCallback)
+        holder.bind(
+            chat[position], getItemViewType(position),
+            ::acceptCallback2, ::rejectCallback2,
+            this.chat[position].propState
+        )
         holder.itemView.setOnClickListener {
             holder.setTimestampVisibility()
         }
@@ -97,5 +101,15 @@ class MyChatAdapter(
     fun addMessage(message: MyMessage) {
         this.chat.add(this.chat.size, message)
         notifyItemInserted(this.chat.size - 1)
+    }
+
+    private fun acceptCallback2(time: Double, position: Int, state: Long) {
+        this.acceptCallback(time, position, state)
+        notifyDataSetChanged()
+    }
+
+    private fun rejectCallback2(position: Int, state: Long) {
+        this.rejectCallback(position, state)
+        notifyDataSetChanged()
     }
 }

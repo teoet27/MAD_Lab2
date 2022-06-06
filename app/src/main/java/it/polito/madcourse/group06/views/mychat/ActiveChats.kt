@@ -41,8 +41,7 @@ class ActiveChats : Fragment() {
         this.noChatMessage = view.findViewById(R.id.noChatTVID)
         this.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        activeChatAdapter = ActiveChatAdapter(listOfActiveChats, myChatViewModel, findNavController())
-
+        activeChatAdapter = ActiveChatAdapter(listOfActiveChats, myChatViewModel, advertisementViewModel, findNavController())
 
         userProfileViewModel.currentUser.observe(viewLifecycleOwner) { currentUser ->
             advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfAdvertisement ->
@@ -89,7 +88,7 @@ class ActiveChats : Fragment() {
                                         break
                                 }
                             }
-                            activeChatAdapter = ActiveChatAdapter(listOfActiveChats, myChatViewModel, findNavController())
+                            activeChatAdapter = ActiveChatAdapter(listOfActiveChats, myChatViewModel, advertisementViewModel, findNavController())
                         }
                         this.noChatMessage.isVisible = this.listOfActiveChats.isEmpty()
                         listOfActiveChats = arrayListOf()

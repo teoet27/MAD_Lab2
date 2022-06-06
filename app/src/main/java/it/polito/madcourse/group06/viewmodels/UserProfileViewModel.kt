@@ -166,52 +166,16 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             }
     }
 
-    /*fun deductCreditFromOtherUser(cost:Double){
-        val updatedUser = _otherUserProfilePH.also { dumbUser ->
-            dumbUser.credit-=cost
-        }
-
-        db
-            .collection("UserProfile")
-            .document(this._otherUserProfilePH.id!!)
-            .update(
-                "id", updatedUser.id,
-                "nickname", updatedUser.nickname,
-                "fullname", updatedUser.fullName,
-                "qualification", updatedUser.qualification,
-                "description", updatedUser.description,
-                "email", updatedUser.email,
-                "phone_number", updatedUser.phoneNumber,
-                "location", updatedUser.location,
-                "skills", updatedUser.skills,
-                "credit", updatedUser.credit,
-                "rating_sum", updatedUser.rating_sum,
-                "n_ratings", updatedUser.n_ratings,
-                "comments_services_rx", updatedUser.comments_services_rx,
-                "comments_services_done", updatedUser.comments_services_done,
-                "img_path", updatedUser.imgPath,
-                "saved_ads_ids", updatedUser.saved_ads_ids
-            )
-            .addOnSuccessListener {
-                Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
-                this._otherUserProfilePH = updatedUser
-                this._pvtOtherUserProfile.value = this._otherUserProfilePH
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
-            }
-    }*/
-
-    fun addCreditToCurrentUser(cost:Double){
-        val updatedUser = _singleUserProfilePH.also { dumbUser ->
-            dumbUser.credit+=cost
+    fun addCreditToCurrentUser(cost: Double) {
+        val updatedUser = _pvtUserProfile.value.also { dumbUser ->
+            dumbUser!!.credit += cost
         }
 
         db
             .collection("UserProfile")
             .document(this._singleUserProfilePH.id!!)
             .update(
-                "id", updatedUser.id,
+                "id", updatedUser!!.id,
                 "nickname", updatedUser.nickname,
                 "fullname", updatedUser.fullName,
                 "qualification", updatedUser.qualification,
@@ -228,15 +192,36 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 "img_path", updatedUser.imgPath,
                 "saved_ads_ids", updatedUser.saved_ads_ids
             )
-            .addOnSuccessListener {
-                Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
-                this._singleUserProfilePH = updatedUser
-                this._pvtUserProfile.value = this._singleUserProfilePH
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
-            }
     }
+
+    fun deductCreditToCurrentUser(cost: Double) {
+        val updatedUser = _pvtUserProfile.value.also { dumbUser ->
+            dumbUser!!.credit -= cost
+        }
+
+        db
+            .collection("UserProfile")
+            .document(this._pvtUserProfile.value?.id!!)
+            .update(
+                "id", updatedUser!!.id,
+                "nickname", updatedUser.nickname,
+                "fullname", updatedUser.fullName,
+                "qualification", updatedUser.qualification,
+                "description", updatedUser.description,
+                "email", updatedUser.email,
+                "phone_number", updatedUser.phoneNumber,
+                "location", updatedUser.location,
+                "skills", updatedUser.skills,
+                "credit", updatedUser.credit,
+                "rating_sum", updatedUser.rating_sum,
+                "n_ratings", updatedUser.n_ratings,
+                "comments_services_rx", updatedUser.comments_services_rx,
+                "comments_services_done", updatedUser.comments_services_done,
+                "img_path", updatedUser.imgPath,
+                "saved_ads_ids", updatedUser.saved_ads_ids
+            )
+    }
+
     /**
      * toUser is an extension function which provide translation from
      * [DocumentSnapshot] to [UserProfile]
@@ -262,7 +247,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             val comments_services_done = this.get("comments_services_done") as ArrayList<String>?
             val imgPath = this.get("img_path") as String
             val savedAdsIDs = this.get("saved_ads_ids") as ArrayList<String>?
-            val listOfChatIDs = this.get("chats_id") as HashMap<String,String>?
+            val listOfChatIDs = this.get("chats_id") as HashMap<String, String>?
             UserProfile(
                 id, nickname, fullname, qualification,
                 description, email, phoneNumber, location, skills, credit,
@@ -293,7 +278,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 this._singleUserProfilePH = UserProfile(
                     null, null, null, null,
                     null, null, null, null, null, 0.0,
-                    0.0, 0.0, ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String,String>()
+                    0.0, 0.0, ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String, String>()
                 )
                 this._pvtUserProfile.value = this._singleUserProfilePH
             }
@@ -318,7 +303,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 this._otherUserProfilePH = UserProfile(
                     null, null, null, null,
                     null, null, null, null, null, 0.0,
-                    0.0, 0.0, ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String,String>()
+                    0.0, 0.0, ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String, String>()
                 )
                 this._pvtOtherUserProfile.value = this._otherUserProfilePH
             }
