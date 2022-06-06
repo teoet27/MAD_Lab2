@@ -73,8 +73,9 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                 setAnimationListener(
                     object : Animation.AnimationListener {
                         override fun onAnimationStart(arg0: Animation) {
-                            backgroundAd.background=resources.getDrawable(R.drawable.transparent_background)
+                            backgroundAd.background = resources.getDrawable(R.drawable.transparent_background)
                         }
+
                         override fun onAnimationRepeat(arg0: Animation) {}
                         override fun onAnimationEnd(arg0: Animation) {
                             activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
@@ -118,7 +119,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                     )
                 }
 
-                }
+            }
 
             this.advTitle.text = singleAdvertisement.advTitle
             this.advAccount.text = singleAdvertisement.advAccount
@@ -176,7 +177,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                         activity?.supportFragmentManager?.beginTransaction()?.remove(frag)
                             ?.commit()
                         Navigation.findNavController(view)
-                            .navigate(R.id.action_ShowListTimeslots_to_myChat,bundleOf("advId" to singleAdvertisement.id))
+                            .navigate(R.id.action_ShowListTimeslots_to_myChat, bundleOf("advId" to singleAdvertisement.id))
                     }
                 }
             }
@@ -188,8 +189,9 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                     setAnimationListener(
                         object : Animation.AnimationListener {
                             override fun onAnimationStart(arg0: Animation) {
-                                backgroundAd.background=resources.getDrawable(R.drawable.transparent_background)
+                                backgroundAd.background = resources.getDrawable(R.drawable.transparent_background)
                             }
+
                             override fun onAnimationRepeat(arg0: Animation) {}
                             override fun onAnimationEnd(arg0: Animation) {
                                 activity?.supportFragmentManager!!.findFragmentByTag("single_timeslot")
@@ -206,7 +208,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
     }
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
-        val anim=AnimationUtils.loadAnimation(requireActivity(),R.anim.slide_in_up)
+        val anim = AnimationUtils.loadAnimation(requireActivity(), R.anim.slide_in_up)
         anim.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation) {
                 // additional functionality
@@ -218,7 +220,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
 
             override fun onAnimationEnd(animation: Animation) {
                 // additional functionality
-                backgroundAd.background=resources.getDrawable(R.drawable.semi_transparent_background)
+                backgroundAd.background = resources.getDrawable(R.drawable.semi_transparent_background)
             }
         })
         return anim
