@@ -58,9 +58,9 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private val selectedSkillsList: ArrayList<String> = arrayListOf()
     private var timeDuration:Double?=null
     private val now =(SimpleDateFormat("HH:mm").format(Date())).split(":")
-    private var timeStartingHour: Int = now[0].toInt()
+    private var timeStartingHour: Int = now[0].toInt()-1
     private var timeStartingMinute: Int = now[1].toInt()
-    private var timeEndingHour: Int = now[0].toInt()
+    private var timeEndingHour: Int = now[0].toInt()-1
     private var timeEndingMinute: Int = now[1].toInt()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
