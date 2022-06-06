@@ -10,6 +10,7 @@
     <color name="prussian_blue">#003153</color>
     <color name="dark_prussian_blue">#00192B</color>
     <color name="orange_poli">#fc7a08</color>
+    <color name="orange_deactivated_poli">#FFB473</color>
     <color name="darkGray">#333533</color>
     <color name="lightGray">#EEE</color>
     <color name="red_deleting">#8E0F06</color>

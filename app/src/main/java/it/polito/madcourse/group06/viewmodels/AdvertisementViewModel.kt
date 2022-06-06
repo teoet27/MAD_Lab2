@@ -133,6 +133,15 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             .addOnFailureListener {
                 Toast.makeText(context, "Deletion failed.", Toast.LENGTH_SHORT).show()
             }
+
+        db
+            .collection("Chat")
+            .whereEqualTo("adv_id", id)
+            .addSnapshotListener { value, error ->
+                if(error != null)
+                    throw Exception()
+                for (adv in value!!.documents) { adv.reference.delete() }
+            }
     }
 
     /**
@@ -268,7 +277,8 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "rating_user_id" to ad.ratingUserId,
                     "active_at" to ad.activeAt,
                     "active_for" to ad.activeFor,
-                    "active_location" to ad.activeLocation)
+                    "active_location" to ad.activeLocation
+                )
             )
             .addOnSuccessListener {
                 Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
