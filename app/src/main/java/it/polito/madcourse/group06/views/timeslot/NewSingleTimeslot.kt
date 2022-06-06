@@ -53,14 +53,15 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private var accountID: String = ""
     private lateinit var skillsChipGroup: ChipGroup
     private lateinit var addNewSkillChip: Chip
-    private var timeStartingHour: Int = 0
-    private var timeStartingMinute: Int = 0
-    private var timeEndingHour: Int = 0
-    private var timeEndingMinute: Int = 0
     private var newSkillTitleLabel: String = ""
     private lateinit var skillList: ArrayList<String>
     private val selectedSkillsList: ArrayList<String> = arrayListOf()
-    private var timeDuration=0.0
+    private var timeDuration:Double?=null
+    private val now =(SimpleDateFormat("HH:mm").format(Date())).split(":")
+    private var timeStartingHour: Int = now[0].toInt()
+    private var timeStartingMinute: Int = now[1].toInt()
+    private var timeEndingHour: Int = now[0].toInt()
+    private var timeEndingMinute: Int = now[1].toInt()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -184,8 +185,16 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         ).show()
                     } else if (!isTimeDifferenceOk) {
                         Snackbar.make(
-                            requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_SHORT
+                            requireView(),
+                            "Error: the starting time must be before the ending time. Try again.",
+                            Snackbar.LENGTH_SHORT
                         ).show()
+                    }
+                    else if(timeDuration==null){Snackbar.make(
+                        requireView(),
+                        "Error: a duration for your service must be indicated.",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                     } else if (isAdvValid()) {
                         advertisementViewModel.insertAdvertisement(
                             Advertisement(
@@ -198,7 +207,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                                 chosenDate,
                                 newStartingTime.text.toString(),
                                 newEndingTime.text.toString(),
-                                timeDuration,
+                                timeDuration!!,
                                 accountName,
                                 accountID,
                                 null,
@@ -418,7 +427,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             timeBox.text = String.format(Locale.getDefault(), "%02d:%02d", timeEndingHour, timeEndingMinute)
         }
 
-        val timePickerDialog: TimePickerDialog = TimePickerDialog(this.context, onTimeSetListener, timeEndingHour, timeEndingMinute, true)
+        val timePickerDialog: TimePickerDialog = TimePickerDialog(this.context, onTimeSetListener, timeStartingHour, timeStartingMinute, true)
         timePickerDialog.setTitle("Select time")
         timePickerDialog.show()
     }
@@ -433,10 +442,10 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             computeTimeDifference(newStartingTime.text.toString(),newEndingTime.text.toString()).first.also{maxDuration->
                 timeDuration= min((selectedHour.toDouble()+selectedMinute.toDouble()/60),if(maxDuration>0) maxDuration else 25.0)
             }
-            timeBox.text = String.format(Locale.getDefault(), "%d h %d min", floor(timeDuration).toInt(), ((timeDuration-floor(timeDuration))*60).toInt())
+            timeBox.text = String.format(Locale.getDefault(), "%d h %d min", floor(timeDuration!!).toInt(), ((timeDuration!!-floor(timeDuration!!))*60).toInt())
         }
         val timePickerDialog: TimePickerDialog = TimePickerDialog(this.context, onTimeSetListener,
-            floor(timeDuration).toInt(), ((timeDuration-floor(timeDuration))*60).toInt(), true)
+            0,0, true)
         timePickerDialog.setTitle("Select Duration")
         timePickerDialog.show()
     }
