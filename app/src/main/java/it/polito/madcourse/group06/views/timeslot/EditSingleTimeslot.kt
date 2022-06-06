@@ -58,12 +58,13 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     private lateinit var accountID: String
     private lateinit var confirmButton: Button
     private lateinit var discardButton: Button
-    private var timeStartingHour: Int = 0
-    private var timeStartingMinute: Int = 0
-    private var timeEndingHour: Int = 0
-    private var timeEndingMinute: Int = 0
     private var selectedSkillsList: ArrayList<String> = arrayListOf()
-    private var timeDuration=0.0
+    private var timeDuration:Double?=null
+    private val now =(SimpleDateFormat("HH:mm").format(Date())).split(":")
+    private var timeStartingHour: Int = now[0].toInt()
+    private var timeStartingMinute: Int = now[1].toInt()
+    private var timeEndingHour: Int = now[0].toInt()
+    private var timeEndingMinute: Int = now[1].toInt()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -232,6 +233,12 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             Snackbar.make(
                                 requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_LONG
                             ).show()
+
+                        } else if(timeDuration==null){
+                            Snackbar.make(
+                                requireView(), "Error: a duration for your service must be indicated.",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
                         } else if (isAdvValid()) {
                             dumbAdvertisement.advTitle = advTitle.text.toString()
                             dumbAdvertisement.advLocation = advLocation.text.toString()
@@ -240,7 +247,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             dumbAdvertisement.advDate = chosenDate
                             dumbAdvertisement.advStartingTime = advStartingTime.text.toString()
                             dumbAdvertisement.advEndingTime = advEndingTime.text.toString()
-                            dumbAdvertisement.advDuration = timeDuration
+                            dumbAdvertisement.advDuration = timeDuration!!
                             dumbAdvertisement.listOfSkills = selectedSkillsList
                             advertisementViewModel.editAdvertisement(dumbAdvertisement)
                             sharedViewModel.updateSearchState()
@@ -451,7 +458,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
             timeBox.text = String.format(Locale.getDefault(), "%02d:%02d", timeEndingHour, timeEndingMinute)
         }
 
-        val timePickerDialog: TimePickerDialog = TimePickerDialog(this.context, onTimeSetListener, timeEndingHour, timeEndingMinute, true)
+        val timePickerDialog: TimePickerDialog = TimePickerDialog(this.context, onTimeSetListener, timeStartingHour, timeStartingMinute, true)
         timePickerDialog.setTitle("Select time")
         timePickerDialog.show()
     }
@@ -466,10 +473,9 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
             computeTimeDifference(advStartingTime.text.toString(),advEndingTime.text.toString()).first.also{maxDuration->
                 timeDuration= min((selectedHour.toDouble()+selectedMinute.toDouble()/60), if(maxDuration>0) maxDuration else 25.0)
             }
-            timeBox.text = String.format(Locale.getDefault(), "%d h %d min", floor(timeDuration).toInt(), ((timeDuration-floor(timeDuration))*60).toInt())
+            timeBox.text = String.format(Locale.getDefault(), "%d h %d min", floor(timeDuration!!).toInt(), ((timeDuration!!-floor(timeDuration!!))*60).toInt())
         }
-        val timePickerDialog: TimePickerDialog = TimePickerDialog(this.context, onTimeSetListener,
-            floor(timeDuration).toInt(), ((timeDuration- floor(timeDuration) *60).toInt()), true)
+        val timePickerDialog: TimePickerDialog = TimePickerDialog(this.context, onTimeSetListener,0,0, true)
         timePickerDialog.setTitle("Select Duration")
         timePickerDialog.show()
     }
