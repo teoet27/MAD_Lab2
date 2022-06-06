@@ -98,7 +98,7 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
             drawerLayout.closeDrawer(GravityCompat.START)
 
             //Remove fragments which are left open by navigating with drawer
-            for (tag in listOf("single_timeslot","other_user_profile","filter_window")) {
+            for (tag in listOf("single_timeslot","other_user_profile","filter_window","comment_fragment","rating_fragment")) {
                 supportFragmentManager.findFragmentByTag(tag)
                     ?.let { frag -> supportFragmentManager.beginTransaction().remove(frag).commit() }
             }
