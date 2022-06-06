@@ -17,6 +17,7 @@ import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
+import org.w3c.dom.Text
 
 
 class ShowMyProfileFragment : Fragment() {
@@ -116,6 +117,13 @@ class ShowMyProfileFragment : Fragment() {
             this.credit.text = userProfile.credit.toInt().toString()
         }
 
+        view.findViewById<TextView>(R.id.profileCredit).setOnClickListener {
+            Toast.makeText(context, "Credits are the TimeBanking currency and they are used as payment for services. 1 credit is equivalent to 15 minutes worth of work.", Toast.LENGTH_LONG).show()
+        }
+        view.findViewById<ImageView>(R.id.profileCreditSymbol).setOnClickListener {
+            Toast.makeText(context, "Credits are the TimeBanking currency and they are used as payment for services. 1 credit is equivalent to 15 minutes worth of work.", Toast.LENGTH_LONG).show()
+        }
+
         // Check this option to open onCreateOptionsMenu method
         setHasOptionsMenu(true)
 
@@ -124,9 +132,6 @@ class ShowMyProfileFragment : Fragment() {
                 findNavController().navigate(R.id.action_showMyProfileFragment_to_ShowListOfServices)
             }
         })
-
-        // check this option to open onCreateOptionsMenu method
-        setHasOptionsMenu(true)
     }
 
     /**
