@@ -125,7 +125,7 @@ class MyChat : Fragment() {
             this.chatID = it.chatID
             this.listOfMessages = it.chatContent
             this.hasChatEnded = it.hasEnded
-            if (this.hasChatEnded) { switchToDoneMode() }
+            if (it.hasEnded) { switchToDoneMode() }
         }
 
         this.sendMessageButton.setOnClickListener {
@@ -216,8 +216,10 @@ class MyChat : Fragment() {
 
         this.backArrow.setOnClickListener {
             if (fromWhere == 0 /*from the show single advertisement*/) {
+                myChatViewModel.onBackReset()
                 findNavController().navigate(R.id.action_myChat_to_ShowListOfServices)
             } else if (fromWhere == 1 /*from the mychat menu*/) {
+                myChatViewModel.onBackReset()
                 findNavController().navigate(R.id.action_myChat_to_activeChats)
             }
             activityTB.supportActionBar?.show()
@@ -236,8 +238,10 @@ class MyChat : Fragment() {
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (fromWhere == 0 /*from the show single advertisement*/) {
+                    myChatViewModel.onBackReset()
                     findNavController().navigate(R.id.action_myChat_to_ShowListOfServices)
                 } else if (fromWhere == 1 /*from the mychat menu*/) {
+                    myChatViewModel.onBackReset()
                     findNavController().navigate(R.id.action_myChat_to_activeChats)
                 }
                 activityTB.supportActionBar?.show()
