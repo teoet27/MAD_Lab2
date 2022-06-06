@@ -71,7 +71,8 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
                 R.id.ShowListTimeslots,
                 R.id.ShowListOfServices,
                 R.id.showMyProfileFragment,
-                R.id.newProfileFragment
+                R.id.newProfileFragment,
+                R.id.activeChats
             ), drawerLayout
         )
         // setup navigation drawer
