@@ -3,7 +3,7 @@ package it.polito.madcourse.group06.models.mychat
 import androidx.room.Entity
 import com.google.firebase.firestore.PropertyName
 
-@Entity(tableName = "mychatTable")
+@Entity(tableName = "myChatTable")
 data class MyMessage (
     @get:PropertyName("sender_id")
     @set:PropertyName("sender_id")
@@ -35,5 +35,15 @@ data class MyMessage (
 
     @get:PropertyName("is_an_offer")
     @set:PropertyName("is_an_offer")
-    var isAnOffer: Boolean
+    var isAnOffer: Boolean,
+
+    /**
+     * -1: rejected
+     * 0: pending
+     * 1: accepted
+     * 2: not available
+     */
+    @get:PropertyName("prop_state")
+    @set:PropertyName("prop_state")
+    var propState: Long
 )

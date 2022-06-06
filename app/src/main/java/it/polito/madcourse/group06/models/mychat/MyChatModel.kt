@@ -23,5 +23,9 @@ data class MyChatModel(
 
     @get:PropertyName("adv_id")
     @set:PropertyName("adv_id")
-    var advID: String
+    var advID: String,
+
+    @get:PropertyName("has_ended")
+    @set:PropertyName("has_ended")
+    var hasEnded: Boolean
 )

@@ -1,18 +1,15 @@
 package it.polito.madcourse.group06.views.mychat
 
 import android.app.TimePickerDialog
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -56,6 +53,8 @@ class MyChat : Fragment() {
     private lateinit var myStartingTime: TextView
     private lateinit var myDuration: TextView
     private lateinit var sendProposalButton: ImageView
+    private var hasChatEnded = false
+    private var fromWhere = 0
     private var startingTimeHourProposal = 0
     private var startingTimeMinuteProposal = 0
     private var durationTimeProposal = 0.0
@@ -63,10 +62,12 @@ class MyChat : Fragment() {
     private var currentID = ""
     private var otherID = ""
     private var otherCredit = 0.0
+    private var myCredit = 0.0
     private var chatID = ""
     private var chatMenuArrowStartingPositionY = 0.0f
     private var chatMenuArrowStartingPositionX = 0.0f
     private var isAnswerMenuOpen = false
+    private var isCurrentUserTheOwner = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -100,13 +101,18 @@ class MyChat : Fragment() {
         this.chatMenuArrowStartingPositionY = this.chatArrowUpButton.y
         this.chatMenuArrowStartingPositionX = this.chatArrowUpButton.x
 
-        arguments?.getString("advId")?.also { advId ->
-            advertisementViewModel.fetchSingleAdvertisementById(advId)//TODO: necessario?
+        arguments?.getString("fromWhere")?.also { fromWhere ->
+            this.fromWhere = fromWhere.toInt()
         }
 
-        userProfileViewModel.currentUser.observe(viewLifecycleOwner) {
-            this.currentID = it.id!!
+        userProfileViewModel.currentUser.observe(viewLifecycleOwner) { user ->
+            this.currentID = user.id!!
+            this.myCredit = user.credit
+            advertisementViewModel.advertisement.observe(viewLifecycleOwner) { adv ->
+                this.isCurrentUserTheOwner = adv.id == this.currentID
+            }
         }
+
         myChatViewModel.chattingUser.observe(viewLifecycleOwner) {
             this.chatFullname.text = it.fullName
             this.chatNickname.text = "@${it.nickname}"
@@ -114,9 +120,12 @@ class MyChat : Fragment() {
             this.otherID = it.id!!
             this.otherCredit = it.credit
         }
+
         myChatViewModel.myCurrentChat.observe(viewLifecycleOwner) {
             this.chatID = it.chatID
             this.listOfMessages = it.chatContent
+            this.hasChatEnded = it.hasEnded
+            if (this.hasChatEnded) { switchToDoneMode() }
         }
 
         this.sendMessageButton.setOnClickListener {
@@ -131,7 +140,7 @@ class MyChat : Fragment() {
                     SimpleDateFormat(
                         "dd/MM/yyyy hh:mm",
                         Locale.getDefault()
-                    ).format(Date()).toString(), false
+                    ).format(Date()).toString(), false, 0
                 )
                 this.listOfMessages.add(msg)
                 myChatViewModel.addNewMessage(this.chatID, this.listOfMessages)
@@ -169,7 +178,7 @@ class MyChat : Fragment() {
                     SimpleDateFormat(
                         "dd/MM/yyyy hh:mm",
                         Locale.getDefault()
-                    ).format(Date()).toString(), true
+                    ).format(Date()).toString(), true, 0
                 )
                 this.listOfMessages.add(msg)
                 myChatViewModel.addNewMessage(this.chatID, this.listOfMessages)
@@ -206,13 +215,17 @@ class MyChat : Fragment() {
         }
 
         this.backArrow.setOnClickListener {
-            findNavController().navigate(R.id.action_myChat_to_ShowListOfServices)
+            if (fromWhere == 0 /*from the show single advertisement*/) {
+                findNavController().navigate(R.id.action_myChat_to_ShowListOfServices)
+            } else if (fromWhere == 1 /*from the mychat menu*/) {
+                findNavController().navigate(R.id.action_myChat_to_activeChats)
+            }
             activityTB.supportActionBar?.show()
         }
 
         myChatViewModel.myCurrentChat.observe(viewLifecycleOwner) { chat ->
             this.emptyChatMessage.isVisible = chat.chatContent.isEmpty()
-            chatAdapterCard = MyChatAdapter(chat.chatContent, currentID, otherID, { acceptProposal() }, { rejectProposal() })
+            chatAdapterCard = MyChatAdapter(chat.chatContent, currentID, otherID, ::acceptProposal, ::rejectProposal)
 
             val linearLayoutManager = LinearLayoutManager(this.context)
             linearLayoutManager.stackFromEnd = true
@@ -222,25 +235,14 @@ class MyChat : Fragment() {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_myChat_to_ShowListOfServices)
+                if (fromWhere == 0 /*from the show single advertisement*/) {
+                    findNavController().navigate(R.id.action_myChat_to_ShowListOfServices)
+                } else if (fromWhere == 1 /*from the mychat menu*/) {
+                    findNavController().navigate(R.id.action_myChat_to_activeChats)
+                }
                 activityTB.supportActionBar?.show()
             }
         })
-    }
-
-    /**
-     * This permits having the right-to-left animation
-     */
-    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
-        val anim = AnimationUtils.loadAnimation(requireActivity(), R.anim.slide_in_from_right)
-        anim.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation) {}
-            override fun onAnimationRepeat(animation: Animation) {}
-            override fun onAnimationEnd(animation: Animation) {
-                view?.findViewById<ConstraintLayout>(R.id.filterBackground)?.background = resources.getDrawable(R.drawable.semi_transparent_background)
-            }
-        })
-        return anim
     }
 
     private fun openNewProposal() {
@@ -326,37 +328,52 @@ class MyChat : Fragment() {
     }
 
     //TODO: per vivi, collegare il codice a questa funzione
-    private fun acceptProposal() {
-        /*hoursToCredit(durationTimeProposal).also { cost ->
+    private fun acceptProposal(duration: Double, messageID: Int, messageState: Long) {
+        val cost = hoursToCredit(duration)
+        if (!this.isCurrentUserTheOwner) {
+            if (this.myCredit >= cost) {
+                myChatViewModel.addCreditToChattingUser(cost.toDouble())
+                userProfileViewModel.deductCreditToCurrentUser(cost.toDouble())
+                myChatViewModel.setProposalState(messageID, messageState)
+                myChatViewModel.concludeChat()
+                activateTimeslot()
+                switchToDoneMode()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "You can't afford to pay for this.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        } else {
             if (this.otherCredit >= cost) {
                 myChatViewModel.deductCreditFromChattingUser(cost.toDouble())
                 userProfileViewModel.addCreditToCurrentUser(cost.toDouble())
                 activateTimeslot()
+                switchToDoneMode()
             } else {
-                Toast.makeText(requireContext(),
-                    "No enough credits!",
-                    Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    requireContext(),
+                    "${this.chatFullname} can't afford to pay for this.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
-        }*/
+        }
 
-        /**
-         * UI/UX feedback
-         */
-        switchToDoneMode()
     }
 
-    private fun rejectProposal() {
-        // TODO: implements
+    private fun rejectProposal(messageID: Int, messageState: Long) {
+        myChatViewModel.setProposalState(messageID, messageState)
     }
 
     private fun activateTimeslot() {
         // TODO: checks
-        advertisementViewModel.activateAdvertisement(
+        /*advertisementViewModel.activateAdvertisement(
             this.currentID,
             "${this.startingTimeHourProposal}:${this.startingTimeMinuteProposal}",
             this.durationTimeProposal,
             this.myLocation.text.toString()
-        )
+        )*/
         // TODO: all the other proposal must be deactivated
     }
 
@@ -385,7 +402,7 @@ class MyChat : Fragment() {
      * @param timeBox reference to the TextView of the starting time
      */
     private fun popTimePickerStarting(timeBox: TextView) {
-        val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
+        val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { _, selectedHour, selectedMinute ->
             startingTimeHourProposal = selectedHour
             startingTimeMinuteProposal = selectedMinute
             timeBox.text = String.format(Locale.getDefault(), "%02d:%02d", startingTimeHourProposal, startingTimeMinuteProposal)
@@ -401,11 +418,11 @@ class MyChat : Fragment() {
      * @param timeBox reference to the TextView of the duration
      */
     private fun popTimePickerDuration(timeBox: TextView) {
-        val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
+        val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { _, selectedHour, selectedMinute ->
             durationTimeProposal = selectedHour.toDouble() + selectedMinute.toDouble() / 60
             timeBox.text = String.format(Locale.getDefault(), "%d h %d min", selectedHour, selectedMinute)
         }
-        val timePickerDialog: TimePickerDialog = TimePickerDialog(
+        val timePickerDialog = TimePickerDialog(
             this.context, onTimeSetListener,
             floor(durationTimeProposal).toInt(), ((durationTimeProposal - floor(durationTimeProposal)) * 60).toInt(), true
         )
@@ -422,8 +439,8 @@ class MyChat : Fragment() {
      * @return a Pair<Float, Boolean> where it's specified the time difference and its acceptability
      */
     private fun computeTimeDifference(startingTime: String, endingTime: String): Pair<Double, Boolean> {
-        var timeDifference: Double = 0.0
-        if (startingTime.isNullOrEmpty() || endingTime.isNullOrEmpty()) {
+        var timeDifference = 0.0
+        if (startingTime.isEmpty() || endingTime.isEmpty()) {
             return Pair(-1.0, false)
         }
         val startingHour = startingTime.split(":")[0].toInt()

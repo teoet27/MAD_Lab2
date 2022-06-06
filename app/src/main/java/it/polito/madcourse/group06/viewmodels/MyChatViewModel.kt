@@ -1,16 +1,12 @@
 package it.polito.madcourse.group06.viewmodels
 
 import android.app.Application
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.storage.FirebaseStorage
-import it.polito.madcourse.group06.models.advertisement.Advertisement
 import it.polito.madcourse.group06.models.mychat.MyChatModel
 import it.polito.madcourse.group06.models.mychat.MyMessage
 import it.polito.madcourse.group06.models.userprofile.UserProfile
@@ -35,7 +31,7 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
     /**
      * [MyChatModel] live data
      */
-    private var _myChatPH = MyChatModel("", "", "", arrayListOf(), "-1")
+    private var _myChatPH = MyChatModel("", "", "", arrayListOf(), "-1", false)
     private val _pvtMyChat = MutableLiveData<MyChatModel>().also { it.value = _myChatPH }
     val myCurrentChat: LiveData<MyChatModel> = this._pvtMyChat
 
@@ -90,9 +86,10 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
                     "other_user_id" to otherUserID,
                     "chat_content" to mutableListOf<MyMessage>(),
                     "adv_id" to advID,
+                    "progress" to false
                 )
             )
-        this._myChatPH = MyChatModel(chatID, currentUserID, otherUserID, arrayListOf(), advID)
+        this._myChatPH = MyChatModel(chatID, currentUserID, otherUserID, arrayListOf(), advID, false)
         this._pvtMyChat.value = this._myChatPH
     }
 
@@ -107,7 +104,7 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
                     this.createNewChat(advertisementID, currentUserID, otherUserID)
                 } else {
                     query.documents[0].also { docSnap ->
-                        this._myChatPH = docSnap.toMyChatModel() ?: MyChatModel("", "", "", arrayListOf(), "")
+                        this._myChatPH = docSnap.toMyChatModel() ?: MyChatModel("", "", "", arrayListOf<MyMessage>(), "", false)
                         this._pvtMyChat.value = this._myChatPH
                     }
                 }
@@ -119,6 +116,7 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
             .collection("Chat")
             .document(chatID)
             .update(
+                "chat_id", chatID,
                 "chat_content", messages
             )
             .addOnSuccessListener {
@@ -130,21 +128,21 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
     private fun DocumentSnapshot.toMyChatModel(): MyChatModel? {
         return try {
             val advID = this.get("adv_id") as String
-            val chatContent: ArrayList<MyMessage>? = (this.get("chat_content") as ArrayList<HashMap<Any, Any>>)
-                .toMyMessageArray()
+            val chatContent: ArrayList<MyMessage>? = (this.get("chat_content") as ArrayList<HashMap<Any, Any>>).toMyMessageArray()
             val chatID = this.get("chat_id") as String
             val currentID = this.get("user_id") as String
             val otherUserID = this.get("other_user_id") as String
-            MyChatModel(chatID, currentID, otherUserID, chatContent!!, advID)
+            val progress = this.get("has_ended") as Boolean
+            MyChatModel(chatID, currentID, otherUserID, chatContent!!, advID, progress)
         } catch (e: Exception) {
             null
         }
     }
 
     private fun ArrayList<HashMap<Any, Any>>.toMyMessageArray(): ArrayList<MyMessage> {
-        val out: ArrayList<MyMessage> = ArrayList()
+        val out: ArrayList<MyMessage> = arrayListOf()
         for (value in this) {
-            val myMessage = MyMessage("", "", "", "", "", 0.0, "", false)
+            val myMessage = MyMessage("", "", "", "", "", 0.0, "", false, 2)
             myMessage.senderID = value["sender_id"] as String
             myMessage.receiverID = value["receiver_id"] as String
             myMessage.msg = value["msg"] as String
@@ -153,9 +151,38 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
             myMessage.duration = value["duration"] as Double
             myMessage.timestamp = value["timestamp"] as String
             myMessage.isAnOffer = value["is_an_offer"] as Boolean
+            myMessage.propState = value["prop_state"] as Long
             out.add(myMessage)
         }
         return out
+    }
+
+    fun addCreditToChattingUser(cost: Double) {
+        val updatedUser = _pvtChattingUser.value.also { dumbUser ->
+            dumbUser!!.credit += cost
+        }
+
+        db
+            .collection("UserProfile")
+            .document(this._pvtChattingUser.value?.id!!)
+            .update(
+                "id", updatedUser!!.id,
+                "nickname", updatedUser.nickname,
+                "fullname", updatedUser.fullName,
+                "qualification", updatedUser.qualification,
+                "description", updatedUser.description,
+                "email", updatedUser.email,
+                "phone_number", updatedUser.phoneNumber,
+                "location", updatedUser.location,
+                "skills", updatedUser.skills,
+                "credit", updatedUser.credit,
+                "rating_sum", updatedUser.rating_sum,
+                "n_ratings", updatedUser.n_ratings,
+                "comments_services_rx", updatedUser.comments_services_rx,
+                "comments_services_done", updatedUser.comments_services_done,
+                "img_path", updatedUser.imgPath,
+                "saved_ads_ids", updatedUser.saved_ads_ids
+            )
     }
 
     fun deductCreditFromChattingUser(cost: Double) {
@@ -183,15 +210,33 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
                 "img_path", updatedUser.imgPath,
                 "saved_ads_ids", updatedUser.saved_ads_ids
             )
-            .addOnSuccessListener {
-                Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Edit failed.", Toast.LENGTH_SHORT).show()
+    }
+
+    fun concludeChat() {
+        db
+            .collection("Chat")
+            .document(this._pvtMyChat.value?.chatID!!)
+            .get()
+            .addOnSuccessListener { doc ->
+                val chat = doc.toMyChatModel()
+                chat!!.hasEnded = true
+                doc.reference.update("has_ended", chat.hasEnded)
+                this._myChatPH.hasEnded = true
+                this._pvtMyChat.value = this._myChatPH
             }
     }
 
-    fun deactivateProposal(chatID: String, position: Int) {
-        // TODO: implement method
+    fun setProposalState(messageID: Int, messageState: Long) {
+        db
+            .collection("Chat")
+            .document(this._pvtMyChat.value?.chatID!!)
+            .get()
+            .addOnSuccessListener { doc ->
+                val chat = doc.toMyChatModel()
+                val messages = chat!!.chatContent
+                messages[messageID].propState = messageState
+                doc.reference.update("chat_content", messages)
+            }
     }
+
 }
