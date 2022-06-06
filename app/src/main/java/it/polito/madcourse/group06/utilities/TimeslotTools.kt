@@ -176,37 +176,6 @@ fun hoursToCredit(hours: Double): Int {
     return round(hours * 4).toInt()
 }
 
-//Useful extension functions
-fun Boolean.toInt() = if (this) 1 else 0
-
-fun Advertisement.isAvailable(): Boolean {
-    return this.rxUserId.isNullOrEmpty() && this.ratingUserId.isNullOrEmpty() && !this.isExpired()
-}
-
-fun Advertisement.isEnded(): Boolean {
-    return this.rxUserId.isNullOrEmpty() && this.ratingUserId.isNullOrEmpty() && !this.activeAt.isNullOrEmpty()
-}
-
-fun Advertisement.isExpired(): Boolean {
-    return ((timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())) >= timeStringToDoubleHour(advEndingTime)
-            && this.advDate == SimpleDateFormat("dd/MM/yyyy").format(Date()))
-            || (computeDateDifference(SimpleDateFormat("dd/MM/yyyy").format(Date()), this.advDate).first < 0))
-}
-
-fun Advertisement.isToBeRated(): Boolean {
-    return if (!activeAt.isNullOrEmpty()) {
-        (timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())) >= timeStringToDoubleHour(
-            activeAt!!
-        ) + activeFor
-                && this.advDate == SimpleDateFormat("dd/MM/yyyy").format(Date())
-                || (computeDateDifference(
-            SimpleDateFormat("dd/MM/yyyy").format(Date()),
-            this.advDate
-        ).first < 0))
-    } else {
-        false
-    }
-}
 
 fun dateListToString(date: String): String {
     val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Date())
@@ -257,3 +226,36 @@ fun intToMonth(n: Int): String {
     }
 }
 
+
+
+//Useful extension functions
+fun Boolean.toInt() = if (this) 1 else 0
+
+fun Advertisement.isAvailable(): Boolean {
+    return this.rxUserId.isNullOrEmpty() && this.ratingUserId.isNullOrEmpty() && !this.isExpired()
+}
+
+fun Advertisement.isEnded(): Boolean {
+    return this.rxUserId.isNullOrEmpty() && this.ratingUserId.isNullOrEmpty() && !this.activeAt.isNullOrEmpty()
+}
+
+fun Advertisement.isExpired(): Boolean {
+    return ((timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())) >= timeStringToDoubleHour(advEndingTime)
+            && this.advDate == SimpleDateFormat("dd/MM/yyyy").format(Date()))
+            || (computeDateDifference(SimpleDateFormat("dd/MM/yyyy").format(Date()), this.advDate).first < 0))
+}
+
+fun Advertisement.isToBeRated(): Boolean {
+    return if (!activeAt.isNullOrEmpty()) {
+        (timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())) >= timeStringToDoubleHour(
+            activeAt!!
+        ) + activeFor
+                && this.advDate == SimpleDateFormat("dd/MM/yyyy").format(Date())
+                || (computeDateDifference(
+            SimpleDateFormat("dd/MM/yyyy").format(Date()),
+            this.advDate
+        ).first < 0))
+    } else {
+        false
+    }
+}
