@@ -95,6 +95,7 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                     isMine = true
                     this.editButton.setImageResource(R.drawable.ic_edit_black_24dp)
                 } else {
+                    this.advAccount.paintFlags = this.advAccount.paintFlags or Paint.UNDERLINE_TEXT_FLAG
                     userProfileViewModel.fetchUserProfileById(singleAdvertisement.accountID)
                     userProfileViewModel.otherUser.observe(viewLifecycleOwner) {
                         myChatViewModel.setChattingUserProfile(it)
@@ -172,8 +173,6 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
             }
         }
 
-        this.advAccount.setPaintFlags(this.advAccount.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
-
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_down).apply {
@@ -195,7 +194,6 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                 }
             }
         })
-
     }
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
