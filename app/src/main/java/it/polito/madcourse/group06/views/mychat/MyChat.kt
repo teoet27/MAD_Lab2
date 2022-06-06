@@ -353,6 +353,8 @@ class MyChat : Fragment() {
             if (this.otherCredit >= cost) {
                 myChatViewModel.deductCreditFromChattingUser(cost.toDouble())
                 userProfileViewModel.addCreditToCurrentUser(cost.toDouble())
+                myChatViewModel.setProposalState(messageID, messageState)
+                myChatViewModel.concludeChat()
                 switchToDoneMode()
             } else {
                 Toast.makeText(
