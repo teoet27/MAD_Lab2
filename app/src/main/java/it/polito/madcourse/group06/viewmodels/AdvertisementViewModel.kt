@@ -197,7 +197,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                         "rating_user_id" to ad.ratingUserId,
                         "active_at" to ad.activeAt,
                         "active_for" to ad.activeFor,
-                        "activate_location" to ad.activeLocation
+                        "active_location" to ad.activeLocation
                     )
                 )
         }
