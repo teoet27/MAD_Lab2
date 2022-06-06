@@ -371,14 +371,12 @@ class MyChat : Fragment() {
     }
 
     private fun activateTimeslot() {
-        // TODO: checks
-        /*advertisementViewModel.activateAdvertisement(
+        advertisementViewModel.activateAdvertisement(
             this.currentID,
             "${this.startingTimeHourProposal}:${this.startingTimeMinuteProposal}",
             this.durationTimeProposal,
             this.myLocation.text.toString()
-        )*/
-        // TODO: all the other proposal must be deactivated
+        )
     }
 
     /**
