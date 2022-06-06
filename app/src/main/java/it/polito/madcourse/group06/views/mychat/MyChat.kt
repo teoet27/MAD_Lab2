@@ -331,7 +331,6 @@ class MyChat : Fragment() {
         this.myDuration.text = ""
     }
 
-    //TODO: per vivi, collegare il codice a questa funzione
     private fun acceptProposal(duration: Double, messageID: Int, messageState: Long) {
         val cost = hoursToCredit(duration)
         activateTimeslot()
