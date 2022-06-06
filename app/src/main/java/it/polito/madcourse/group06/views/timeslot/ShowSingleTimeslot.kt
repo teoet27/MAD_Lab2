@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -109,7 +110,15 @@ class ShowSingleTimeslot : Fragment(R.layout.time_slot_details_fragment) {
                         activity?.supportFragmentManager?.beginTransaction()?.add(R.id.nav_host_fragment_content_main, ShowProfileOtherFragment(), "other_user_profile")?.commit()
                     }
                 }
-            }
+
+                if (!singleAdvertisement.rxUserId.isNullOrEmpty() && !singleAdvertisement.ratingUserId.isNullOrEmpty()) {
+                    this.editButton.backgroundTintList = AppCompatResources.getColorStateList(
+                        requireContext(),
+                        R.color.orange_deactivated_poli
+                    )
+                }
+
+                }
 
             this.advTitle.text = singleAdvertisement.advTitle
             this.advAccount.text = singleAdvertisement.advAccount
