@@ -109,7 +109,7 @@ class MyChat : Fragment() {
             this.currentID = user.id!!
             this.myCredit = user.credit
             advertisementViewModel.advertisement.observe(viewLifecycleOwner) { adv ->
-                this.isCurrentUserTheOwner = adv.id == this.currentID
+                this.isCurrentUserTheOwner = adv.accountID == this.currentID
             }
         }
 
@@ -404,8 +404,8 @@ class MyChat : Fragment() {
      */
     private fun popTimePickerStarting(timeBox: TextView) {
         val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { _, selectedHour, selectedMinute ->
-            startingTimeHourProposal = selectedHour
-            startingTimeMinuteProposal = selectedMinute
+            this.startingTimeHourProposal = selectedHour
+            this.startingTimeMinuteProposal = selectedMinute
             timeBox.text = String.format(Locale.getDefault(), "%02d:%02d", startingTimeHourProposal, startingTimeMinuteProposal)
         }
         val timePickerDialog = TimePickerDialog(this.context, onTimeSetListener, startingTimeHourProposal, startingTimeMinuteProposal, true)
