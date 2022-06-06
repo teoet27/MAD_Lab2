@@ -239,4 +239,8 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
             }
     }
 
+    fun onBackReset() {
+        this._pvtMyChat.value!!.hasEnded = false
+    }
+
 }
