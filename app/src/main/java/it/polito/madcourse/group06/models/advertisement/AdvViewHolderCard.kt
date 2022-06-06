@@ -61,12 +61,12 @@ class AdvViewHolderCard(private val v: View, private val userViewModel: UserProf
         if (viewType == R.layout.adv_active_item || viewType == R.layout.adv_active_item_saved) {
             var tradeStartingTime = ""
 
-            SimpleDateFormat("dd/MM/yyyy").format(Date()).also { currentDate ->
+            SimpleDateFormat("dd/MM/yyyy",Locale.getDefault()).format(Date()).also { currentDate ->
                 if (adv.advDate != currentDate) {
                     tradeStartingTime =
                         "${dateListToString(adv.advDate)}, at ${adv.activeAt}"
                 } else {
-                    SimpleDateFormat("HH:mm").format(Date()).also { currentTime ->
+                    SimpleDateFormat("HH:mm",Locale.getDefault()).format(Date()).also { currentTime ->
                         if (adv.activeAt?.isLaterThanTime(currentTime) == true)
                             tradeStartingTime = "Starts at ${adv.activeAt}"
                         else if (timeStringToDoubleHour(currentTime)

@@ -21,6 +21,7 @@ import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.Advertisement
+import it.polito.madcourse.group06.utilities.checkTimeslotForm
 import it.polito.madcourse.group06.utilities.timeDoubleHourToString
 import it.polito.madcourse.group06.utilities.timeStringToDoubleHour
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
@@ -56,11 +57,11 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private var newSkillTitleLabel: String = ""
     private lateinit var skillList: ArrayList<String>
     private val selectedSkillsList: ArrayList<String> = arrayListOf()
-    private var timeDuration:Double?=null
-    private val now =(SimpleDateFormat("HH:mm").format(Date())).split(":")
-    private var timeStartingHour: Int = now[0].toInt()-1
+    private var timeDuration: Double? = null
+    private val now = (SimpleDateFormat("HH:mm",Locale.getDefault()).format(Date())).split(":")
+    private var timeStartingHour: Int = now[0].toInt()
     private var timeStartingMinute: Int = now[1].toInt()
-    private var timeEndingHour: Int = now[0].toInt()-1
+    private var timeEndingHour: Int = now[0].toInt()
     private var timeEndingMinute: Int = now[1].toInt()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -86,7 +87,11 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             skillList = user.skills!!
             for (skill in skillList) {
                 this.skillsChipGroup.addChip(requireContext(), skill)
-                this.skillsChipGroup.moveAddChip(requireContext(), view.findViewById(R.id.add_new_skill_chip)!!, this.skillsChipGroup)
+                this.skillsChipGroup.moveAddChip(
+                    requireContext(),
+                    view.findViewById(R.id.add_new_skill_chip)!!,
+                    this.skillsChipGroup
+                )
             }
         }
 
@@ -115,29 +120,8 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         }
 
         this.confirmButton.setOnClickListener {
-            val (timeDifference, isTimeDifferenceOk) = computeTimeDifference(newStartingTime.text.toString(), newEndingTime.text.toString())
             advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) {
-                var isPossible = true
-                var isDateAndTimeCorrect = true
-                val sdfDate = SimpleDateFormat("dd/MM/yyyy")
-                val sdfTime = SimpleDateFormat("HH:mm")
-                val currentDate = sdfDate.format(Date())
-                var currentTime = sdfTime.format(Date())
-
-                // check on time and date
-                val (_, isCurrentTimeDifference) =
-                    if(!newStartingTime.text.toString().isNullOrEmpty())
-                        computeTimeDifference(currentTime, newStartingTime.text.toString())
-                    else
-                        Pair(-1,true)
-                val (_, isCurrentDateDifference) = computeDateDifference(currentDate, chosenDate)
-
-                if (isCurrentDateDifference) {
-                    isDateAndTimeCorrect = true
-                } else if (!isCurrentTimeDifference) {
-                    isDateAndTimeCorrect = false
-                }
-
+                var isPossible=true
                 val tmpList = it.filter { it.accountID == accountID }
                 for (adv in tmpList) {
                     if (adv.advDate != chosenDate) {
@@ -155,47 +139,38 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                     if (newETH * 60 + newETM >= staticSTH * 60 + staticSTM && newSTH * 60 + newSTM <= staticSTH * 60 + staticSTM) {
                         isPossible = false
                         Snackbar.make(
-                            requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_SHORT
+                            requireView(),
+                            "Error: you have already offered this timeslot; change your starting and/or ending time.",
+                            Snackbar.LENGTH_SHORT
                         ).show()
                     } else if (newSTH * 60 + newSTM >= staticSTH * 60 + staticSTM && newETH * 60 + newETM <= staticETH * 60 + staticETM) {
                         isPossible = false
                         Snackbar.make(
-                            requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_SHORT
+                            requireView(),
+                            "Error: you have already offered this timeslot; change your starting and/or ending time.",
+                            Snackbar.LENGTH_SHORT
                         ).show()
                     } else if (newSTH * 60 + newSTM <= staticETH * 60 + staticETM && newETH * 60 + newETM >= staticETH * 60 + staticETM) {
                         isPossible = false
                         Snackbar.make(
-                            requireView(), "Error: you have already offered this timeslot; change your starting and/or ending time.", Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-                if (!isDateAndTimeCorrect) {
-                    Snackbar.make(
-                        requireView(), "Error: you cannot create a timeslot back in time.", Snackbar.LENGTH_SHORT
-                    ).show()
-                } else if (isPossible) {
-                    if (areAllFieldsEmpty()) {
-                        Snackbar.make(
-                            requireView(), "Creation canceled.", Snackbar.LENGTH_SHORT
-                        ).show()
-                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
-                    } else if (!isTimeDifferenceOk && timeDifference < 0) {
-                        Snackbar.make(
-                            requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_SHORT
-                        ).show()
-                    } else if (!isTimeDifferenceOk) {
-                        Snackbar.make(
                             requireView(),
-                            "Error: the starting time must be before the ending time. Try again.",
+                            "Error: you have already offered this timeslot; change your starting and/or ending time.",
                             Snackbar.LENGTH_SHORT
                         ).show()
                     }
-                    else if(timeDuration==null){Snackbar.make(
-                        requireView(),
-                        "Error: a duration for your service must be indicated.",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                    } else if (isAdvValid()) {
+                }
+                if (isPossible &&
+                        checkTimeslotForm(
+                            requireView(),
+                            newTitle.text.toString(),
+                            newDescription.text.toString(),
+                            newLocation.text.toString(),
+                            newStartingTime.text.toString(),
+                            newEndingTime.text.toString(),
+                            newDuration.text.toString().toDouble(),
+                            chosenDate
+                            )
+                    ) {
                         advertisementViewModel.insertAdvertisement(
                             Advertisement(
                                 "",
@@ -207,7 +182,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                                 chosenDate,
                                 newStartingTime.text.toString(),
                                 newEndingTime.text.toString(),
-                                timeDuration!!,
+                                newDuration.text.toString().toDouble(),
                                 accountName,
                                 accountID,
                                 null,
@@ -222,21 +197,17 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             context, "Advertisement created successfully!", Toast.LENGTH_LONG
                         ).show()
                         findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
-                    } else {
-                        Snackbar.make(
-                            requireView(), "Creation canceled.", Snackbar.LENGTH_SHORT
-                        ).show()
-                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
-                    }
                 }
             }
         }
 
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                confirmButton.performClick()
-            }
-        })
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    confirmButton.performClick()
+                }
+            })
     }
 
     /**
@@ -245,7 +216,11 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
      * @param
      * @param
      */
-    private fun ChipGroup.addChip(context: Context, skill: String, isAlreadySelected: Boolean = false) {
+    private fun ChipGroup.addChip(
+        context: Context,
+        skill: String,
+        isAlreadySelected: Boolean = false
+    ) {
         Chip(context).apply {
             id = View.generateViewId()
             text = skill
@@ -258,10 +233,12 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             if (isAlreadySelected) {
                 selectedSkillsList.add(skill)
                 setTextColor(ContextCompat.getColor(context, R.color.white))
-                chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.prussian_blue))
+                chipBackgroundColor =
+                    ColorStateList.valueOf(ContextCompat.getColor(context, R.color.prussian_blue))
             } else {
                 setTextColor(ContextCompat.getColor(context, R.color.black))
-                chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lightGray))
+                chipBackgroundColor =
+                    ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lightGray))
             }
 
             setOnClickListener {
@@ -272,10 +249,16 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                 }
                 if (isChecked) {
                     setTextColor(ContextCompat.getColor(context, R.color.white))
-                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.prussian_blue))
+                    chipBackgroundColor = ColorStateList.valueOf(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.prussian_blue
+                        )
+                    )
                 } else {
                     setTextColor(ContextCompat.getColor(context, R.color.black))
-                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lightGray))
+                    chipBackgroundColor =
+                        ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lightGray))
                 }
 
             }
@@ -303,7 +286,12 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         date.split("/").forEachIndexed { index, s ->
             when (index) {
                 0 -> dateInt += s.toInt() //day
-                1 -> dateInt += (31 - 3 * (s.toInt() == 2).toInt() - (listOf(4, 6, 9, 11).contains(s.toInt())).toInt()) * s.toInt() //month
+                1 -> dateInt += (31 - 3 * (s.toInt() == 2).toInt() - (listOf(
+                    4,
+                    6,
+                    9,
+                    11
+                ).contains(s.toInt())).toInt()) * s.toInt() //month
                 2 -> dateInt += (if (s.toInt() % 400 == 0) 366 else 365) * s.toInt() //year
             }
         }
@@ -360,14 +348,20 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
             newSkillTitleLabel = newSkillTitle.text.toString().replaceFirstChar(Char::titlecase)
             if (newSkillTitleLabel.isNotEmpty()) {
                 chipGroup.addChip(context, newSkillTitleLabel, isAlreadySelected = true)
-                chipGroup.moveAddChip(context, view?.findViewById(R.id.add_new_skill_chip)!!, chipGroup)
+                chipGroup.moveAddChip(
+                    context,
+                    view?.findViewById(R.id.add_new_skill_chip)!!,
+                    chipGroup
+                )
                 skillList.add(newSkillTitleLabel)
                 Snackbar.make(
                     requireView(), "New skill added!", Snackbar.LENGTH_SHORT
                 ).show()
             } else {
                 Snackbar.make(
-                    requireView(), "You must provide a name for the new skill.", Snackbar.LENGTH_SHORT
+                    requireView(),
+                    "You must provide a name for the new skill.",
+                    Snackbar.LENGTH_SHORT
                 ).show()
             }
         })
@@ -404,13 +398,25 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
      * @param timeBox reference to the TextView of the starting time
      */
     private fun popTimePickerStarting(timeBox: TextView) {
-        val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
-            timeStartingHour = selectedHour
-            timeStartingMinute = selectedMinute
-            timeBox.text = String.format(Locale.getDefault(), "%02d:%02d", timeStartingHour, timeStartingMinute)
-        }
+        val onTimeSetListener: TimePickerDialog.OnTimeSetListener =
+            TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
+                timeStartingHour = selectedHour
+                timeStartingMinute = selectedMinute
+                timeBox.text = String.format(
+                    Locale.getDefault(),
+                    "%02d:%02d",
+                    timeStartingHour,
+                    timeStartingMinute
+                )
+            }
 
-        val timePickerDialog = TimePickerDialog(this.context, onTimeSetListener, timeStartingHour, timeStartingMinute, true)
+        val timePickerDialog = TimePickerDialog(
+            this.context,
+            onTimeSetListener,
+            timeStartingHour,
+            timeStartingMinute,
+            true
+        )
         timePickerDialog.setTitle("Select time")
         timePickerDialog.show()
     }
@@ -421,13 +427,25 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
      * @param timeBox reference to the TextView of the ending time
      */
     private fun popTimePickerEnding(timeBox: TextView) {
-        val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
-            timeEndingHour = selectedHour
-            timeEndingMinute = selectedMinute
-            timeBox.text = String.format(Locale.getDefault(), "%02d:%02d", timeEndingHour, timeEndingMinute)
-        }
+        val onTimeSetListener: TimePickerDialog.OnTimeSetListener =
+            TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
+                timeEndingHour = selectedHour
+                timeEndingMinute = selectedMinute
+                timeBox.text = String.format(
+                    Locale.getDefault(),
+                    "%02d:%02d",
+                    timeEndingHour,
+                    timeEndingMinute
+                )
+            }
 
-        val timePickerDialog: TimePickerDialog = TimePickerDialog(this.context, onTimeSetListener, timeStartingHour, timeStartingMinute, true)
+        val timePickerDialog: TimePickerDialog = TimePickerDialog(
+            this.context,
+            onTimeSetListener,
+            timeStartingHour,
+            timeStartingMinute,
+            true
+        )
         timePickerDialog.setTitle("Select time")
         timePickerDialog.show()
     }
@@ -438,14 +456,28 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
      * @param timeBox reference to the TextView of the duration
      */
     private fun popTimePickerDuration(timeBox: TextView) {
-        val onTimeSetListener: TimePickerDialog.OnTimeSetListener = TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
-            computeTimeDifference(newStartingTime.text.toString(),newEndingTime.text.toString()).first.also{maxDuration->
-                timeDuration= min((selectedHour.toDouble()+selectedMinute.toDouble()/60),if(maxDuration>0) maxDuration else 25.0)
+        val onTimeSetListener: TimePickerDialog.OnTimeSetListener =
+            TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
+                computeTimeDifference(
+                    newStartingTime.text.toString(),
+                    newEndingTime.text.toString()
+                ).first.also { maxDuration ->
+                    timeDuration = min(
+                        (selectedHour.toDouble() + selectedMinute.toDouble() / 60),
+                        if (maxDuration > 0) maxDuration else 25.0
+                    )
+                }
+                timeBox.text = String.format(
+                    Locale.getDefault(),
+                    "%d h %d min",
+                    floor(timeDuration!!).toInt(),
+                    ((timeDuration!! - floor(timeDuration!!)) * 60).toInt()
+                )
             }
-            timeBox.text = String.format(Locale.getDefault(), "%d h %d min", floor(timeDuration!!).toInt(), ((timeDuration!!-floor(timeDuration!!))*60).toInt())
-        }
-        val timePickerDialog: TimePickerDialog = TimePickerDialog(this.context, onTimeSetListener,
-            0,0, true)
+        val timePickerDialog: TimePickerDialog = TimePickerDialog(
+            this.context, onTimeSetListener,
+            0, 0, true
+        )
         timePickerDialog.setTitle("Select Duration")
         timePickerDialog.show()
     }
@@ -458,7 +490,10 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
      * @param endingTime the ending time
      * @return a Pair<Float, Boolean> where it's specified the time difference and its acceptability
      */
-    private fun computeTimeDifference(startingTime: String, endingTime: String): Pair<Double, Boolean> {
+    private fun computeTimeDifference(
+        startingTime: String,
+        endingTime: String
+    ): Pair<Double, Boolean> {
         var timeDifference: Double = 0.0
         if (startingTime.isNullOrEmpty() || endingTime.isNullOrEmpty()) {
             return Pair(-1.0, false)
@@ -476,19 +511,6 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
         )
     }
 
-    /**
-     * areAllFieldsEmpty to check whether all fields are empty or not
-     * @return whether all fields are empty or not
-     */
-    private fun areAllFieldsEmpty(): Boolean {
-        return this.newTitle.text.toString().isNullOrEmpty() &&
-                this.newLocation.text.toString().isNullOrEmpty() &&
-                this.newStartingTime.text.toString().isNullOrEmpty() &&
-                this.newEndingTime.text.toString().isNullOrEmpty() &&
-                this.newDuration.text.toString().isNullOrEmpty() &&
-                this.newRestrictions.text.toString().isNullOrEmpty() &&
-                this.newDescription.text.toString().isNullOrEmpty()
-    }
     private fun Boolean.toInt() = if (this) 1 else 0
 }
 

@@ -259,7 +259,7 @@ fun timeDoubleHourToString(time: Double): String {
 }
 
 fun dateListToString(date: String): String {
-    val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Date())
+    val currentDate = SimpleDateFormat("dd/MM/yyyy",Locale.getDefault()).format(Date())
     computeDateDifference(currentDate, date).first.also { distance ->
         return if (distance == 0.0)
             "Today"
@@ -361,8 +361,8 @@ fun Advertisement.isEnded(): Boolean {
 }
 
 fun Advertisement.isExpired(): Boolean {
-    timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())).also { now ->
-        SimpleDateFormat("dd/MM/yyyy").format(Date()).also { today ->
+    timeStringToDoubleHour(SimpleDateFormat("HH:mm",Locale.getDefault()).format(Date())).also { now ->
+        SimpleDateFormat("dd/MM/yyyy",Locale.getDefault()).format(Date()).also { today ->
             return (now >= timeStringToDoubleHour(advEndingTime)
                     && computeDateDifference(today, this.advDate).first == 0.0
                     || (computeDateDifference(today, this.advDate).first < 0))
@@ -371,8 +371,8 @@ fun Advertisement.isExpired(): Boolean {
 }
 
 fun Advertisement.isToBeRated(): Boolean {
-    timeStringToDoubleHour(SimpleDateFormat("HH:mm").format(Date())).also { now ->
-        SimpleDateFormat("dd/MM/yyyy").format(Date()).also { today ->
+    timeStringToDoubleHour(SimpleDateFormat("HH:mm",Locale.getDefault()).format(Date())).also { now ->
+        SimpleDateFormat("dd/MM/yyyy",Locale.getDefault()).format(Date()).also { today ->
             return if (!activeAt.isNullOrEmpty()) {
                 now >= timeStringToDoubleHour(activeAt!!) + activeFor && computeDateDifference(
                     today,
@@ -458,8 +458,8 @@ fun checkTimeslotForm(
     } else if (duration <= 0) {
         Snackbar.make(view, "Error: you must provide a valid duration for your timeslot.", Snackbar.LENGTH_SHORT).show()
         return false
-    }else if(computeTimeDifference(startingTime,endingTime).first-duration<0){
-        Snackbar.make(view, "Error: please provide a duration compatible with the availability time range.", Snackbar.LENGTH_SHORT).show()
+    }else if(timeStringToDoubleHour(endingTime)- timeStringToDoubleHour(startingTime)-duration<0){
+        Snackbar.make(view, "Error: please provide a duration compatible with the availability time range.", Snackbar.LENGTH_LONG).show()
         return false
     }
 

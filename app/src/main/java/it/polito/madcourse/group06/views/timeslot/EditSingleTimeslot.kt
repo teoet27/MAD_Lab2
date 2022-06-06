@@ -21,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.Advertisement
 import it.polito.madcourse.group06.models.userprofile.UserProfile
+import it.polito.madcourse.group06.utilities.checkTimeslotForm
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
@@ -60,10 +61,10 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
     private lateinit var discardButton: Button
     private var selectedSkillsList: ArrayList<String> = arrayListOf()
     private var timeDuration:Double?=null
-    private val now =(SimpleDateFormat("HH:mm").format(Date())).split(":")
-    private var timeStartingHour: Int = now[0].toInt()-1
+    private val now =(SimpleDateFormat("HH:mm",Locale.getDefault()).format(Date())).split(":")
+    private var timeStartingHour: Int = now[0].toInt()
     private var timeStartingMinute: Int = now[1].toInt()
-    private var timeEndingHour: Int = now[0].toInt()-1
+    private var timeEndingHour: Int = now[0].toInt()
     private var timeEndingMinute: Int = now[1].toInt()
 
 
@@ -162,29 +163,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
             }
 
             this.confirmButton.setOnClickListener {
-                val (timeDifference, isTimeDifferenceOk) = computeTimeDifference(advStartingTime.text.toString(), advEndingTime.text.toString())
                 advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) { listOfTimeslots ->
                     var isPossible = true
-                    var isDateAndTimeCorrect = true
-                    val sdfDate = SimpleDateFormat("dd/MM/yyyy")
-                    val sdfTime = SimpleDateFormat("HH:mm")
-                    val currentDate = sdfDate.format(Date())
-                    var currentTime = sdfTime.format(Date())
-
-                    // check on time and date
-                    val (_, isCurrentTimeDifference) =
-                        if(!advStartingTime.text.toString().isNullOrEmpty())
-                            computeTimeDifference(currentTime, advStartingTime.text.toString())
-                        else
-                            Pair(-1,true)
-                    val (_, isCurrentDateDifference) = computeDateDifference(currentDate, chosenDate)
-
-                    if (isCurrentDateDifference) {
-                        isDateAndTimeCorrect = true
-                    } else if (!isCurrentTimeDifference) {
-                        isDateAndTimeCorrect = false
-                    }
-
                     val tmpList = listOfTimeslots.filter { it.accountID == accountID }
                     for (adv in tmpList) {
                         if (adv.id == dumbAdvertisement.id) {
@@ -220,26 +200,18 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                         }
                     }
 
-                    if (!isDateAndTimeCorrect) {
-                        Snackbar.make(
-                            requireView(), "Error: you cannot create a timeslot back in time.", Snackbar.LENGTH_LONG
-                        ).show()
-                    } else if (isPossible) {
-                        if (!isTimeDifferenceOk && timeDifference < 0) {
-                            Snackbar.make(
-                                requireView(), "Error: starting and ending time must be not empty. Try again.", Snackbar.LENGTH_LONG
-                            ).show()
-                        } else if (!isTimeDifferenceOk) {
-                            Snackbar.make(
-                                requireView(), "Error: the starting time must be before the ending time. Try again.", Snackbar.LENGTH_LONG
-                            ).show()
-
-                        } else if(timeDuration==null){
-                            Snackbar.make(
-                                requireView(), "Error: a duration for your service must be indicated.",
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                        } else if (isAdvValid()) {
+                    if (isPossible &&
+                        checkTimeslotForm(
+                            requireView(),
+                            advTitle.text.toString(),
+                            advDescription.text.toString(),
+                            advLocation.text.toString(),
+                            advStartingTime.text.toString(),
+                            advEndingTime.text.toString(),
+                            advDurationTime.text.toString().toDouble(),
+                            chosenDate
+                            )
+                    ) {
                             dumbAdvertisement.advTitle = advTitle.text.toString()
                             dumbAdvertisement.advLocation = advLocation.text.toString()
                             dumbAdvertisement.advDescription = advDescription.text.toString()
@@ -247,21 +219,16 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             dumbAdvertisement.advDate = chosenDate
                             dumbAdvertisement.advStartingTime = advStartingTime.text.toString()
                             dumbAdvertisement.advEndingTime = advEndingTime.text.toString()
-                            dumbAdvertisement.advDuration = timeDuration!!
-                            dumbAdvertisement.listOfSkills = selectedSkillsList
+                            dumbAdvertisement.advDuration = advDurationTime.text.toString().toDouble()
+                        dumbAdvertisement.listOfSkills = selectedSkillsList
                             advertisementViewModel.editAdvertisement(dumbAdvertisement)
                             sharedViewModel.updateSearchState()
                             findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
 
-                        } else {
-                            Snackbar.make(
-                                requireView(), "Error: you need to provide at least a title, a starting and ending time, a skill, a location and a date. Try again.", Snackbar.LENGTH_LONG
-                            ).show()
                         }
                     }
                 }
             }
-        }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
