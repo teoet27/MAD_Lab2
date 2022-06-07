@@ -138,7 +138,6 @@ class AdvAdapterCard(
         } else if (savedAdsFlag == true) {
             adsList.filter { savedAdsIDs.contains(it.id) && !it.isEnded() }
         } else
-            // hide expired or active timeslots
             adsList.filter { it.isAvailable() && !it.isEnded()}
     }
 
