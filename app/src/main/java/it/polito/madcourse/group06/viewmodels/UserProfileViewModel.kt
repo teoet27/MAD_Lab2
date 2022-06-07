@@ -461,19 +461,32 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
         db
             .collection("Advertisement")
             .whereEqualTo("accountID", id)
-            .addSnapshotListener { value, error ->
-                if (error != null) {
-                    throw Exception()
-                } else {
-                    Log.e("VALUE:", value.toString())
-                    if (value?.documents.isNullOrEmpty()) {
-                        Log.e("VALUE:", value?.documents.toString())
-                        val listOfDocuments: MutableList<DocumentSnapshot>? = value?.documents
-                        for (doc in listOfDocuments!!) {
-                            Log.e("doc:", doc.toString())
-                            doc.reference.delete()
-                        }
-                    }
+            .get()
+            .addOnSuccessListener { listOfDocuments ->
+                for (doc in listOfDocuments.documents!!) {
+                    doc.reference.delete()
+                }
+            }
+
+        /**
+         * On-Cascade deletion of their chats
+         */
+        db
+            .collection("Chat")
+            .whereEqualTo("user_id", id)
+            .get()
+            .addOnSuccessListener { listOfDocuments ->
+                for (doc in listOfDocuments.documents!!) {
+                    doc.reference.delete()
+                }
+            }
+        db
+            .collection("Chat")
+            .whereEqualTo("other_user_id", id)
+            .get()
+            .addOnSuccessListener { listOfDocuments ->
+                for (doc in listOfDocuments.documents!!) {
+                    doc.reference.delete()
                 }
             }
     }
