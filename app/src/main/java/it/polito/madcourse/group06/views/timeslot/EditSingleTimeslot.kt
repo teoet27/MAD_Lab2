@@ -22,6 +22,7 @@ import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.Advertisement
 import it.polito.madcourse.group06.models.userprofile.UserProfile
 import it.polito.madcourse.group06.utilities.checkTimeslotForm
+import it.polito.madcourse.group06.utilities.timeStringToDoubleHour
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
@@ -208,7 +209,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             advLocation.text.toString(),
                             advStartingTime.text.toString(),
                             advEndingTime.text.toString(),
-                            advDurationTime.text.toString().toDouble(),
+                            timeStringToDoubleHour(advDurationTime.text.toString(),"HH h mm m"),
                             chosenDate
                             )
                     ) {
@@ -219,7 +220,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             dumbAdvertisement.advDate = chosenDate
                             dumbAdvertisement.advStartingTime = advStartingTime.text.toString()
                             dumbAdvertisement.advEndingTime = advEndingTime.text.toString()
-                            dumbAdvertisement.advDuration = advDurationTime.text.toString().toDouble()
+                            dumbAdvertisement.advDuration = timeStringToDoubleHour(advDurationTime.text.toString(),"HH h mm m")
                         dumbAdvertisement.listOfSkills = selectedSkillsList
                             advertisementViewModel.editAdvertisement(dumbAdvertisement)
                             sharedViewModel.updateSearchState()
