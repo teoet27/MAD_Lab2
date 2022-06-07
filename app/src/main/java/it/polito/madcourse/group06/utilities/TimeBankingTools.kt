@@ -244,13 +244,12 @@ fun timeStringToDoubleSec(time: String): Double {
 }
 
 fun timeStringToDoubleHour(time: String, pattern:String="HH:mm"): Double {
-    if(pattern=="HH:mm")
-        return time.split(":").foldRight(0.0) { a, b -> (a.toDouble() + b.toDouble()) / 60.0 } * 60
-    if(pattern=="HH h mm min"){
-        val timeList=Regex("[0-9]+").findAll(time).map{ it.value.toDouble() }.toList()
-        return timeList[0]+timeList[1]/60
+    return when(pattern){
+        "HH:mm"->time.split(":").foldRight(0.0) { a, b -> (a.toDouble() + b.toDouble()) / 60.0 } * 60
+        "HH h mm min"->{val timeList=Regex("[0-9]+").findAll(time).map{ it.value.toDouble() }.toList();
+                        timeList[0]+timeList[1]/60}
+        else->-1.0
     }
-    return -1.0
 }
 
 fun timeDoubleHourToString(time: Double): String {
