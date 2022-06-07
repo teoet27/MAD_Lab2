@@ -8,7 +8,6 @@ import android.icu.util.Calendar
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
-import android.util.Log
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.models.advertisement.Advertisement
@@ -16,8 +15,6 @@ import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.math.floor
 import kotlin.math.round

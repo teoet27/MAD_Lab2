@@ -2,7 +2,6 @@ package it.polito.madcourse.group06.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import it.polito.madcourse.group06.utilities.ALL_SERVICES
 import it.polito.madcourse.group06.utilities.AdvFilter
 import it.polito.madcourse.group06.utilities.SearchState
 

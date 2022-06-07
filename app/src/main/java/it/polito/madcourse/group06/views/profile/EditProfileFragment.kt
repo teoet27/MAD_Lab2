@@ -46,7 +46,6 @@ class EditProfileFragment : Fragment() {
     private lateinit var editPhoneOBJ: EditText
     private lateinit var profilePictureOBJ: ImageView
     private lateinit var photoURI: Uri
-    private lateinit var profilePictureDirectoryPath: String
     private lateinit var profilePicturePath: String
     private lateinit var skillsChips: ChipGroup
     private lateinit var skillText: TextView

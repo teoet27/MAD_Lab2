@@ -12,7 +12,6 @@ import android.view.View
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -22,16 +21,13 @@ import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.Advertisement
 import it.polito.madcourse.group06.utilities.checkTimeslotForm
-import it.polito.madcourse.group06.utilities.timeDoubleHourToString
 import it.polito.madcourse.group06.utilities.timeStringToDoubleHour
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.floor
-import kotlin.math.min
 import kotlin.math.roundToInt
 
 class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
