@@ -20,14 +20,21 @@
         android:id="@+id/commentTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_description_black_24dp"
+        android:drawablePadding="8dp"
         android:text="TextView"
         android:textColor="@color/prussian_blue"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:drawableTint="@color/prussian_blue" />
 
     <TextView
         android:id="@+id/commentBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:drawableLeft="@drawable/ic_rate_review_black_24dp"
+        android:drawablePadding="8dp"
         android:ellipsize="end"
         android:inputType="textMultiLine"
         android:singleLine="false"

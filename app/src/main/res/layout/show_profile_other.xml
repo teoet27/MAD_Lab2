@@ -208,7 +208,7 @@
                     android:paddingLeft="16dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:text="Rate"
+                    android:text="Average rate"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/prussian_blue"
                     android:textSize="24sp"
