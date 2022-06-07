@@ -255,12 +255,11 @@ fun timeStringToDoubleHour(time: String, pattern:String="HH:mm"): Double {
 fun timeDoubleHourToString(time: Double): String {
     val h = floor(time).toInt()
     val min = round((time - floor(time)) * 60).toInt()
-    return if (h == 0)
-        "${min} min"
-    else if (min == 0)
-        "${h} h"
-    else
-        "${h} h ${min} min"
+    return when(true) {
+        (h == 0) -> "$min min"
+        (min == 0) -> "$h h"
+        else -> "$h h $min min"
+    }
 }
 
 fun dateListToString(date: String): String {
