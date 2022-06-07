@@ -443,7 +443,6 @@ class MyChat : Fragment() {
                 myChatViewModel.addCreditToChattingUser(cost.toDouble())
                 userProfileViewModel.deductCreditToCurrentUser(cost.toDouble())
                 myChatViewModel.setProposalState(messageID, messageState)
-                myChatViewModel.setAllPastProposalToNotAvailable(messageID)
                 myChatViewModel.concludeChat()
                 switchToDoneMode()
             } else {
@@ -458,7 +457,6 @@ class MyChat : Fragment() {
                 myChatViewModel.deductCreditFromChattingUser(cost.toDouble())
                 userProfileViewModel.addCreditToCurrentUser(cost.toDouble())
                 myChatViewModel.setProposalState(messageID, messageState)
-                myChatViewModel.setAllPastProposalToNotAvailable(messageID)
                 myChatViewModel.concludeChat()
                 switchToDoneMode()
             } else {
