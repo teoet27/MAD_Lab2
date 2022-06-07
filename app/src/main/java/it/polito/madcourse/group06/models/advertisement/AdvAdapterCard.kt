@@ -42,7 +42,7 @@ class AdvAdapterCard(
                     R.layout.adv_to_rate_item_saved -> inflate(R.layout.adv_to_rate_item_saved, parent, false)
                     R.layout.adv_ended_item_saved -> inflate(R.layout.adv_ended_item_saved, parent, false)
                     R.layout.adv_finished_item -> inflate(R.layout.adv_finished_item, parent, false)
-                    else -> inflate(R.layout.adv_to_rate_item_saved, parent, false)
+                    else -> inflate(R.layout.adv_item, parent, false)
                 }
             }
         return AdvViewHolderCard(vg, userViewModel)
