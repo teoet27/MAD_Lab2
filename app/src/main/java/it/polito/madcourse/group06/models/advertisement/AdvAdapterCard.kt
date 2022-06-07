@@ -25,24 +25,27 @@ class AdvAdapterCard(
 ) : RecyclerView.Adapter<AdvViewHolderCard>() {
 
     private var showedData = adsList
-    private var userID:String?=null
+    private var userID: String? = null
     private var savedAdsIDs = listOf<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdvViewHolderCard {
         val vg = LayoutInflater
-            .from(parent.context).run{
-                when(viewType) {
-                    R.layout.adv_item->inflate(R.layout.adv_item, parent, false)
-                    R.layout.adv_item_saved->inflate(R.layout.adv_item_saved, parent, false)
-                    R.layout.adv_active_item->inflate(R.layout.adv_active_item, parent, false)
-                    R.layout.adv_active_item_saved->inflate(R.layout.adv_active_item_saved, parent, false)
-                    R.layout.adv_expired_item->inflate(R.layout.adv_expired_item, parent, false)
-                    R.layout.adv_expired_item_saved->inflate(R.layout.adv_expired_item_saved, parent, false)
-                    R.layout.adv_to_rate_item->inflate(R.layout.adv_to_rate_item, parent, false)
-                    else->inflate(R.layout.adv_to_rate_item_saved, parent, false)
-                 }
+            .from(parent.context).run {
+                when (viewType) {
+                    R.layout.adv_item -> inflate(R.layout.adv_item, parent, false)
+                    R.layout.adv_item_saved -> inflate(R.layout.adv_item_saved, parent, false)
+                    R.layout.adv_active_item -> inflate(R.layout.adv_active_item, parent, false)
+                    R.layout.adv_active_item_saved -> inflate(R.layout.adv_active_item_saved, parent, false)
+                    R.layout.adv_expired_item -> inflate(R.layout.adv_expired_item, parent, false)
+                    R.layout.adv_expired_item_saved -> inflate(R.layout.adv_expired_item_saved, parent, false)
+                    R.layout.adv_to_rate_item -> inflate(R.layout.adv_to_rate_item, parent, false)
+                    R.layout.adv_to_rate_item_saved -> inflate(R.layout.adv_to_rate_item_saved, parent, false)
+                    R.layout.adv_ended_item_saved -> inflate(R.layout.adv_ended_item_saved, parent, false)
+                    R.layout.adv_finished_item -> inflate(R.layout.adv_finished_item, parent, false)
+                    else -> inflate(R.layout.adv_to_rate_item_saved, parent, false)
+                }
             }
-        return AdvViewHolderCard(vg,userViewModel)
+        return AdvViewHolderCard(vg, userViewModel)
     }
 
 
@@ -50,7 +53,7 @@ class AdvAdapterCard(
      * Bind operations.
      */
     override fun onBindViewHolder(holder: AdvViewHolderCard, position: Int) {
-        holder.bind(showedData[position], getItemViewType(position),userID!!)
+        holder.bind(showedData[position], getItemViewType(position), userID!!)
         holder.itemView.setOnClickListener {
             advViewModel.setSingleAdvertisement((showedData[showedData.indexOf(showedData[position])]))
             (activity as TBMainActivity).supportFragmentManager.beginTransaction()
@@ -61,24 +64,24 @@ class AdvAdapterCard(
     }
 
     override fun getItemViewType(position: Int): Int {
-
         // case 0: adv was active and it is ended
-        return if(showedData[position].isEnded()){
+        return if (showedData[position].isEnded()) {
             if (savedAdsIDs.contains(showedData[position].id)) {
                 R.layout.adv_ended_item_saved
-            }
-            else {
+            } else {
                 R.layout.adv_finished_item
             }
         }
         // case 1: adv was active, it needs to be rated
-        else if (showedData[position].isToBeRated() && userID == showedData[position].accountID
-            && !showedData[position].rxUserId.isNullOrEmpty()
-            || (userID == showedData[position].ratingUserId && showedData[position].isToBeRated()) ) {
+        else if ((showedData[position].isToBeRated() && userID == showedData[position].accountID
+                    && !showedData[position].rxUserId.isNullOrEmpty())
+            ||
+            ((userID == showedData[position].ratingUserId
+                    && showedData[position].isToBeRated()))
+        ) {
             if (savedAdsIDs.contains(showedData[position].id)) {
                 R.layout.adv_to_rate_item_saved
-            }
-            else {
+            } else {
                 R.layout.adv_to_rate_item
             }
         }
@@ -92,7 +95,8 @@ class AdvAdapterCard(
         // case 3: active ads, still to begin
         else if (userID == showedData[position].accountID
             && !showedData[position].rxUserId.isNullOrEmpty()
-            || (userID == showedData[position].ratingUserId)) {
+            || (userID == showedData[position].ratingUserId)
+        ) {
             if (savedAdsIDs.contains(showedData[position].id))
                 R.layout.adv_active_item_saved
             else
@@ -138,12 +142,14 @@ class AdvAdapterCard(
         }
         // Active or Saved timeslot filtering
         else if (activeAdsFlag == true) {
-            adsList.filter { (it.ratingUserId == userID ||
-                             (it.accountID == userID && !it.rxUserId.isNullOrEmpty())) && !it.isEnded()}
+            adsList.filter {
+                (it.ratingUserId == userID ||
+                        (it.accountID == userID && !it.rxUserId.isNullOrEmpty())) && !it.isEnded()
+            }
         } else if (savedAdsFlag == true) {
             adsList.filter { savedAdsIDs.contains(it.id) && !it.isEnded() }
         } else
-            adsList.filter { it.isAvailable() && !it.isEnded()}
+            adsList.filter { it.isAvailable() && !it.isEnded() }
     }
 
     /**
@@ -177,7 +183,7 @@ class AdvAdapterCard(
         }
 
         // init dataset
-        this.userID=userID
+        this.userID = userID
         showedData = initDataset(myAds, activeAdsFlag, savedAdsFlag)
 
         // SelectedSkill filtering phase (only in main page)
