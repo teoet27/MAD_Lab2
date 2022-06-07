@@ -373,7 +373,7 @@ fun Advertisement.isAvailable(): Boolean {
 }
 
 fun Advertisement.isEnded(): Boolean {
-    return this.rxUserId.isNullOrEmpty() && this.ratingUserId.isNullOrEmpty() && !this.activeAt.isNullOrEmpty()
+    return this.rxUserId.isNullOrEmpty() && this.ratingUserId.isNullOrEmpty() && !this.activeAt.isNullOrEmpty()  && !this.activeLocation.isNullOrEmpty()
 }
 
 fun Advertisement.isExpired(): Boolean {

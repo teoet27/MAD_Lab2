@@ -60,8 +60,16 @@ class AdvAdapterCard(
     }
 
     override fun getItemViewType(position: Int): Int {
+
+        // case 0: adv was active and it is ended
+        return if(showedData[position].isEnded()){
+            if (savedAdsIDs.contains(showedData[position].id))
+                R.layout.adv_ended_item_saved
+            else
+                R.layout.adv_ended_item
+        }
         // case 1: adv was active, it needs to be rated
-        return if (showedData[position].isToBeRated() && userID == showedData[position].accountID
+        else if (showedData[position].isToBeRated() && userID == showedData[position].accountID
             && !showedData[position].rxUserId.isNullOrEmpty()
             || (userID == showedData[position].ratingUserId && showedData[position].isToBeRated()) ) {
             if (savedAdsIDs.contains(showedData[position].id))
@@ -126,12 +134,12 @@ class AdvAdapterCard(
         // Active or Saved timeslot filtering
         else if (activeAdsFlag == true) {
             adsList.filter { (it.ratingUserId == userID ||
-                             (it.accountID == userID && !it.rxUserId.isNullOrEmpty()))}
+                             (it.accountID == userID && !it.rxUserId.isNullOrEmpty())) && !it.isEnded()}
         } else if (savedAdsFlag == true) {
-            adsList.filter { savedAdsIDs.contains(it.id) }
+            adsList.filter { savedAdsIDs.contains(it.id) && !it.isEnded() }
         } else
             // hide expired or active timeslots
-            adsList.filter { it.isAvailable()}
+            adsList.filter { it.isAvailable() && !it.isEnded()}
     }
 
     /**
