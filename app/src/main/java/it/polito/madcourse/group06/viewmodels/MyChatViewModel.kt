@@ -239,6 +239,21 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
             }
     }
 
+    fun setAllPastProposalToNotAvailable(messageID: Int) {
+        db
+            .collection("Chat")
+            .document(this._pvtMyChat.value?.chatID!!)
+            .get()
+            .addOnSuccessListener { doc ->
+                val chat = doc.toMyChatModel()
+                chat!!.chatContent.removeAt(messageID)
+                val messages = chat.chatContent
+                for (mess in messages)
+                    mess.propState = 2
+                doc.reference.update("chat_content", messages)
+            }
+    }
+
     fun onBackReset() {
         this._pvtMyChat.value!!.hasEnded = false
     }
