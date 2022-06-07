@@ -228,7 +228,8 @@ class MyChat : Fragment() {
 
         myChatViewModel.myCurrentChat.observe(viewLifecycleOwner) { chat ->
             this.emptyChatMessage.isVisible = chat.chatContent.isEmpty()
-            chatAdapterCard = MyChatAdapter(chat.chatContent, currentID, otherID, ::acceptProposal, ::rejectProposal)
+            chatAdapterCard = MyChatAdapter(chat.chatContent, currentID, otherID,
+                ::acceptProposal, ::rejectProposal, advertisementViewModel, isCurrentUserTheOwner)
 
             val linearLayoutManager = LinearLayoutManager(this.context)
             linearLayoutManager.stackFromEnd = true
@@ -334,7 +335,6 @@ class MyChat : Fragment() {
 
     private fun acceptProposal(duration: Double, messageID: Int, messageState: Long) {
         val cost = hoursToCredit(duration)
-        activateTimeslot()
         if (!this.isCurrentUserTheOwner) {
             if (this.myCredit >= cost) {
                 myChatViewModel.addCreditToChattingUser(cost.toDouble())
@@ -369,15 +369,6 @@ class MyChat : Fragment() {
 
     private fun rejectProposal(messageID: Int, messageState: Long) {
         myChatViewModel.setProposalState(messageID, messageState)
-    }
-
-    private fun activateTimeslot() {
-        advertisementViewModel.activateAdvertisement(
-            if(this.isCurrentUserTheOwner) this.otherID else this.currentID,
-            "${this.startingTimeHourProposal}:${this.startingTimeMinuteProposal}",
-            this.durationTimeProposal,
-            this.myLocation.text.toString()
-        )
     }
 
     /**

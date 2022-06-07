@@ -10,10 +10,13 @@ import android.widget.TextView
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
+import it.polito.madcourse.group06.utilities.timeStringToDoubleHour
+import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 
 class MyChatViewHolder(
     private val v: View,
-    private val isMyMessage: Boolean
+    private val isMyMessage: Boolean,
+    private val advertisementViewModel: AdvertisementViewModel
 ) : RecyclerView.ViewHolder(v) {
     private lateinit var msgContent: TextView
     private lateinit var msgTimestamp: TextView
@@ -35,7 +38,12 @@ class MyChatViewHolder(
     private var startingHeight: Int = 0
     private var isMsgTimestampShown = false
 
-    fun bind(msg: MyMessage, itemViewType: Int, acceptCallback: ((Double, Int, Long) -> Unit), rejectCallback: ((Int, Long) -> Unit), propState: Long) {
+    fun bind(
+        msg: MyMessage, itemViewType: Int,
+        acceptCallback: ((Double, Int, Long) -> Unit),
+        rejectCallback: ((Int, Long) -> Unit), propState: Long,
+        clientID: String
+    ) {
         this.msgState = propState
         if (isMyMessage) {
             when (itemViewType) {
@@ -61,7 +69,7 @@ class MyChatViewHolder(
                     this.v.findViewById<LinearLayout>(R.id.myMainContainerProposalID).gravity = Gravity.START
                     this.msgTimestamp = this.v.findViewById(R.id.myProposalTimestampID)
                     this.msgTimestamp.alpha = 0f
-                    when(this.msgState) {
+                    when (this.msgState) {
                         (-1).toLong() -> { // REJECTED
                             this.myPendingState?.isGone = true
                             this.myAcceptedState?.isGone = true
@@ -132,7 +140,7 @@ class MyChatViewHolder(
                     this.msgTimestamp = this.v.findViewById(R.id.otherProposalTimestampID)
                     this.msgTimestamp.alpha = 0f
 
-                    when(this.msgState) {
+                    when (this.msgState) {
                         (-1).toLong() -> { // REJECTED
                             this.otherPendingState?.isGone = true
                             this.otherAcceptedState?.isGone = true
@@ -181,14 +189,22 @@ class MyChatViewHolder(
                      * Accept and reject buttons setting
                      */
                     this.acceptButton?.setOnClickListener {
-                        acceptCallback(this.msgDuration.text.toString().split(":")[0].toDouble()
-                                + this.msgDuration.text.toString().split(":")[0].toDouble() / 60.0, this.position, 1)
+                        acceptCallback(
+                            this.msgDuration.text.toString().split(":")[0].toDouble()
+                                    + this.msgDuration.text.toString().split(":")[0].toDouble() / 60.0, this.position, 1
+                        )
                         this.otherPendingState?.isGone = true
                         this.otherAcceptedState?.isGone = false
                         this.otherRejectedState?.isGone = true
                         this.otherNotAvailableState?.isGone = true
                         this.acceptButton?.isGone = true
                         this.rejectButton?.isGone = true
+                        advertisementViewModel.activateAdvertisement(
+                            clientID,
+                            this.msgStartingTime.text.toString(),
+                            timeStringToDoubleHour(this.msgDuration.text.toString(), "HH h mm min"),
+                            this.msgLocation.text.toString()
+                        )
                     }
                     this.rejectButton?.setOnClickListener {
                         rejectCallback(this.position, -1)

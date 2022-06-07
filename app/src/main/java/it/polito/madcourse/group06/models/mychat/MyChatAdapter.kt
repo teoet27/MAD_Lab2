@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import it.polito.madcourse.group06.R
-import it.polito.madcourse.group06.viewmodels.MyChatViewModel
+import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 
 class MyChatAdapter(
     listOfMessages: List<MyMessage>,
@@ -13,6 +13,8 @@ class MyChatAdapter(
     private val otherUserID: String,
     private val acceptCallback: (Double, Int, Long) -> Unit,
     private val rejectCallback: (Int, Long) -> Unit,
+    private val advertisementViewModel: AdvertisementViewModel,
+    private val isCurrentUserTheOwner: Boolean
 ) : RecyclerView.Adapter<MyChatViewHolder>() {
     private val chat: MutableList<MyMessage> = listOfMessages.toMutableList()
 
@@ -56,14 +58,16 @@ class MyChatAdapter(
                 isMyMessage = true
             }
         }
-        return MyChatViewHolder(vg, isMyMessage)
+        return MyChatViewHolder(vg, isMyMessage, advertisementViewModel)
     }
 
     override fun onBindViewHolder(holder: MyChatViewHolder, position: Int) {
+        val clientID = if (!isCurrentUserTheOwner) currentUserID else otherUserID
+
         holder.bind(
             chat[position], getItemViewType(position),
-            ::acceptCallback2, ::rejectCallback2,
-            this.chat[position].propState
+            ::acceptCallbackWrapper, ::rejectCallbackWrapper,
+            this.chat[position].propState, clientID
         )
         holder.itemView.setOnClickListener {
             holder.setTimestampVisibility()
@@ -103,12 +107,12 @@ class MyChatAdapter(
         notifyItemInserted(this.chat.size - 1)
     }
 
-    private fun acceptCallback2(time: Double, position: Int, state: Long) {
+    private fun acceptCallbackWrapper(time: Double, position: Int, state: Long) {
         this.acceptCallback(time, position, state)
         notifyDataSetChanged()
     }
 
-    private fun rejectCallback2(position: Int, state: Long) {
+    private fun rejectCallbackWrapper(position: Int, state: Long) {
         this.rejectCallback(position, state)
         notifyDataSetChanged()
     }
