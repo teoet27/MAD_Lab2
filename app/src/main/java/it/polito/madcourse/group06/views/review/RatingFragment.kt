@@ -24,7 +24,7 @@ class RatingFragment : Fragment() {
     private val userProfileViewModel by activityViewModels<UserProfileViewModel>()
     private val advertisementViewModel by activityViewModels<AdvertisementViewModel>()
 
-    private var rxUserId: String? = ""
+    private var otherID: String? = ""
     private var advId: String? = ""
     private var advAccountId: String? = ""
     private var advTitle: String? = ""
@@ -34,7 +34,7 @@ class RatingFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        rxUserId = arguments?.getString("rx_user_id")
+        otherID = arguments?.getString("other_id")
         advAccountId = arguments?.getString("adv_account_id")
 
         advId = arguments?.getString("adv_id")
@@ -88,14 +88,14 @@ class RatingFragment : Fragment() {
             })
 
         advAccountId?.let {
-            rxUserId?.let {
+            otherID?.let {
                 advId?.let {
                     advertisementViewModel.fetchSingleAdvertisementById(advId!!)
 
                     userProfileViewModel.currentUser.observe(this.viewLifecycleOwner) { currentUser ->
                         isServiceDone = (currentUser.id == advAccountId)
                         if (isServiceDone) {
-                            userProfileViewModel.fetchUserProfileById(rxUserId)
+                            userProfileViewModel.fetchUserProfileById(otherID)
                         } else {
                             userProfileViewModel.fetchUserProfileById(advAccountId)
                         }

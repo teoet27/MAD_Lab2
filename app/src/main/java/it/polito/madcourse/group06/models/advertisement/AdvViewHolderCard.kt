@@ -27,18 +27,24 @@ class AdvViewHolderCard(private val v: View, private val userViewModel: UserProf
     private val duration: TextView = v.findViewById(R.id.advCardDuration)
     private val account: TextView = v.findViewById(R.id.advCardAccount)
     private val bookmark: ImageView = v.findViewById(R.id.item_bookmark)
+    private var otherID:String?=null
 
     /**
      * bind:
      * A method to bind the i-th entry of the adsList to the i-th holder properties.
      * @param adv an object of class Advertisement
      */
-    fun bind(adv: Advertisement, viewType: Int) {
+    fun bind(adv: Advertisement, viewType: Int,userID:String) {
         this.title.text = adv.advTitle
         this.location.text = adv.advLocation
         this.duration.text =
             timeDoubleHourToString(if (adv.activeFor > 0) adv.activeFor else adv.advDuration)
         this.account.text = adv.advAccount
+
+        if(userID==adv.accountID)
+            otherID=adv.rxUserId
+        else
+            otherID=adv.accountID
 
         this.bookmark.setOnClickListener {
             userViewModel.bookmarkAdvertisement(adv.id!!)
@@ -47,7 +53,7 @@ class AdvViewHolderCard(private val v: View, private val userViewModel: UserProf
             v.findViewById<Button>(R.id.rate_button).setOnClickListener {
                 RatingFragment().also {
                     it.arguments = bundleOf(
-                        "rx_user_id" to adv.rxUserId,
+                        "other_id" to otherID,
                         "adv_account_id" to adv.accountID,
                         "adv_title" to adv.advTitle,
                         "adv_id" to adv.id

@@ -49,7 +49,7 @@ class AdvAdapterCard(
      * Bind operations.
      */
     override fun onBindViewHolder(holder: AdvViewHolderCard, position: Int) {
-        holder.bind(showedData[position], getItemViewType(position))
+        holder.bind(showedData[position], getItemViewType(position),userID!!)
         holder.itemView.setOnClickListener {
             advViewModel.setSingleAdvertisement((showedData[showedData.indexOf(showedData[position])]))
             (activity as TBMainActivity).supportFragmentManager.beginTransaction()
@@ -57,13 +57,6 @@ class AdvAdapterCard(
                 .add(R.id.nav_host_fragment_content_main, ShowSingleTimeslot(), "single_timeslot")
                 .commit()
         }
-
-        /*if(viewType == R.layout.adv_to_rate_item || viewType == R.layout.adv_to_rate_item_saved)
-            v.findViewById<Button>(R.id.rate_button).setOnClickListener{
-                (holder.itemView.context as TBMainActivity).supportFragmentManager!!.beginTransaction()
-                    .add(R.id.nav_host_fragment_content_main, RatingFragment(), "rating_fragment")
-                    .commit()
-            }*/
     }
 
     override fun getItemViewType(position: Int): Int {
