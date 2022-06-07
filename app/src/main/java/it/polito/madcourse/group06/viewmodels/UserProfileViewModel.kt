@@ -31,22 +31,52 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      * Single [UserProfile]
      */
     private var _singleUserProfilePH = UserProfile(
-        "", "", "", "", "", "", "",
-        "", null, 0.0, 0.0, 0.0,
-        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String, String>()
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        null,
+        0.0,
+        0.0,
+        0.0,
+        ArrayList<String>(),
+        ArrayList<String>(),
+        null,
+        ArrayList<String>(),
+        HashMap<String, String>()
     )
-    private val _pvtUserProfile = MutableLiveData<UserProfile>().also { it.value = _singleUserProfilePH }
+    private val _pvtUserProfile =
+        MutableLiveData<UserProfile>().also { it.value = _singleUserProfilePH }
     val currentUser: LiveData<UserProfile> = this._pvtUserProfile
 
     /**
      * Other [UserProfile]
      */
     private var _otherUserProfilePH = UserProfile(
-        "", "", "", "", "", "",
-        "", "", null, 0.0, 0.0, 0.0,
-        ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String, String>()
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        null,
+        0.0,
+        0.0,
+        0.0,
+        ArrayList<String>(),
+        ArrayList<String>(),
+        null,
+        ArrayList<String>(),
+        HashMap<String, String>()
     )
-    private val _pvtOtherUserProfile = MutableLiveData<UserProfile>().also { it.value = _otherUserProfilePH }
+    private val _pvtOtherUserProfile =
+        MutableLiveData<UserProfile>().also { it.value = _otherUserProfilePH }
     val otherUser: LiveData<UserProfile> = this._pvtOtherUserProfile
 
     /**
@@ -78,7 +108,15 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
 
 
     fun bookmarkAdvertisement(advID: String) {
-        val updatedUser = _singleUserProfilePH.also { if (it.saved_ads_ids?.contains(advID) == true) it.saved_ads_ids?.remove(advID) else it.saved_ads_ids?.add(advID) }
+        val updatedUser = _singleUserProfilePH.also {
+            if (it.saved_ads_ids.isNullOrEmpty())
+                it.saved_ads_ids = arrayListOf(advID)
+            else {
+                if (it.saved_ads_ids?.contains(advID) == true)
+                    it.saved_ads_ids?.remove(advID)
+                else it.saved_ads_ids?.add(advID)
+            }
+        }
 
         db
             .collection("UserProfile")
@@ -249,9 +287,23 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             val savedAdsIDs = this.get("saved_ads_ids") as ArrayList<String>?
             val listOfChatIDs = this.get("chats_id") as HashMap<String, String>?
             UserProfile(
-                id, nickname, fullname, qualification,
-                description, email, phoneNumber, location, skills, credit,
-                rating_sum, nRatings, comments_services_rx, comments_services_done, imgPath, savedAdsIDs, listOfChatIDs
+                id,
+                nickname,
+                fullname,
+                qualification,
+                description,
+                email,
+                phoneNumber,
+                location,
+                skills,
+                credit,
+                rating_sum,
+                nRatings,
+                comments_services_rx,
+                comments_services_done,
+                imgPath,
+                savedAdsIDs,
+                listOfChatIDs
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -276,9 +328,23 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             }
             .addOnFailureListener {
                 this._singleUserProfilePH = UserProfile(
-                    null, null, null, null,
-                    null, null, null, null, null, 0.0,
-                    0.0, 0.0, ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String, String>()
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    0.0,
+                    0.0,
+                    0.0,
+                    ArrayList<String>(),
+                    ArrayList<String>(),
+                    null,
+                    ArrayList<String>(),
+                    HashMap<String, String>()
                 )
                 this._pvtUserProfile.value = this._singleUserProfilePH
             }
@@ -301,9 +367,23 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             }
             .addOnFailureListener {
                 this._otherUserProfilePH = UserProfile(
-                    null, null, null, null,
-                    null, null, null, null, null, 0.0,
-                    0.0, 0.0, ArrayList<String>(), ArrayList<String>(), null, ArrayList<String>(), HashMap<String, String>()
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    0.0,
+                    0.0,
+                    0.0,
+                    ArrayList<String>(),
+                    ArrayList<String>(),
+                    null,
+                    ArrayList<String>(),
+                    HashMap<String, String>()
                 )
                 this._pvtOtherUserProfile.value = this._otherUserProfilePH
             }
@@ -514,7 +594,8 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
 
         val profilePath = "images/${imgFilename}.jpg"
         val profilePathReference = this.storage.getReference(profilePath)
-        val profilePathMetadata: StorageMetadata = StorageMetadata.Builder().setCustomMetadata("accountID", imgFilename).build()
+        val profilePathMetadata: StorageMetadata =
+            StorageMetadata.Builder().setCustomMetadata("accountID", imgFilename).build()
 
         /**
          * uploadTask can be used to keep track of the upload through a progress bar or something similar
@@ -530,7 +611,9 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
      */
     fun retrieveProfilePicture(imageView: ImageView, imgPath: String) {
         var suffix = if (imgPath == "staticuser") "png" else "jpg"
-        val profilePathReference = this.storage.getReferenceFromUrl("gs://timebankingmadg06.appspot.com").child("images/${imgPath}.${suffix}")
+        val profilePathReference =
+            this.storage.getReferenceFromUrl("gs://timebankingmadg06.appspot.com")
+                .child("images/${imgPath}.${suffix}")
         val localFile = File.createTempFile(imgPath, ".${suffix}")
         profilePathReference.getFile(localFile)
             .addOnSuccessListener {
@@ -541,7 +624,9 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     fun retrieveStaticProfilePicture(imageView: ImageView) {
-        val profilePathReference = this.storage.getReferenceFromUrl("gs://timebankingmadg06.appspot.com").child("images/staticuser.png")
+        val profilePathReference =
+            this.storage.getReferenceFromUrl("gs://timebankingmadg06.appspot.com")
+                .child("images/staticuser.png")
         val localFile = File.createTempFile("staticuser", ".png")
         profilePathReference.getFile(localFile)
             .addOnSuccessListener {
