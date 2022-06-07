@@ -462,7 +462,7 @@ class MyChat : Fragment() {
             } else {
                 Toast.makeText(
                     requireContext(),
-                    "${this.chatFullname.text} can't afford to pay for this.",
+                    "This proposal is now unavailable; contact ${this.chatFullname.text} to set up a new proposal.",
                     Toast.LENGTH_LONG
                 ).show()
             }
