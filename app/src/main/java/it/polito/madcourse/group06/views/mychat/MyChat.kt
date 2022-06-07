@@ -385,7 +385,7 @@ class MyChat : Fragment() {
             } else {
                 Toast.makeText(
                     requireContext(),
-                    "${this.chatFullname} can't afford to pay for this.",
+                    "${this.chatFullname.text} can't afford to pay for this.",
                     Toast.LENGTH_LONG
                 ).show()
             }
