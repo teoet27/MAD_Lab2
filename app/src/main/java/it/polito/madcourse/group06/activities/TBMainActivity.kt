@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -110,11 +111,8 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
                     true
                 }
                 R.id.ShowListOfAdvertisementsMenuItem -> {
-                    sharedViewModel.resetSearchState()
-                    navController.navigate(
-                        R.id.ShowListTimeslots,
-                        bundleOf("selected_skill" to ALL_SERVICES)
-                    )
+                    sharedViewModel.updateSearchState(selectedSkill = ALL_SERVICES)
+                    navController.navigate(R.id.ShowListTimeslots)
                     true
                 }
                 R.id.ShowProfileMenuItem -> {

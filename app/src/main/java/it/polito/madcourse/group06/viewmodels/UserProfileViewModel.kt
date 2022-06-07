@@ -157,18 +157,18 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             dumbUser.rating_sum += rating
 
             if (isServiceDone && !comment.isNullOrEmpty()) {
-                // done
-                if (dumbUser.comments_services_done != null) {
-                    dumbUser.comments_services_done!!.add(commentBis)
-                } else {
-                    dumbUser.comments_services_done = arrayListOf(commentBis)
-                }
-            } else if (!isServiceDone && !comment.isNullOrEmpty()) {
-                // rx
+                // I performed the service and add a comment in your received services
                 if (dumbUser.comments_services_rx != null) {
                     dumbUser.comments_services_rx!!.add(commentBis)
                 } else {
                     dumbUser.comments_services_rx = arrayListOf(commentBis)
+                }
+            } else if (!isServiceDone && !comment.isNullOrEmpty()) {
+                // I received the service and add a comment in your done services
+                if (dumbUser.comments_services_done != null) {
+                    dumbUser.comments_services_done!!.add(commentBis)
+                } else {
+                    dumbUser.comments_services_done = arrayListOf(commentBis)
                 }
             }
         }
