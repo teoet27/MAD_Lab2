@@ -28,7 +28,6 @@ import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.floor
-import kotlin.math.roundToInt
 
 class MyChat : Fragment() {
 
@@ -46,7 +45,7 @@ class MyChat : Fragment() {
     private lateinit var inputMessageBox: EditText
     private lateinit var sendMessageButton: ImageView
     private lateinit var backArrow: ImageView
-    private lateinit var myPurposeContainer: LinearLayout
+    private lateinit var myPurposeContainer: ScrollView
     private lateinit var chatAcceptButton: TextView
     private lateinit var chatRejectButton: TextView
     private lateinit var chatArrowUpButton: ImageView
@@ -97,7 +96,7 @@ class MyChat : Fragment() {
         this.chatAcceptButton = view.findViewById(R.id.chatAcceptTextViewID)
         this.chatRejectButton = view.findViewById(R.id.chatRejectTextViewID)
         this.chatArrowUpButton = view.findViewById(R.id.chatMenuArrowID)
-        this.myPurposeContainer = view.findViewById(R.id.myPurposeID)
+        this.myPurposeContainer = view.findViewById(R.id.myPurposeScrollViewID)
         this.myLocation = view.findViewById(R.id.myLocationTVID)
         this.myStartingTime = view.findViewById(R.id.myStartingTimeTVID)
         this.myDuration = view.findViewById(R.id.myDurationTVID)
@@ -126,8 +125,8 @@ class MyChat : Fragment() {
         myChatViewModel.chattingUser.observe(viewLifecycleOwner) {
             this.chatFullname.text = it.fullName
             this.chatNickname.text = "@${it.nickname}"
-            userProfileViewModel.retrieveProfilePicture(this.chattingUserProfilePicture, it.imgPath!!)
-            userProfileViewModel.retrieveProfilePicture(this.profilePictureExtended, it.imgPath!!)
+            userProfileViewModel.retrieveProfilePicture(this.chattingUserProfilePicture, it.imgPath?:"staticuser")
+            userProfileViewModel.retrieveProfilePicture(this.profilePictureExtended, it.imgPath?:"staticuser")
             this.otherID = it.id!!
             this.otherCredit = it.credit
         }

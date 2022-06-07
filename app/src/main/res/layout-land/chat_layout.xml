@@ -208,11 +208,11 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
-        android:id="@id/myPurposeScrollViewID"
+        android:id="@+id/myPurposeScrollViewID"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="290dp"
-        android:visibility="gone"
+        android:layout_marginTop="305dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/inputMessageBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -230,30 +230,32 @@
             android:layout_marginBottom="25dp"
             android:background="@drawable/common_message_bubble"
             android:backgroundTint="@color/my_bubble"
-            android:orientation="vertical"
             android:visibility="visible">
 
             <TextView
                 android:id="@+id/purposeTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_gravity="center|center_horizontal|center_vertical"
+                android:layout_gravity="start"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/my_message_bubble"
                 android:backgroundTint="@color/dark_prussian_blue"
-                android:padding="16dp"
+                android:padding="4dp"
                 android:text="New proposal"
                 android:textColor="@color/white"
-                android:textSize="34sp"
-                android:textStyle="bold" />
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical"
                 android:paddingLeft="8dp"
-                android:paddingTop="8dp"
                 android:paddingRight="8dp">
 
                 <TextView
@@ -275,8 +277,9 @@
 
                 <EditText
                     android:id="@+id/myLocationTVID"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="4"
                     android:background="@drawable/my_message_bubble"
                     android:backgroundTint="@color/dark_prussian_blue"
                     android:gravity="center_vertical"
@@ -293,8 +296,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp">
@@ -318,8 +322,9 @@
 
                 <TextView
                     android:id="@+id/myStartingTimeTVID"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="4"
                     android:background="@drawable/my_message_bubble"
                     android:backgroundTint="@color/dark_prussian_blue"
                     android:gravity="center_vertical"
@@ -337,8 +342,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
@@ -363,8 +369,9 @@
 
                 <TextView
                     android:id="@+id/myDurationTVID"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="4"
                     android:background="@drawable/my_message_bubble"
                     android:backgroundTint="@color/dark_prussian_blue"
                     android:gravity="center_vertical"
@@ -386,7 +393,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/rounded_corners_total"
@@ -402,13 +409,13 @@
         android:id="@+id/chatMenuArrowID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/rounded_corners_total"
         android:backgroundTint="@color/darkGray"
         android:padding="3dp"
         app:layout_constraintBottom_toTopOf="@+id/inputMessageBox"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_add_black_24dp"
         app:tint="@color/lightGray" />
