@@ -44,6 +44,7 @@ class SharedViewModel : ViewModel() {
         savedAdsFlag: Boolean? = null,
         filter: AdvFilter? = null
     ) {
+        homeTabPressed(false)
         if(currentTab!=null)
             _searchState.currentTab=currentTab
         if (selectedSkill != null)

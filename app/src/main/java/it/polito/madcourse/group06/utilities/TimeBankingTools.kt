@@ -474,7 +474,7 @@ fun checkTimeslotForm(
     } else if (duration <= 0) {
         Snackbar.make(view, "Error: you must provide a valid duration for your timeslot.", Snackbar.LENGTH_SHORT).show()
         return false
-    } else if(timeStringToDoubleHour(endingTime)- timeStringToDoubleHour(startingTime)-duration<0){
+    } else if(computeTimeDifference(startingTime, endingTime).first - duration < 0){
         Snackbar.make(view, "Error: please provide a duration compatible with the availability time range.", Snackbar.LENGTH_LONG).show()
         return false
     }

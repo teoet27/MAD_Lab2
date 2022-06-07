@@ -113,7 +113,6 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
             this.advDurationTime.text = timeDoubleHourToString(singleAdvertisement.advDuration)
             this.advDurationTime.setOnClickListener{ popTimePickerDuration(this.advDurationTime) }
 
-
             // Date
             val loadedDate = Calendar.getInstance()
             loadedDate.set(
