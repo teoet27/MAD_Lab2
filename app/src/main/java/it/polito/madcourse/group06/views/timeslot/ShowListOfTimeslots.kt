@@ -182,6 +182,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                     this.updateAdHint.visibility=View.GONE
                     when (ss.currentTab) {
                         TAB_ACTIVE -> {
+                            sharedViewModel.homeTabPressed(false)
                             setActionBarTitle("Active Timeslots")
                             ss.selectedSkill?.let { skill ->
                                 bottomNavView.menu.getItem(0).apply {
@@ -193,6 +194,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                             bottomNavView.menu.getItem(1).isChecked = true
                         }
                         TAB_SAVED -> {
+                            sharedViewModel.homeTabPressed(false)
                             setActionBarTitle("Saved Timeslots")
                             ss.selectedSkill?.let { skill ->
                                 bottomNavView.menu.getItem(0).title = skill
@@ -203,6 +205,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
 
                         }
                         TAB_MINE -> {
+                            sharedViewModel.homeTabPressed(false)
                             setActionBarTitle("My Timeslots")
                             ss.selectedSkill?.let { skill ->
                                 bottomNavView.menu.getItem(0).title = skill
