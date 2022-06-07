@@ -235,7 +235,6 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     )
                 )
                 .addOnSuccessListener {
-                    Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
                     this._singleAdvertisementPH = ad
                     this._pvtAdvertisement.value = this._singleAdvertisementPH
                 }
@@ -275,7 +274,6 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                 )
             )
             .addOnSuccessListener {
-                Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
                 this._singleAdvertisementPH = ad
                 this._pvtAdvertisement.value = this._singleAdvertisementPH
             }
