@@ -54,7 +54,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     private lateinit var skillList: ArrayList<String>
     private val selectedSkillsList: ArrayList<String> = arrayListOf()
     private var timeDuration: Double? = null
-    private val now = (SimpleDateFormat("HH:mm",Locale.getDefault()).format(Date())).split(":")
+    private val now = (SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())).split(":")
     private var timeStartingHour: Int = now[0].toInt()
     private var timeStartingMinute: Int = now[1].toInt()
     private var timeEndingHour: Int = now[0].toInt()
@@ -117,7 +117,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
 
         this.confirmButton.setOnClickListener {
             advertisementViewModel.listOfAdvertisements.observe(viewLifecycleOwner) {
-                var isPossible=true
+                var isPossible = true
                 val tmpList = it.filter { it.accountID == accountID }
                 for (adv in tmpList) {
                     if (adv.advDate != chosenDate) {
@@ -155,44 +155,50 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                         ).show()
                     }
                 }
+                val insertedDuration = timeStringToDoubleHour(newDuration.text.toString(), "HH h mm min")
+                val maximumDuration = computeTimeDifference(
+                    this.newStartingTime.text.toString(),
+                    this.newEndingTime.text.toString()
+                ).first
+                val finalDuration = if (insertedDuration > maximumDuration) maximumDuration else insertedDuration
                 if (isPossible &&
-                        checkTimeslotForm(
-                            requireView(),
+                    checkTimeslotForm(
+                        requireView(),
+                        newTitle.text.toString(),
+                        newDescription.text.toString(),
+                        newLocation.text.toString(),
+                        newStartingTime.text.toString(),
+                        newEndingTime.text.toString(),
+                        finalDuration,
+                        chosenDate
+                    )
+                ) {
+                    advertisementViewModel.insertAdvertisement(
+                        Advertisement(
+                            "",
                             newTitle.text.toString(),
                             newDescription.text.toString(),
+                            newRestrictions.text.toString(),
+                            selectedSkillsList,
                             newLocation.text.toString(),
+                            chosenDate,
                             newStartingTime.text.toString(),
                             newEndingTime.text.toString(),
-                            timeStringToDoubleHour(newDuration.text.toString(),"HH h mm min"),
-                            chosenDate
-                            )
-                    ) {
-                        advertisementViewModel.insertAdvertisement(
-                            Advertisement(
-                                "",
-                                newTitle.text.toString(),
-                                newDescription.text.toString(),
-                                newRestrictions.text.toString(),
-                                selectedSkillsList,
-                                newLocation.text.toString(),
-                                chosenDate,
-                                newStartingTime.text.toString(),
-                                newEndingTime.text.toString(),
-                                timeStringToDoubleHour(newDuration.text.toString(),"HH h mm min"),
-                                accountName,
-                                accountID,
-                                null,
-                                null,
-                                null,
-                                0.0,
-                                ""
-                            )
+                            finalDuration,
+                            accountName,
+                            accountID,
+                            null,
+                            null,
+                            null,
+                            0.0,
+                            ""
                         )
-                        userProfileViewModel.updateSkillList(skillList)
-                        Toast.makeText(
-                            context, "Advertisement created successfully!", Toast.LENGTH_LONG
-                        ).show()
-                        findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
+                    )
+                    userProfileViewModel.updateSkillList(skillList)
+                    Toast.makeText(
+                        context, "Advertisement created successfully!", Toast.LENGTH_LONG
+                    ).show()
+                    findNavController().navigate(R.id.action_newTimeSlotDetailsFragment_to_ShowListTimeslots)
                 }
             }
         }
@@ -459,13 +465,13 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                     newEndingTime.text.toString()
                 ).first.also { maxDuration ->
                     if ((selectedHour.toDouble() + selectedMinute.toDouble() / 60) > maxDuration
-                        && maxDuration > 0) {
+                        && maxDuration > 0
+                    ) {
                         Toast.makeText(
                             context, "Your service duration cannot exceed your availability time!", Toast.LENGTH_LONG
                         ).show()
                         timeDuration = maxDuration
-                    }
-                    else {
+                    } else {
                         timeDuration = (selectedHour.toDouble() + selectedMinute.toDouble() / 60)
                     }
                 }
