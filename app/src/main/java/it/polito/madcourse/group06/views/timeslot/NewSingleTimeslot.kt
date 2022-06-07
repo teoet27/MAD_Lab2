@@ -211,7 +211,6 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
     }
 
     /**
-     * TODO
      * addChip
      * @param
      * @param
@@ -383,7 +382,6 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
      * @return whether it's possible to actually create an advertisement or not
      */
     private fun isAdvValid(): Boolean {
-        // TODO: check on the availability of that spot
         return !(newTitle.text.toString().isNullOrEmpty() ||
                 newStartingTime.text.toString().isNullOrEmpty() ||
                 newEndingTime.text.toString().isNullOrEmpty() ||

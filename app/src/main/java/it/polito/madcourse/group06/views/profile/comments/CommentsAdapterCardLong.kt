@@ -24,10 +24,6 @@ class CommentsAdapterCardLong(private val commentList: ArrayList<String>) : Recy
      */
     override fun onBindViewHolder(holder: CommentsViewHolderCard, position: Int) {
         holder.bind(commentList[position])
-        /*holder.itemView.setOnClickListener { view ->
-            /*Navigation.findNavController(view).navigate(R.id.action_showListOfSkills_to_ShowListTimeslots,
-                bundleOf("selected_skill" to commentList[position]))*/
-        }*/
     }
 
     /**

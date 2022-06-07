@@ -56,7 +56,6 @@ class EditProfileFragment : Fragment() {
     private var n_ratings: Double = 0.0
     private var comments_services_rx: ArrayList<String>? = arrayListOf<String>()
     private var comments_services_done: ArrayList<String>?  = arrayListOf<String>()
-    // TODO: retrieve the savedAdsIDs
     private var savedAdsIDs = arrayListOf<String>()
     private var listOfChatIDs= HashMap<String, String>()
     private lateinit var imgProfilePicturePath: String
