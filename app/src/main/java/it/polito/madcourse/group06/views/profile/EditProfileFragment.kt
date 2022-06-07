@@ -134,10 +134,6 @@ class EditProfileFragment : Fragment() {
                 this.skillsChips.removeAllViews()
                 userProfile.skills!!.forEach { skill ->
                     this.skillsChips.addChipForEdit(requireContext(), skill, this.skillsChips)
-                    /*this.skillsChips.setOnCheckedChangeListener { chipGroup, checkedId ->
-                        val selectedService = chipGroup.findViewById<Chip>(checkedId)?.text
-                        Toast.makeText(chipGroup.context, selectedService ?: "No Choice", Toast.LENGTH_LONG).show()
-                    }*/
                 }
                 this.skillsChips.addPlusChip(requireContext(), this.skillsChips)
             }

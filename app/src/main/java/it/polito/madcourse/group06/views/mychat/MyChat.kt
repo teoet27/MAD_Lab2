@@ -269,7 +269,7 @@ class MyChat : Fragment() {
         this.sendProposalButton.setOnClickListener {
             if (this.myLocation.text.toString().isNotEmpty() &&
                 this.myStartingTime.text.toString().isNotEmpty() &&
-                this.myDuration.text.toString().isNotEmpty() /*&& isProposalValid()*/
+                this.myDuration.text.toString().isNotEmpty()
             ) {
                 val msg = MyMessage(
                     currentID, otherID,
