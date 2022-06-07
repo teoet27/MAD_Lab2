@@ -37,7 +37,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
-                app:srcCompat="@drawable/propic" />
+                app:srcCompat="@drawable/staticuser" />
 
             <ImageView
                 android:id="@+id/profilePicture_mask_ID"
