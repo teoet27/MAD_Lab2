@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:layout_marginTop="5dp"
-            android:background="@color/red_deleting"
+            android:background="@color/accept_color"
             android:contentDescription='@string/separation_line'
             android:paddingTop="2dp"
             android:src="@drawable/rounded_corners_land" />
@@ -43,7 +43,7 @@
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:text="Ended!"
-            android:textColor="@color/red_deleting"
+            android:textColor="@color/accept_color"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -51,7 +51,7 @@
             android:id="@+id/imageView19"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/red_deleting"
+            android:background="@color/accept_color"
             android:contentDescription='@string/separation_line'
             android:paddingTop="2dp"
             android:src="@drawable/rounded_corners_land" />

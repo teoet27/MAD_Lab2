@@ -40,7 +40,7 @@ class AdvAdapterCard(
                     R.layout.adv_to_rate_item -> inflate(R.layout.adv_to_rate_item, parent, false)
                     R.layout.adv_to_rate_item_saved -> inflate(R.layout.adv_to_rate_item_saved, parent, false)
                     R.layout.adv_ended_item_saved -> inflate(R.layout.adv_ended_item_saved, parent, false)
-                    R.layout.adv_finished_item -> inflate(R.layout.adv_finished_item, parent, false)
+                    R.layout.adv_ended_item -> inflate(R.layout.adv_ended_item, parent, false)
                     else -> inflate(R.layout.adv_item, parent, false)
                 }
             }
@@ -67,7 +67,7 @@ class AdvAdapterCard(
             if (savedAdsIDs.contains(showedData[position].id)) {
                 R.layout.adv_ended_item_saved
             } else {
-                R.layout.adv_finished_item
+                R.layout.adv_ended_item
             }
         }
         // case 1: adv was active, it needs to be rated
