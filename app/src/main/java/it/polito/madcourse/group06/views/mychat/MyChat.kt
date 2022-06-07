@@ -135,6 +135,21 @@ class MyChat : Fragment() {
                     requireContext(),
                     R.color.accept_color
                 )
+            } else {
+                this.chatArrowUpButton.setImageResource(R.drawable.ic_add_black_24dp)
+                this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(
+                    requireContext(),
+                    R.color.darkGray
+                )
+                this.chatArrowUpButton.setOnClickListener {
+                    if (!this.isAnswerMenuOpen) {
+                        openNewProposal()
+                        this.isAnswerMenuOpen = !this.isAnswerMenuOpen
+                    } else {
+                        closeProposal()
+                        this.isAnswerMenuOpen = !this.isAnswerMenuOpen
+                    }
+                }
             }
         }
 
@@ -237,8 +252,10 @@ class MyChat : Fragment() {
 
         myChatViewModel.myCurrentChat.observe(viewLifecycleOwner) { chat ->
             this.emptyChatMessage.isVisible = chat.chatContent.isEmpty()
-            chatAdapterCard = MyChatAdapter(chat.chatContent, currentID, otherID,
-                ::acceptProposal, ::rejectProposal, advertisementViewModel, isCurrentUserTheOwner)
+            chatAdapterCard = MyChatAdapter(
+                chat.chatContent, currentID, otherID,
+                ::acceptProposal, ::rejectProposal, advertisementViewModel, isCurrentUserTheOwner
+            )
 
             val linearLayoutManager = LinearLayoutManager(this.context)
             linearLayoutManager.stackFromEnd = true
