@@ -248,8 +248,11 @@ class MyChatViewModel(application: Application) : AndroidViewModel(application) 
                 val chat = doc.toMyChatModel()
                 chat!!.chatContent.removeAt(messageID)
                 val messages = chat.chatContent
-                for (mess in messages)
-                    mess.propState = 2
+                for ((index, mess) in messages.withIndex()) {
+                    if (index != messageID) {
+                        mess.propState = 2
+                    }
+                }
                 doc.reference.update("chat_content", messages)
             }
     }
