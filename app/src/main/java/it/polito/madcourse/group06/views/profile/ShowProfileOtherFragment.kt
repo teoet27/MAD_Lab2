@@ -37,6 +37,7 @@ class ShowProfileOtherFragment : Fragment() {
     private lateinit var starsOBJ: AppCompatRatingBar
     private lateinit var sentenceCommentDone: TextView
     private lateinit var sentenceCommentRx: TextView
+    private lateinit var reviews: TextView
     private var commentsDone: ArrayList<String>? = ArrayList<String>()
     private var commentsRx: ArrayList<String>? = ArrayList<String>()
     private lateinit var showMoreComments: TextView
@@ -75,6 +76,7 @@ class ShowProfileOtherFragment : Fragment() {
         this.starsOBJ = view.findViewById(R.id.ratingBar_other)
         this.sentenceCommentDone = view.findViewById(R.id.comments_other_done)
         this.sentenceCommentRx = view.findViewById(R.id.comment_other_rx)
+        this.reviews = view.findViewById(R.id.reviews_other)
         this.showMoreComments = view.findViewById(R.id.show_more_comments)
         this.confirmedBadge=view.findViewById(R.id.edit_camera_button_other)
         this.skillsChips = view.findViewById(R.id.skill_chips_group_other)
@@ -140,9 +142,11 @@ class ShowProfileOtherFragment : Fragment() {
             if (userProfile.n_ratings != 0.0) {
                 this.starsOBJ.rating = (userProfile.rating_sum / userProfile.n_ratings).toFloat()
                 this.starsOBJ.visibility = View.VISIBLE
+                this.rateOBJ.visibility = View.VISIBLE
             }
             else {
                 this.starsOBJ.visibility = View.GONE
+                this.rateOBJ.visibility = View.GONE
             }
 
             // reviews -> comments-done (recyclerView)
@@ -165,6 +169,12 @@ class ShowProfileOtherFragment : Fragment() {
                 sentenceCommentRx.visibility = View.GONE
             } else {
                 sentenceCommentRx.visibility = View.VISIBLE
+            }
+
+            if (userProfile.comments_services_done == null || userProfile.comments_services_done!!.size == 0 && userProfile.comments_services_rx == null || userProfile.comments_services_rx!!.size == 0) {
+                this.reviews.visibility = View.GONE
+            } else {
+                this.reviews.visibility = View.VISIBLE
             }
 
             // display the 'show more...' button only if some comments are not shown here because they exceed the limit of 3
