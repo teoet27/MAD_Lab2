@@ -23,6 +23,7 @@ import it.polito.madcourse.group06.viewmodels.MyChatViewModel
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.models.mychat.MyMessage
 import it.polito.madcourse.group06.utilities.hoursToCredit
+import it.polito.madcourse.group06.utilities.timeDoubleHourToString
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -136,7 +137,7 @@ class MyChat : Fragment() {
                 val msg = MyMessage(
                     currentID, otherID,
                     this.inputMessageBox.text.toString(),
-                    "", "", 0.0,
+                    "", "", "",
                     SimpleDateFormat(
                         "dd/MM/yyyy HH:mm",
                         Locale.getDefault()
@@ -174,7 +175,7 @@ class MyChat : Fragment() {
                     "",
                     this.myLocation.text.toString(),
                     this.myStartingTime.text.toString(),
-                    this.durationTimeProposal,
+                    timeDoubleHourToString(this.durationTimeProposal),
                     SimpleDateFormat(
                         "dd/MM/yyyy HH:mm",
                         Locale.getDefault()

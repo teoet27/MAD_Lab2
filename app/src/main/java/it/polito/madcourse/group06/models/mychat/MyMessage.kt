@@ -27,7 +27,7 @@ data class MyMessage (
 
     @get:PropertyName("duration")
     @set:PropertyName("duration")
-    var duration: Double,
+    var duration: String,
 
     @get:PropertyName("timestamp")
     @set:PropertyName("timestamp")
