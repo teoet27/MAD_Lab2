@@ -151,8 +151,7 @@ class ShowListOfTimeslots : Fragment(R.layout.show_timeslots_frag) {
                         .also { n ->
                             when (n) {
                                 0 -> bottomNavView.removeBadge(R.id.active_time_slots_tab)
-                                else -> bottomNavView.getOrCreateBadge(R.id.active_time_slots_tab)
-                                    .number = n
+                                else -> bottomNavView.getOrCreateBadge(R.id.active_time_slots_tab).number = n
                             }
                         }
                     myExpiredAdsCnt=listOfAdv.count { it.accountID == currentAccountID &&
