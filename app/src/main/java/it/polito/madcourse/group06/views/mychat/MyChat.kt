@@ -54,6 +54,11 @@ class MyChat : Fragment() {
     private lateinit var myStartingTime: TextView
     private lateinit var myDuration: TextView
     private lateinit var sendProposalButton: ImageView
+    private lateinit var profilePictureBlack: ImageView
+    private lateinit var profilePictureExtended: ImageView
+    private lateinit var profilePictureClose: ImageView
+    private lateinit var profilePictureCloseText: TextView
+    private var isProfilePictureShown = false
     private var hasChatEnded = false
     private var fromWhere = 0
     private var startingTimeHourProposal = 0
@@ -97,6 +102,10 @@ class MyChat : Fragment() {
         this.myStartingTime = view.findViewById(R.id.myStartingTimeTVID)
         this.myDuration = view.findViewById(R.id.myDurationTVID)
         this.sendProposalButton = view.findViewById(R.id.sendProposalButtonID)
+        this.profilePictureBlack = view.findViewById(R.id.profilePictureBlackBack)
+        this.profilePictureExtended = view.findViewById(R.id.profilePictureExtended)
+        this.profilePictureClose = view.findViewById(R.id.profilePictureCloseButton)
+        this.profilePictureCloseText = view.findViewById(R.id.profilePictureCloseTextView)
 
         this.myPurposeContainer.alpha = 0f
         this.chatMenuArrowStartingPositionY = this.chatArrowUpButton.y
@@ -118,6 +127,7 @@ class MyChat : Fragment() {
             this.chatFullname.text = it.fullName
             this.chatNickname.text = "@${it.nickname}"
             userProfileViewModel.retrieveProfilePicture(this.chattingUserProfilePicture, it.imgPath!!)
+            userProfileViewModel.retrieveProfilePicture(this.profilePictureExtended, it.imgPath!!)
             this.otherID = it.id!!
             this.otherCredit = it.credit
         }
@@ -150,6 +160,73 @@ class MyChat : Fragment() {
                         this.isAnswerMenuOpen = !this.isAnswerMenuOpen
                     }
                 }
+            }
+        }
+
+        this.profilePictureBlack.isGone = true
+        this.profilePictureBlack.alpha = 0f
+        this.profilePictureExtended.isGone = true
+        this.profilePictureExtended.alpha = 0f
+        this.profilePictureClose.isGone = true
+        this.profilePictureClose.alpha = 0f
+        this.profilePictureCloseText.isGone = true
+        this.profilePictureCloseText.alpha = 0f
+
+        this.profilePictureBlack.setOnClickListener { }
+
+        this.profilePictureClose.setOnClickListener {
+            if(this.isProfilePictureShown){
+                this.profilePictureBlack.isGone = true
+                this.profilePictureBlack.alpha = 0f
+                this.profilePictureExtended.isGone = true
+                this.profilePictureExtended.alpha = 0f
+                this.profilePictureClose.isGone = true
+                this.profilePictureClose.alpha = 0f
+                this.profilePictureCloseText.isGone = true
+                this.profilePictureCloseText.alpha = 0f
+                this.isProfilePictureShown = false
+            }
+        }
+
+        this.profilePictureCloseText.setOnClickListener {
+            if(this.isProfilePictureShown){
+                this.profilePictureBlack.isGone = true
+                this.profilePictureBlack.alpha = 0f
+                this.profilePictureExtended.isGone = true
+                this.profilePictureExtended.alpha = 0f
+                this.profilePictureClose.isGone = true
+                this.profilePictureClose.alpha = 0f
+                this.profilePictureCloseText.isGone = true
+                this.profilePictureCloseText.alpha = 0f
+                this.isProfilePictureShown = false
+            }
+        }
+
+        this.chattingUserProfilePicture.setOnClickListener {
+            if(!this.isProfilePictureShown){
+                this.profilePictureBlack.isGone = false
+                this.profilePictureExtended.isGone = false
+                this.profilePictureClose.isGone = false
+                this.profilePictureCloseText.isGone = false
+
+                this.profilePictureBlack.animate().apply {
+                    duration = 150
+                    alpha(1f)
+                }.start()
+                this.profilePictureExtended.animate().apply {
+                    duration = 500
+                    alpha(1f)
+                }.start()
+                this.profilePictureClose.animate().apply {
+                    duration = 750
+                    alpha(1f)
+                }.start()
+                this.profilePictureCloseText.animate().apply {
+                    duration = 750
+                    alpha(1f)
+                }.start()
+
+                this.isProfilePictureShown = true
             }
         }
 
