@@ -2,6 +2,7 @@ package it.polito.madcourse.group06.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import it.polito.madcourse.group06.utilities.ALL_SERVICES
 import it.polito.madcourse.group06.utilities.AdvFilter
 import it.polito.madcourse.group06.utilities.SearchState
 
@@ -70,6 +71,7 @@ class SharedViewModel : ViewModel() {
     fun resetSearchState(
         currentTab: String? = null,
         resetSelectedSkill: Boolean = false,
+        selectedSkill: String?= null,
         searchedWord: String? = null,
         sortParameter: Int? = 0,
         sortUpFlag: Boolean? = true,
@@ -78,9 +80,17 @@ class SharedViewModel : ViewModel() {
         savedAdsFlag: Boolean? = false,
         filter: AdvFilter? = AdvFilter()
     ) {
+
+        var skill:String?=null
+        when(true){
+            resetSelectedSkill-> skill=null
+            (!resetSelectedSkill && selectedSkill.isNullOrEmpty())->skill=_searchState.selectedSkill
+            (!resetSelectedSkill && !selectedSkill.isNullOrEmpty())->skill=selectedSkill
+            else->_searchState.selectedSkill
+        }
         _searchState = SearchState(
             currentTab,
-            if(resetSelectedSkill) null else _searchState.selectedSkill,
+            skill,
             searchedWord,
             sortParameter,
             sortUpFlag,
