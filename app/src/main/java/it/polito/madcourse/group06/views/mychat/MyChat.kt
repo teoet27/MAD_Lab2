@@ -126,7 +126,16 @@ class MyChat : Fragment() {
             this.chatID = it.chatID
             this.listOfMessages = it.chatContent
             this.hasChatEnded = it.hasEnded
-            if (it.hasEnded) { switchToDoneMode() }
+            if (it.hasEnded) {
+                this.chatArrowUpButton.setOnClickListener {
+                    Toast.makeText(requireContext(), "Congratulations! You and ${this.chatFullname.text} have reached an agreement!", Toast.LENGTH_LONG).show()
+                }
+                this.chatArrowUpButton.setImageResource(R.drawable.ic_done_black_24dp)
+                this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(
+                    requireContext(),
+                    R.color.accept_color
+                )
+            }
         }
 
         this.sendMessageButton.setOnClickListener {
@@ -381,7 +390,7 @@ class MyChat : Fragment() {
         this.chatArrowUpButton.animate().apply {
             duration = 500
             rotationX(360f)
-            alpha(0.5f)
+            alpha(1f)
         }.start()
         this.chatArrowUpButton.setImageResource(R.drawable.ic_done_black_24dp)
         this.chatArrowUpButton.backgroundTintList = AppCompatResources.getColorStateList(
@@ -422,31 +431,5 @@ class MyChat : Fragment() {
         )
         timePickerDialog.setTitle("Select Duration")
         timePickerDialog.show()
-    }
-
-    /**
-     * computeTimeDifference is a method which return the time difference from two "time-strings" and whether
-     * they are acceptable or not.
-     *
-     * @param startingTime the starting time
-     * @param endingTime the ending time
-     * @return a Pair<Float, Boolean> where it's specified the time difference and its acceptability
-     */
-    private fun computeTimeDifference(startingTime: String, endingTime: String): Pair<Double, Boolean> {
-        var timeDifference = 0.0
-        if (startingTime.isEmpty() || endingTime.isEmpty()) {
-            return Pair(-1.0, false)
-        }
-        val startingHour = startingTime.split(":")[0].toInt()
-        val startingMinute = startingTime.split(":")[1].toInt()
-        val endingHour = endingTime.split(":")[0].toInt()
-        val endingMinute = endingTime.split(":")[1].toInt()
-
-        timeDifference += (endingHour - startingHour) + ((endingMinute - startingMinute) / 60.0)
-
-        return Pair(
-            (timeDifference * 100.0).roundToInt() / 100.0,
-            (timeDifference * 100.0).roundToInt() / 100.0 >= 0
-        )
     }
 }

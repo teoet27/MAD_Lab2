@@ -8,6 +8,7 @@ import android.icu.util.Calendar
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.models.advertisement.Advertisement
@@ -240,26 +241,24 @@ fun dateStringToInt(date: String): Int {
 }
 
 fun timeStringToDoubleSec(time: String): Double {
-    return time.split(":").fold(0.0) { a, b -> (a.toDouble() + b.toDouble()) * 60.0 }
+    return time.split(":")[0].toDouble() * 3600.0 + time.split(":")[1].toDouble() * 60.0
 }
 
-fun timeStringToDoubleHour(time: String, pattern:String="HH:mm"): Double {
-    when(pattern) {
+fun timeStringToDoubleHour(time: String, pattern: String = "HH:mm"): Double {
+    when (pattern) {
         "HH:mm" -> return time.split(":")
             .foldRight(0.0) { a, b -> (a.toDouble() + b.toDouble()) / 60.0 } * 60
         "HH h mm min" -> {
             val timeList = Regex("[0-9]+").findAll(time).map { it.value.toDouble() }.toList();
             if (timeList.size == 2) {
                 return timeList[0] + timeList[1] / 60
-            }
-            else if (time.contains("h")) {
+            } else if (time.contains("h")) {
                 return timeList[0]
-            }
-            else if (time.contains("min")){
-                return timeList[0]/60
+            } else if (time.contains("min")) {
+                return timeList[0] / 60
             }
         }
-        else->return -1.0
+        else -> return -1.0
     }
     return -1.0
 }
@@ -267,7 +266,7 @@ fun timeStringToDoubleHour(time: String, pattern:String="HH:mm"): Double {
 fun timeDoubleHourToString(time: Double): String {
     val h = floor(time).toInt()
     val min = round((time - floor(time)) * 60).toInt()
-    return when(true) {
+    return when (true) {
         (h == 0) -> "$min min"
         (min == 0) -> "$h h"
         else -> "$h h $min min"
@@ -275,7 +274,7 @@ fun timeDoubleHourToString(time: Double): String {
 }
 
 fun dateListToString(date: String): String {
-    val currentDate = SimpleDateFormat("dd/MM/yyyy",Locale.getDefault()).format(Date())
+    val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
     computeDateDifference(currentDate, date).first.also { distance ->
         return if (distance == 0.0)
             "Today"
@@ -373,12 +372,12 @@ fun Advertisement.isAvailable(): Boolean {
 }
 
 fun Advertisement.isEnded(): Boolean {
-    return this.rxUserId.isNullOrEmpty() && this.ratingUserId.isNullOrEmpty() && !this.activeAt.isNullOrEmpty()  && !this.activeLocation.isNullOrEmpty()
+    return this.rxUserId.isNullOrEmpty() && this.ratingUserId.isNullOrEmpty() && !this.activeAt.isNullOrEmpty() && !this.activeLocation.isNullOrEmpty()
 }
 
 fun Advertisement.isExpired(): Boolean {
-    timeStringToDoubleHour(SimpleDateFormat("HH:mm",Locale.getDefault()).format(Date())).also { now ->
-        SimpleDateFormat("dd/MM/yyyy",Locale.getDefault()).format(Date()).also { today ->
+    timeStringToDoubleHour(SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())).also { now ->
+        SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()).also { today ->
             return (now >= timeStringToDoubleHour(advEndingTime)
                     && computeDateDifference(today, this.advDate).first == 0.0
                     || (computeDateDifference(today, this.advDate).first < 0))
@@ -387,19 +386,16 @@ fun Advertisement.isExpired(): Boolean {
 }
 
 fun Advertisement.isToBeRated(): Boolean {
-    timeStringToDoubleSec(SimpleDateFormat("HH:mm",Locale.getDefault()).format(Date())).also { now ->
-        SimpleDateFormat("dd/MM/yyyy",Locale.getDefault()).format(Date()).also { today ->
-            return if (!activeAt.isNullOrEmpty()) {
-                now >= timeStringToDoubleSec(activeAt!!) + activeFor*3600 && computeDateDifference(
-                    today,
-                    this.advDate
-                ).first == 0.0
-                        || (computeDateDifference(today, this.advDate).first < 0)
-            } else {
-                false
-            }
-        }
+    val now = timeStringToDoubleSec(SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date()))
+    val today = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+    return if (!activeAt.isNullOrEmpty()) {
+        (now >= timeStringToDoubleSec(activeAt!!) + activeFor * 3600 &&
+                computeDateDifference(today, this.advDate).first == 0.0) ||
+                (computeDateDifference(today, this.advDate).first < 0)
+    } else {
+        false
     }
+
 }
 
 fun checkTimeslotForm(
@@ -474,7 +470,7 @@ fun checkTimeslotForm(
     } else if (duration <= 0) {
         Snackbar.make(view, "Error: you must provide a valid duration for your timeslot.", Snackbar.LENGTH_SHORT).show()
         return false
-    } else if(computeTimeDifference(startingTime, endingTime).first - duration < 0){
+    } else if (computeTimeDifference(startingTime, endingTime).first - duration < 0) {
         Snackbar.make(view, "Error: please provide a duration compatible with the availability time range.", Snackbar.LENGTH_LONG).show()
         return false
     }

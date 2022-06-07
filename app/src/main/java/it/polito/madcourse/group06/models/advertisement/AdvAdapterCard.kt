@@ -48,7 +48,6 @@ class AdvAdapterCard(
         return AdvViewHolderCard(vg, userViewModel)
     }
 
-
     /**
      * Bind operations.
      */
