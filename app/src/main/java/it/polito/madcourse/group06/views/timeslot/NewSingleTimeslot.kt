@@ -457,15 +457,23 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
      */
     private fun popTimePickerDuration(timeBox: TextView) {
         val onTimeSetListener: TimePickerDialog.OnTimeSetListener =
-            TimePickerDialog.OnTimeSetListener() { timepicker, selectedHour, selectedMinute ->
+            TimePickerDialog.OnTimeSetListener() { timepicker,
+                                                   selectedHour,
+                                                   selectedMinute ->
                 computeTimeDifference(
                     newStartingTime.text.toString(),
                     newEndingTime.text.toString()
                 ).first.also { maxDuration ->
-                    timeDuration = min(
-                        (selectedHour.toDouble() + selectedMinute.toDouble() / 60),
-                        if (maxDuration > 0) maxDuration else 25.0
-                    )
+                    if ((selectedHour.toDouble() + selectedMinute.toDouble() / 60) > maxDuration
+                        && maxDuration > 0) {
+                        Toast.makeText(
+                            context, "Your service duration cannot exceed your availability time!", Toast.LENGTH_LONG
+                        ).show()
+                        timeDuration = maxDuration
+                    }
+                    else {
+                        timeDuration = (selectedHour.toDouble() + selectedMinute.toDouble() / 60)
+                    }
                 }
                 timeBox.text = String.format(
                     Locale.getDefault(),

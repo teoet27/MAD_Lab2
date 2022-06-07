@@ -244,12 +244,24 @@ fun timeStringToDoubleSec(time: String): Double {
 }
 
 fun timeStringToDoubleHour(time: String, pattern:String="HH:mm"): Double {
-    return when(pattern){
-        "HH:mm"->time.split(":").foldRight(0.0) { a, b -> (a.toDouble() + b.toDouble()) / 60.0 } * 60
-        "HH h mm min"->{val timeList=Regex("[0-9]+").findAll(time).map{ it.value.toDouble() }.toList();
-                        timeList[0]+timeList[1]/60}
-        else->-1.0
+    when(pattern) {
+        "HH:mm" -> return time.split(":")
+            .foldRight(0.0) { a, b -> (a.toDouble() + b.toDouble()) / 60.0 } * 60
+        "HH h mm min" -> {
+            val timeList = Regex("[0-9]+").findAll(time).map { it.value.toDouble() }.toList();
+            if (timeList.size == 2) {
+                return timeList[0] + timeList[1] / 60
+            }
+            else if (time.contains("h")) {
+                return timeList[0]
+            }
+            else if (time.contains("min")){
+                return timeList[0]/60
+            }
+        }
+        else->return -1.0
     }
+    return -1.0
 }
 
 fun timeDoubleHourToString(time: Double): String {
@@ -462,7 +474,7 @@ fun checkTimeslotForm(
     } else if (duration <= 0) {
         Snackbar.make(view, "Error: you must provide a valid duration for your timeslot.", Snackbar.LENGTH_SHORT).show()
         return false
-    }else if(timeStringToDoubleHour(endingTime)- timeStringToDoubleHour(startingTime)-duration<0){
+    } else if(timeStringToDoubleHour(endingTime)- timeStringToDoubleHour(startingTime)-duration<0){
         Snackbar.make(view, "Error: please provide a duration compatible with the availability time range.", Snackbar.LENGTH_LONG).show()
         return false
     }
