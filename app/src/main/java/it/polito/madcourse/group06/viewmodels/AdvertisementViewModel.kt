@@ -71,7 +71,7 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
             val activeFor = this.get("active_for") as Double
             val activeLocation = this.get("active_location") as String
             Advertisement(
-                id, title, description, restrictions, listOfSkills ?: arrayListOf<String>(),
+                id, title, description, restrictions, listOfSkills ?: arrayListOf(),
                 location, date, startingTime,
                 endingTime, duration, accountName,
                 accountID, rxUserId, ratingUserId, activeAt, activeFor, activeLocation
@@ -87,10 +87,10 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
      * @param ad a new advertisement
      */
     fun insertAdvertisement(ad: Advertisement) {
-        var advID: String = ""
+        var advID = ""
         db
             .collection("Advertisement")
-            .document(/*ad.id.toString()*/).also { advID = it.id }
+            .document().also { advID = it.id }
             .set(
                 mapOf(
                     "id" to advID,
@@ -112,9 +112,6 @@ class AdvertisementViewModel(application: Application) : AndroidViewModel(applic
                     "active_location" to ad.activeLocation,
                 )
             )
-            .addOnSuccessListener {
-                Toast.makeText(context, "Creation completed.", Toast.LENGTH_SHORT).show()
-            }
     }
 
     /**
