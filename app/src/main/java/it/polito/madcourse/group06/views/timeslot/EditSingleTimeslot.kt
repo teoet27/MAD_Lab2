@@ -22,6 +22,7 @@ import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.models.advertisement.Advertisement
 import it.polito.madcourse.group06.models.userprofile.UserProfile
 import it.polito.madcourse.group06.utilities.checkTimeslotForm
+import it.polito.madcourse.group06.utilities.timeDoubleHourToString
 import it.polito.madcourse.group06.utilities.timeStringToDoubleHour
 import it.polito.madcourse.group06.viewmodels.AdvertisementViewModel
 import it.polito.madcourse.group06.viewmodels.SharedViewModel
@@ -109,7 +110,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
             this.advEndingTime.setOnClickListener { popTimePickerEnding(this.advEndingTime) }
 
             // Duration
-            this.advDurationTime.text = singleAdvertisement.advDuration.toString()
+            this.advDurationTime.text = timeDoubleHourToString(singleAdvertisement.advDuration)
             this.advDurationTime.setOnClickListener{ popTimePickerDuration(this.advDurationTime) }
 
 
