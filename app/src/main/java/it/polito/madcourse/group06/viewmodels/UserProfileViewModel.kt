@@ -140,7 +140,6 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 "saved_ads_ids", updatedUser.saved_ads_ids
             )
             .addOnSuccessListener {
-                Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
                 this._singleUserProfilePH = updatedUser
                 this._pvtUserProfile.value = this._singleUserProfilePH
             }
@@ -195,7 +194,6 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 "saved_ads_ids", updatedUser.saved_ads_ids
             )
             .addOnSuccessListener {
-                Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
                 this._otherUserProfilePH = updatedUser
                 this._pvtOtherUserProfile.value = this._otherUserProfilePH
             }
@@ -507,7 +505,6 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 "saved_ads_ids", userProfile.saved_ads_ids
             )
             .addOnSuccessListener {
-                Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
                 this._singleUserProfilePH = userProfile
                 this._pvtUserProfile.value = this._singleUserProfilePH
             }
@@ -543,7 +540,6 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 "saved_ads_ids", userProfile.saved_ads_ids
             )
             .addOnSuccessListener {
-                Toast.makeText(context, "Edit completed.", Toast.LENGTH_SHORT).show()
                 this._otherUserProfilePH = userProfile
                 this._pvtOtherUserProfile.value = this._otherUserProfilePH
             }
