@@ -150,6 +150,9 @@
         <action
             android:id="@+id/action_setting_to_ShowListOfServices"
             app:destination="@id/ShowListOfServices" />
+        <action
+            android:id="@+id/action_setting_to_guide"
+            app:destination="@id/guide" />
     </fragment>
     <fragment
         android:id="@+id/myChat"
@@ -187,5 +190,14 @@
         <action
             android:id="@+id/action_showMyProfileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/guide"
+        android:name="it.polito.madcourse.group06.views.setting.Guide"
+        android:label="FAQ"
+        tools:layout="@layout/guide_layout">
+        <action
+            android:id="@+id/action_guide_to_setting"
+            app:destination="@id/setting" />
     </fragment>
 </navigation>

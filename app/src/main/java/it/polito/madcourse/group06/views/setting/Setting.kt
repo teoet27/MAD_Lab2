@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -28,6 +29,7 @@ import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 class Setting : Fragment() {
 
     private lateinit var deleteYourAccountButton: TextView
+    private lateinit var faqButton: ImageView
     private val userProfileViewModel: UserProfileViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -41,8 +43,14 @@ class Setting : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         this.deleteYourAccountButton = view.findViewById(R.id.deleteYourAccountButtonID)
+        this.faqButton = view.findViewById(R.id.arrow1ID)
+
         this.deleteYourAccountButton.setOnClickListener {
             showDeleteYourUserWindow()
+        }
+
+        this.faqButton.setOnClickListener {
+            findNavController().navigate(R.id.action_setting_to_guide)
         }
 
         activity?.onBackPressedDispatcher?.addCallback(

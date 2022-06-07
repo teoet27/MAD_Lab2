@@ -124,4 +124,16 @@
     <string name="ending_time_of_availability">Ending time of availability</string>
     <string name="starting_time_of_availability">Starting time of availability</string>
     <string name="add_restrictions_to_your_timeslot">Add restrictions to your timeslot...</string>
+    <string name="faq_main_title">FAQ: let\'s talk about TimeBanking</string>
+    <string name="faq_question_1">What is the concept behind the time-based currency?</string>
+    <string name="faq_question_5">What is the concept behind the time-based currency?</string>
+    <string name="faq_question_2">What is the concept behind the time-based currency?</string>
+    <string name="faq_question_4">What is the concept behind the time-based currency?</string>
+    <string name="faq_question_3">What is the concept behind the time-based currency?</string>
+    <string name="faq_answer_1">In economics, a time-based currency is an alternative currency or exchange system where the unit of account is the person-hour or some other time unit. In our system, everyone\'s contributions have the same value: one hour equals four credits. Then, one person volunteers to work for an hour for another person; thus, they are credited with one hour, thus four credits, which they can redeem for some time of service from another volunteer.</string>
+    <string name="faq_answer_2">In economics, a time-based currency is an alternative currency or exchange system where the unit of account is the person-hour or some other time unit. In our system, everyone\'s contributions have the same value: one hour equals four credits. Then, one person volunteers to work for an hour for another person; thus, they are credited with one hour, thus four credits, which they can redeem for some time of service from another volunteer.</string>
+    <string name="faq_answer_3">In economics, a time-based currency is an alternative currency or exchange system where the unit of account is the person-hour or some other time unit. In our system, everyone\'s contributions have the same value: one hour equals four credits. Then, one person volunteers to work for an hour for another person; thus, they are credited with one hour, thus four credits, which they can redeem for some time of service from another volunteer.</string>
+    <string name="faq_answer_4">In economics, a time-based currency is an alternative currency or exchange system where the unit of account is the person-hour or some other time unit. In our system, everyone\'s contributions have the same value: one hour equals four credits. Then, one person volunteers to work for an hour for another person; thus, they are credited with one hour, thus four credits, which they can redeem for some time of service from another volunteer.</string>
+    <string name="faq_answer_5">In economics, a time-based currency is an alternative currency or exchange system where the unit of account is the person-hour or some other time unit. In our system, everyone\'s contributions have the same value: one hour equals four credits. Then, one person volunteers to work for an hour for another person; thus, they are credited with one hour, thus four credits, which they can redeem for some time of service from another volunteer.</string>
+
 </resources>
