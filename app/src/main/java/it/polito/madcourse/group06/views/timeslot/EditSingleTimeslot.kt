@@ -200,7 +200,12 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             ).show()
                         }
                     }
-
+                    val insertedDuration = timeStringToDoubleHour(advDurationTime.text.toString(), "HH h mm min")
+                    val maximumDuration = computeTimeDifference(
+                        this.advStartingTime.text.toString(),
+                        this.advEndingTime.text.toString()
+                    ).first
+                    val finalDuration = if (insertedDuration > maximumDuration) maximumDuration else insertedDuration
                     if (isPossible &&
                         checkTimeslotForm(
                             requireView(),
@@ -209,7 +214,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             advLocation.text.toString(),
                             advStartingTime.text.toString(),
                             advEndingTime.text.toString(),
-                            timeStringToDoubleHour(advDurationTime.text.toString(),"HH h mm min"),
+                            finalDuration,
                             chosenDate
                             )
                     ) {
@@ -220,7 +225,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             dumbAdvertisement.advDate = chosenDate
                             dumbAdvertisement.advStartingTime = advStartingTime.text.toString()
                             dumbAdvertisement.advEndingTime = advEndingTime.text.toString()
-                            dumbAdvertisement.advDuration = timeStringToDoubleHour(advDurationTime.text.toString(),"HH h mm min")
+                            dumbAdvertisement.advDuration = finalDuration
                             dumbAdvertisement.listOfSkills = selectedSkillsList
                             advertisementViewModel.editAdvertisement(dumbAdvertisement)
                             sharedViewModel.updateSearchState()
