@@ -167,7 +167,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                             newLocation.text.toString(),
                             newStartingTime.text.toString(),
                             newEndingTime.text.toString(),
-                            timeStringToDoubleHour(newDuration.text.toString(),"HH h mm m"),
+                            timeStringToDoubleHour(newDuration.text.toString(),"HH h mm min"),
                             chosenDate
                             )
                     ) {
@@ -182,7 +182,7 @@ class NewSingleTimeslot : Fragment(R.layout.new_time_slot_details_fragment) {
                                 chosenDate,
                                 newStartingTime.text.toString(),
                                 newEndingTime.text.toString(),
-                                timeStringToDoubleHour(newDuration.text.toString(),"HH h mm m"),
+                                timeStringToDoubleHour(newDuration.text.toString(),"HH h mm min"),
                                 accountName,
                                 accountID,
                                 null,

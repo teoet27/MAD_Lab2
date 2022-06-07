@@ -209,7 +209,7 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             advLocation.text.toString(),
                             advStartingTime.text.toString(),
                             advEndingTime.text.toString(),
-                            timeStringToDoubleHour(advDurationTime.text.toString(),"HH h mm m"),
+                            timeStringToDoubleHour(advDurationTime.text.toString(),"HH h mm min"),
                             chosenDate
                             )
                     ) {
@@ -220,8 +220,8 @@ class EditSingleTimeslot : Fragment(R.layout.edit_time_slot_details_fragment) {
                             dumbAdvertisement.advDate = chosenDate
                             dumbAdvertisement.advStartingTime = advStartingTime.text.toString()
                             dumbAdvertisement.advEndingTime = advEndingTime.text.toString()
-                            dumbAdvertisement.advDuration = timeStringToDoubleHour(advDurationTime.text.toString(),"HH h mm m")
-                        dumbAdvertisement.listOfSkills = selectedSkillsList
+                            dumbAdvertisement.advDuration = timeStringToDoubleHour(advDurationTime.text.toString(),"HH h mm min")
+                            dumbAdvertisement.listOfSkills = selectedSkillsList
                             advertisementViewModel.editAdvertisement(dumbAdvertisement)
                             sharedViewModel.updateSearchState()
                             findNavController().navigate(R.id.action_editTimeSlotDetailsFragment_to_ShowListTimeslots)
