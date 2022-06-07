@@ -32,10 +32,13 @@
             android:id="@+id/FAQQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_help_outline_black_24dp"
+            android:drawablePadding="6dp"
             android:text="@string/faq_question_1"
             android:textColor="@color/darkGray"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:drawableTint="@color/my_bubble" />
 
         <TextView
             android:id="@+id/FAQAnswer"
@@ -57,10 +60,13 @@
             android:id="@+id/FAQQuestion2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_help_outline_black_24dp"
+            android:drawablePadding="6dp"
             android:text="@string/faq_question_2"
             android:textColor="@color/darkGray"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:drawableTint="@color/my_bubble" />
 
         <TextView
             android:id="@+id/FAQAnswer2"
@@ -82,10 +88,13 @@
             android:id="@+id/FAQQuestion3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_help_outline_black_24dp"
+            android:drawablePadding="6dp"
             android:text="@string/faq_question_3"
             android:textColor="@color/darkGray"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:drawableTint="@color/my_bubble" />
 
         <TextView
             android:id="@+id/FAQAnswer3"
@@ -107,10 +116,13 @@
             android:id="@+id/FAQQuestion4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_help_outline_black_24dp"
+            android:drawablePadding="6dp"
             android:text="@string/faq_question_4"
             android:textColor="@color/darkGray"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:drawableTint="@color/my_bubble" />
 
         <TextView
             android:id="@+id/FAQAnswer4"
@@ -132,10 +144,13 @@
             android:id="@+id/FAQQuestion5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_help_outline_black_24dp"
+            android:drawablePadding="6dp"
             android:text="@string/faq_question_5"
             android:textColor="@color/darkGray"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:drawableTint="@color/my_bubble" />
 
         <TextView
             android:id="@+id/FAQAnswer5"
@@ -144,6 +159,62 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="6dp"
             android:text="@string/faq_answer_5"
+            android:textColor="@color/darkGray"
+            android:textSize="16sp" />
+
+        <View
+            android:id="@+id/divider7"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            android:id="@+id/FAQQuestion6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_help_outline_black_24dp"
+            android:drawablePadding="6dp"
+            android:text="@string/faq_question_6"
+            android:textColor="@color/darkGray"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:drawableTint="@color/my_bubble" />
+
+        <TextView
+            android:id="@+id/FAQAnswer6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="6dp"
+            android:text="@string/faq_answer_6"
+            android:textColor="@color/darkGray"
+            android:textSize="16sp" />
+
+        <View
+            android:id="@+id/divider8"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            android:id="@+id/FAQQuestion7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_help_outline_black_24dp"
+            android:drawablePadding="6dp"
+            android:text="@string/faq_question_7"
+            android:textColor="@color/darkGray"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:drawableTint="@color/my_bubble" />
+
+        <TextView
+            android:id="@+id/FAQAnswer7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="6dp"
+            android:text="@string/faq_answer_7"
             android:textColor="@color/darkGray"
             android:textSize="16sp" />
 
