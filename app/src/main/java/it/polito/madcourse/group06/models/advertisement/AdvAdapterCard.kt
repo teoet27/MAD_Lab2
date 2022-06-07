@@ -132,7 +132,7 @@ class AdvAdapterCard(
         }
         // Active or Saved timeslot filtering
         else if (activeAdsFlag == true) {
-            adsList.filter { (it.rxUserId == userID && !it.ratingUserId.isNullOrEmpty() ||
+            adsList.filter { (it.ratingUserId == userID ||
                              (it.accountID == userID && !it.rxUserId.isNullOrEmpty()))}
         } else if (savedAdsFlag == true) {
             adsList.filter { savedAdsIDs.contains(it.id) }
