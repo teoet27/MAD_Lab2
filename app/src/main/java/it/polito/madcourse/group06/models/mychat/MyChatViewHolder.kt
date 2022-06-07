@@ -190,8 +190,8 @@ class MyChatViewHolder(
                      */
                     this.acceptButton?.setOnClickListener {
                         acceptCallback(
-                            this.msgDuration.text.toString().split(":")[0].toDouble()
-                                    + this.msgDuration.text.toString().split(":")[0].toDouble() / 60.0, this.position, 1
+                            timeStringToDoubleHour(this.msgDuration.text.toString(), "HH h mm min"),
+                            this.position, 1
                         )
                         this.otherPendingState?.isGone = true
                         this.otherAcceptedState?.isGone = false
