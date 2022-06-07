@@ -387,10 +387,10 @@ fun Advertisement.isExpired(): Boolean {
 }
 
 fun Advertisement.isToBeRated(): Boolean {
-    timeStringToDoubleHour(SimpleDateFormat("HH:mm",Locale.getDefault()).format(Date())).also { now ->
+    timeStringToDoubleSec(SimpleDateFormat("HH:mm",Locale.getDefault()).format(Date())).also { now ->
         SimpleDateFormat("dd/MM/yyyy",Locale.getDefault()).format(Date()).also { today ->
             return if (!activeAt.isNullOrEmpty()) {
-                now >= timeStringToDoubleHour(activeAt!!) + activeFor && computeDateDifference(
+                now >= timeStringToDoubleSec(activeAt!!) + activeFor*3600 && computeDateDifference(
                     today,
                     this.advDate
                 ).first == 0.0

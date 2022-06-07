@@ -126,7 +126,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                     dumbUser.comments_services_done = arrayListOf(commentBis)
                 }
             } else if (!isServiceDone && !comment.isNullOrEmpty()) {
-                // done
+                // rx
                 if (dumbUser.comments_services_rx != null) {
                     dumbUser.comments_services_rx!!.add(commentBis)
                 } else {
