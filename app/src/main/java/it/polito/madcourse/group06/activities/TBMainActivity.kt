@@ -24,6 +24,7 @@ import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.utilities.ALL_SERVICES
 import it.polito.madcourse.group06.utilities.DrawerInterface
+import it.polito.madcourse.group06.utilities.TAB_SERVICES
 import it.polito.madcourse.group06.viewmodels.MyChatViewModel
 
 class TBMainActivity : AppCompatActivity(), DrawerInterface {
@@ -111,7 +112,7 @@ class TBMainActivity : AppCompatActivity(), DrawerInterface {
                     true
                 }
                 R.id.ShowListOfAdvertisementsMenuItem -> {
-                    sharedViewModel.updateSearchState(selectedSkill = ALL_SERVICES)
+                    sharedViewModel.resetSearchState(selectedSkill= ALL_SERVICES)
                     navController.navigate(R.id.ShowListTimeslots)
                     true
                 }
