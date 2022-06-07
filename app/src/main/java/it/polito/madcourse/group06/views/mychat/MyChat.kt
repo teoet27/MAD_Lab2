@@ -138,7 +138,7 @@ class MyChat : Fragment() {
                     this.inputMessageBox.text.toString(),
                     "", "", 0.0,
                     SimpleDateFormat(
-                        "dd/MM/yyyy hh:mm",
+                        "dd/MM/yyyy HH:mm",
                         Locale.getDefault()
                     ).format(Date()).toString(), false, 0
                 )
@@ -176,7 +176,7 @@ class MyChat : Fragment() {
                     this.myStartingTime.text.toString(),
                     this.durationTimeProposal,
                     SimpleDateFormat(
-                        "dd/MM/yyyy hh:mm",
+                        "dd/MM/yyyy HH:mm",
                         Locale.getDefault()
                     ).format(Date()).toString(), true, 0
                 )
