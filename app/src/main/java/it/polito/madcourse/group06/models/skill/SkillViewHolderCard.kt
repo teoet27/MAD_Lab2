@@ -17,7 +17,7 @@ class SkillViewHolderCard(v: View) : RecyclerView.ViewHolder(v) {
     /**
      * bind:
      * A method to bind the i-th entry of the serviceList to the i-th holder properties.
-     * @param service an object of class Service
+     * @param skillName an object of class Service
      */
     fun bind(skillName: String) {
         this.name.text = skillName

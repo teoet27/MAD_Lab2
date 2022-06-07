@@ -3,7 +3,6 @@ package it.polito.madcourse.group06.views.profile.comments
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.google.common.collect.Comparators.min
 import it.polito.madcourse.group06.R
 
 /**

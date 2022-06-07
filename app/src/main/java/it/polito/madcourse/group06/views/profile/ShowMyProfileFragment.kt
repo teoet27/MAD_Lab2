@@ -17,8 +17,6 @@ import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.viewmodels.UserProfileViewModel
-import org.w3c.dom.Text
-
 
 class ShowMyProfileFragment : Fragment() {
     private lateinit var fullnameOBJ: TextView

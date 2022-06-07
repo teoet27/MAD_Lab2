@@ -1,7 +1,6 @@
 package it.polito.madcourse.group06.models.advertisement
 
 import android.app.Activity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -125,11 +124,10 @@ class AdvAdapterCard(
      * - My timeslots
      *
      * @param myAds: if true the inital set is based on Ads whose owner ID coincide with [userID]
-     * @param userID: owner ID
-     * @param activeAdsFlag: if true the initial set is based on Ads marked as "active" by inserting them in [adsIDsDs]
-     * @param savedAdsFlag: if true the initial set is based on Ads marked as "saved" by inserting them in [adsIDsDs]
+     * @param activeAdsFlag: if true the initial set is based on Ads marked as "active"
+     * @param savedAdsFlag: if true the initial set is based on Ads marked as "saved"
      */
-    fun initDataset(
+    private fun initDataset(
         myAds: Boolean? = null,
         activeAdsFlag: Boolean? = null,
         savedAdsFlag: Boolean? = null

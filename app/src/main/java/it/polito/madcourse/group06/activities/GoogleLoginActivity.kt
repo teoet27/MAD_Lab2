@@ -68,7 +68,7 @@ class GoogleLoginActivity : AppCompatActivity() {
         firebaseAuth = Firebase.auth
 
         val signInButton = findViewById<CardView>(R.id.cardView3) as CardView
-        signInButton.setOnClickListener { view: View? ->
+        signInButton.setOnClickListener {
             signIn()
         }
     }

@@ -1,8 +1,6 @@
 package it.polito.madcourse.group06.views.setting
 
-import android.app.ActionBar
 import android.app.AlertDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -20,7 +18,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import it.polito.madcourse.group06.R
 import it.polito.madcourse.group06.activities.GoogleLoginActivity

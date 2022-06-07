@@ -9,7 +9,6 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import it.polito.madcourse.group06.models.advertisement.Advertisement
-import it.polito.madcourse.group06.models.userprofile.UserProfile
 import java.lang.Exception
 
 class AdvertisementViewModel(application: Application) : AndroidViewModel(application) {
