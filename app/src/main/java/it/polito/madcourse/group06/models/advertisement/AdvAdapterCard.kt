@@ -1,6 +1,7 @@
 package it.polito.madcourse.group06.models.advertisement
 
 import android.app.Activity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -63,19 +64,23 @@ class AdvAdapterCard(
 
         // case 0: adv was active and it is ended
         return if(showedData[position].isEnded()){
-            if (savedAdsIDs.contains(showedData[position].id))
+            if (savedAdsIDs.contains(showedData[position].id)) {
                 R.layout.adv_ended_item_saved
-            else
-                R.layout.adv_ended_item
+            }
+            else {
+                R.layout.adv_finished_item
+            }
         }
         // case 1: adv was active, it needs to be rated
         else if (showedData[position].isToBeRated() && userID == showedData[position].accountID
             && !showedData[position].rxUserId.isNullOrEmpty()
             || (userID == showedData[position].ratingUserId && showedData[position].isToBeRated()) ) {
-            if (savedAdsIDs.contains(showedData[position].id))
+            if (savedAdsIDs.contains(showedData[position].id)) {
                 R.layout.adv_to_rate_item_saved
-            else
+            }
+            else {
                 R.layout.adv_to_rate_item
+            }
         }
         // case 2: generic adv is expired
         else if (showedData[position].isExpired()) {
