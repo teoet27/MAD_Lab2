@@ -8,7 +8,16 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="prussian_blue">#003153</color>
+    <color name="dark_prussian_blue">#00192B</color>
     <color name="orange_poli">#fc7a08</color>
+    <color name="orange_deactivated_poli">#FFB473</color>
     <color name="darkGray">#333533</color>
     <color name="lightGray">#EEE</color>
+    <color name="red_deleting">#8E0F06</color>
+    <color name="online_green">#2DBA0C</color>
+    <color name="other_bubble">#DFDFDF</color>
+    <color name="my_bubble">#005EA1</color>
+    <color name="my_bubble_end">#0086E6</color>
+    <color name="accept_color">#3F9C29</color>
+    <color name="reject_color">#98322B</color>
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="it.polito.group06">
+    package="it.polito.madcourse.group06">
 
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -18,28 +18,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MAD_Lab2">
+
         <activity
-            android:name=".views.TBMainActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.MAD_Lab2.NoActionBar" >
+            android:name="it.polito.madcourse.group06.activities.GoogleLoginActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".legacy.EditProfileActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".legacy.ShowProfileActivity"
-            android:exported="true">
+            android:name="it.polito.madcourse.group06.activities.TBMainActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/Theme.MAD_Lab2.NoActionBar"
+            android:exported="false" >
         </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="it.polito.group06.android.fileprovider"
+            android:authorities="it.polito.madcourse.group06.android.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

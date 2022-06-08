@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_title"
+        android:title="@string/title" />
+    <item
+        android:id="@+id/menu_duration"
+        android:title="@string/duration_menu" />
+    <item
+        android:id="@+id/menu_starting_time"
+        android:title="@string/starting_time_menu" />
+    <item
+        android:id="@+id/menu_ending_time"
+        android:title="@string/ending_time_menu" />
+    <item
+        android:id="@+id/menu_date"
+        android:title="@string/date" />
+</menu>
