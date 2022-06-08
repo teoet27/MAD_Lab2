@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rounded_corners_land"
+        android:backgroundTint="@color/lightGray"
+        android:paddingTop="4dp">
+
+        <TextView
+            android:id="@+id/activeAdvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="5"
+            android:drawableLeft="@drawable/ic_description_black_24dp"
+            android:drawablePadding="4dp"
+            android:text="Advertisement title"
+            android:textAlignment="viewStart"
+            android:textColor="@color/darkGray"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:drawableTint="@color/darkGray" />
+
+        <ImageView
+            android:id="@+id/goToChatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/ic_svg_circle"
+            android:backgroundTint="@color/my_bubble"
+            android:padding="8dp"
+            app:srcCompat="@drawable/ic_baseline_chat_24"
+            app:tint="#FFFFFF" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/activeAccountFullname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corners_land"
+        android:backgroundTint="@color/lightGray"
+        android:drawableLeft="@drawable/ic_account_circle_black_24dp"
+        android:drawablePadding="4dp"
+        android:fontFamily="sans-serif-light"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="8dp"
+        android:text="by Name Surname"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textColor="@color/darkGray"
+        app:drawableTint="@color/darkGray" />
+
+</LinearLayout>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/ShowListOfServices">
+
+    <fragment
+        android:id="@+id/ShowListTimeslots"
+        android:name="it.polito.madcourse.group06.views.timeslot.ShowListOfTimeslots">
+        <action
+            android:id="@+id/action_ShowListTimeslots_to_newTimeSlotDetailsFragment"
+            app:destination="@id/newTimeSlotDetailsFragment" />
+        <action
+            android:id="@+id/action_ShowListTimeslots_to_showSingleTimeslot"
+            app:destination="@id/showSingleTimeslot" />
+        <action
+            android:id="@+id/action_ShowListTimeslots_to_showListOfServices"
+            app:destination="@id/ShowListOfServices" />
+        <action
+            android:id="@+id/action_ShowListTimeslots_to_filterTimeslots"
+            app:destination="@id/filterTimeslots" />
+        <action
+            android:id="@+id/action_ShowListTimeslots_to_editTimeSlotDetailsFragment"
+            app:destination="@id/editTimeSlotDetailsFragment" />
+        <action
+            android:id="@+id/action_ShowListTimeslots_to_showProfileOtherFragment"
+            app:destination="@id/showProfileOtherFragment" />
+        <action
+            android:id="@+id/action_ShowListTimeslots_to_myChat"
+            app:destination="@id/myChat" />
+        <action
+            android:id="@+id/action_ShowListTimeslots_to_showMyProfileFragment"
+            app:destination="@id/showMyProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="it.polito.madcourse.group06.views.profile.EditProfileFragment"
+        android:label="Edit profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_showMyProfileFragment"
+            app:destination="@id/showMyProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newTimeSlotDetailsFragment"
+        android:name="it.polito.madcourse.group06.views.timeslot.NewSingleTimeslot"
+        android:label="Create a new timeslot"
+        tools:layout="@layout/new_time_slot_details_fragment">
+        <action
+            android:id="@+id/action_newTimeSlotDetailsFragment_to_ShowListTimeslots"
+            app:destination="@id/ShowListTimeslots" />
+    </fragment>
+    <fragment
+        android:id="@+id/showSingleTimeslot"
+        android:name="it.polito.madcourse.group06.views.timeslot.ShowSingleTimeslot"
+        android:label="Expanded timeslot">
+        <action
+            android:id="@+id/action_showSingleTimeslot_to_editTimeSlotDetailsFragment"
+            app:destination="@id/editTimeSlotDetailsFragment" />
+        <action
+            android:id="@+id/action_showSingleTimeslot_to_ShowListTimeslots"
+            app:destination="@id/ShowListTimeslots" />
+    </fragment>
+    <fragment
+        android:id="@+id/editTimeSlotDetailsFragment"
+        android:name="it.polito.madcourse.group06.views.timeslot.EditSingleTimeslot"
+        android:label="Edit your timeslot">
+        <action
+            android:id="@+id/action_editTimeSlotDetailsFragment_to_showSingleTimeslot"
+            app:destination="@id/showSingleTimeslot" />
+        <action
+            android:id="@+id/action_editTimeSlotDetailsFragment_to_ShowListTimeslots"
+            app:destination="@id/ShowListTimeslots" />
+    </fragment>
+    <fragment
+        android:id="@+id/ShowListOfServices"
+        android:name="it.polito.madcourse.group06.views.timeslot.ShowListOfSkills"
+        android:label="Offered Services">
+        <action
+            android:id="@+id/action_showListOfSkills_to_ShowListTimeslots"
+            app:destination="@id/ShowListTimeslots" />
+        <action
+            android:id="@+id/action_ShowListOfServices_to_newProfileFragment"
+            app:destination="@id/newProfileFragment" />
+        <action
+            android:id="@+id/action_ShowListOfServices_to_newTimeSlotDetailsFragment"
+            app:destination="@id/newTimeSlotDetailsFragment" />
+        <action
+            android:id="@+id/action_ShowListOfServices_to_showListOfUsers"
+            app:destination="@id/showListOfUsers" />
+        <action
+            android:id="@+id/action_ShowListOfServices_to_setting"
+            app:destination="@id/setting" />
+        <action
+            android:id="@+id/action_ShowListOfServices_to_myChat"
+            app:destination="@id/myChat" />
+        <action
+            android:id="@+id/action_ShowListOfServices_to_activeChats"
+            app:destination="@id/activeChats" />
+    </fragment>
+    <fragment
+        android:id="@+id/newProfileFragment"
+        android:name="it.polito.madcourse.group06.views.profile.NewProfileFragment"
+        android:label="Create your profile">
+        <action
+            android:id="@+id/action_newProfileFragment_to_ShowListOfServices"
+            app:destination="@id/ShowListOfServices" />
+    </fragment>
+    <fragment
+        android:id="@+id/filterTimeslots"
+        android:name="it.polito.madcourse.group06.views.timeslot.FilterTimeslots"
+        android:label="FilterTimeslots" >
+        <action
+            android:id="@+id/action_filterTimeslots_to_ShowListTimeslots"
+            app:destination="@id/ShowListTimeslots" />
+    </fragment>
+    <fragment
+        android:id="@+id/showProfileOtherFragment"
+        android:name="it.polito.madcourse.group06.views.profile.ShowProfileOtherFragment"
+        android:label="ShowProfileOtherFragment" >
+        <action
+            android:id="@+id/action_showProfileOtherFragment_to_showSingleTimeslot"
+            app:destination="@id/showSingleTimeslot" />
+        <action
+            android:id="@+id/action_showProfileOtherFragment_to_ratingFragment"
+            app:destination="@id/ratingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ratingFragment"
+        android:name="it.polito.madcourse.group06.views.review.RatingFragment"
+        android:label="Rating">
+        <action
+            android:id="@+id/action_ratingFragment_to_ShowListTimeslots"
+            app:destination="@id/ShowListTimeslots" />
+    </fragment>
+    <fragment
+        android:id="@+id/showListOfUsers"
+        android:name="it.polito.madcourse.group06.views.mychat.ShowListOfUsers"
+        android:label="Contacts"
+        tools:layout="@layout/show_list_of_users">
+        <action
+            android:id="@+id/action_showListOfUsers_to_ShowListOfServices"
+            app:destination="@id/ShowListOfServices" />
+    </fragment>
+    <fragment
+        android:id="@+id/setting"
+        android:name="it.polito.madcourse.group06.views.setting.Setting"
+        android:label="Settings"
+        tools:layout="@layout/setting">
+        <action
+            android:id="@+id/action_setting_to_ShowListOfServices"
+            app:destination="@id/ShowListOfServices" />
+        <action
+            android:id="@+id/action_setting_to_guide"
+            app:destination="@id/guide" />
+    </fragment>
+    <fragment
+        android:id="@+id/myChat"
+        android:name="it.polito.madcourse.group06.views.mychat.MyChat"
+        android:label="MyChat" >
+        <action
+            android:id="@+id/action_myChat_to_ShowListOfServices"
+            app:destination="@id/ShowListOfServices" />
+        <action
+            android:id="@+id/action_myChat_to_ShowListTimeslots"
+            app:destination="@id/ShowListTimeslots" />
+        <action
+            android:id="@+id/action_myChat_to_activeChats"
+            app:destination="@id/activeChats" />
+    </fragment>
+    <fragment
+        android:id="@+id/activeChats"
+        android:name="it.polito.madcourse.group06.views.mychat.ActiveChats"
+        android:label="List of active chats"
+        tools:layout="@layout/active_chats_layout">
+        <action
+            android:id="@+id/action_activeChats_to_ShowListOfServices"
+            app:destination="@id/ShowListOfServices" />
+        <action
+            android:id="@+id/action_activeChats_to_myChat"
+            app:destination="@id/myChat" />
+    </fragment>
+    <fragment
+        android:id="@+id/showMyProfileFragment"
+        android:name="it.polito.madcourse.group06.views.profile.ShowMyProfileFragment"
+        android:label="My Profile" >
+        <action
+            android:id="@+id/action_showMyProfileFragment_to_ShowListOfServices"
+            app:destination="@id/ShowListOfServices" />
+        <action
+            android:id="@+id/action_showMyProfileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/guide"
+        android:name="it.polito.madcourse.group06.views.setting.Guide"
+        android:label="FAQ"
+        tools:layout="@layout/guide_layout">
+        <action
+            android:id="@+id/action_guide_to_setting"
+            app:destination="@id/setting" />
+    </fragment>
+</navigation>
